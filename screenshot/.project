@@ -3,6 +3,7 @@
 	<name>ScreenShotUtility</name>
 	<comment></comment>
 	<projects>
+		<project>Mines</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

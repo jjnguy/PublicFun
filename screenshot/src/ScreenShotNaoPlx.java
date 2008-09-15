@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 
@@ -13,10 +15,11 @@ public class ScreenShotNaoPlx {
 
 	public static void main(String[] args) throws HeadlessException, IOException,
 			AWTException {
-		ImageIO.write(getScreenShot(), "png", new File("C:/hi.png"));
+		Timer t = new Timer();
+		t.scheduleAtFixedRate(new TakeSS(), 0, 2000);
 	}
 
-	private static BufferedImage getScreenShot() throws HeadlessException, AWTException {
+	public static BufferedImage getScreenShot() throws HeadlessException, AWTException {
 		return getScreenShot(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
 	}
 
@@ -24,4 +27,27 @@ public class ScreenShotNaoPlx {
 		Robot c3po = new Robot();
 		return c3po.createScreenCapture(bounds);
 	}
+}
+
+
+class TakeSS extends TimerTask {
+	int i = 0;
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		try {
+			ImageIO.write(ScreenShotNaoPlx.getScreenShot(), "png", new File("C:/hi. " + i + ".png"));
+		} catch (HeadlessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}i++;
+	}
+	
+	
 }
