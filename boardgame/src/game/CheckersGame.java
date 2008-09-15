@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 
 import piece.CheckerPiece;
+import piece.GenericGamePiece;
 import verifiers.CheckersMoveVerifier;
 
 @SuppressWarnings("serial")
@@ -56,6 +57,14 @@ public class CheckersGame extends GenericBoardGame {
 		// TODO don't change turn if there is a double jump chance
 		movePiece(p1, p2);
 		return true;
+	}
+	
+	public void addPiece(GenericGamePiece piece, Point coord, boolean causedByJump) {
+		board.addPiece(coord.y, coord.x, piece);
+		if (!causedByJump) {
+			return;
+		}
+		// TODO keep track of pieces
 	}
 	
 	@Override
