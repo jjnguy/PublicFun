@@ -18,4 +18,10 @@ public class CheckerPiece extends GenericGamePiece {
 	public static CheckerPiece BLACK(){
 		return new CheckerPiece(Color.BLACK, new Color(128, 0, 0));
 	}
+	
+	@Override
+	public String toString() {
+		if (innerColor().equals(Color.BLACK)) return "Black Piece";
+		else return "Red Piece";
+	}
 }

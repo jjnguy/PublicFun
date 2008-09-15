@@ -6,6 +6,7 @@ import java.awt.Point;
 
 import piece.BlankPiece;
 import piece.CheckerPiece;
+import piece.GenericGamePiece;
 
 public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 
@@ -119,7 +120,16 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 					|| (Math.abs(originalSpot.x - newSpot.x) > 2)) {
 				return false;
 			}
-
+			Point jumpedPoint = new Point(originalSpot.x
+					- ((originalSpot.x - newSpot.x) / 2), originalSpot.y
+					- ((originalSpot.y - newSpot.y) / 2));
+			GenericGamePiece jumpedPiece = game.getPiece(jumpedPoint);
+			if (jumpedPiece.equals(BlankPiece.BLANK())) {
+				return false;
+			}
+			if (jumpedPiece.equals(pieceAtFirstPoint)) {
+				return false;
+			}
 			// TODO fire a piece jumped at the correct point if a legal jumped happened
 		}
 

@@ -15,4 +15,9 @@ public class BlankPiece extends GenericGamePiece {
 	public static BlankPiece BLANK() {
 		return new BlankPiece();
 	}
+
+	@Override
+	public String toString() {
+		return "Blank Piece";
+	}
 }

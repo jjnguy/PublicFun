@@ -48,6 +48,10 @@ public class GenericGamePiece extends JPanel {
 		g2.setStroke(s);
 	}
 
+	public String toString(){
+		return innerColor.toString() + outerColor.toString();
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
