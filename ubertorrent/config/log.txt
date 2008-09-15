@@ -1,0 +1,26 @@
+Aug 27, 2008 2:14:01 PM edu.iastate.cs309.server.Server loadConfig
+SEVERE: Configuration file not found or could not be opened, server exiting
+	Create the file config\server.conf
+java.io.FileNotFoundException: config\server.conf (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(Unknown Source)
+	at java.util.Scanner.<init>(Unknown Source)
+	at edu.iastate.cs309.util.ConfigFile.readFile(ConfigFile.java:55)
+	at edu.iastate.cs309.util.ConfigFile.<init>(ConfigFile.java:41)
+	at edu.iastate.cs309.server.Server.loadConfig(Server.java:121)
+	at edu.iastate.cs309.server.Server.run(Server.java:81)
+	at java.lang.Thread.run(Unknown Source)
+Aug 27, 2008 2:15:42 PM edu.iastate.cs309.server.Server listenForClients
+SEVERE: Unable to open port for client listening.
+java.net.BindException: Address already in use: JVM_Bind
+	at java.net.PlainSocketImpl.socketBind(Native Method)
+	at java.net.PlainSocketImpl.bind(Unknown Source)
+	at java.net.ServerSocket.bind(Unknown Source)
+	at java.net.ServerSocket.<init>(Unknown Source)
+	at java.net.ServerSocket.<init>(Unknown Source)
+	at javax.net.ssl.SSLServerSocket.<init>(Unknown Source)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketImpl.<init>(Unknown Source)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketFactoryImpl.createServerSocket(Unknown Source)
+	at edu.iastate.cs309.server.Server.listenForClients(Server.java:377)
+	at edu.iastate.cs309.server.Server.run(Server.java:84)
+	at java.lang.Thread.run(Unknown Source)

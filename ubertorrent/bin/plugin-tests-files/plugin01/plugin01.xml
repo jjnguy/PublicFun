@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE uebertorrent-plugin PUBLIC "-//No//DTD/EN" 
+		     "something.dtd">
+<uebertorrent-plugin version="1.0">
+<!-- 	Required -->
+	<name>super plugin</name>
+	<version>0.01</version>
+	<file>
+		<local>file01.jar</local>
+		<install>install/file01.jar</install>
+	</file>
+	<file>
+		<local>file02.jar</local>
+		<install>install/file02.jar</install>
+	</file>
+	<file>
+		<local>file03.jar</local>
+		<install>install/file03.jar</install>
+	</file>
+	<server-compat>
+		<version>
+			<start>0.01</start>
+			<end>1.0</end>
+		</version>
+	</server-compat>
+	<client-compat>
+		<version>
+			<exact>0.01</exact>
+			<exact>0.02</exact>
+		</version>
+	</client-compat>
+<!--  Optional -->
+	<prereq>
+		<plugin>cool plugin</plugin>
+		<version>
+			<start>0.01</start>
+			<end>1.0</end>
+		</version>
+	</prereq>
+	<prereq>
+		<plugin>cooler plugin</plugin>
+		<version>
+			<exact>1.0</exact>
+			<exact>2.0</exact>
+		</version>
+	</prereq> 
+	<prereq-other>
+		<name>nmap</name>
+		<path>/usr/bin/nmap</path>
+	</prereq-other>
+</uebertorrent-plugin>

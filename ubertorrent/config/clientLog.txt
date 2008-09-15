@@ -1,0 +1,15 @@
+Aug 27, 2008 10:53:14 AM edu.iastate.cs309.guiElements.MainGui loadConfFileForGet
+SEVERE: The config file could not be created for some reason.  Expect failure.
+Aug 27, 2008 10:53:32 AM edu.iastate.cs309.guiElements.MainGui loadConfFileForeSave
+WARNING: The config file could not be loaded.  A new one will be created.
+Aug 27, 2008 2:16:37 PM edu.iastate.cs309.client.TheActualClient addTorrent
+SEVERE: A FailedMessageException was thrown while trying to add a torrent file to the Server with the following message:
+couldn't send addTorrent(): Connection has been shutdown: javax.net.ssl.SSLException: java.net.SocketException: Connection reset
+Aug 27, 2008 2:16:54 PM edu.iastate.cs309.client.ConnectThread run
+SEVERE: Failed to connect to the Server.
+edu.iastate.cs309.clientserverprotocol.exceptions.ServerClientIOException: Failed to connect to localhost on 30908
+	at edu.iastate.cs309.clientserverprotocol.ServerConnection.<init>(ServerConnection.java:75)
+	at edu.iastate.cs309.client.TheActualClient.connect(TheActualClient.java:115)
+	at edu.iastate.cs309.client.ConnectThread.run(ConnectThread.java:43)
+Aug 27, 2008 2:16:56 PM edu.iastate.cs309.client.TheActualClient getListOfTorrents
+SEVERE: Tried to change properties on the server or client while not connected.

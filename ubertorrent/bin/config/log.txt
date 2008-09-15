@@ -1,0 +1,648 @@
+Apr 18, 2008 12:13:08 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:634)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:345)
+	at edu.iastate.cs309.server.Server.run(Server.java:76)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 18, 2008 12:14:29 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:634)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:345)
+	at edu.iastate.cs309.server.Server.run(Server.java:76)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 18, 2008 8:58:23 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:634)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:345)
+	at edu.iastate.cs309.server.Server.run(Server.java:76)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 19, 2008 12:59:55 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:659)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:347)
+	at edu.iastate.cs309.server.Server.run(Server.java:78)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 19, 2008 3:13:19 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:659)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:347)
+	at edu.iastate.cs309.server.Server.run(Server.java:78)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 19, 2008 3:16:33 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:659)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:347)
+	at edu.iastate.cs309.server.Server.run(Server.java:78)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 19, 2008 3:18:36 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:659)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:347)
+	at edu.iastate.cs309.server.Server.run(Server.java:78)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 19, 2008 3:19:23 PM edu.iastate.cs309.server.Server addTorrent
+WARNING: Couldn't add torrent
+Apr 19, 2008 3:22:39 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:659)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:347)
+	at edu.iastate.cs309.server.Server.run(Server.java:78)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 19, 2008 3:33:32 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:659)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:347)
+	at edu.iastate.cs309.server.Server.run(Server.java:78)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 19, 2008 9:16:09 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:678)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:347)
+	at edu.iastate.cs309.server.Server.run(Server.java:78)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 19, 2008 9:17:00 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:770)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 19, 2008 9:17:04 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:770)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 10:30:59 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 10:31:37 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:21:42 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:22:12 PM edu.iastate.cs309.server.Server addTorrent
+WARNING: Couldn't add torrent
+Apr 20, 2008 11:23:17 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:19 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:19 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:20 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:20 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:20 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:20 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:20 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:20 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:21 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:21 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:21 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:21 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:21 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:21 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:22 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:22 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:22 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:22 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:22 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:23 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:23 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:23 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:23 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:23 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:23 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 20, 2008 11:23:24 PM edu.iastate.cs309.server.Server removeTorrent
+WARNING: Client tried to remove nonexistent torrent
+edu.iastate.cs309.torrentManager.exceptions.TorrentNotFoundException
+	at edu.iastate.cs309.torrentManager.TorrentManager.removeTorrent(TorrentManager.java:388)
+	at edu.iastate.cs309.server.Server.removeTorrent(Server.java:790)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.removeTorrent(ClientConnectionCallbackThread.java:200)
+	at edu.iastate.cs309.clientserverprotocol.ClientConnectionCallbackThread.run(ClientConnectionCallbackThread.java:117)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 9:17:55 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at edu.iastate.cs309.Main.main(Main.java:22)
+Apr 21, 2008 9:19:25 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at edu.iastate.cs309.Main.main(Main.java:22)
+Apr 21, 2008 9:21:25 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+	at edu.iastate.cs309.Main.main(Main.java:22)
+Apr 21, 2008 9:21:42 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+	at edu.iastate.cs309.Main.main(Main.java:22)
+Apr 21, 2008 9:21:56 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+	at edu.iastate.cs309.Main.main(Main.java:22)
+Apr 21, 2008 9:22:28 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+	at edu.iastate.cs309.Main.main(Main.java:22)
+Apr 21, 2008 9:22:51 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 9:28:21 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 9:32:54 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 9:47:00 AM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 5:35:49 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 5:38:13 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 5:41:15 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 5:57:43 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 6:05:53 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 6:08:31 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 7:07:38 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 7:10:32 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 8:07:48 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:699)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:359)
+	at edu.iastate.cs309.server.Server.run(Server.java:80)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 8:30:56 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:708)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:360)
+	at edu.iastate.cs309.server.Server.run(Server.java:82)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 8:37:42 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:708)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:360)
+	at edu.iastate.cs309.server.Server.run(Server.java:82)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 9:03:54 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:709)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:361)
+	at edu.iastate.cs309.server.Server.run(Server.java:82)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 9:25:00 PM edu.iastate.cs309.server.Server loadTorrentInfo
+WARNING: Couldn't read from torrent status file
+java.io.FileNotFoundException: config\torrents.dat (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at edu.iastate.cs309.server.Server.loadTorrentInfo(Server.java:718)
+	at edu.iastate.cs309.server.Server.makeTorrentManager(Server.java:362)
+	at edu.iastate.cs309.server.Server.run(Server.java:83)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 9:25:02 PM edu.iastate.cs309.server.Server listenForClients
+SEVERE: Unable to open port for client listening.
+java.net.BindException: Address already in use: JVM_Bind
+	at java.net.PlainSocketImpl.socketBind(Native Method)
+	at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:359)
+	at java.net.ServerSocket.bind(ServerSocket.java:319)
+	at java.net.ServerSocket.<init>(ServerSocket.java:185)
+	at java.net.ServerSocket.<init>(ServerSocket.java:141)
+	at javax.net.ssl.SSLServerSocket.<init>(SSLServerSocket.java:84)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketImpl.<init>(SSLServerSocketImpl.java:79)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketFactoryImpl.createServerSocket(SSLServerSocketFactoryImpl.java:58)
+	at edu.iastate.cs309.server.Server.listenForClients(Server.java:378)
+	at edu.iastate.cs309.server.Server.run(Server.java:85)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 9:25:26 PM edu.iastate.cs309.server.Server listenForClients
+SEVERE: Unable to open port for client listening.
+java.net.BindException: Address already in use: JVM_Bind
+	at java.net.PlainSocketImpl.socketBind(Native Method)
+	at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:359)
+	at java.net.ServerSocket.bind(ServerSocket.java:319)
+	at java.net.ServerSocket.<init>(ServerSocket.java:185)
+	at java.net.ServerSocket.<init>(ServerSocket.java:141)
+	at javax.net.ssl.SSLServerSocket.<init>(SSLServerSocket.java:84)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketImpl.<init>(SSLServerSocketImpl.java:79)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketFactoryImpl.createServerSocket(SSLServerSocketFactoryImpl.java:58)
+	at edu.iastate.cs309.server.Server.listenForClients(Server.java:378)
+	at edu.iastate.cs309.server.Server.run(Server.java:85)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 21, 2008 9:28:54 PM edu.iastate.cs309.server.Server listenForClients
+SEVERE: Unable to open port for client listening.
+java.net.BindException: Address already in use: JVM_Bind
+	at java.net.PlainSocketImpl.socketBind(Native Method)
+	at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:359)
+	at java.net.ServerSocket.bind(ServerSocket.java:319)
+	at java.net.ServerSocket.<init>(ServerSocket.java:185)
+	at java.net.ServerSocket.<init>(ServerSocket.java:141)
+	at javax.net.ssl.SSLServerSocket.<init>(SSLServerSocket.java:84)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketImpl.<init>(SSLServerSocketImpl.java:79)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketFactoryImpl.createServerSocket(SSLServerSocketFactoryImpl.java:58)
+	at edu.iastate.cs309.server.Server.listenForClients(Server.java:378)
+	at edu.iastate.cs309.server.Server.run(Server.java:85)
+	at java.lang.Thread.run(Thread.java:619)
+Apr 22, 2008 9:23:10 AM edu.iastate.cs309.server.Server listenForClients
+SEVERE: Unable to open port for client listening.
+java.net.BindException: Address already in use: JVM_Bind
+	at java.net.PlainSocketImpl.socketBind(Native Method)
+	at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:359)
+	at java.net.ServerSocket.bind(ServerSocket.java:319)
+	at java.net.ServerSocket.<init>(ServerSocket.java:185)
+	at java.net.ServerSocket.<init>(ServerSocket.java:141)
+	at javax.net.ssl.SSLServerSocket.<init>(SSLServerSocket.java:84)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketImpl.<init>(SSLServerSocketImpl.java:79)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketFactoryImpl.createServerSocket(SSLServerSocketFactoryImpl.java:58)
+	at edu.iastate.cs309.server.Server.listenForClients(Server.java:377)
+	at edu.iastate.cs309.server.Server.run(Server.java:84)
+	at java.lang.Thread.run(Thread.java:619)
+Jun 14, 2008 7:55:26 AM edu.iastate.cs309.server.Server listenForClients
+SEVERE: Unable to open port for client listening.
+java.net.BindException: Address already in use: JVM_Bind
+	at java.net.PlainSocketImpl.socketBind(Native Method)
+	at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:359)
+	at java.net.ServerSocket.bind(ServerSocket.java:319)
+	at java.net.ServerSocket.<init>(ServerSocket.java:185)
+	at java.net.ServerSocket.<init>(ServerSocket.java:141)
+	at javax.net.ssl.SSLServerSocket.<init>(SSLServerSocket.java:84)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketImpl.<init>(SSLServerSocketImpl.java:79)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketFactoryImpl.createServerSocket(SSLServerSocketFactoryImpl.java:58)
+	at edu.iastate.cs309.server.Server.listenForClients(Server.java:377)
+	at edu.iastate.cs309.server.Server.run(Server.java:84)
+	at java.lang.Thread.run(Thread.java:619)
+Jun 22, 2008 8:59:35 AM edu.iastate.cs309.server.Server listenForClients
+SEVERE: Unable to open port for client listening.
+java.net.BindException: Address already in use: JVM_Bind
+	at java.net.PlainSocketImpl.socketBind(Native Method)
+	at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:359)
+	at java.net.ServerSocket.bind(ServerSocket.java:319)
+	at java.net.ServerSocket.<init>(ServerSocket.java:185)
+	at java.net.ServerSocket.<init>(ServerSocket.java:141)
+	at javax.net.ssl.SSLServerSocket.<init>(SSLServerSocket.java:84)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketImpl.<init>(SSLServerSocketImpl.java:79)
+	at com.sun.net.ssl.internal.ssl.SSLServerSocketFactoryImpl.createServerSocket(SSLServerSocketFactoryImpl.java:58)
+	at edu.iastate.cs309.server.Server.listenForClients(Server.java:377)
+	at edu.iastate.cs309.server.Server.run(Server.java:84)
+	at java.lang.Thread.run(Thread.java:619)

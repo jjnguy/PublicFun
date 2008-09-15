@@ -1,0 +1,21 @@
+
+Michael
+	WriteTorrent (stream, file)	
+	
+		
+	 change listening port while running
+
+David
+
+	Add register/deregister 	
+	File Transfer toServer (relative to server install path)	
+	
+	Partial Chunks downloaded state
+
+
+Justin
+
+	In non-debug mode, does login work correctly?
+	
+	getfile requests must be made with a nonempty list
+ 
