@@ -9,37 +9,38 @@ import piece.CheckerPiece;
 import piece.GenericGamePiece;
 
 public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
-
+	
 	/**
 	 * Sorry about the length of the method!
 	 * 
 	 * @Override
 	 */
-	public boolean legalMove(CheckersGame game, Point originalSpot, Point newSpot) {
-		// TODO don't let pieces move side to side by one space
+	public boolean legalMove(CheckersGame game, GenericGamePiece turn, Point originalSpot, Point newSpot) {
+		
+		// If it isn't your turn, don't move
+		if (!game.getPiece(originalSpot).equals(turn))
+			return false;
 		/*
 		 * first we verify that the move points are legal
 		 */
 		// if the first point is out of bounds
 		// return false
-		if (originalSpot.x >= game.getDimension().width
-				|| originalSpot.y >= game.getDimension().height)
+		if (originalSpot.x >= game.getDimension().width || originalSpot.y >= game.getDimension().height)
 			return false;
 		if (originalSpot.x < 0 || originalSpot.y < 0)
 			return false;
 		// if the second point is out of bounds
 		// return false
-		if (newSpot.x >= game.getDimension().width
-				|| newSpot.y >= game.getDimension().height)
+		if (newSpot.x >= game.getDimension().width || newSpot.y >= game.getDimension().height)
 			return false;
 		if (newSpot.x < 0 || newSpot.y < 0)
 			return false;
-
+		
 		// if the first point is the same as the second point
 		// return false
 		if (originalSpot.equals(newSpot))
 			return false;
-
+		
 		/*
 		 * Now we verify that the piece is making a move in the right direction
 		 */
@@ -52,7 +53,7 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 		} catch (ClassCastException e) {
 			return false;
 		}
-
+		
 		if (pieceAtFirstPoint.equals(CheckerPiece.RED())) {
 			// ie from bottom to top, or top to bottom
 			if (game.getSide(0).equals(CheckersGame.RED_SIDE)) {
@@ -86,7 +87,7 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 		} else {
 			// if its a king then it can go either way
 		}
-
+		
 		/*
 		 * The second piece better be a BlankPiece.BLANK
 		 */
@@ -97,7 +98,7 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 		} catch (ClassCastException e) {
 			return false;
 		}
-
+		
 		/*
 		 * Make sure the piece is moving diagonally
 		 */
@@ -106,23 +107,19 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 		// diagonal implies same dx and dy
 		if (Math.abs(newSpot.x - originalSpot.x) != Math.abs(newSpot.y - originalSpot.y))
 			return false;
-
+		
 		/*
 		 * Check for jump case if the y distance is greater than 1 if there is no jump,
 		 * then the move should be valid
 		 */
-		if ((Math.abs(originalSpot.y - newSpot.y) > 1)
-				|| Math.abs(originalSpot.x - newSpot.x) > 1) {
+		if ((Math.abs(originalSpot.y - newSpot.y) > 1) || Math.abs(originalSpot.x - newSpot.x) > 1) {
 			// TODO jump case stuff
 			// TODO no jumping w/out removing pieces
 			// if the y or x dist is too far..then we have an illegal move
-			if (Math.abs(originalSpot.y - newSpot.y) > 2
-					|| (Math.abs(originalSpot.x - newSpot.x) > 2)) {
+			if (Math.abs(originalSpot.y - newSpot.y) > 2 || (Math.abs(originalSpot.x - newSpot.x) > 2)) {
 				return false;
 			}
-			Point jumpedPoint = new Point(originalSpot.x
-					- ((originalSpot.x - newSpot.x) / 2), originalSpot.y
-					- ((originalSpot.y - newSpot.y) / 2));
+			Point jumpedPoint = new Point(originalSpot.x - ((originalSpot.x - newSpot.x) / 2), originalSpot.y - ((originalSpot.y - newSpot.y) / 2));
 			GenericGamePiece jumpedPiece = game.getPiece(jumpedPoint);
 			// We cannot jump ourselves or blank spots
 			if (jumpedPiece.equals(BlankPiece.BLANK())) {
@@ -134,7 +131,7 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 			// this essentially removes the jumped piece
 			game.addPiece(BlankPiece.BLANK(), jumpedPoint, true);
 		}
-
+		
 		return true;
 	}
 }
