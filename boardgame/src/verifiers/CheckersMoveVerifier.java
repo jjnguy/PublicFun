@@ -89,6 +89,7 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 		/*
 		 * The second piece better be a BlankPiece.BLANK
 		 */
+		@SuppressWarnings("unused")
 		BlankPiece pieceAtSecondPoint = null;
 		try {
 			pieceAtSecondPoint = (BlankPiece) game.getPiece(newSpot);

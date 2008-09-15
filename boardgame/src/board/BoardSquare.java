@@ -22,7 +22,7 @@ public class BoardSquare extends JPanel {
 	public static final int SELECTED = -7;
 	public static final String STATUS_CHANGE = "statuschange";
 
-	private Color color;
+	//private Color color;
 	private int status;
 	private GenericGamePiece piece;
 	private int iD;
@@ -33,7 +33,7 @@ public class BoardSquare extends JPanel {
 
 	public BoardSquare(Color color, int uniqueID) {
 		super(new BorderLayout());
-		this.color = color;
+		//this.color = color;
 		iD = uniqueID;
 		setPreferredSize(new Dimension(CELL_WIDTH, CELL_WIDTH));
 		setBackground(color);
