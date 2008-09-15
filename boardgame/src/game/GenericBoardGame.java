@@ -50,6 +50,14 @@ public abstract class GenericBoardGame extends JFrame implements BoardGame {
 		board.addPiece(coord.y, coord.x, piece);
 	}
 
+	public void addPiece(GenericGamePiece piece, Point coord, boolean causedByJump) {
+		board.addPiece(coord.y, coord.x, piece);
+		if (!causedByJump) {
+			return;
+		}
+		// TODO keep track of pieces
+	}
+
 	@Override
 	public Dimension getDimension() {
 		return board.getDimenstion();

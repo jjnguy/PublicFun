@@ -114,7 +114,7 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 		if ((Math.abs(originalSpot.y - newSpot.y) > 1)
 				|| Math.abs(originalSpot.x - newSpot.x) > 1) {
 			// TODO jump case stuff
-			// TODO no jumping w/out removing pieces, or no jumping yourself
+			// TODO no jumping w/out removing pieces
 			// if the y or x dist is too far..then we have an illegal move
 			if (Math.abs(originalSpot.y - newSpot.y) > 2
 					|| (Math.abs(originalSpot.x - newSpot.x) > 2)) {
@@ -124,13 +124,15 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 					- ((originalSpot.x - newSpot.x) / 2), originalSpot.y
 					- ((originalSpot.y - newSpot.y) / 2));
 			GenericGamePiece jumpedPiece = game.getPiece(jumpedPoint);
+			// We cannot jump ourselves or blank spots
 			if (jumpedPiece.equals(BlankPiece.BLANK())) {
 				return false;
 			}
 			if (jumpedPiece.equals(pieceAtFirstPoint)) {
 				return false;
 			}
-			// TODO fire a piece jumped at the correct point if a legal jumped happened
+			// this essentially removes the jumped piece
+			game.addPiece(BlankPiece.BLANK(), jumpedPoint, true);
 		}
 
 		return true;
