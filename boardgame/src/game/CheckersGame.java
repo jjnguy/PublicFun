@@ -14,6 +14,7 @@ public class CheckersGame extends GenericBoardGame {
 	public static String RED_SIDE = "redside";
 	public static String BLACK_SIDE = "blackside";
 	
+	private int reds, blacks;
 	private CheckerPiece turn;
 	
 	public CheckersGame() {
@@ -24,14 +25,18 @@ public class CheckersGame extends GenericBoardGame {
 	private void initializeGame() {
 		turn = CheckerPiece.RED();
 		
+		reds = blacks = 0;
+		
 		for (int row = 0; row < 3; row++) {
 			for (int col = (row % 2 == 0) ? 0 : 1; col < board.getDimenstion().width; col += 2) {
 				addPiece(CheckerPiece.RED(), new Point(col, row));
+				reds++;
 			}
 		}
 		for (int row = board.getDimenstion().height - 1; row > board.getDimenstion().height - 4; row--) {
 			for (int col = (row % 2 == 0) ? 0 : 1; col < board.getDimenstion().width; col += 2) {
 				addPiece(CheckerPiece.BLACK(), new Point(col, row));
+				blacks++;
 			}
 		}
 	}
@@ -56,15 +61,22 @@ public class CheckersGame extends GenericBoardGame {
 		turn = turn.equals(CheckerPiece.RED()) ? CheckerPiece.BLACK() : CheckerPiece.RED();
 		// TODO don't change turn if there is a double jump chance
 		movePiece(p1, p2);
+		// TODO check for kinging!, make king checker pieces
 		return true;
 	}
 	
 	public void addPiece(GenericGamePiece piece, Point coord, boolean causedByJump) {
+		CheckerPiece p = (CheckerPiece) getPiece(coord);
 		board.addPiece(coord.y, coord.x, piece);
 		if (!causedByJump) {
 			return;
 		}
-		// TODO keep track of pieces
+		// TODO track win if pieces become 0;
+		if (p.equals(CheckerPiece.BLACK()))
+			blacks--;
+		else
+			reds--;
+		System.out.println("Red: " + reds + "   Black: " + blacks);
 	}
 	
 	@Override
