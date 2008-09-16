@@ -29,7 +29,7 @@ public class CheckersGame extends GenericBoardGame {
 
 		for (int row = 0; row < 3; row++) {
 			for (int col = (row % 2 == 0) ? 0 : 1; col < board.getDimenstion().width; col += 2) {
-				addPiece(CheckerPiece.RED_KING(), new Point(col, row));
+				addPiece(CheckerPiece.RED(), new Point(col, row));
 				reds++;
 			}
 		}
