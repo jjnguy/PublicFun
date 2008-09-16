@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Stroke;
+import java.awt.image.ImageObserver;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -16,6 +18,7 @@ import board.BoardSquare;
 public class GenericGamePiece extends JPanel {
 
 	private Color innerColor, outerColor;
+	private Image img;
 
 	public GenericGamePiece() {
 		this(Color.BLACK, Color.WHITE);
@@ -24,9 +27,15 @@ public class GenericGamePiece extends JPanel {
 	public GenericGamePiece(Color innercolorP, Color outerColorP) {
 		innerColor = innercolorP;
 		outerColor = outerColorP;
+		img = null;
+
 		setBorder(BorderFactory.createEmptyBorder());
 		setPreferredSize(new Dimension(BoardSquare.CELL_WIDTH, BoardSquare.CELL_WIDTH));
 		setOpaque(false);
+	}
+
+	public GenericGamePiece(Color innerColorP, Color outerColorP, Image pic) {
+		this(innerColorP, outerColorP);
 	}
 
 	public Color innerColor() {
@@ -46,12 +55,26 @@ public class GenericGamePiece extends JPanel {
 		g.drawOval(2, 2, BoardSquare.CELL_WIDTH - 4, BoardSquare.CELL_WIDTH - 4);
 		g.setColor(c);
 		g2.setStroke(s);
+
+		if (img == null)
+			return;
+
+		g2.drawImage(img, 0, 0, BoardSquare.CELL_WIDTH, BoardSquare.CELL_WIDTH,
+				new ImageObserver() {
+
+					@Override
+					public boolean imageUpdate(Image img, int infoflags, int x, int y,
+							int width, int height) {
+						// TODO Auto-generated method stub
+						return false;
+					}
+				});
 	}
 
-	public String toString(){
+	public String toString() {
 		return innerColor.toString() + outerColor.toString();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -113,8 +113,6 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 		 * then the move should be valid
 		 */
 		if ((Math.abs(originalSpot.y - newSpot.y) > 1) || Math.abs(originalSpot.x - newSpot.x) > 1) {
-			// TODO jump case stuff
-			// TODO no jumping w/out removing pieces
 			// if the y or x dist is too far..then we have an illegal move
 			if (Math.abs(originalSpot.y - newSpot.y) > 2 || (Math.abs(originalSpot.x - newSpot.x) > 2)) {
 				return false;

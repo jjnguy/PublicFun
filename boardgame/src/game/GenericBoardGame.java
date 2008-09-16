@@ -27,7 +27,6 @@ public abstract class GenericBoardGame extends JFrame implements BoardGame {
 	
 	@Override
 	public void play() {
-		// TODO need to set turn order
 		setVisible(true);
 	}
 	
