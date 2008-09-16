@@ -16,7 +16,7 @@ public class CheckersMoveVerifier implements MoveVerifyer<CheckersGame> {
 	 * @Override
 	 */
 	public boolean legalMove(CheckersGame game, GenericGamePiece turn, Point originalSpot, Point newSpot) {
-		
+		// TODO kings should be able to move
 		// If it isn't your turn, don't move
 		if (!game.getPiece(originalSpot).equals(turn))
 			return false;
