@@ -1,6 +1,8 @@
 package piece;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class CheckerPiece extends GenericGamePiece {
