@@ -37,4 +37,9 @@ public class CheckersGameClient {
 		return true;
 	}
 	
+	public static void main(String[] args) {
+		CheckersGameClient client = new CheckersGameClient("localhost");
+		client.connect();
+	}
+	
 }
