@@ -4,6 +4,7 @@ import game.CheckersGame;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class CheckerGameHost {
 	public static final int DEFAULT_PORT = 1128;
@@ -22,6 +23,10 @@ public class CheckerGameHost {
 		
 		game = new CheckersGame();
 		
+	}
+	
+	public Socket waitForConnection() throws IOException {
+		return socket.accept();
 	}
 	
 }
