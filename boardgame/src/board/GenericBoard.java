@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
 
 import javax.swing.JPanel;
 
+import piece.BlankPiece;
 import piece.GenericGamePiece;
 
 @SuppressWarnings("serial")
@@ -83,6 +84,19 @@ public class GenericBoard extends JPanel {
 		return d;
 	}
 
+	public void resetBoard() {
+		for (int row = 0; row < squares.length; row++) {
+			for (int col = 0; col < squares[row].length; col++) {
+				squares[row][col].setPiece(BlankPiece.BLANK());
+			}
+		}
+		for (int row = 0; row < squares.length; row++) {
+			for (int col = 0; col < squares[row].length; col++) {
+				squares[row][col].setStatus(BoardSquare.NONE);
+			}
+		}
+	}
+
 	public Point getPointFromSquare(BoardSquare square) {
 		for (int row = 0; row < squares.length; row++) {
 			for (int col = 0; col < squares[0].length; col++) {
@@ -110,7 +124,7 @@ public class GenericBoard extends JPanel {
 					selected1 = (BoardSquare) evt.getSource();
 				else
 					selected2 = (BoardSquare) evt.getSource();
-				if (selected2 != null) {
+				if (selected2 != null && selected1 != null) {
 					parent.makeMove(getPointFromSquare(selected1),
 							getPointFromSquare(selected2));
 					selected1.setStatus(BoardSquare.NONE);

@@ -27,6 +27,10 @@ public class CheckersGame extends GenericBoardGame {
 
 		reds = blacks = 0;
 
+		addPieces();
+	}
+
+	private void addPieces() {
 		for (int row = 0; row < 3; row++) {
 			for (int col = (row % 2 == 0) ? 0 : 1; col < board.getDimenstion().width; col += 2) {
 				addPiece(CheckerPiece.RED(), new Point(col, row));
@@ -47,7 +51,9 @@ public class CheckersGame extends GenericBoardGame {
 	}
 
 	public static void main(String[] args) {
-		new CheckersGame().play();
+		CheckersGame c = new CheckersGame();
+		c.play();
+		// c.resetGame();
 	}
 
 	@Override
@@ -59,7 +65,7 @@ public class CheckersGame extends GenericBoardGame {
 		}
 		// TODO don't change turn if there is a double jump chance
 		movePiece(p1, p2);
-		
+
 		if (turn.turnEquals(CheckerPiece.RED())
 				&& p2.y == board.getDimenstion().height - 1) {
 			addPiece(CheckerPiece.RED_KING(), p2);
@@ -84,14 +90,18 @@ public class CheckersGame extends GenericBoardGame {
 			reds--;
 		if (reds == 0 || blacks == 0) {
 			// TODO win stuff
+			resetGame();
 		}
 		System.out.println("Red: " + reds + "   Black: " + blacks);
 	}
 
 	@Override
 	public void resetGame() {
-		// TODO Auto-generated method stub
-
+		// TODO fix this shit
+		board.resetBoard();
+		reds = blacks = 0;
+		addPieces();
+		turn = CheckerPiece.RED();
 	}
 
 	@Override

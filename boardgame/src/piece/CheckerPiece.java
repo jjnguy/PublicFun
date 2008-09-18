@@ -1,8 +1,6 @@
 package piece;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("serial")
 public class CheckerPiece extends GenericGamePiece {
@@ -14,8 +12,6 @@ public class CheckerPiece extends GenericGamePiece {
 	private CheckerPiece(Color c1, Color c2, Color c3) {
 		super(c1, c2, c3);
 	}
-	
-	// TODO implement graphics for king checkers
 	
 	public static CheckerPiece RED() {
 		return new CheckerPiece(new Color(128, 0, 0), Color.BLACK);
