@@ -1,9 +1,0 @@
-edu.iastate.cs309.client
-edu.iastate.cs309.comminterfaces
-edu.iastate.cs309.communication
-edu.iastate.cs309.plugins
-edu.iastate.cs309.plugins.interfaces
-edu.iastate.cs309.server
-edu.iastate.cs309.torrentManager
-edu.iastate.cs309.torrentparser
-edu.iastate.cs309.util
