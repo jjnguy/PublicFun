@@ -1,4 +1,5 @@
 package guiElements;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -92,27 +93,37 @@ public class PlayGui extends JFrame {
 	private WindowAdapter closeListener = new WindowAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
-			if (PlayGui.this.p != null) PlayGui.this.p.destroy();
+			if (PlayGui.this.p != null)
+				PlayGui.this.p.destroy();
 		}
 	};
 	
 	public void play() throws IOException {
 		playPauseButton.setVisible(false);
 		pack();
-
+		
 		shuffleSongs();
 		TimerTask tt = new TimerTask() {
+			private String drinkBitchPath = "drinkBitch.mp3";
+			
 			@Override
 			public void run() {
-				if (vlcLocation == null) return;
-				if (songCount > SONG_AMNT) return;
-				if (p != null) p.destroy();
+				if (vlcLocation == null)
+					return;
+				if (songCount > SONG_AMNT)
+					return;
+				if (p != null)
+					p.destroy();
 				try {
-					p = Runtime.getRuntime().exec(
-							new String[] { vlcLocation, songs.get(songCount).getAbsolutePath() });
+					Process drinkBitch = Runtime.getRuntime().exec(new String[] { vlcLocation, "--volume=1024", drinkBitchPath });
+					Thread.sleep(1000);
+					p = Runtime.getRuntime().exec(new String[] { vlcLocation, songs.get(songCount).getAbsolutePath() });
 					cursongLable.setText(songs.get(songCount).getName());
 					pack();
 				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				incrementSongcount();
