@@ -6,11 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,12 +22,16 @@ import java.util.NoSuchElementException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
-public class FullChatPanel extends JPanel implements ChatInterface {
+public class FullChatPanel extends JFrame implements ChatInterface {
 
 	private JTextArea conversation, outgoingMesages;
 	private JScrollPane recievedScroller, outgoingScroller;
@@ -41,9 +45,13 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 
 	private Socket connection;
 	private InputStream sockIn;
+	private OutputStream socOut;
+	private JMenuItem connectItem;
+	private JMenuItem hostItem;
 
 	public FullChatPanel() {
-		super(new GridBagLayout());
+		super("Chat");
+		JPanel mainPane = new JPanel(new GridBagLayout());
 		outgoingMessageBuffer = new ArrayList<String>();
 		incomingAndOutgoingSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		conversation = new JTextArea();
@@ -66,12 +74,31 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.weightx = gc.weighty = 1;
 		gc.fill = GridBagConstraints.BOTH;
-		add(incomingAndOutgoingSplit, gc);
+		mainPane.add(incomingAndOutgoingSplit, gc);
 		gc.weightx = gc.weighty = 0;
 		gc.fill = GridBagConstraints.NONE;
 		gc.gridy = 1;
 		gc.anchor = GridBagConstraints.BASELINE_TRAILING;
-		add(send, gc);
+		mainPane.add(send, gc);
+		add(mainPane);
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setJMenuBar(buildMenu());
+		pack();
+		setVisible(true);
+	}
+
+	private JMenuBar buildMenu() {
+		JMenuBar ret = new JMenuBar();
+		JMenu file = new JMenu("File");
+		connectItem = new JMenuItem("Connect");
+		connectItem.addActionListener(connectAction);
+		hostItem = new JMenuItem("Host");
+		hostItem.addActionListener(hostAction);
+		file.add(connectItem);
+		file.add(hostItem);
+		ret.add(file);
+		return ret;
 	}
 
 	public void newMessage(String text, String userName) {
@@ -86,17 +113,15 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 	 * @return the mesage to be sent
 	 */
 	public void sendMessage() {
-		if (outgoingMessageBuffer.isEmpty())
-			throw new NoSuchElementException();
-		String outgoingMessage = outgoingMessageBuffer.remove(0);
-		PrintStream out = null;
-		try {
-			out = new PrintStream(connection.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while (!outgoingMessageBuffer.isEmpty()) {
+			String outgoingMessage = outgoingMessageBuffer.remove(0);
+			try {
+				socOut.write(outgoingMessage.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		out.println(outgoingMessage);
 	}
 
 	@Override
@@ -121,6 +146,7 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 			e.printStackTrace();
 		}
 		out.print(conversation.getText());
+		out.close();
 	}
 
 	private ActionListener sendAction = new ActionListener() {
@@ -149,12 +175,14 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 	};
 
 	public static void main(String[] args) {
-		JFrame f = new JFrame();
-		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		f.add(new FullChatPanel());
-		f.setJMenuBar(new ChatPanelMenu());
-		f.pack();
-		f.setVisible(true);
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				new FullChatPanel();
+			}
+		});
 	}
 
 	@Override
@@ -164,6 +192,7 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 		try {
 			connection = new Socket(host, port);
 			sockIn = connection.getInputStream();
+			socOut = connection.getOutputStream();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -181,9 +210,12 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 	public void hostConversation() throws IOException {
 		if (connected())
 			return;
+
 		ServerSocket servS = new ServerSocket(ChatServer.DEFAULT_PORT);
 		connection = servS.accept();
+
 		sockIn = connection.getInputStream();
+		socOut = connection.getOutputStream();
 		InputListenerThread th = new InputListenerThread(this);
 		th.start();
 		send.setEnabled(true);
@@ -219,13 +251,27 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 
 	@Override
 	public InputStream getIStream() {
-		// TODO Auto-generated method stub
-		try {
-			return connection.getInputStream();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return sockIn;
 	}
+
+	private ActionListener connectAction = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			connectToChatServer("localhost", 5001);
+		}
+	};
+	private ActionListener hostAction = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				hostConversation();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	};
+
 }
