@@ -31,7 +31,7 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 	private JTextArea conversation, outgoingMesages;
 	private JScrollPane recievedScroller, outgoingScroller;
 	private JSplitPane incomingAndOutgoingSplit;
-
+	
 	private List<String> outgoingMessageBuffer;
 
 	private JButton send;

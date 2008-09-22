@@ -4,10 +4,17 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class ChatClient {
+public class ChatClient implements Runnable {
 	
-	private ChatConnection chatPartner;
 	private ChatInterface interFace;
+	private Socket connection;
+	
+	public ChatClient(){
+		interFace = new FullChatPanel();
+		
+	}
+	
+	
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		Socket server = new Socket("localhost", ChatServer.DEFAULT_PORT);
@@ -19,5 +26,13 @@ public class ChatClient {
 			}
 			out.write("\n".getBytes());
 		}
+	}
+
+	
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 }
