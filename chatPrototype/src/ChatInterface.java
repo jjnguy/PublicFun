@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 
 /**
@@ -9,7 +10,7 @@ import java.net.Socket;
  */
 public interface ChatInterface {
 
-	public String getMessage();
+	public void sendMessage();
 
 	public boolean hasMesageToSend();
 
@@ -17,9 +18,11 @@ public interface ChatInterface {
 	
 	public void saveConversation(String location);
 	
-	public Socket hostConversation() throws IOException;
+	public InputStream getIStream();
 	
-	public Socket connectToChatServer(String host, int port);
+	public void hostConversation() throws IOException;
+	
+	public void connectToChatServer(String host, int port);
 	
 	public boolean connected();
 }

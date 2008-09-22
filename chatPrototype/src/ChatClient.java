@@ -14,8 +14,6 @@ public class ChatClient implements Runnable {
 		
 	}
 	
-	
-	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		Socket server = new Socket("localhost", ChatServer.DEFAULT_PORT);
 		Scanner stdin = new Scanner(System.in);

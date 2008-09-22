@@ -10,6 +10,7 @@ import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -31,13 +32,16 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 	private JTextArea conversation, outgoingMesages;
 	private JScrollPane recievedScroller, outgoingScroller;
 	private JSplitPane incomingAndOutgoingSplit;
-	
+
 	private List<String> outgoingMessageBuffer;
 
 	private JButton send;
 
 	private boolean connected;
-	
+
+	private Socket connection;
+	private InputStream sockIn;
+
 	public FullChatPanel() {
 		super(new GridBagLayout());
 		outgoingMessageBuffer = new ArrayList<String>();
@@ -81,13 +85,117 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 	 * 
 	 * @return the mesage to be sent
 	 */
-	public String getMessage() {
+	public void sendMessage() {
 		if (outgoingMessageBuffer.isEmpty())
 			throw new NoSuchElementException();
-		return outgoingMessageBuffer.remove(0);
+		String outgoingMessage = outgoingMessageBuffer.remove(0);
+		PrintStream out = null;
+		try {
+			out = new PrintStream(connection.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		out.println(outgoingMessage);
 	}
 
-	private static String timestamp(long currentTimeMillis) {
+	@Override
+	public boolean hasMesageToSend() {
+		return !outgoingMessageBuffer.isEmpty();
+	}
+
+	@Override
+	public void saveConversation(String location) {
+		JFileChooser choose = new JFileChooser();
+		int choice = choose.showSaveDialog(this);
+		if (choice == JFileChooser.CANCEL_OPTION)
+			return;
+
+		File f = choose.getSelectedFile();
+
+		PrintStream out = null;
+		try {
+			out = new PrintStream(f);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		out.print(conversation.getText());
+	}
+
+	private ActionListener sendAction = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (outgoingMesages.getText().trim().equals(""))
+				return;
+			newMessage(outgoingMesages.getText(), "You");
+			outgoingMessageBuffer.add(outgoingMesages.getText());
+			outgoingMesages.setText("");
+			sendMessage();
+		}
+	};
+
+	private KeyListener enterPress = new KeyAdapter() {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO doesn't work
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getModifiers() == KeyEvent.CTRL_DOWN_MASK)
+					send.doClick();
+			}
+		}
+	};
+
+	public static void main(String[] args) {
+		JFrame f = new JFrame();
+		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		f.add(new FullChatPanel());
+		f.setJMenuBar(new ChatPanelMenu());
+		f.pack();
+		f.setVisible(true);
+	}
+
+	@Override
+	public void connectToChatServer(String host, int port) {
+		if (connected())
+			return;
+		try {
+			connection = new Socket(host, port);
+			sockIn = connection.getInputStream();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		InputListenerThread th = new InputListenerThread(this);
+		th.start();
+		send.setEnabled(true);
+		connected = true;
+	}
+
+	@Override
+	public void hostConversation() throws IOException {
+		if (connected())
+			return;
+		ServerSocket servS = new ServerSocket(ChatServer.DEFAULT_PORT);
+		connection = servS.accept();
+		sockIn = connection.getInputStream();
+		InputListenerThread th = new InputListenerThread(this);
+		th.start();
+		send.setEnabled(true);
+		connected = true;
+	}
+
+	@Override
+	public boolean connected() {
+		return connected;
+	}
+
+	public static String timestamp(long currentTimeMillis) {
 		return getTimeStringFromMiliseconds(currentTimeMillis) + " : ";
 	}
 
@@ -110,90 +218,14 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 	}
 
 	@Override
-	public boolean hasMesageToSend() {
-		return !outgoingMessageBuffer.isEmpty();
-	}
-
-	@Override
-	public void saveConversation(String location) {
-		JFileChooser choose = new JFileChooser();
-		int choice = choose.showSaveDialog(this);
-		if (choice == JFileChooser.CANCEL_OPTION)
-			return;
-		File f = choose.getSelectedFile();
-
-		PrintStream out = null;
-		try {
-			out = new PrintStream(f);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		out.print(conversation.getText());
-	}
-
-	private ActionListener sendAction = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (outgoingMesages.getText().trim().equals(""))
-				return;
-			newMessage(outgoingMesages.getText(), "you");
-			outgoingMessageBuffer.add(outgoingMesages.getText());
-			outgoingMesages.setText("");
-		}
-	};
-
-	private KeyListener enterPress = new KeyAdapter() {
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO doesn't work
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				if (e.getModifiers() == KeyEvent.CTRL_DOWN_MASK)
-					send.doClick();
-			}
-		}
-	};
-
-	public static void main(String[] args) {
-		JFrame f = new JFrame();
-		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		f.add(new FullChatPanel());
-		f.pack();
-		f.setVisible(true);
-	}
-
-	@Override
-	public Socket connectToChatServer(String host, int port) {
+	public InputStream getIStream() {
 		// TODO Auto-generated method stub
-		Socket ret = null;
 		try {
-			ret = new Socket(host, port);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return connection.getInputStream();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		send.setEnabled(true);
-		connected = true;
-		return ret;
-	}
-
-	@Override
-	public Socket hostConversation() throws IOException {
-		ServerSocket servS;
-		servS = new ServerSocket(ChatServer.DEFAULT_PORT);
-		Socket ret = servS.accept();
-		send.setEnabled(true);
-		connected=true;
-		return ret;
-	}
-
-	@Override
-	public boolean connected() {
-		return connected;
+		return null;
 	}
 }
