@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,14 +30,20 @@ public class ScreenShotNaoPlx {
 	}
 }
 
-
 class TakeSS extends TimerTask {
 	int i = 0;
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		File f = new File("C:/"
+				+ Util.getTimeStringFromMiliseconds(System.currentTimeMillis()));
+		System.out.println(f.mkdirs());
+		
 		try {
-			ImageIO.write(ScreenShotNaoPlx.getScreenShot(), "png", new File("C:/hi. " + i + ".png"));
+			ImageIO.write(ScreenShotNaoPlx.getScreenShot(), "png", new File("C:/"
+					+ Util.getTimeStringFromMiliseconds(System.currentTimeMillis()) + "/" + "img" + i
+					+ ".png"));
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,8 +53,8 @@ class TakeSS extends TimerTask {
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}i++;
+		}
+		i++;
 	}
-	
-	
+
 }
