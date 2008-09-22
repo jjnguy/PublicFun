@@ -36,6 +36,8 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 
 	private JButton send;
 
+	private boolean connected;
+	
 	public FullChatPanel() {
 		super(new GridBagLayout());
 		outgoingMessageBuffer = new ArrayList<String>();
@@ -56,6 +58,7 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 		incomingAndOutgoingSplit.addKeyListener(enterPress);
 		send = new JButton("Send");
 		send.addActionListener(sendAction);
+		send.setEnabled(false);
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.weightx = gc.weighty = 1;
 		gc.fill = GridBagConstraints.BOTH;
@@ -174,6 +177,8 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		send.setEnabled(true);
+		connected = true;
 		return ret;
 	}
 
@@ -181,6 +186,14 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 	public Socket hostConversation() throws IOException {
 		ServerSocket servS;
 		servS = new ServerSocket(ChatServer.DEFAULT_PORT);
-		return servS.accept();
+		Socket ret = servS.accept();
+		send.setEnabled(true);
+		connected=true;
+		return ret;
+	}
+
+	@Override
+	public boolean connected() {
+		return connected;
 	}
 }

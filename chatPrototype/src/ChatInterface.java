@@ -21,4 +21,6 @@ public interface ChatInterface {
 	
 	public Socket connectToChatServer(String host, int port);
 	
+	public boolean connected();
+	
 }
