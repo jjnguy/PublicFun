@@ -5,6 +5,10 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class ChatClient {
+	
+	private ChatConnection chatPartner;
+	private ChatInterface interFace;
+	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		Socket server = new Socket("localhost", ChatServer.DEFAULT_PORT);
 		Scanner stdin = new Scanner(System.in);

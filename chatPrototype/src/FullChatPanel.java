@@ -3,10 +3,18 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -30,16 +38,22 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 
 	public FullChatPanel() {
 		super(new GridBagLayout());
+		outgoingMessageBuffer = new ArrayList<String>();
 		incomingAndOutgoingSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		conversation = new JTextArea();
+		conversation.setEditable(false);
 		outgoingMesages = new JTextArea();
+		outgoingMesages.setEditable(true);
+		outgoingMesages.addKeyListener(enterPress);
 		recievedScroller = new JScrollPane(conversation);
 		outgoingScroller = new JScrollPane(outgoingMesages);
+		outgoingScroller.addKeyListener(enterPress);
 		outgoingScroller.setPreferredSize(new Dimension(300, 150));
 		recievedScroller.setPreferredSize(new Dimension(300, 150));
 		incomingAndOutgoingSplit.add(recievedScroller);
 		incomingAndOutgoingSplit.add(outgoingScroller);
 		incomingAndOutgoingSplit.setResizeWeight(.5);
+		incomingAndOutgoingSplit.addKeyListener(enterPress);
 		send = new JButton("Send");
 		send.addActionListener(sendAction);
 		GridBagConstraints gc = new GridBagConstraints();
@@ -55,7 +69,8 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 
 	public void newMessage(String text, String userName) {
 		conversation.append("\n");
-		conversation.append(FullChatPanel.timestamp(System.currentTimeMillis()));
+		conversation.append(userName + ": "
+				+ FullChatPanel.timestamp(System.currentTimeMillis()));
 		conversation.append(text);
 	}
 
@@ -126,11 +141,46 @@ public class FullChatPanel extends JPanel implements ChatInterface {
 		}
 	};
 
+	private KeyListener enterPress = new KeyAdapter() {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO doesn't work
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getModifiers() == KeyEvent.CTRL_DOWN_MASK)
+					send.doClick();
+			}
+		}
+	};
+
 	public static void main(String[] args) {
 		JFrame f = new JFrame();
 		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		f.add(new FullChatPanel());
 		f.pack();
 		f.setVisible(true);
+	}
+
+	@Override
+	public Socket connectToChatServer(String host, int port) {
+		// TODO Auto-generated method stub
+		Socket ret = null;
+		try {
+			ret = new Socket(host, port);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	@Override
+	public Socket hostConversation() throws IOException {
+		ServerSocket servS;
+		servS = new ServerSocket(ChatServer.DEFAULT_PORT);
+		return servS.accept();
 	}
 }

@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.net.Socket;
+
 /**
  * Provides chat programs with a very simple interface for sending and recieving mesages
  * 
@@ -13,5 +16,9 @@ public interface ChatInterface {
 	public void newMessage(String text, String username);
 	
 	public void saveConversation(String location);
+	
+	public Socket hostConversation() throws IOException;
+	
+	public Socket connectToChatServer(String host, int port);
 	
 }
