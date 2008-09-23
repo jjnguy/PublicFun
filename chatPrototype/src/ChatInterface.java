@@ -15,7 +15,7 @@ public interface ChatInterface {
 
 	public void newMessage(String text, String username);
 	
-	public void saveConversation(String location);
+	public void saveConversation();
 	
 	public InputStream getIStream();
 	

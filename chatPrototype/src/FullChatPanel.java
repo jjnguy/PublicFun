@@ -50,6 +50,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 	private OutputStream socOut;
 	private JMenuItem connectItem;
 	private JMenuItem hostItem;
+	private JMenuItem saveItem;
 
 	public FullChatPanel() {
 		super("Chat");
@@ -97,8 +98,11 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		connectItem.addActionListener(connectAction);
 		hostItem = new JMenuItem("Host");
 		hostItem.addActionListener(hostAction);
+		saveItem = new JMenuItem("Save");
+		saveItem.addActionListener(saveAction);
 		file.add(connectItem);
 		file.add(hostItem);
+		file.add(saveItem);
 		ret.add(file);
 		return ret;
 	}
@@ -132,7 +136,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 	}
 
 	@Override
-	public void saveConversation(String location) {
+	public void saveConversation() {
 		JFileChooser choose = new JFileChooser();
 		int choice = choose.showSaveDialog(this);
 		if (choice == JFileChooser.CANCEL_OPTION)
@@ -214,9 +218,11 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		if (connected())
 			return;
 
-		WaitingForConnectionFrame f = new WaitingForConnectionFrame(FullChatPanel.DEFAULT_PORT);
+		WaitingForConnectionFrame f = new WaitingForConnectionFrame(
+				FullChatPanel.DEFAULT_PORT);
 		connection = f.showConnectionDialog();
-		if (connection == null) return;
+		if (connection == null)
+			return;
 		sockIn = connection.getInputStream();
 		socOut = connection.getOutputStream();
 		InputListenerThread th = new InputListenerThread(this);
@@ -282,6 +288,13 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 						"Failed to host conversation.", "Host Fail",
 						JOptionPane.ERROR_MESSAGE);
 			}
+		}
+	};
+	private ActionListener saveAction = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			saveConversation();
 		}
 	};
 }
