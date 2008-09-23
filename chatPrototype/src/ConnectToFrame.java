@@ -69,7 +69,6 @@ public class ConnectToFrame extends JDialog {
 
 		@Override
 		public void windowClosing(WindowEvent e) {
-			// TODO Auto-generated method stub
 			if (choice != ConnectToFrame.CONNECT_OPTION)
 				choice = ConnectToFrame.CANCEL_OPTION;
 		}
