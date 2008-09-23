@@ -205,6 +205,8 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		th.start();
 		send.setEnabled(true);
 		connected = true;
+		connectItem.setEnabled(false);
+		hostItem.setEnabled(false);
 	}
 
 	@Override
@@ -212,15 +214,17 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		if (connected())
 			return;
 
-		ServerSocket servS = new ServerSocket(FullChatPanel.DEFAULT_PORT);
-		connection = servS.accept();
-
+		WaitingForConnectionFrame f = new WaitingForConnectionFrame(FullChatPanel.DEFAULT_PORT);
+		connection = f.showConnectionDialog();
+		if (connection == null) return;
 		sockIn = connection.getInputStream();
 		socOut = connection.getOutputStream();
 		InputListenerThread th = new InputListenerThread(this);
 		th.start();
 		send.setEnabled(true);
 		connected = true;
+		connectItem.setEnabled(false);
+		hostItem.setEnabled(false);
 	}
 
 	@Override
