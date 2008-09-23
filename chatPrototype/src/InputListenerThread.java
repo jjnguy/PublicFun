@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.swing.JOptionPane;
+
 public class InputListenerThread extends Thread {
 
 	private ChatInterface interFace;
@@ -18,11 +20,10 @@ public class InputListenerThread extends Thread {
 			try {
 				while (stream.available() != 0) {
 					input += (char) stream.read();
-					// input += "\n";
 				}
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Failed to send message.",
+						"Message Send Fail", JOptionPane.ERROR_MESSAGE);
 			}
 			if (!input.trim().equals("")) {
 				interFace.newMessage(input, "Them");
@@ -33,7 +34,6 @@ public class InputListenerThread extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			// stream.
 		}
 	}
 }

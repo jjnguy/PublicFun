@@ -24,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -119,8 +120,8 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 			try {
 				socOut.write(outgoingMessage.getBytes());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Failed to send message.",
+						"Message Send Fail", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -143,8 +144,8 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		try {
 			out = new PrintStream(f);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Failed to save conversation.",
+					"Save Fail", JOptionPane.ERROR_MESSAGE);
 		}
 		out.print(conversation.getText());
 		out.close();
@@ -180,7 +181,6 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				new FullChatPanel();
 			}
 		});
@@ -195,11 +195,11 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 			sockIn = connection.getInputStream();
 			socOut = connection.getOutputStream();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Could not resolve host.",
+					"Not Connected!", JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Failed to send message.",
+					"Message Send Fail", JOptionPane.ERROR_MESSAGE);
 		}
 		InputListenerThread th = new InputListenerThread(this);
 		th.start();
@@ -259,7 +259,12 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			connectToChatServer("localhost", 5001);
+			ConnectToFrame connect = new ConnectToFrame();
+			int choice = connect.showConnectDialog();
+			if (choice != ConnectToFrame.CONNECT_OPTION)
+				return;
+
+			connectToChatServer(connect.getHost(), connect.getPort());
 		}
 	};
 	private ActionListener hostAction = new ActionListener() {
@@ -269,10 +274,10 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 			try {
 				hostConversation();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(FullChatPanel.this,
+						"Failed to host conversation.", "Host Fail",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	};
-
 }
