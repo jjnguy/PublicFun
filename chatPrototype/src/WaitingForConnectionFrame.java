@@ -21,7 +21,7 @@ public class WaitingForConnectionFrame extends JDialog {
 		waitingForConnectionLable = new JLabel("Waiting for connection");
 		getContentPane().add(waitingForConnectionLable);
 		th = new WaitToAcceptThread(port, this);
-		addWindowListener(closeListener);
+		// addWindowListener(closeListener);
 		setModal(true);
 		pack();
 	}
@@ -39,7 +39,8 @@ public class WaitingForConnectionFrame extends JDialog {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			// TODO Auto-generated method stub
-			th.stop();
+			if (th.isAlive())
+				th.stop();
 		}
 	};
 }
@@ -67,6 +68,8 @@ class WaitToAcceptThread extends Thread {
 			e.printStackTrace();
 		}
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		frame.dispose();
+		frame.setVisible(false);
 	}
 
 }
