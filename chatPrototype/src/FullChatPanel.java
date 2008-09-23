@@ -17,7 +17,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -31,8 +30,10 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+@SuppressWarnings("serial")
 public class FullChatPanel extends JFrame implements ChatInterface {
 
+	private static final int DEFAULT_PORT = 5001;
 	private JTextArea conversation, outgoingMesages;
 	private JScrollPane recievedScroller, outgoingScroller;
 	private JSplitPane incomingAndOutgoingSplit;
@@ -211,7 +212,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		if (connected())
 			return;
 
-		ServerSocket servS = new ServerSocket(ChatServer.DEFAULT_PORT);
+		ServerSocket servS = new ServerSocket(FullChatPanel.DEFAULT_PORT);
 		connection = servS.accept();
 
 		sockIn = connection.getInputStream();

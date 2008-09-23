@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Socket;
 
 /**
  * Provides chat programs with a very simple interface for sending and recieving mesages
