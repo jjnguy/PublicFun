@@ -1,3 +1,4 @@
+package genericComponents;
 public class Difficulty {
 
 	private int width, height, numMines;

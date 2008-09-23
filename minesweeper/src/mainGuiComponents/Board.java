@@ -1,3 +1,7 @@
+package mainGuiComponents;
+
+import genericComponents.Difficulty;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;

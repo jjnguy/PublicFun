@@ -1,3 +1,4 @@
+package genericComponents;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -25,12 +26,6 @@ public class Util {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		comp.setLocation((screenSize.width / 2) - comp.getWidth() / 2,
 				(screenSize.height / 2) - comp.getHeight() / 2);
-	}
-
-	public static String parseITunesLocationFormat(String loc) {
-		String ret = loc.substring(17);
-		ret = ret.replace("%20", " ");
-		return ret;
 	}
 
 	public static void setLookAndFeel() {

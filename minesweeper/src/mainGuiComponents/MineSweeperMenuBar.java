@@ -1,3 +1,7 @@
+package mainGuiComponents;
+
+import genericComponents.Difficulty;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

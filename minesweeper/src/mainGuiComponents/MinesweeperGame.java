@@ -1,3 +1,11 @@
+package mainGuiComponents;
+
+import genericComponents.CounterPanel;
+import genericComponents.Difficulty;
+import genericComponents.HighScoreList;
+import genericComponents.TimeCounter;
+import genericComponents.Util;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -9,17 +17,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 
-import javax.swing.JApplet;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class MinesweeperGameWeb extends JApplet {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1732626101602971245L;
+
+@SuppressWarnings("serial")
+public class MinesweeperGame extends JFrame {
 
 	public static final String configFileLocation = ".sweepConf";
 
@@ -38,17 +43,14 @@ public class MinesweeperGameWeb extends JApplet {
 
 	private HighScoreList highScores;
 
-	public MinesweeperGameWeb(Difficulty d) {
+	public MinesweeperGame(Difficulty d) {
+		super("Java-Sweeper");
 		curDifficulty = d;
-		board = new Board(d.width(), d.height(), mineNumber);
-		mineNumber = d.mines();
-
-	}
-
-	@Override
-	public void init() {
 		highScores = new HighScoreList(new File(
-				MinesweeperGameWeb.configFileLocation));
+				MinesweeperGame.configFileLocation));
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		mineNumber = d.mines();
+		board = new Board(d.width(), d.height(), mineNumber);
 		board.addPropertyChangeListener(new PropertyChangeListener() {
 
 			@Override
@@ -75,6 +77,8 @@ public class MinesweeperGameWeb extends JApplet {
 
 		timer = new TimeCounter(TimeCounter.UP_MODE);
 
+		setJMenuBar(new MineSweeperMenuBar(this));
+
 		mines = new CounterPanel(mineNumber);
 
 		newGame = new JButton("New Game");
@@ -98,6 +102,13 @@ public class MinesweeperGameWeb extends JApplet {
 		gc.gridwidth = 3;
 		mainPane.add(board, gc);
 		add(mainPane);
+		setResizable(false);
+		addWindowListener(windowListen);
+		pack();
+		Util.moveToMiddle(this);
+	}
+
+	public void play() {
 		setVisible(true);
 	}
 
@@ -107,12 +118,17 @@ public class MinesweeperGameWeb extends JApplet {
 		public void actionPerformed(ActionEvent e) {
 			timer.stop();
 			timer.reset();
-			mines.setValue(mineNumber);
+			mines.setValue(curDifficulty.mines());
 			board.setEnabled(true);
 			newGame.setText("New Game");
 			board.reset(curDifficulty);
 		}
 	};
+
+	public static void main(String[] args) {
+		MinesweeperGame mine = new MinesweeperGame(Difficulty.EASY);
+		mine.play();
+	}
 
 	private void endGame(int win_lose) {
 		timer.stop();
@@ -124,8 +140,7 @@ public class MinesweeperGameWeb extends JApplet {
 			newGame.setText("You WIN!");
 			board.setEnabled(false);
 			if (highScores.isHighScore(timer.getValue(), curDifficulty)) {
-				String name = JOptionPane
-						.showInputDialog("Please enter your name");
+				String name = JOptionPane.showInputDialog("Please enter your name");
 				updateHighScoreList(name, timer.getValue());
 			}
 		}
@@ -134,13 +149,14 @@ public class MinesweeperGameWeb extends JApplet {
 	public void changeDifficulty(Difficulty d) {
 		curDifficulty = d;
 		newGame.doClick();
+		pack();
+		Util.moveToMiddle(this);
 	}
 
 	private void updateHighScoreList(String name, int value) {
 		highScores.addHighScore(name, value, curDifficulty);
 	}
 
-	@SuppressWarnings("unused")
 	private WindowListener windowListen = new WindowAdapter() {
 
 		@Override
@@ -152,9 +168,5 @@ public class MinesweeperGameWeb extends JApplet {
 
 	public String getHighScores() {
 		return highScores.getTable();
-	}
-	
-	public static void main(String[] args) {
-		new MinesweeperGameWeb(Difficulty.EASY);
 	}
 }
