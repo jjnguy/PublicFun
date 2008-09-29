@@ -5,11 +5,11 @@ import java.util.Scanner;
 
 public class FourierProgram {
 
-	// public static native int fourier(int[] samples, int k);
+	public static native int fourier(int[] samples, int k);
 
-	//static {
-		//System.load((new File("ft.dll").getAbsolutePath()));
-	//}
+	static {
+		System.load((new File("ft.dll").getAbsolutePath()));
+	}
 	
 	public static int fourierJ(int[] ints, int k) {
 		double sumi = 0;
@@ -67,7 +67,7 @@ public class FourierProgram {
 		int[] fMags = new int[nums.size() / 2];
 
 		for (int i = 0; i < nums.size() / 2; i++) {
-			fMags[i] = fourierJ(ints, i);
+			fMags[i] = fourier(ints, i);
 		}
 
 		for (int i = 0; i < fMags.length; i++) {

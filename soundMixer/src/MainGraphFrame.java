@@ -180,7 +180,7 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 		}
 
 		for (int i = 0; i < 128; i++) {
-			ret.add(FourierProgram.fourierJ(ret2, i));
+			ret.add(FourierProgram.fourier(ret2, i));
 		}
 
 		return ret;
