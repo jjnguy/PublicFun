@@ -60,21 +60,29 @@ public class GraphPanel extends JPanel {
 			Point point1, point2;
 			// point1 = new Point(0, parentComponent.listOfSampleValues.get(start));
 			point2 = new Point(getWidth() / VIEW_WIDTH,
-					parentComponent.listOfSampleValues.get(start));
+					resolvePointY(parentComponent.listOfSampleValues.get(start)));
 
 			paintRule(g2);
 			for (int i = 0; i < 250; i++) {
 				point1 = point2;
 				point2 = new Point(i * getWidth() / VIEW_WIDTH,
-						parentComponent.listOfSampleValues.get(i + start));
+						resolvePointY(parentComponent.listOfSampleValues.get(i + start)));
 				g2.setStroke(new BasicStroke(2));
 				g2.setColor(Color.RED);
 				g2.drawLine(point1.x, this.getHeight() - point1.y, point2.x, this
-						.getHeight() - point2.y);
+						.getHeight()
+						- point2.y);
 			}
 		} else {
 			g.drawString("No File Selected", 200, 300);
 		}
+	}
+
+	public int resolvePointY(int rawInput) {
+		// if (true)return rawInput;
+		int MAX = 256;
+		double relative = rawInput / (double)MAX;
+		return (int)(relative * getHeight());
 	}
 
 	private void paintRule(Graphics2D g2) {
