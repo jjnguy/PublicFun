@@ -2,12 +2,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+
+import quicktime.app.actions.MouseController;
 
 public class InstrumentPanel extends JPanel {
 
@@ -33,10 +37,11 @@ public class InstrumentPanel extends JPanel {
 			slide.setMajorTickSpacing(parentComp.listOfSampleValues.size() / 10);
 			slide.setMaximum(parentComp.listOfSampleValues.size());
 			slide.setValue(parentComp.listOfSampleValues.size() / 2);
-		}else{
+		} else {
 			slide.setMaximum(1);
 			slide.setValue(0);
 		}
+		slide.addMouseWheelListener(wheelListen);
 		slide.addChangeListener(parentComp);
 		add(slide, BorderLayout.NORTH);
 
@@ -46,7 +51,7 @@ public class InstrumentPanel extends JPanel {
 		shiftViewBack.addActionListener(parentComp);
 		shiftViewBack.setActionCommand("back");
 		shiftViewBack.setPreferredSize(new Dimension(150, 20));
-		//panel.add(shiftViewBack);
+		// panel.add(shiftViewBack);
 
 		setJumpVal = new JSlider();
 		setJumpVal.addChangeListener(parentComp);
@@ -58,13 +63,13 @@ public class InstrumentPanel extends JPanel {
 		setJumpVal.setSnapToTicks(true);
 		setJumpVal
 				.setToolTipText("Changes the ammount that the left and right buttons move the slider.");
-		//panel.add(setJumpVal);
+		// panel.add(setJumpVal);
 
 		shiftViewFoward = new JButton("Move Window Foward 128");
 		shiftViewFoward.addActionListener(parentComp);
 		shiftViewFoward.setActionCommand("foward");
 		shiftViewFoward.setPreferredSize(new Dimension(165, 20));
-		//panel.add(shiftViewFoward);
+		// panel.add(shiftViewFoward);
 
 		dancing = new JButton("Dancing Colors");
 		dancing.addActionListener(parentComp);
@@ -89,6 +94,15 @@ public class InstrumentPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
+
+	private MouseWheelListener wheelListen = new MouseWheelListener() {
+
+		@Override
+		public void mouseWheelMoved(MouseWheelEvent e) {
+			int ammnt = e.getWheelRotation();
+			slide.setValue(slide.getValue() + (ammnt * 500));
+		}
+	};
 
 	private static final long serialVersionUID = 1L;
 
