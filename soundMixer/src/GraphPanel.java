@@ -14,7 +14,7 @@ import javax.swing.border.BevelBorder;
 
 public class GraphPanel extends JPanel {
 
-	private static final int VIEW_WIDTH = 256;
+	public static final int VIEW_WIDTH = 256;
 	private Color bGroundColor;
 	private MainGraphFrame parentComponent;
 
