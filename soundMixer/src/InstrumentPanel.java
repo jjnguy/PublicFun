@@ -24,8 +24,6 @@ public class InstrumentPanel extends JPanel {
 		LayoutManager hi = new BorderLayout();
 		setLayout(hi);
 
-		setPreferredSize(new Dimension(1024, 120));
-
 		parentComp = par;
 
 		slide = new JSlider();
@@ -48,7 +46,7 @@ public class InstrumentPanel extends JPanel {
 		shiftViewBack.addActionListener(parentComp);
 		shiftViewBack.setActionCommand("back");
 		shiftViewBack.setPreferredSize(new Dimension(150, 20));
-		panel.add(shiftViewBack);
+		//panel.add(shiftViewBack);
 
 		setJumpVal = new JSlider();
 		setJumpVal.addChangeListener(parentComp);
@@ -60,20 +58,20 @@ public class InstrumentPanel extends JPanel {
 		setJumpVal.setSnapToTicks(true);
 		setJumpVal
 				.setToolTipText("Changes the ammount that the left and right buttons move the slider.");
-		panel.add(setJumpVal);
+		//panel.add(setJumpVal);
 
 		shiftViewFoward = new JButton("Move Window Foward 128");
 		shiftViewFoward.addActionListener(parentComp);
 		shiftViewFoward.setActionCommand("foward");
 		shiftViewFoward.setPreferredSize(new Dimension(165, 20));
-		panel.add(shiftViewFoward);
+		//panel.add(shiftViewFoward);
 
 		dancing = new JButton("Dancing Colors");
 		dancing.addActionListener(parentComp);
 		dancing.setActionCommand("dance");
 		dancing.setPreferredSize(new Dimension(120, 20));
 		panel.add(dancing);
-		// dancing.setVisible(false);
+		dancing.setVisible(false);
 
 		add(panel);
 

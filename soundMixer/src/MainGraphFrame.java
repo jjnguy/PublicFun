@@ -1,4 +1,6 @@
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -95,15 +97,28 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		JPanel mainPanel = new JPanel();
-
-		setPreferredSize(new Dimension(1024, 730));
-
+		JPanel mainPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gc = new GridBagConstraints();
+		
+		setPreferredSize(new Dimension(800, 500));
 		setJMenuBar(menu);
-		mainPanel.add(upperPanel);
-		mainPanel.add(buttons);
-		mainPanel.add(fFrame);
-		mainPanel.add(labels);
+		gc.fill = GridBagConstraints.BOTH;
+		gc.weightx = 1;
+		gc.weighty = 1;
+		gc.gridy = 0;
+		mainPanel.add(upperPanel,gc);
+		gc.gridy++;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.weighty = 0;
+		mainPanel.add(buttons,gc);
+		gc.fill = GridBagConstraints.BOTH;
+		gc.gridy++;
+		gc.weighty = 1;
+		mainPanel.add(fFrame,gc);
+		gc.weighty = 0;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.gridy++;
+		mainPanel.add(labels,gc);
 
 		add(mainPanel);
 
@@ -208,7 +223,6 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 			fFrame.repaint();
 			upperPanel.repaint();
 		}
-
 	}
 
 	public int getSampleRate() {

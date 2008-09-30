@@ -14,6 +14,7 @@ import javax.swing.border.BevelBorder;
 
 public class GraphPanel extends JPanel {
 
+	private static final int VIEW_WIDTH = 256;
 	private Color bGroundColor;
 	private MainGraphFrame parentComponent;
 
@@ -31,10 +32,9 @@ public class GraphPanel extends JPanel {
 	public String getToolTipText(MouseEvent e) {
 		/*
 		 * if (!parentComponent.noFile) { int sampleNumToGet =
-		 * parentComponent.buttons.slide.getValue() - 125 + (e.getPoint().x /
-		 * 4); String ret = "Sample Number: " + sampleNumToGet + " "; ret +=
-		 * "Value: " + parentComponent.listOfSampleValues.get(sampleNumToGet);
-		 * return ret; } else {
+		 * parentComponent.buttons.slide.getValue() - 125 + (e.getPoint().x / 4); String
+		 * ret = "Sample Number: " + sampleNumToGet + " "; ret += "Value: " +
+		 * parentComponent.listOfSampleValues.get(sampleNumToGet); return ret; } else {
 		 * 
 		 * return "No File Selected"; }
 		 */return "";
@@ -45,7 +45,8 @@ public class GraphPanel extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		if (!parentComponent.noFile) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.setColor(bGroundColor);
 			g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 			int curMid = parentComponent.buttons.slide.getValue();
@@ -57,20 +58,21 @@ public class GraphPanel extends JPanel {
 			int start = curMid - 125;
 			g2.setColor(Color.BLACK);
 			Point point1, point2;
-			//point1 = new Point(0, parentComponent.listOfSampleValues.get(start));
-			point2 = new Point(4, parentComponent.listOfSampleValues.get(start));
-			
+			// point1 = new Point(0, parentComponent.listOfSampleValues.get(start));
+			point2 = new Point(getWidth() / VIEW_WIDTH,
+					parentComponent.listOfSampleValues.get(start));
+
 			paintRule(g2);
 			for (int i = 0; i < 250; i++) {
 				point1 = point2;
-				point2 = new Point(i * 4, parentComponent.listOfSampleValues.get(i + start));
+				point2 = new Point(i * getWidth() / VIEW_WIDTH,
+						parentComponent.listOfSampleValues.get(i + start));
 				g2.setStroke(new BasicStroke(2));
 				g2.setColor(Color.RED);
-				g2.drawLine(point1.x, this.getHeight() - point1.y, point2.x, this.getHeight() - point2.y);
+				g2.drawLine(point1.x, this.getHeight() - point1.y, point2.x, this
+						.getHeight() - point2.y);
 			}
-
 		} else {
-
 			g.drawString("No File Selected", 200, 300);
 		}
 	}
@@ -80,7 +82,8 @@ public class GraphPanel extends JPanel {
 		Stroke originalStroke = g2.getStroke();
 		g2.setStroke(new BasicStroke(1));
 
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_OFF);
 		g2.setColor(Color.WHITE);
 
 		g2.drawLine(10, 0, 10, this.getHeight());
@@ -91,11 +94,14 @@ public class GraphPanel extends JPanel {
 		}
 
 		for (int i = 0; i <= 10; i++) {
-			if (i != 5) g2.drawString((int) (i * 25.6) + "", 22, this.getHeight() - i * this.getHeight() / 10 + 4);
+			if (i != 5)
+				g2.drawString((int) (i * 25.6) + "", 22, this.getHeight() - i
+						* this.getHeight() / 10 + 4);
 		}
 
 		g2.setColor(originalColor);
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setStroke(originalStroke);
 	}
 
