@@ -1,8 +1,6 @@
 
 filename = raw_input("Filename Please: ")
-filein = open(filename)
-fileout = open(filename + ".emails", "w")
-for line in filein:
-    fileout.write("%s@iastate.edu\n" % line[:len(line)-1])
-filein.close()
-fileout.close()
+file_input = open(filename)
+file_output = open(filename + ".emails", "w")
+for line in file_input:
+    file_output.write("%s@iastate.edu,\n" % line[:len(line)-1])
