@@ -4,14 +4,14 @@ class ID3v2_3Tag:
     def __init__(self, mp3_filename):
         self.file = open(mp3_filename, "rb")
         # create the header using the first ten bytes in the file
-        self.headder = ID3v2_3TagHeader(self.file.read(10))
-        self.headder.printIt()
-        self.headder.noFlags()
+        self.header = ID3v2_3TagHeader(self.file.read(10))
+        self.header.printIt()
+        self.header.noFlags()
         self.frames = []
-        bytes_left = self.headder.len
+        bytes_left = self.header.len
         
         #legacy support
-        if self.headder.major_version < 3:
+        if self.header.major_version < 3:
             while bytes_left > 0:
                 fr_head = ID3v2_2FrameHeader(self.file.read(6))
                 fr_head.pritnIt()
@@ -21,7 +21,8 @@ class ID3v2_3Tag:
                 bytes_left-=fr_head.frame_len
                 print "Bytes left in the tag: %i" % bytes_left
         else:
-            fr_head = ID3v2_3FrameHeader(self.file.read(10))
+            print "take up space"
+            # TODO support the current standard
         
 
 class ID3v2_3TagHeader:
@@ -53,6 +54,11 @@ class ID3v2_2Frame:
     def __init__(self, header, byte_string):
         if header.frame_id[0] == "T":
             self.data = struct.unpack("%is" % header.frame_len, byte_string)[0].strip()
+        elif header.frame_id == "COM":
+            self.language, self.data = struct.unpack(">3s%is" % (header.frame_len - 4), byte_string[1:])
+            print self.language
+        elif header.frame_id == "UFI":
+            self.data = struct.unpack("%is" % header.frame_len, byte_string)
         else:
             self.data = "Complex Shit"
         
@@ -87,4 +93,4 @@ class ID3v2_3FrameHeader:
         print self.status_mes
         print self.format_desc
        
-tag = ID3v2_3Tag("10_Pet.mp3")
+tag = ID3v2_3Tag("12 Sex Rap.mp3")
