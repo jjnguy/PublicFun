@@ -1,6 +1,7 @@
+from PIL import Image
 import struct
 
-class ID3v2_3Tag:
+class ID3v2_XTag:
     def __init__(self, mp3_filename):
         self.file = open(mp3_filename, "rb")
         # create the header using the first ten bytes in the file
@@ -71,6 +72,13 @@ class ID3v2_2Frame:
             print self.language
         elif header.frame_id == "UFI":
             self.data = struct.unpack("%is" % header.frame_len, byte_string)
+        elif header.frame_id == "PIC":
+            format, type = struct.unpack("3sB", byte_string[1:5])
+            desc_data = byte_string[5:]
+            # I think this is not working, not splitting at the right spot
+            desc = byte_string[5:]
+            data2 = byte_string[byte_string.find("\x00")+1:]
+            self.data = ID3V2_2Pic(desc_data,format,type,desc_data)
         else:
             self.data = "Complex Shit"
         
@@ -104,6 +112,17 @@ class ID3v2_3FrameHeader:
         print self.frame_len
         print self.status_mes
         print self.format_desc
-       
+
+class ID3V2_2Pic:
+    
+    def __init__(self, description, format, type, bytes):
+        #print "Desc: %s" % description
+        print "Format %s" % format
+        print "Type %s" % type
+        file_out = open(".tempImg.%s" % format, "wb")
+        file_out.write(bytes[2:])
+        #img = Image.open(".tempImg.%s" % format)
+        #img.show()
+        
 #TODO make sure that padding fix actually works
-tag = ID3v2_3Tag("03 Sonny.mp3")
+tag = ID3v2_XTag("12 Sex Rap.mp3")
