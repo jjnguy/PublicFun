@@ -36,4 +36,4 @@ def transform_factor_list(factor_list):
         return [2] + factor_list
     return ['2 ^ %s' % num2s] + factor_list
         
-print transform_factor_list(factors(1024 * 7))
+print transform_factor_list(factors(17907120))
