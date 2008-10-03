@@ -1,3 +1,4 @@
+import java.io.Console;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,7 +23,6 @@ public class Euler {
 
 					@Override
 					public int compare(Integer o1, Integer o2) {
-						// TODO Auto-generated method stub
 						return o2 - o1;
 					}
 				});
@@ -159,17 +159,86 @@ public class Euler {
 	}
 
 	public static String sumPrimesBelow2mil() {
+		// TODO fix this, skipping number ten for now
 		BigInteger sum = new BigInteger("0");
 		for (int i = 1; i < 2000000; i++) {
 			if (isPrime(i)) {
-				sum = sum.add(new BigInteger(i+""));
+				sum = sum.add(new BigInteger(i + ""));
 			}
 		}
 		return sum.toString();
 	}
 
+	public static int getNumWith500factors(List<Integer> ints) {
+		for (Integer integer : ints) {
+			if (integer % 10 != 0)
+				continue;
+			int numFactors = countFactors(integer);
+			if (numFactors > 200) {
+				System.out.println("The number: " + integer + " has " + numFactors
+						+ " factors.");
+			}
+			// 76576500 the answer
+			if (numFactors > 500) {
+				return integer;
+			}
+		}
+		throw new Error("The silly list didn't go high enough");
+	}
+
+	public static int countFactors(int num) {
+		int factorNumber = 0;
+		int lim = num / 2;
+		for (int i = 1; i < lim; i++) {
+			if (num % i == 0)
+				factorNumber++;
+		}
+		return factorNumber;
+	}
+
+	public static List<Integer> getTriangleNumbers() {
+		List<Integer> ret = new ArrayList<Integer>();
+		ret.add(1);
+		for (int i = 1; i < 1000000; i++) {
+			ret.add(ret.get(i - 1) + i + 1);
+		}
+		System.out.println("Done computing triangles");
+		return ret;
+	}
+
+	public static List<Integer> getPentagonalNumbers() {
+		List<Integer> ret = new ArrayList<Integer>();
+		for (int i = 1; i < 1000000; i++) {
+			ret.add(i * (3 * i - 1) / 2);
+		}
+		System.out.println("Done computing pentagonal");
+		return ret;
+	}
+
+	public static List<Integer> getHexgonalNumbers() {
+		List<Integer> ret = new ArrayList<Integer>();
+		for (int i = 1; i < 1000000; i++) {
+			ret.add(i * (2 * i - 1));
+		}
+		System.out.println("Done computing hexagonal");
+		return ret;
+	}
+
+	public static void getHexPentTri() {
+		List<Integer> tris = getTriangleNumbers();
+		List<Integer> pents = getPentagonalNumbers();
+		List<Integer> hexs = getHexgonalNumbers();
+
+		for (Integer integer : tris) {
+			if (pents.contains(integer) && hexs.contains(integer)) {
+				System.out.println("The integer: " + integer
+						+ " is all three types of number.");
+			}
+		}
+		System.out.println("Done looking, make the lists bigger maybe");
+	}
+
 	public static void main(String[] args) {
-		//System.out.println(isPrime(3));
-		System.out.println(sumPrimesBelow2mil());
+		getHexPentTri();
 	}
 }
