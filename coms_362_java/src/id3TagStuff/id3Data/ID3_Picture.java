@@ -1,4 +1,6 @@
-package id3TagStuff;
+package id3TagStuff.id3Data;
+
+import id3TagStuff.ID3v2_2FrameData;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

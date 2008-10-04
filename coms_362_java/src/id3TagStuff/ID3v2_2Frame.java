@@ -1,5 +1,9 @@
 package id3TagStuff;
 
+import id3TagStuff.id3Data.ID3_Comment;
+import id3TagStuff.id3Data.ID3_Picture;
+import id3TagStuff.id3Data.ID3_String;
+
 import java.io.IOException;
 import java.io.InputStream;
 
