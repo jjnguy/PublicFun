@@ -1,5 +1,8 @@
 package id3TagStuff;
 
+import id3TagStuff.frames.ID3v2_2Frame;
+import id3TagStuff.frames.ID3v2_XFrame;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

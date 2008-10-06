@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import id3TagStuff.ID3v2_XFrame;
 import id3TagStuff.ID3v2_XTag;
+import id3TagStuff.frames.ID3v2_XFrame;
 
 public class CreateAndPrintTagFromFile {
 	public static void main(String[] args) throws IOException {

@@ -1,6 +1,5 @@
 package id3TagStuff.id3Data;
 
-import id3TagStuff.ID3v2_XFrameData;
 
 import java.util.Arrays;
 

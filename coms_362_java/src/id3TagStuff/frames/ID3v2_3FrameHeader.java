@@ -1,4 +1,4 @@
-package id3TagStuff;
+package id3TagStuff.frames;
 
 public class ID3v2_3FrameHeader implements ID3v2_XFrameHeader {
 

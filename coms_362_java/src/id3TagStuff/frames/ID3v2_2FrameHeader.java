@@ -1,4 +1,4 @@
-package id3TagStuff;
+package id3TagStuff.frames;
 
 import java.util.Arrays;
 

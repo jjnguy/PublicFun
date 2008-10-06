@@ -1,7 +1,6 @@
 package id3TagStuff.id3Data;
 
 import util.Util;
-import id3TagStuff.ID3v2_XFrameData;
 
 public class ID3_String implements ID3v2_XFrameData {
 	private String data;

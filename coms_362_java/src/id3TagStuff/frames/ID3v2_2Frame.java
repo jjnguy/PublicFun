@@ -1,20 +1,22 @@
-package id3TagStuff;
+package id3TagStuff.frames;
 
 import id3TagStuff.id3Data.ID3_Comment;
 import id3TagStuff.id3Data.ID3_Picture;
 import id3TagStuff.id3Data.ID3_String;
+import id3TagStuff.id3Data.ID3v2_XFrameData;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import util.Util;
 
-public class ID3v2_3Frame implements ID3v2_XFrame {
-	private ID3v2_3FrameHeader header;
+public class ID3v2_2Frame implements ID3v2_XFrame {
+
+	private ID3v2_2FrameHeader header;
 	private ID3v2_XFrameData data;
 
-	public ID3v2_3Frame(int[] headerBytes, InputStream tagFile) throws IOException {
-		header = new ID3v2_3FrameHeader(headerBytes);
+	public ID3v2_2Frame(int[] headerBytes, InputStream tagFile) throws IOException {
+		header = new ID3v2_2FrameHeader(headerBytes);
 		byte[] frameBytes = new byte[header.getSize()];
 		tagFile.read(frameBytes);
 		if (header.getID().startsWith("T", 0)) {
