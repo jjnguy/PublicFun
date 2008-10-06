@@ -1,6 +1,7 @@
 package id3TagStuff;
 
 import id3TagStuff.frames.ID3v2_XFrame;
+import id3TagStuff.frames.ID3v2_XFrameFactory;
 import id3TagStuff.frames.v2.ID3v2_2Frame;
 
 import java.io.File;
@@ -27,13 +28,15 @@ public class ID3v2_XTag {
 		header = new ID3v2_XTagHeader(Util.castByteArrToIntArr(headerBytes));
 		frames = new ArrayList<ID3v2_XFrame>();
 		int bytesLeft = header.getSize();
-		byte[] frameHeadderBytes = new byte[6];
+		int frameHeadderLength = header.getMajorVersion() == 2? 6:10;
+		byte[] frameHeadderBytes = new byte[frameHeadderLength];
 		while (bytesLeft > 0) {
 			in.read(frameHeadderBytes);
-			ID3v2_2Frame frame = new ID3v2_2Frame(Util
+			// TODO framefactory to create the necessary v2_2 or v2_3
+			ID3v2_XFrame frame = ID3v2_XFrameFactory.getFrame(Util
 					.castByteArrToIntArr(frameHeadderBytes), in);
 			frames.add(frame);
-			bytesLeft -= 6;
+			bytesLeft -= frameHeadderLength;
 			bytesLeft -= frame.getSize();
 			System.out.println(bytesLeft);
 		}
@@ -46,7 +49,6 @@ public class ID3v2_XTag {
 	}
 
 	public List<ID3v2_XFrame> getAllFrames() {
-		// TODO Auto-generated method stub
 		return frames;
 	}
 }

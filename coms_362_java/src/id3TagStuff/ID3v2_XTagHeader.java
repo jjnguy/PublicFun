@@ -5,6 +5,7 @@ import java.util.Arrays;
 import util.Util;
 
 public class ID3v2_XTagHeader {
+	
 	private String tagIdentifier;
 	private int majorVersion, minorVersion, flags;
 	private int size;
@@ -25,11 +26,15 @@ public class ID3v2_XTagHeader {
 		return size;
 	}
 
+	public int getMajorVersion(){
+		return majorVersion;
+	}
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return String.format("ID: %s, Major Version: %d, Flags: %d, Size: %d",
-				tagIdentifier, majorVersion, flags, size);
+		return String.format("ID: %s, Version: %d.%d, Flags: %d, Size: %d",
+				tagIdentifier, majorVersion, minorVersion, flags, size);
 
 	}
 }
