@@ -71,7 +71,7 @@ class ID3v2_2Frame:
             self.language, self.data = struct.unpack(">3s%is" % (header.frame_len - 4), byte_string[1:])
             print self.language
         elif header.frame_id == "UFI":
-            self.data = struct.unpack("%is" % header.frame_len, byte_string)
+            self.data = struct.unpack(">%is" % header.frame_len, byte_string)
         elif header.frame_id == "PIC":
             format, type = struct.unpack("3sB", byte_string[1:5])
             desc_data = byte_string[5:]
