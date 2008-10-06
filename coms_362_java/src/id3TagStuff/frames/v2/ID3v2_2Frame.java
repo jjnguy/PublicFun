@@ -1,5 +1,6 @@
-package id3TagStuff.frames;
+package id3TagStuff.frames.v2;
 
+import id3TagStuff.frames.ID3v2_XFrame;
 import id3TagStuff.id3Data.ID3_Comment;
 import id3TagStuff.id3Data.ID3_Picture;
 import id3TagStuff.id3Data.ID3_String;
@@ -10,12 +11,13 @@ import java.io.InputStream;
 
 import util.Util;
 
-public class ID3v2_3Frame implements ID3v2_XFrame {
-	private ID3v2_3FrameHeader header;
+public class ID3v2_2Frame implements ID3v2_XFrame {
+
+	private ID3v2_2FrameHeader header;
 	private ID3v2_XFrameData data;
 
-	public ID3v2_3Frame(int[] headerBytes, InputStream tagFile) throws IOException {
-		header = new ID3v2_3FrameHeader(headerBytes);
+	public ID3v2_2Frame(int[] headerBytes, InputStream tagFile) throws IOException {
+		header = new ID3v2_2FrameHeader(headerBytes);
 		byte[] frameBytes = new byte[header.getSize()];
 		tagFile.read(frameBytes);
 		if (header.getID().startsWith("T", 0)) {
@@ -34,5 +36,10 @@ public class ID3v2_3Frame implements ID3v2_XFrame {
 	@Override
 	public String toString() {
 		return String.format("Type: %s, Data: %s", header.getID(), data.toString());
+	}
+
+	@Override
+	public String getFrameType() {
+		return data.getType();
 	}
 }

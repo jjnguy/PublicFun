@@ -44,4 +44,9 @@ public class ID3_Picture implements ID3v2_XFrameData {
 	public String toString() {
 		return "ID3 Picture: " + description;
 	}
+
+	@Override
+	public String getType() {
+		return "Picture";
+	}
 }

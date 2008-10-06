@@ -1,10 +1,12 @@
-package id3TagStuff.frames;
+package id3TagStuff.frames.v2;
+
+import id3TagStuff.frames.ID3v2_XFrameHeader;
 
 import java.util.Arrays;
 
 import util.Util;
 
-public class ID3v2_2FrameHeader {
+public class ID3v2_2FrameHeader implements ID3v2_XFrameHeader {
 	private String tagID;
 	private int size;
 
@@ -20,12 +22,13 @@ public class ID3v2_2FrameHeader {
 		}
 	}
 
+	@Override
 	public int getSize() {
 		return size;
 	}
 
+	@Override
 	public String getID() {
-		// TODO Auto-generated method stub
 		return tagID;
 	}
 

@@ -13,4 +13,10 @@ public class ID3_String implements ID3v2_XFrameData {
 	public String toString() {
 		return data;
 	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "String";
+	}
 }

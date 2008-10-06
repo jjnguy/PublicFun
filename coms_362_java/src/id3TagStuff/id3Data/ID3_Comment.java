@@ -18,4 +18,10 @@ public class ID3_Comment implements ID3v2_XFrameData {
 	public String toString() {
 		return String.format("Language: %s, Comment: %s", language, comment);
 	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "Comment";
+	}
 }
