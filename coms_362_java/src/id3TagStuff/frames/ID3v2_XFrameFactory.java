@@ -13,7 +13,7 @@ public class ID3v2_XFrameFactory {
 
 	public static ID3v2_XFrame getFrame(int[] headerBytes, InputStream frameStream)
 			throws IOException {
-		ID3v2_XFrame frame;
+		ID3v2_XFrame frame = null;
 		if (headerBytes.length == 6) {
 			frame = new ID3v2_2Frame(headerBytes, frameStream);
 		} else if (headerBytes.length == 10) {
@@ -24,5 +24,4 @@ public class ID3v2_XFrameFactory {
 		}
 		return frame;
 	}
-
 }
