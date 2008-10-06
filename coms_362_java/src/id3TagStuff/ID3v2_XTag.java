@@ -29,12 +29,12 @@ public class ID3v2_XTag {
 			frames.add(frame);
 			bytesLeft -= 6;
 			bytesLeft-=frame.getSize();
+			System.out.println(bytesLeft);
 		}
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return String.format("File name: %s, Header data: %s", mp3File.getName(), header
 				.toString());
 	}

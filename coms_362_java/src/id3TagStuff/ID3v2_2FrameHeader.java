@@ -12,6 +12,9 @@ public class ID3v2_2FrameHeader {
 					"The frame header for version 2.2 needs to be 6 bytes long.");
 		tagID = new String(Arrays.copyOfRange(headerBytes, 0, 3));
 		size = (headerBytes[3] << 16) + (headerBytes[4] << 8) + headerBytes[5];
+		if (size < 0){
+			size = size & 0xff;
+		}
 	}
 	
 	public int getSize(){

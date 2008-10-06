@@ -12,4 +12,8 @@ public class ID3_Comment implements ID3v2_2FrameData {
 		comment = new String(Arrays.copyOfRange(dataP, 3, dataP.length));
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Language: %s, Comment: %s", language, comment);
+	}
 }
