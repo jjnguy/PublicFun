@@ -1,6 +1,6 @@
 package id3TagStuff.id3Data;
 
-import id3TagStuff.ID3v2_2FrameData;
+import id3TagStuff.ID3v2_XFrameData;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,34 +11,38 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-public class ID3_Picture implements ID3v2_2FrameData {
+import util.Util;
+
+public class ID3_Picture implements ID3v2_XFrameData {
 
 	private String format, description;
 	private byte type;
-	private byte[] data;
+	private int[] data;
 
-	public ID3_Picture(byte[] dataP) throws IOException {
-		format = new String(Arrays.copyOfRange(dataP, 0, 3));
-		type = dataP[3];
+	public ID3_Picture(int[] dataP) throws IOException {
+		System.out.println("We are creating a pic");
+		format = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(dataP, 1, 4)));
+		type = (byte)dataP[4];
 		int descWidth = 0;
-		for (int i = 4; i < dataP.length; i++) {
+		for (int i = 5; i < dataP.length; i++) {
 			if (dataP[i] == (byte) 00) {
 				break;
 			}
 			descWidth++;
 		}
-		description = new String(Arrays.copyOfRange(dataP, 4, 4 + descWidth));
+		description = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(dataP, 4, 4 + descWidth)));
 		this.data = Arrays.copyOfRange(dataP, 4 + descWidth, dataP.length);
 
-		for (int i = 0; i < this.data.length; i++) {
-			if (data[i] < 0) {
-				data[i] = (byte) (data[i] & 0xff);
-			}
-		}
+		System.out.println(type);
 		// begin test code
 		PrintStream out = new PrintStream(new File(".dataTest"));
-		out.write(data);
+		Util.writeIntArrToStream(out, data);
 		BufferedImage i = ImageIO.read(new File(".dataTest"));
-		ImageIO.write(i, format, new File("imageTest.png"));
+		ImageIO.write(i, format, new File("imageTest." + format));
+	}
+	
+	@Override
+	public String toString() {
+		return "ID3 Picture: " + description;
 	}
 }
