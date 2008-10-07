@@ -21,10 +21,12 @@ public class ID3v2_XFrame {
 		tagFile.read(frameBytes);
 		if (header.getID().startsWith("T", 0)) {
 			data = new ID3_String(Util.castByteArrToIntArr(frameBytes));
-		} else if (header.getID().equals("COM")) {
+		} else if (header.getID().matches("COM|COMM")) {
 			data = new ID3_Comment(Util.castByteArrToIntArr(frameBytes));
-		} else if (header.getID().equals("PIC")) {
+		} else if (header.getID().matches("PIC|APIC")) {
 			data = new ID3_Picture(Util.castByteArrToIntArr(frameBytes));
+		} else {
+			data = new ID3_String(Util.castByteArrToIntArr(frameBytes));
 		}
 	}
 
@@ -38,6 +40,6 @@ public class ID3v2_XFrame {
 	}
 
 	public String getFrameType() {
-		return data.getType();
+		return header.getID();
 	}
 }

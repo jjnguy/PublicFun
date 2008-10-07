@@ -61,10 +61,6 @@ public class ID3v2_XTag {
 			// we use <framelength> + <headerlength> bytes every time
 			bytesLeft -= frameHeadderLength;
 			bytesLeft -= frame.getFrameSize();
-
-			if (Util.DEBUG) {
-				System.out.println(bytesLeft);
-			}
 		}
 	}
 

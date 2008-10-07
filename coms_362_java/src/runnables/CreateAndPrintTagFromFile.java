@@ -10,11 +10,10 @@ import java.util.List;
 public class CreateAndPrintTagFromFile {
 	public static void main(String[] args) throws IOException {
 		// suck my kiss is version 3...yay!
-		ID3v2_XTag tg = new ID3v2_XTag(new File("TestFiles/07 Suck My Kiss.mp3"));
+		ID3v2_XTag tg = new ID3v2_XTag(new File("TestFiles/12 Sex Rap.mp3"));
 		System.out.println(tg);
 		List<ID3v2_XFrame> frames = tg.getAllFrames();
 		for (ID3v2_XFrame frame : frames) {
-			//System.out.println("Printing a new frame");
 			System.out.println(frame);
 		}
 	}
