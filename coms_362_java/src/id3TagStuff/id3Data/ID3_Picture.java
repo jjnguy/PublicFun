@@ -29,10 +29,11 @@ public class ID3_Picture implements ID3v2_XFrameData {
 			descWidth++;
 		}
 		description = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(dataP, 4, 4 + descWidth)));
-		this.data = Arrays.copyOfRange(dataP, 4 + descWidth, dataP.length);
+		this.data = Arrays.copyOfRange(dataP, 4 + descWidth + 2, dataP.length);
 
 		System.out.println(type);
 		// begin test code
+		//data = Arrays.copyOfRange(data, 2, data.length);
 		PrintStream out = new PrintStream(new File(".dataTest"));
 		Util.writeIntArrToStream(out, data);
 		BufferedImage i = ImageIO.read(new File(".dataTest"));
