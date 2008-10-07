@@ -1,4 +1,4 @@
-package id3TagStuff.frames.v2;
+package id3TagStuff.frames;
 
 import id3TagStuff.id3Data.ID3_Comment;
 import id3TagStuff.id3Data.ID3_Picture;

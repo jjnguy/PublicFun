@@ -1,6 +1,6 @@
 package id3TagStuff;
 
-import id3TagStuff.frames.v2.ID3v2_XFrame;
+import id3TagStuff.frames.ID3v2_XFrame;
 
 import java.io.File;
 import java.io.FileInputStream;
