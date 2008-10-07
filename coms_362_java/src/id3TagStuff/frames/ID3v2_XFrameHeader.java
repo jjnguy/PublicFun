@@ -45,4 +45,15 @@ public class ID3v2_XFrameHeader {
 		return flags;
 	}
 
+	public static String translateFrameHeaderStringToEnglish(String headerType) {
+		if (headerType.matches("PIC|APIC")){
+			return "Picture";
+		}
+		if(headerType.matches("COMM?")){
+			return "Comment";
+		}
+		
+		return null;
+	}
+
 }
