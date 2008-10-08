@@ -24,7 +24,8 @@ public class ID3v2_XFrame {
 		} else if (header.getID().matches("COM|COMM")) {
 			data = new ID3_Comment(Util.castByteArrToIntArr(frameBytes));
 		} else if (header.getID().matches("PIC|APIC")) {
-			data = new ID3_Picture(Util.castByteArrToIntArr(frameBytes));
+			data = new ID3_Picture(header.getVersion(), Util
+					.castByteArrToIntArr(frameBytes));
 		} else {
 			data = new ID3_String(Util.castByteArrToIntArr(frameBytes));
 		}

@@ -13,9 +13,11 @@ public class ID3v2_XFrameHeader {
 	private String tagID;
 	private int size;
 	private int flags;
+	private int majorVersion;
 
 	public ID3v2_XFrameHeader(int[] headerBytes) {
 		if (headerBytes.length == 6) {
+			majorVersion = 2;
 			tagID = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(headerBytes,
 					0, 3)));
 			size = (headerBytes[3] << 16) + (headerBytes[4] << 8) + headerBytes[5];
@@ -24,6 +26,7 @@ public class ID3v2_XFrameHeader {
 			}
 			flags = 0;
 		} else if (headerBytes.length == 10) {
+			majorVersion = 3;
 			tagID = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(headerBytes,
 					0, 4)));
 			size = (headerBytes[4] << 24) + (headerBytes[5] << 16)
@@ -49,6 +52,10 @@ public class ID3v2_XFrameHeader {
 		return flags;
 	}
 
+	public int getVersion(){
+		return majorVersion;
+	}
+	
 	public static String translateFrameHeaderStringToEnglish(String headerType) {
 		Scanner fin = null;
 		try {

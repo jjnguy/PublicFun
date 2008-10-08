@@ -80,10 +80,11 @@ public class ID3v2_XTag {
 			System.out.println("Padding not big enough");
 			// TODO need to rewrite the whole file...later
 		} else {
-			RandomAccessFile randFile = new RandomAccessFile(mp3File, "wb");
+			RandomAccessFile randFile = new RandomAccessFile(mp3File, "rw");
 			randFile.seek(header.getTagSize() + header.getHeaderSize());
 			String picID = header.getMajorVersion() < 3 ? "PIC" : "APIC";
-			randFile.write(picID.getBytes());
+			
+			randFile.write(picID.getBytes() );
 			randFile.write(0);
 			randFile.write(0);
 			randFile.write(0);

@@ -11,13 +11,16 @@ import util.Util;
 
 public class ID3_Picture implements ID3v2_XFrameData {
 
-	private String format, description;
-	private byte type;
+	private String format_MIME, description;
+	private byte type, textEncoding;
 	private int[] data;
 
-	public ID3_Picture(int[] dataP) throws IOException {
-		System.out.println("We are creating a pic");
-		format = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(dataP, 1, 4)));
+	// TODO this won't work with v2.3
+	public ID3_Picture(int majorVersion, int[] dataP) throws IOException {
+		if (Util.DEBUG)
+			System.out.println("We are creating a pic");
+		format_MIME = new String(Util
+				.castIntArrToByteArr(Arrays.copyOfRange(dataP, 1, 4)));
 		type = (byte) dataP[4];
 		int descWidth = 0;
 		for (int i = 5; i < dataP.length; i++) {
@@ -31,10 +34,20 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		this.data = Arrays.copyOfRange(dataP, 4 + descWidth + 2, dataP.length);
 	}
 
-	public ID3_Picture(int[] dataP, File saveToLocation) throws IOException {
-		this(dataP);
+	public ID3_Picture(int majorVersion, int[] dataP, File saveToLocation)
+			throws IOException {
+		this(majorVersion, dataP);
 		PrintStream out = new PrintStream(saveToLocation);
 		Util.writeIntArrToStream(out, data);
+	}
+
+	public ID3_Picture(String descriptionP, byte textEncodingP, byte imageType,
+			String formatOrMIME, int[] picData) {
+		this.description = descriptionP;
+		textEncoding = textEncodingP;
+		type = imageType;
+		format_MIME = formatOrMIME;
+		data = picData;
 	}
 
 	@Override
@@ -47,13 +60,24 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		return "Picture";
 	}
 
+	/**
+	 * Embeds the picture at the end of the ID3v2.X Tag. Adjusts to work with v2.2, v2.3,
+	 * and v2.4
+	 * 
+	 * @param mp3FileToEmbedInto
+	 *            the file to embed the picture into
+	 */
+	public void embedInTag(File mp3FileToEmbedInto) {
+
+	}
+
 	public void saveAs(File loc) throws IOException {
 		String name = loc.getName();
-		if (!name.endsWith("." + format.toLowerCase())
-				&& !name.endsWith("." + format.toUpperCase())) {
-			name += "." + format;
+		if (!name.endsWith("." + format_MIME.toLowerCase())
+				&& !name.endsWith("." + format_MIME.toUpperCase())) {
+			name += "." + format_MIME;
 		}
 		PrintStream out = new PrintStream(new File(name));
-		out.write(Util.castIntArrToByteArr(data));
+		Util.writeIntArrToStream(out, data);
 	}
 }
