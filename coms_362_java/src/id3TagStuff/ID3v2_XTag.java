@@ -4,8 +4,14 @@ import id3TagStuff.frames.ID3v2_XFrame;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +22,7 @@ public class ID3v2_XTag {
 	private File mp3File;
 	private ID3v2_XTagHeader header;
 	private List<ID3v2_XFrame> frames;
+	private int paddingSize;
 
 	/**
 	 * Creates a new ID3v2.X tag.
@@ -50,6 +57,7 @@ public class ID3v2_XTag {
 			in.read(frameHeadderBytes);
 			if (new String(frameHeadderBytes).equals(new String(blankHeader))) {
 				byte[] garbage = new byte[bytesLeft - frameHeadderLength];
+				paddingSize = garbage.length;
 				in.read(garbage);
 				bytesLeft = 0;
 				break;
@@ -62,6 +70,30 @@ public class ID3v2_XTag {
 			bytesLeft -= frameHeadderLength;
 			bytesLeft -= frame.getFrameSize();
 		}
+	}
+
+	public void addNewPicFrame(String desc, File picLocation) throws IOException {
+		InputStream newPicIn = new FileInputStream(picLocation);
+		byte[] newPicData = new byte[newPicIn.available()];
+		newPicIn.read(newPicData);
+		if (paddingSize < newPicData.length) {
+			System.out.println("Padding not big enough");
+			// TODO need to rewrite the whole file...later
+		} else {
+			RandomAccessFile randFile = new RandomAccessFile(mp3File, "wb");
+			randFile.seek(header.getTagSize() + header.getHeaderSize());
+			String picID = header.getMajorVersion() < 3 ? "PIC" : "APIC";
+			randFile.write(picID.getBytes());
+			randFile.write(0);
+			randFile.write(0);
+			randFile.write(0);
+			randFile.write(newPicData);
+			randFile.close();
+		}
+	}
+
+	public void addNewCommentFrame(String comment) {
+
 	}
 
 	@Override

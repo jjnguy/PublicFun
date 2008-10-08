@@ -5,12 +5,14 @@ import java.util.Arrays;
 import util.Util;
 
 public class ID3v2_XTagHeader {
-	
+
 	private String tagIdentifier;
 	private int majorVersion, minorVersion, flags;
 	private int tagSize;
+	private int headerSize;
 
 	public ID3v2_XTagHeader(int[] bytes) {
+		headerSize = bytes.length;
 		if (bytes.length != 10)
 			throw new IllegalArgumentException(
 					"The byte string must be exactly 10 bytes long.");
@@ -26,14 +28,18 @@ public class ID3v2_XTagHeader {
 		return tagSize;
 	}
 
-	public int getMajorVersion(){
+	public int getMajorVersion() {
 		return majorVersion;
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("ID: %s, Version: %d.%d, Flags: %d, Size: %d",
 				tagIdentifier, majorVersion, minorVersion, flags, tagSize);
 
+	}
+
+	public int getHeaderSize() {
+		return headerSize;
 	}
 }
