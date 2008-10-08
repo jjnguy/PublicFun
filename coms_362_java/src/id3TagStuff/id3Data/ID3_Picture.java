@@ -1,13 +1,8 @@
 package id3TagStuff.id3Data;
 
-import id3TagStuff.ID3v2_XTag;
-
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.RandomAccessFile;
 import java.util.Arrays;
 
 import util.Util;
@@ -75,7 +70,20 @@ public class ID3_Picture implements ID3v2_XFrameData {
 
 	@Override
 	public int[] getByteRepresentation(int majorVersion) {
-		// TODO Auto-generated method stub
-		return null;
+		byte[] ret = new byte[1 + format_MIME.getBytes().length + 1
+				+ description.getBytes().length + 1 + data.length];
+		int offset = 0;
+		ret[offset++] = 0;
+		System
+				.arraycopy(format_MIME.getBytes(), 0, ret, 1,
+						format_MIME.getBytes().length);
+		offset += format_MIME.getBytes().length;
+		ret[offset++] = 0;
+		System.arraycopy(description.getBytes(), 0, ret, offset,
+				description.getBytes().length);
+		offset += description.getBytes().length;
+		ret[offset++] = 0;
+		System.arraycopy(data, 0, ret, offset, data.length);
+		return Util.castByteArrToIntArr(ret);
 	}
 }

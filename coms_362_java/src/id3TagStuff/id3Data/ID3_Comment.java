@@ -1,6 +1,5 @@
 package id3TagStuff.id3Data;
 
-
 import java.util.Arrays;
 
 import util.Util;
@@ -27,7 +26,11 @@ public class ID3_Comment implements ID3v2_XFrameData {
 
 	@Override
 	public int[] getByteRepresentation(int versionNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		// encoding + language + empty comment description + comment
+		byte[] ret = new byte[1 + 3 + 1 + comment.length()];
+		ret[0] = ret[4] = 0;
+		System.arraycopy(language.getBytes(), 0, ret, 1, language.getBytes().length);
+		System.arraycopy(comment.getBytes(), 0, ret, 5, comment.getBytes().length);
+		return Util.castByteArrToIntArr(ret);
 	}
 }

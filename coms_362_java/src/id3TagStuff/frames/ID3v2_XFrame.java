@@ -61,14 +61,15 @@ public class ID3v2_XFrame {
 	 * 
 	 * @return
 	 */
-	public int[] getFrameData(int majorVersionNumber){
-		int[] ret = new int[(majorVersionNumber < 3 ? 6:10) +header.getSize()];
+	public int[] getFrameData(int majorVersionNumber) {
+		// TODO needs to combine the frame header bytes and the data bytes to make the
+		// whole frame
+		int[] ret = new int[(majorVersionNumber < 3 ? 6 : 10) + header.getSize()];
 		String headerStr = header.getID();
-		if (majorVersionNumber < 3 && headerStr.length() == 10){
+		if (majorVersionNumber < 3 && headerStr.length() == 10) {
 			headerStr = ID3v2_XFrameHeader.translate3ByteTagTo4ByteTagAndBack(headerStr);
 		}
-		
-		
+
 		return ret;
 	}
 }

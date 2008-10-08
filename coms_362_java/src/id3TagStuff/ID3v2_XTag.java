@@ -76,16 +76,17 @@ public class ID3v2_XTag {
 
 	/**
 	 * Immediately adds the data onto the tag in the file
+	 * 
 	 * @param toAdd
 	 */
-	public void addID3v2_XFrame(ID3v2_XFrame toAdd){
-		
+	public void addID3v2_XFrame(ID3v2_XFrame toAdd) {
+
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("File name: %s, Header data: %s", mp3File.getName(), header
-				.toString());
+		return String.format("ID3v2.%d, file name: %s", mp3File.getName(), header
+				.getMajorVersion());
 	}
 
 	public int getPaddingSize() {
