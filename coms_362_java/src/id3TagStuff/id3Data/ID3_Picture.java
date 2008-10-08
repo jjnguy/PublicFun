@@ -2,6 +2,7 @@ package id3TagStuff.id3Data;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -29,8 +30,8 @@ public class ID3_Picture implements ID3v2_XFrameData {
 				4 + descWidth)));
 		this.data = Arrays.copyOfRange(dataP, 4 + descWidth + 2, dataP.length);
 	}
-	
-	public ID3_Picture(int[] dataP, File saveToLocation) throws IOException{
+
+	public ID3_Picture(int[] dataP, File saveToLocation) throws IOException {
 		this(dataP);
 		PrintStream out = new PrintStream(saveToLocation);
 		Util.writeIntArrToStream(out, data);
@@ -44,5 +45,15 @@ public class ID3_Picture implements ID3v2_XFrameData {
 	@Override
 	public String getType() {
 		return "Picture";
+	}
+
+	public void saveAs(File loc) throws IOException {
+		String name = loc.getName();
+		if (!name.endsWith("." + format.toLowerCase())
+				&& !name.endsWith("." + format.toUpperCase())) {
+			name += "." + format;
+		}
+		PrintStream out = new PrintStream(new File(name));
+		out.write(Util.castIntArrToByteArr(data));
 	}
 }

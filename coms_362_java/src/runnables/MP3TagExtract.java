@@ -2,6 +2,7 @@ package runnables;
 
 import id3TagStuff.ID3v2_XTag;
 import id3TagStuff.frames.ID3v2_XFrame;
+import id3TagStuff.id3Data.ID3_Picture;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class MP3TagExtract {
 	public static int VIEW_INFO_OPTION;
 	public static int EXTRACT_PIC_OPTION;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Scanner stdin = new Scanner(System.in);
 		File file = null;
 		if (args.length == 0) {
@@ -79,6 +80,18 @@ public class MP3TagExtract {
 			}
 		} else if (option == EXTRACT_PIC_OPTION) {
 			// TODO extract stuff
+			ID3v2_XFrame picFrame = null;
+			for (ID3v2_XFrame frame : frames) {
+				if (frame.getFrameType().matches("PIC|APIC")) {
+					picFrame = frame;
+					break;
+				}
+			}
+			System.out.println("Where would you like to save the picture?");
+			System.out.print(">>");
+			File loc = new File(stdin.nextLine());
+			ID3_Picture pic = (ID3_Picture) picFrame.getData();
+			pic.saveAs(loc);
 		} else {
 			System.out.println("NOT AN OPTION FUCKER!!!");
 			System.exit(0);
