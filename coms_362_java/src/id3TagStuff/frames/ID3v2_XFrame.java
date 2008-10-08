@@ -42,4 +42,12 @@ public class ID3v2_XFrame {
 	public String getFrameType() {
 		return header.getID();
 	}
+
+	public String getEnglishTagDescription() {
+		return ID3v2_XFrameHeader.translateFrameHeaderStringToEnglish(header.getID());
+	}
+
+	public ID3v2_XFrameData getData() {
+		return data;
+	}
 }
