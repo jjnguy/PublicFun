@@ -1,10 +1,13 @@
 package id3TagStuff.id3Data;
 
+import id3TagStuff.ID3v2_XTag;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.RandomAccessFile;
 import java.util.Arrays;
 
 import util.Util;
@@ -66,9 +69,11 @@ public class ID3_Picture implements ID3v2_XFrameData {
 	 * 
 	 * @param mp3FileToEmbedInto
 	 *            the file to embed the picture into
+	 * @throws IOException 
 	 */
-	public void embedInTag(File mp3FileToEmbedInto) {
-
+	public void embedInTag(File mp3FileToEmbedInto) throws IOException {
+		ID3v2_XTag tag = new ID3v2_XTag(mp3FileToEmbedInto);
+		
 	}
 
 	public void saveAs(File loc) throws IOException {

@@ -51,4 +51,12 @@ public class ID3v2_XFrame {
 	public ID3v2_XFrameData getData() {
 		return data;
 	}
+	
+	/**
+	 * Gets the raw bytes that can be directly written to a ID3 tag
+	 * @return
+	 */
+	public int[] getFrameData(int majorVersionNumber){
+		
+	}
 }
