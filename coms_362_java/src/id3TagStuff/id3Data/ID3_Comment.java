@@ -24,4 +24,10 @@ public class ID3_Comment implements ID3v2_XFrameData {
 		// TODO Auto-generated method stub
 		return "Comment";
 	}
+
+	@Override
+	public int[] getByteRepresentation(int versionNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

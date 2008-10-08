@@ -63,19 +63,6 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		return "Picture";
 	}
 
-	/**
-	 * Embeds the picture at the end of the ID3v2.X Tag. Adjusts to work with v2.2, v2.3,
-	 * and v2.4
-	 * 
-	 * @param mp3FileToEmbedInto
-	 *            the file to embed the picture into
-	 * @throws IOException 
-	 */
-	public void embedInTag(File mp3FileToEmbedInto) throws IOException {
-		ID3v2_XTag tag = new ID3v2_XTag(mp3FileToEmbedInto);
-		
-	}
-
 	public void saveAs(File loc) throws IOException {
 		String name = loc.getName();
 		if (!name.endsWith("." + format_MIME.toLowerCase())
@@ -84,5 +71,11 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		}
 		PrintStream out = new PrintStream(new File(name));
 		Util.writeIntArrToStream(out, data);
+	}
+
+	@Override
+	public int[] getByteRepresentation(int majorVersion) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

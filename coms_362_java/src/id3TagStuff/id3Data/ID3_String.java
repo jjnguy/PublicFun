@@ -19,4 +19,10 @@ public class ID3_String implements ID3v2_XFrameData {
 		// TODO Auto-generated method stub
 		return "String";
 	}
+
+	@Override
+	public int[] getByteRepresentation(int versionNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
