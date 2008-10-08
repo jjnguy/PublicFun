@@ -2,7 +2,9 @@ package id3TagStuff.frames;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import util.Util;
@@ -10,6 +12,7 @@ import util.Util;
 public class ID3v2_XFrameHeader {
 
 	private static final String TRANSLATOR_FILE_LOCATION = "tagToEnglish";
+	private static final String ID_CHANGE_FILE_LOCATION = "v2IDtov3TD";
 	private String tagID;
 	private int size;
 	private int flags;
@@ -52,10 +55,10 @@ public class ID3v2_XFrameHeader {
 		return flags;
 	}
 
-	public int getVersion(){
+	public int getVersion() {
 		return majorVersion;
 	}
-	
+
 	public static String translateFrameHeaderStringToEnglish(String headerType) {
 		Scanner fin = null;
 		try {
@@ -88,5 +91,31 @@ public class ID3v2_XFrameHeader {
 		if (Util.DEBUG)
 			System.out.println("The unknown tag " + headerType + " was found.");
 		return "Unknown Tag";
+	}
+
+	public static String translate3ByteTagTo4ByteTagAndBack(String id) {
+		if (id.length() != 3 || id.length() != 4)
+			throw new IllegalArgumentException("Frame ID's must be 3 or 4 bytes long.");
+		Scanner fin;
+		try {
+			fin = new Scanner(new File(ID_CHANGE_FILE_LOCATION));
+		} catch (FileNotFoundException e) {
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
+			return id;
+		}
+		while (fin.hasNextLine()) {
+			String[] ids = fin.nextLine().split(",");
+			if (ids.length == 1 && ids[0].trim().equals(id)) {
+				throw new NoSuchElementException("The tag " + id
+						+ " cannot be translated");
+			}
+			if (ids[0].trim().equals(id))
+				return ids[1].trim();
+			if (ids[1].trim().equals(id))
+				return ids[0].trim();
+		}
+		throw new NoSuchElementException("The tag " + id + " is nt supported.");
 	}
 }

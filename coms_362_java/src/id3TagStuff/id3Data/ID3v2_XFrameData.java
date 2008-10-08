@@ -6,5 +6,6 @@ public interface ID3v2_XFrameData {
 	
 	public String getType();
 
-	public ID3v2_XFrame createFrame(int majorVersion);
+	public int[] getByteRepresentation();
+	
 }

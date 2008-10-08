@@ -35,6 +35,10 @@ public class ID3v2_XFrame {
 		return header.getSize();
 	}
 
+	public int getTotalSize() {
+		return getFrameSize() + header.getVersion() < 3 ? 6 : 10;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Type: %s, Data: %s", header.getID(), data.toString());
@@ -51,12 +55,20 @@ public class ID3v2_XFrame {
 	public ID3v2_XFrameData getData() {
 		return data;
 	}
-	
+
 	/**
 	 * Gets the raw bytes that can be directly written to a ID3 tag
+	 * 
 	 * @return
 	 */
 	public int[] getFrameData(int majorVersionNumber){
+		int[] ret = new int[(majorVersionNumber < 3 ? 6:10) +header.getSize()];
+		String headerStr = header.getID();
+		if (majorVersionNumber < 3 && headerStr.length() == 10){
+			headerStr = ID3v2_XFrameHeader.translate3ByteTagTo4ByteTagAndBack(headerStr);
+		}
 		
+		
+		return ret;
 	}
 }

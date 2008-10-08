@@ -78,7 +78,7 @@ public class ID3v2_XTag {
 	 * Immediately adds the data onto the tag in the file
 	 * @param toAdd
 	 */
-	public void addID3v2_XFrameData(ID3v2_XFrameData toAdd){
+	public void addID3v2_XFrame(ID3v2_XFrame toAdd){
 		
 	}
 	
