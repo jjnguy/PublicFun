@@ -63,8 +63,8 @@ public class ID3v2_XTag {
 				bytesLeft = 0;
 				break;
 			}
-			ID3v2_XFrame frame = new ID3v2_XFrame(Util
-					.castByteArrToIntArr(frameHeadderBytes), in);
+			ID3v2_XFrame frame = new ID3v2_XFrame(Util.castByteArrToIntArr(frameHeadderBytes),
+					in);
 
 			frames.add(frame);
 			// we use <framelength> + <headerlength> bytes every time
@@ -78,9 +78,22 @@ public class ID3v2_XTag {
 	 * Immediately adds the data onto the tag in the file
 	 * 
 	 * @param toAdd
+	 * @throws IOException
+	 * @throws UnsupportedOperationException
+	 *             Throws the exception if the new frame will not fit within the paddin
+	 *             that we have left
 	 */
-	public void addID3v2_XFrame(ID3v2_XFrame toAdd) {
+	public void addID3v2_XFrame(ID3v2_XFrame toAdd) throws IOException {
+		int[] toWrite = toAdd.getFrameData(header.getMajorVersion());
+		if (toWrite.length > paddingSize)
+			throw new UnsupportedOperationException(
+					"We do not support adding frames without enough padding.");
+		paddingSize -= toWrite.length;
+		frames.add(toAdd); // we need to update the current object as well as the file
+		RandomAccessFile file = new RandomAccessFile(mp3File, "rw");
+		file.seek(header.getHeaderSize());
 
+		file.write(Util.castIntArrToByteArr(toWrite));
 	}
 
 	@Override
@@ -93,6 +106,10 @@ public class ID3v2_XTag {
 		return paddingSize;
 	}
 
+	public int getVersion(){
+		return header.getMajorVersion();
+	}
+	
 	/**
 	 * Allows access to the frames of the Tag
 	 * 

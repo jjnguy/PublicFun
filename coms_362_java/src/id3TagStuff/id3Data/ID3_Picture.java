@@ -17,8 +17,7 @@ public class ID3_Picture implements ID3v2_XFrameData {
 	public ID3_Picture(int majorVersion, int[] dataP) throws IOException {
 		if (Util.DEBUG)
 			System.out.println("We are creating a pic");
-		format_MIME = new String(Util
-				.castIntArrToByteArr(Arrays.copyOfRange(dataP, 1, 4)));
+		format_MIME = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(dataP, 1, 4)));
 		type = (byte) dataP[4];
 		int descWidth = 0;
 		for (int i = 5; i < dataP.length; i++) {
@@ -32,8 +31,7 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		this.data = Arrays.copyOfRange(dataP, 4 + descWidth + 2, dataP.length);
 	}
 
-	public ID3_Picture(int majorVersion, int[] dataP, File saveToLocation)
-			throws IOException {
+	public ID3_Picture(int majorVersion, int[] dataP, File saveToLocation) throws IOException {
 		this(majorVersion, dataP);
 		PrintStream out = new PrintStream(saveToLocation);
 		Util.writeIntArrToStream(out, data);
@@ -70,17 +68,17 @@ public class ID3_Picture implements ID3v2_XFrameData {
 
 	@Override
 	public int[] getByteRepresentation(int majorVersion) {
+		// encoding + mime_type + pic type + desc + data
 		byte[] ret = new byte[1 + format_MIME.getBytes().length + 1
 				+ description.getBytes().length + 1 + data.length];
 		int offset = 0;
 		ret[offset++] = 0;
-		System
-				.arraycopy(format_MIME.getBytes(), 0, ret, 1,
-						format_MIME.getBytes().length);
+		System.arraycopy(format_MIME.getBytes(), 0, ret, 1, format_MIME.getBytes().length);
 		offset += format_MIME.getBytes().length;
 		ret[offset++] = 0;
-		System.arraycopy(description.getBytes(), 0, ret, offset,
-				description.getBytes().length);
+		System
+				.arraycopy(description.getBytes(), 0, ret, offset,
+						description.getBytes().length);
 		offset += description.getBytes().length;
 		ret[offset++] = 0;
 		System.arraycopy(data, 0, ret, offset, data.length);

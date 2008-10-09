@@ -21,8 +21,7 @@ public class ID3v2_XFrameHeader {
 	public ID3v2_XFrameHeader(int[] headerBytes) {
 		if (headerBytes.length == 6) {
 			majorVersion = 2;
-			tagID = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(headerBytes,
-					0, 3)));
+			tagID = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(headerBytes, 0, 3)));
 			size = (headerBytes[3] << 16) + (headerBytes[4] << 8) + headerBytes[5];
 			if (size < 0) {
 				size = size & 0xffff;
@@ -30,10 +29,9 @@ public class ID3v2_XFrameHeader {
 			flags = 0;
 		} else if (headerBytes.length == 10) {
 			majorVersion = 3;
-			tagID = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(headerBytes,
-					0, 4)));
-			size = (headerBytes[4] << 24) + (headerBytes[5] << 16)
-					+ (headerBytes[6] << 8) + headerBytes[7];
+			tagID = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(headerBytes, 0, 4)));
+			size = (headerBytes[4] << 24) + (headerBytes[5] << 16) + (headerBytes[6] << 8)
+					+ headerBytes[7];
 			if (size < 0) {
 				size = size & 0xffff;
 			}
@@ -41,6 +39,12 @@ public class ID3v2_XFrameHeader {
 		} else {
 			throw new IllegalArgumentException("Header bytes must 6 or 10");
 		}
+	}
+
+	public ID3v2_XFrameHeader(int version) {
+		majorVersion = version;
+		flags = 0;
+		tagID = version < 3 ? "XXX" : "XXXX";
 	}
 
 	public int getSize() {
@@ -57,6 +61,22 @@ public class ID3v2_XFrameHeader {
 
 	public int getVersion() {
 		return majorVersion;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public void setTagID(String ID) {
+		tagID = ID;
+	}
+
+	public void setFlags() {
+		flags = 0;
+	}
+
+	public void setVersion(int version) {
+		majorVersion = version;
 	}
 
 	public static String translateFrameHeaderStringToEnglish(String headerType) {
@@ -108,8 +128,7 @@ public class ID3v2_XFrameHeader {
 		while (fin.hasNextLine()) {
 			String[] ids = fin.nextLine().split(",");
 			if (ids.length == 1 && ids[0].trim().equals(id)) {
-				throw new NoSuchElementException("The tag " + id
-						+ " cannot be translated");
+				throw new NoSuchElementException("The tag " + id + " cannot be translated");
 			}
 			if (ids[0].trim().equals(id))
 				return ids[1].trim();

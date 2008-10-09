@@ -24,10 +24,18 @@ public class ID3v2_XFrame {
 		} else if (header.getID().matches("COM|COMM")) {
 			data = new ID3_Comment(Util.castByteArrToIntArr(frameBytes));
 		} else if (header.getID().matches("PIC|APIC")) {
-			data = new ID3_Picture(header.getVersion(), Util
-					.castByteArrToIntArr(frameBytes));
+			data = new ID3_Picture(header.getVersion(), Util.castByteArrToIntArr(frameBytes));
 		} else {
 			data = new ID3_String(Util.castByteArrToIntArr(frameBytes));
+		}
+	}
+
+	public ID3v2_XFrame(ID3v2_XFrameData data, int vers) {
+		this.data = data;
+		header = new ID3v2_XFrameHeader(vers);
+		header.setSize(data.getByteRepresentation(vers).length);
+		if (data.getClass() == ID3_Picture.class) {
+			header.setTagID(vers < 3 ? "PIC" : "APIC");
 		}
 	}
 
@@ -64,12 +72,33 @@ public class ID3v2_XFrame {
 	public int[] getFrameData(int majorVersionNumber) {
 		// TODO needs to combine the frame header bytes and the data bytes to make the
 		// whole frame
-		int[] ret = new int[(majorVersionNumber < 3 ? 6 : 10) + header.getSize()];
 		String headerStr = header.getID();
-		if (majorVersionNumber < 3 && headerStr.length() == 10) {
+		if (majorVersionNumber < 3 && headerStr.length() == 4) {
+			headerStr = ID3v2_XFrameHeader.translate3ByteTagTo4ByteTagAndBack(headerStr);
+		} else if (majorVersionNumber >= 3 && headerStr.length() == 3) {
 			headerStr = ID3v2_XFrameHeader.translate3ByteTagTo4ByteTagAndBack(headerStr);
 		}
 
-		return ret;
+		int[] dataBytes = data.getByteRepresentation(majorVersionNumber);
+		int totalLength = dataBytes.length;
+		int headerLength = (majorVersionNumber < 3 ? 6 : 10) + header.getSize();
+		totalLength += headerLength;
+
+		byte[] ret = new byte[totalLength];
+		int offset = 0;
+		System.arraycopy(headerStr.getBytes(), 0, ret, offset, headerStr.getBytes().length);
+		offset += headerStr.getBytes().length;
+
+		int size = header.getSize();
+		// TODO translate size into three bytes
+		byte b1 = (byte) ((size >> 16) & 0xff);
+		byte b2 = (byte) ((size >> 8) & 0xff);
+		byte b3 = (byte) (size & 0xff);
+		ret[offset++] = b1;
+		ret[offset++] = b2;
+		ret[offset++] = b3;
+
+		System.arraycopy(dataBytes, 0, ret, offset, dataBytes.length);
+		return Util.castByteArrToIntArr(ret);
 	}
 }
