@@ -80,15 +80,17 @@ public class ID3v2_XTag {
 	 * @param toAdd
 	 * @throws IOException
 	 * @throws UnsupportedOperationException
-	 *             Throws the exception if the new frame will not fit within the paddin
-	 *             that we have left
+	 *             Throws the exception if the new frame will not fit within the paddin that we
+	 *             have left
 	 */
 	public void addID3v2_XFrame(ID3v2_XFrame toAdd) throws IOException {
 		int[] toWrite = toAdd.getFrameData(header.getMajorVersion());
-		if (toWrite.length > paddingSize)
-			throw new UnsupportedOperationException(
-					"We do not support adding frames without enough padding.");
+		// if (toWrite.length > paddingSize)
+		// throw new UnsupportedOperationException(
+		// "We do not support adding frames without enough padding.");
 		paddingSize -= toWrite.length;
+		if (Util.DEBUG)
+			System.out.println(paddingSize);
 		frames.add(toAdd); // we need to update the current object as well as the file
 		RandomAccessFile file = new RandomAccessFile(mp3File, "rw");
 		file.seek(header.getHeaderSize());
@@ -106,10 +108,10 @@ public class ID3v2_XTag {
 		return paddingSize;
 	}
 
-	public int getVersion(){
+	public int getVersion() {
 		return header.getMajorVersion();
 	}
-	
+
 	/**
 	 * Allows access to the frames of the Tag
 	 * 

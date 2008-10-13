@@ -1,5 +1,7 @@
 package util;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,7 +9,7 @@ import java.io.OutputStream;
 public class Util {
 
 	public static final boolean DEBUG = true;
-	
+
 	public static byte[] castIntArrToByteArr(int[] arr) {
 		byte[] ret = new byte[arr.length];
 		for (int i = 0; i < arr.length; i++) {
@@ -38,4 +40,15 @@ public class Util {
 			out.write(arrToWrite[i]);
 		}
 	}
+
+	public static int[] getBytesFromFile(File file) throws IOException {
+		InputStream in = new FileInputStream(file);
+		int[] b = new int[in.available()];
+		int count = 0;
+		while(in.available() > 0){
+			b[count++] = in.read();
+		}
+		return b;
+	}
+	
 }

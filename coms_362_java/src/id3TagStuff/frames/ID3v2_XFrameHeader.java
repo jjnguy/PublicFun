@@ -10,9 +10,11 @@ import java.util.Scanner;
 import util.Util;
 
 public class ID3v2_XFrameHeader {
-
-	private static final String TRANSLATOR_FILE_LOCATION = "tagToEnglish";
-	private static final String ID_CHANGE_FILE_LOCATION = "v2IDtov3TD";
+	private static final String Tag_ID_FileFolder = "FrameID_Files";
+	private static final String TRANSLATOR_FILE_LOCATION = Tag_ID_FileFolder + '/'
+			+ "tagToEnglish";
+	private static final String ID_CHANGE_FILE_LOCATION = Tag_ID_FileFolder + '/'
+			+ "v2IDtov3TD";
 	private String tagID;
 	private int size;
 	private int flags;

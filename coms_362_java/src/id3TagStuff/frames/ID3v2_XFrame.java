@@ -84,9 +84,9 @@ public class ID3v2_XFrame {
 		int headerLength = (majorVersionNumber < 3 ? 6 : 10) + header.getSize();
 		totalLength += headerLength;
 
-		byte[] ret = new byte[totalLength];
+		int[] ret = new int[totalLength];
 		int offset = 0;
-		System.arraycopy(headerStr.getBytes(), 0, ret, offset, headerStr.getBytes().length);
+		System.arraycopy(Util.castByteArrToIntArr(headerStr.getBytes()), 0, ret, offset, headerStr.getBytes().length);
 		offset += headerStr.getBytes().length;
 
 		int size = header.getSize();
@@ -99,6 +99,6 @@ public class ID3v2_XFrame {
 		ret[offset++] = b3;
 
 		System.arraycopy(dataBytes, 0, ret, offset, dataBytes.length);
-		return Util.castByteArrToIntArr(ret);
+		return ret;
 	}
 }

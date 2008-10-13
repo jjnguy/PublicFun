@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.omg.CORBA._PolicyStub;
+
 import util.Util;
 
 import id3TagStuff.ID3v2_XTag;
@@ -20,11 +22,9 @@ public class AddNewFrameTest {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		ID3v2_XTag tag = new ID3v2_XTag(new File("TestFiles/07 Suck My Kiss.mp3"));
-		InputStream in = new FileInputStream(new File("TestFiles/compiler.PNG"));
-		byte[] b = new byte[in.available()];
-		in.read(b);
-		ID3v2_XFrame toAdd = new ID3v2_XFrame(new ID3_Picture(tag.getVersion(), Util
-				.castByteArrToIntArr(b)), tag.getVersion());
+		int[] b = Util.getBytesFromFile(new File("TestFiles/compiler.PNG"));
+		ID3_Picture idPic = new ID3_Picture("A pic that I added", (byte) 0, (byte) 0, "png", b);
+		ID3v2_XFrame toAdd = new ID3v2_XFrame(idPic, tag.getVersion());
 		tag.addID3v2_XFrame(toAdd);
 	}
 
