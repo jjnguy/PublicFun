@@ -27,5 +27,4 @@ public class AddNewFrameTest {
 		ID3v2_XFrame toAdd = new ID3v2_XFrame(idPic, tag.getVersion());
 		tag.addID3v2_XFrame(toAdd);
 	}
-
 }
