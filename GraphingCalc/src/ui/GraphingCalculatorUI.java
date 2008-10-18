@@ -113,6 +113,9 @@ public class GraphingCalculatorUI {
 			plotTanLine();
 		if (curType == LINE_GRAPH)
 			plotLine();
+		// non-homework option
+		if (curType == POLYNOMIAL_GRAPH)
+			plotPolynomialLine();
 	}
 
 	private void handleLineInput() {
@@ -246,4 +249,21 @@ public class GraphingCalculatorUI {
 		System.out.println(fullMenu);
 	}
 
+	public static final boolean HOMEWORK_MODE = false;
+
+	// Begin extra code not in the homework spec
+
+	private static final int POLYNOMIAL_GRAPH = 5;
+
+	private void plotPolynomialLine() {
+		
+	}
+
+	private void polynomialMenu() {
+		final String optionA = "a - plot a polynomial";
+		final String optionB = "b - change a term's coefficient";
+		final String optionQ = "q - quit";
+		final String fullMenu = optionA + '\n' + optionB + '\n' + optionQ;
+		System.out.println(fullMenu);
+	}
 }

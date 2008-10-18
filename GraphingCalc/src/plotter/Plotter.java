@@ -33,7 +33,7 @@ public class Plotter extends JPanel {
 	private static final int RELATIVE_Y_MAX = Y_MAX * 2;
 
 	private static final int POINT_DIAMETER = 4;
-	private static final double SLOPE_TOLLERANCE = 90;
+	private static final double SLOPE_TOLLERANCE = Double.MAX_VALUE;
 
 	private List<Point2D.Double> points;
 	private boolean connectedMode;
@@ -111,7 +111,7 @@ public class Plotter extends JPanel {
 	}
 
 	private void paintPoints(Graphics2D g) {
-		boolean paintHugeSlope = false;
+		boolean paintHugeSlope = true;
 		Color originalColor = g.getColor();
 		Stroke originalStroke = g.getStroke();
 		g.setColor(POINT_COLOR);
@@ -134,7 +134,7 @@ public class Plotter extends JPanel {
 				}
 				// For tan graphs we want to exclude the lines between points that shouldn't be
 				// there
-				if (!paintHugeSlope && Math.abs(slope) < SLOPE_TOLLERANCE) {
+				if (paintHugeSlope || Math.abs(slope) < SLOPE_TOLLERANCE) {
 					g.setColor(LINE_COLOR);
 					g.drawLine(oldJavaPoint.x, oldJavaPoint.y, javaPoint.x, javaPoint.y);
 					g.setColor(POINT_COLOR);
@@ -189,5 +189,4 @@ public class Plotter extends JPanel {
 		g.setStroke(originalStroke);
 		g.setColor(originalColor);
 	}
-
 }
