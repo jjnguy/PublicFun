@@ -1,4 +1,5 @@
 package plotter;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -189,26 +190,4 @@ public class Plotter extends JPanel {
 		g.setColor(originalColor);
 	}
 
-	public static void plotTanCurve(Plotter p, double step) {
-		for (double i = Plotter.X_MIN; i <= Plotter.X_MAX; i += step) {
-			p.addPoint(i, Math.tan(i));
-		}
-	}
-
-	public static void plotSinCurve(Plotter p, double step) {
-		for (double i = Plotter.X_MIN; i <= Plotter.X_MAX; i += step) {
-			p.addPoint(i, Math.sin(i));
-		}
-	}
-
-	public static void plotTanCurve(Plotter p) {
-		plotTanCurve(p, .01);
-	}
-
-	public static void main(String[] args) {
-		Plotter p = new Plotter(true);
-		p.startPlotter();
-		plotTanCurve(p, .01);
-		// plotTanCurve(p, .1);
-	}
 }
