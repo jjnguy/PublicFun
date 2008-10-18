@@ -28,9 +28,10 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		} else {
 			int mimelength = 0;
 			for (int i = offset; i < dataP.length; i++) {
-				mimelength++;
-				if (dataP[i] == (byte) 00)
+				if (dataP[i] == (byte) 00) {
 					break;
+				}
+				mimelength++;
 			}
 			format_MIME = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(dataP,
 					offset, offset + mimelength)));
