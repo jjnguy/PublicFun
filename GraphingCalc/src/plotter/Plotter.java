@@ -1,3 +1,4 @@
+package plotter;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,6 +22,8 @@ public class Plotter extends JPanel {
 	private static final Color POINT_COLOR = Color.BLACK;
 	private static final Color RULE_COLOR = Color.LIGHT_GRAY;
 
+	public static final int VIEWPORT_MAX = 10;
+	public static final int VIEWPORT_MIN = -10;
 	public static final int Y_MAX = 10;
 	public static final int Y_MIN = -10;
 	public static final int X_MAX = 10;
@@ -38,7 +41,7 @@ public class Plotter extends JPanel {
 	private JFrame plotHolder;
 
 	public Plotter() {
-		this(false);
+		this(true);
 	}
 
 	public Plotter(boolean connectedModeP) {
@@ -91,6 +94,7 @@ public class Plotter extends JPanel {
 		Runnable r = new Runnable() {
 			@Override
 			public void run() {
+				points.clear();
 				plotHolder.dispose();
 			}
 		};
@@ -101,7 +105,7 @@ public class Plotter extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		paingGrid(g2);
+		paintGrid(g2);
 		paintPoints(g2);
 	}
 
@@ -157,7 +161,7 @@ public class Plotter extends JPanel {
 		return new Point(javaCoordX, javaCoordY);
 	}
 
-	private void paingGrid(Graphics2D g) {
+	private void paintGrid(Graphics2D g) {
 		// save some things before changing them
 		Color originalColor = g.getColor();
 		Stroke originalStroke = g.getStroke();
@@ -205,6 +209,6 @@ public class Plotter extends JPanel {
 		Plotter p = new Plotter(true);
 		p.startPlotter();
 		plotTanCurve(p, .01);
-		//plotTanCurve(p, .1);
+		// plotTanCurve(p, .1);
 	}
 }
