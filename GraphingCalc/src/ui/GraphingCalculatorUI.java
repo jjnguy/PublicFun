@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import plotter.Plotter;
@@ -55,6 +57,10 @@ public class GraphingCalculatorUI {
 				handleClear();
 			} else if (choice == 'd') {
 				handleChangeGap();
+			} else if (EXTRA_FEAURES && choice == 'e') {
+				handlePolynomialInput();
+			} else if (EXTRA_FEAURES && choice == 'f') {
+				handleToggleAbsMode();
 			} else {
 				allertOfInvalidInput();
 			}
@@ -112,7 +118,7 @@ public class GraphingCalculatorUI {
 		if (curType == TAN_GRAPH)
 			plotTanLine();
 		if (curType == LINE_GRAPH)
-			plotLine();
+			plotStraitLine();
 		// non-homework option
 		if (curType == POLYNOMIAL_GRAPH)
 			plotPolynomialLine();
@@ -171,25 +177,37 @@ public class GraphingCalculatorUI {
 
 	private void plotTanLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			myPlotter.addPoint(i, amplitude * Math.tan(i));
+			double yVal = amplitude * Math.tan(i);
+			if (absMode)
+				yVal = Math.abs(yVal);
+			myPlotter.addPoint(i, yVal);
 		}
 	}
 
 	private void plotSinLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			myPlotter.addPoint(i, amplitude * Math.sin(i));
+			double yVal = amplitude * Math.sin(i);
+			if (absMode)
+				yVal = Math.abs(yVal);
+			myPlotter.addPoint(i, yVal);
 		}
 	}
 
 	private void plotCosLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			myPlotter.addPoint(i, amplitude * Math.cos(i));
+			double yVal = amplitude * Math.cos(i);
+			if (absMode)
+				yVal = Math.abs(yVal);
+			myPlotter.addPoint(i, yVal);
 		}
 	}
 
-	private void plotLine() {
+	private void plotStraitLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			myPlotter.addPoint(i, slope * i + yIntercept);
+			double yVal = slope * i + yIntercept;
+			if (absMode)
+				yVal = Math.abs(yVal);
+			myPlotter.addPoint(i, yVal);
 		}
 	}
 
@@ -220,8 +238,14 @@ public class GraphingCalculatorUI {
 		final String optionD = "d - change gap between samples";
 		final String optionQ = "q - quit";
 
-		final String fullMenu = optionA + '\n' + optionB + '\n' + optionC + '\n' + optionD
-				+ '\n' + optionQ;
+		final String optionE = "e - plot polynomial line";
+		final String optionF = "f - toggle absolute value mode (currently "
+				+ (absMode ? "ON" : "OFF") + ")";
+
+		String fullMenu = optionA + '\n' + optionB + '\n' + optionC + '\n' + optionD + '\n';
+		if (EXTRA_FEAURES)
+			fullMenu += optionE + '\n' + optionF + '\n';
+		fullMenu += optionQ;
 
 		System.out.println(fullMenu);
 	}
@@ -249,14 +273,91 @@ public class GraphingCalculatorUI {
 		System.out.println(fullMenu);
 	}
 
-	public static final boolean HOMEWORK_MODE = false;
+	/////////////////////////////////////////////////
+	/// Begin extra code not in the homework spec //
+	///////////////////////////////////////////////
 
-	// Begin extra code not in the homework spec
+	// TODO derivative mode
+
+	public static final boolean EXTRA_FEAURES = true;
 
 	private static final int POLYNOMIAL_GRAPH = 5;
+	private boolean absMode = false;
+
+	/**
+	 * Represents a polynomial function
+	 * the order of the terms is as follows:
+	 * ax^0 + bx^1 + cx^2 and so on
+	 * So, in other words the index of the coefficient is
+	 * the power of x in each term
+	 */
+	private List<Double> polynomialCoefficients;
+
+	private void handleToggleAbsMode() {
+		absMode = !absMode;
+		refreshGraph();
+	}
+
+	private void handlePolynomialInput() {
+		while (6 == 6) {
+			polynomialMenu();
+			char choice = 0;
+			try {
+				choice = getUserInputMenuChoice();
+			} catch (IllegalArgumentException e) {
+				allertOfInvalidInput();
+				continue;
+			}
+			if (choice == 'q')
+				return;
+			if (choice == 'a') {
+				try {
+					polynomialCoefficients = getCoeficients("Please enter the formula: ");
+					curType = POLYNOMIAL_GRAPH;
+				} catch (IllegalArgumentException e) {
+					allertOfInvalidInput();
+				}
+			} else if (choice == 'b') {
+				System.out.println("Sorry, this is not implemented yet.");
+			}
+			refreshGraph();
+		}
+	}
+
+	private List<Double> getCoeficients(String prompt) {
+		List<Double> ret = new ArrayList<Double>();
+		System.out.println("Use the format:  ax^0 (+/-)bx^1 (+/-)cx^3.");
+		System.out.println("Note, the spacing is important");
+		System.out.println("To leave out a term use a coefficient of 0.");
+		System.out.println("It is legal to begin with a negtive term.");
+		System.out.print(prompt);
+		String input = stdin.nextLine();
+		String splitBy = "x\\^\\d";
+		String[] brokenDownInput = input.split(splitBy);
+		try {
+			for (String string : brokenDownInput) {
+				ret.add(Double.parseDouble(string.trim()));
+			}
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException();
+		}
+		return ret;
+	}
 
 	private void plotPolynomialLine() {
-		
+		if (polynomialCoefficients == null) {
+			polynomialCoefficients = new ArrayList<Double>();
+		}
+		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
+			double yVal = 0;
+			for (int j = 0; j < polynomialCoefficients.size(); j++) {
+				double coefficient = polynomialCoefficients.get(j);
+				yVal += coefficient * (Math.pow(i, j));
+			}
+			if (absMode)
+				yVal = Math.abs(yVal);
+			myPlotter.addPoint(i, yVal);
+		}
 	}
 
 	private void polynomialMenu() {

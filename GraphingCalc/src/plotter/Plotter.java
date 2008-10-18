@@ -27,8 +27,8 @@ public class Plotter extends JPanel {
 	public static final int VIEWPORT_MIN = -10;
 	public static final int Y_MAX = 10;
 	public static final int Y_MIN = -10;
-	public static final int X_MAX = 10;
-	public static final int X_MIN = -10;
+	public static final int X_MAX = VIEWPORT_MAX;
+	public static final int X_MIN = VIEWPORT_MIN;
 	private static final int RELATIVE_X_MAX = X_MAX * 2;
 	private static final int RELATIVE_Y_MAX = Y_MAX * 2;
 
