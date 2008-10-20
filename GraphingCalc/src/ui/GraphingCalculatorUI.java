@@ -61,6 +61,10 @@ public class GraphingCalculatorUI {
 				handlePolynomialInput();
 			} else if (EXTRA_FEAURES && choice == 'f') {
 				handleToggleAbsMode();
+			} else if (choice == 't') {
+				myPlotter.widenView(2);
+			} else if (choice == 'r') {
+				myPlotter.thinView(2);
 			} else {
 				allertOfInvalidInput();
 			}

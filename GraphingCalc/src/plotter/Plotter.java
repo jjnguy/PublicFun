@@ -23,14 +23,14 @@ public class Plotter extends JPanel {
 	private static final Color POINT_COLOR = Color.BLACK;
 	private static final Color RULE_COLOR = Color.LIGHT_GRAY;
 
-	public static final int VIEWPORT_MAX = 10;
-	public static final int VIEWPORT_MIN = -10;
-	public static final int Y_MAX = 10;
-	public static final int Y_MIN = -10;
-	public static final int X_MAX = VIEWPORT_MAX;
-	public static final int X_MIN = VIEWPORT_MIN;
-	private static final int RELATIVE_X_MAX = X_MAX * 2;
-	private static final int RELATIVE_Y_MAX = Y_MAX * 2;
+	public static int VIEWPORT_MAX = 10;
+	public static int VIEWPORT_MIN = -10;
+	public static int Y_MAX = 10;
+	public static int Y_MIN = -10;
+	public static int X_MAX = VIEWPORT_MAX;
+	public static int X_MIN = VIEWPORT_MIN;
+	private static int RELATIVE_X_MAX = X_MAX - X_MIN;
+	private static int RELATIVE_Y_MAX = Y_MAX - Y_MIN;
 
 	private static final int POINT_DIAMETER = 4;
 	private static final double SLOPE_TOLLERANCE = Double.MAX_VALUE;
@@ -109,6 +109,45 @@ public class Plotter extends JPanel {
 		SwingUtilities.invokeLater(r);
 	}
 
+	public void zoomOut(int factor) {
+		changeViewport(X_MAX * factor, X_MIN * factor, Y_MAX * factor, Y_MIN * factor);
+	}
+
+	public void zoomIn(int factor) {
+		changeViewport(X_MAX / factor, X_MIN / factor, Y_MAX / factor, Y_MIN / factor);
+	}
+
+	public void widenView(int factor) {
+		changeViewport(X_MAX * factor, X_MIN * factor, Y_MAX, Y_MIN);
+	}
+
+	public void thinView(int factor) {
+		changeViewport(X_MAX / factor, X_MIN / factor, Y_MAX, Y_MIN);
+	}
+
+	public void growViewHeight(int factor) {
+		changeViewport(X_MAX, X_MIN, Y_MAX * factor, Y_MIN * factor);
+	}
+
+	public void shrinkViewHeight(int factor) {
+		changeViewport(X_MAX, X_MIN, Y_MAX / factor, Y_MIN / factor);
+	}
+
+	public void changeViewport(int xMax, int xMin, int yMax, int yMin) {
+		if (xMax < 1)
+			return;
+		if (yMax < 1)
+			return;
+		X_MAX = xMax;
+		X_MIN = xMin;
+		Y_MAX = yMax;
+		Y_MIN = yMin;
+		VIEWPORT_MAX = X_MAX;
+		VIEWPORT_MIN = X_MIN;
+		RELATIVE_X_MAX = X_MAX * 2;
+		RELATIVE_Y_MAX = Y_MAX * 2;
+	}
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -141,7 +180,6 @@ public class Plotter extends JPanel {
 				double slope;
 				if (oldRegPoint.x - point.x != 0) {
 					slope = (oldRegPoint.y - point.y) / (double) (oldRegPoint.x - point.x);
-					// System.out.println(slope);
 				} else {
 					slope = 0;
 				}
@@ -166,8 +204,8 @@ public class Plotter extends JPanel {
 
 	private static Point shiftPointToJavaCoord(Point2D.Double cartesianCoord,
 			int componentHeight, int componentWidth) {
-		double relativeX = cartesianCoord.x + 10;
-		double relativeY = cartesianCoord.y + 10;
+		double relativeX = cartesianCoord.x + X_MAX;
+		double relativeY = cartesianCoord.y + Y_MAX;
 
 		int javaCoordX = (int) ((relativeX / RELATIVE_X_MAX) * componentWidth);
 		int javaCoordY = componentHeight
@@ -182,7 +220,7 @@ public class Plotter extends JPanel {
 
 		g.setColor(RULE_COLOR);
 
-		final int MINI_LINE_LENGTH = 20;
+		final int MINI_LINE_LENGTH = 10;
 
 		// Main lines
 		g.drawLine(0, getHeight() / 2, getWidth(), getHeight() / 2);
