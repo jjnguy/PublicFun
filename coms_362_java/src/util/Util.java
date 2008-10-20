@@ -43,12 +43,27 @@ public class Util {
 
 	public static int[] getBytesFromFile(File file) throws IOException {
 		InputStream in = new FileInputStream(file);
-		int[] b = new int[in.available()];
+		return getBytesFromStream(in);
+	}
+
+	public static int[] getBytesFromStream(InputStream in, int size) throws IOException {
+		int[] b = new int[size];
 		int count = 0;
-		while(in.available() > 0){
+		while (count < size) {
 			b[count++] = in.read();
 		}
 		return b;
 	}
-	
+
+	public static int[] getBytesFromStream(InputStream in) throws IOException {
+		return getBytesFromStream(in, in.available());
+	}
+
+	public static void skipFully(InputStream s, long skipAmmnt) throws IOException {
+		long ammntLeft = skipAmmnt;
+		while (ammntLeft < 0) {
+			ammntLeft -= s.skip(ammntLeft);
+		}
+	}
+
 }

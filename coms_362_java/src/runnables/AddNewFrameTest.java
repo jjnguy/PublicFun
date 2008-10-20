@@ -20,8 +20,7 @@ public class AddNewFrameTest {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		ID3v2_XTag tag = new ID3v2_XTag(new File("TestFiles/07 Suck My Kiss.mp3"));
+		ID3v2_XTag tag = new ID3v2_XTag(new File("TestFiles/03 Sonny.mp3"));
 		int[] b = Util.getBytesFromFile(new File("TestFiles/compiler.PNG"));
 		ID3_Picture idPic = new ID3_Picture("A pic that I added", (byte) 0, (byte) 0, "png", b);
 		ID3v2_XFrame toAdd = new ID3v2_XFrame(idPic, tag.getVersion());

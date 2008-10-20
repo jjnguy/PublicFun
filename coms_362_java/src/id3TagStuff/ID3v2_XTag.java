@@ -16,9 +16,13 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
+import sun.security.action.GetBooleanAction;
 import util.Util;
 
 public class ID3v2_XTag {
+
+	// For now we add a kilobyte of extra padding
+	private static int EXTRA_PADDING_TO_ADD = 1024;
 
 	private File mp3File;
 	private ID3v2_XTagHeader header;
@@ -58,7 +62,8 @@ public class ID3v2_XTag {
 			in.read(frameHeadderBytes);
 			if (new String(frameHeadderBytes).equals(new String(blankHeader))) {
 				byte[] garbage = new byte[bytesLeft - frameHeadderLength];
-				paddingSize = garbage.length;
+				// The padding is what's left plus the empty bytes we read into the header
+				paddingSize = garbage.length + frameHeadderLength;
 				in.read(garbage);
 				bytesLeft = 0;
 				break;
@@ -88,9 +93,14 @@ public class ID3v2_XTag {
 		// if (toWrite.length > paddingSize)
 		// throw new UnsupportedOperationException(
 		// "We do not support adding frames without enough padding.");
-		paddingSize -= toWrite.length;
+		paddingSize -= toAdd.getTotalSize();
+		header.incrementTagSize(toAdd.getTotalSize());
 		if (Util.DEBUG)
 			System.out.println(paddingSize);
+		if (paddingSize < 0) {
+			addPaddingToFile(toAdd.getTotalSize() + EXTRA_PADDING_TO_ADD);
+			paddingSize = EXTRA_PADDING_TO_ADD;
+		}
 		frames.add(toAdd); // we need to update the current object as well as the file
 		RandomAccessFile file = new RandomAccessFile(mp3File, "rw");
 		file.seek(header.getHeaderSize());
@@ -98,10 +108,29 @@ public class ID3v2_XTag {
 		file.write(Util.castIntArrToByteArr(toWrite));
 	}
 
+	public void addPaddingToFile(int ammountToAdd) throws IOException {
+		// TODO Now I need to figure out how to grow the padding...
+		// First we save the tag
+		InputStream in = new FileInputStream(mp3File);
+		int[] tagBytes = Util.getBytesFromStream(in, header.getHeaderSize()
+				+ header.getTagSize());
+		// skip the current padding
+		Util.skipFully(in, paddingSize);
+		// Now we read in and save the song data
+		int[] songBytes = Util.getBytesFromStream(in);
+		// Now its time to write over our current file (better have a backup)
+		OutputStream out = new FileOutputStream(mp3File);
+		Util.writeIntArrToStream(out, tagBytes);
+		int[] paddingToAdd = new int[ammountToAdd];
+		Util.writeIntArrToStream(out, paddingToAdd);
+		Util.writeIntArrToStream(out, songBytes);
+		// Idealy this should put the file back where it was with some extra tag bytes in the middle
+	}
+
 	@Override
 	public String toString() {
-		return String.format("ID3v2.%d, file name: %s", mp3File.getName(), header
-				.getMajorVersion());
+		return String.format("ID3v2.%d, file name: %s", header.getMajorVersion(), mp3File
+				.getName());
 	}
 
 	public int getPaddingSize() {

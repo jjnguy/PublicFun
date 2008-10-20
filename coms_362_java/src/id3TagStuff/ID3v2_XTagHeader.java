@@ -16,8 +16,7 @@ public class ID3v2_XTagHeader {
 		if (bytes.length != 10)
 			throw new IllegalArgumentException(
 					"The byte string must be exactly 10 bytes long.");
-		tagIdentifier = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(bytes, 0,
-				3)));
+		tagIdentifier = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(bytes, 0, 3)));
 		majorVersion = bytes[3];
 		minorVersion = bytes[4];
 		flags = bytes[5];
@@ -34,12 +33,18 @@ public class ID3v2_XTagHeader {
 
 	@Override
 	public String toString() {
-		return String.format("ID: %s, Version: %d.%d, Flags: %d, Size: %d",
-				tagIdentifier, majorVersion, minorVersion, flags, tagSize);
+		return String.format("ID: %s, Version: %d.%d, Flags: %d, Size: %d", tagIdentifier,
+				majorVersion, minorVersion, flags, tagSize);
 
 	}
 
 	public int getHeaderSize() {
 		return headerSize;
+	}
+
+	public void incrementTagSize(int totalSize) {
+		if (totalSize < 0)
+			throw new IllegalArgumentException("A framse size cannot be negative.");
+		tagSize += totalSize;
 	}
 }

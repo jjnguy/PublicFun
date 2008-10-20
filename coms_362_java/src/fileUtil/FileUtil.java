@@ -31,13 +31,51 @@ public class FileUtil {
 		}
 		return ret;
 	}
+}
 
-	static class SongFileFilter implements FileFilter {
+class SongFileFilter implements FileFilter {
 
-		@Override
-		public boolean accept(File pathname) {
-			// TODO Auto-generated method stub
+	@Override
+	public boolean accept(File pathname) {
+		MP3FileFilter mp3 = new MP3FileFilter();
+		AACFileFilter aac = new AACFileFilter();
+		WAVFileFilter wav = new WAVFileFilter();
+		return mp3.accept(pathname) && aac.accept(pathname) && wav.accept(pathname);
+	}
+}
+
+class MP3FileFilter implements FileFilter {
+
+	@Override
+	public boolean accept(File pathname) {
+		if (pathname.isDirectory())
 			return false;
-		}
+		String filename = pathname.getName();
+		String extention = filename.substring(filename.lastIndexOf("."), filename.length());
+		return extention.equalsIgnoreCase(".mp3");
+	}
+}
+
+class WAVFileFilter implements FileFilter {
+
+	@Override
+	public boolean accept(File pathname) {
+		if (pathname.isDirectory())
+			return false;
+		String filename = pathname.getName();
+		String extention = filename.substring(filename.lastIndexOf("."), filename.length());
+		return extention.equalsIgnoreCase(".wav");
+	}
+}
+
+class AACFileFilter implements FileFilter {
+
+	@Override
+	public boolean accept(File pathname) {
+		if (pathname.isDirectory())
+			return false;
+		String filename = pathname.getName();
+		String extention = filename.substring(filename.lastIndexOf("."), filename.length());
+		return extention.equalsIgnoreCase(".aac");
 	}
 }
