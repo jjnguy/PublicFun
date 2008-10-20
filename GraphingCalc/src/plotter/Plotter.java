@@ -29,8 +29,8 @@ public class Plotter extends JPanel {
 	public static int Y_MIN = -10;
 	public static int X_MAX = VIEWPORT_MAX;
 	public static int X_MIN = VIEWPORT_MIN;
-	private static int RELATIVE_X_MAX = X_MAX - X_MIN;
-	private static int RELATIVE_Y_MAX = Y_MAX - Y_MIN;
+	private static int WIDTH = X_MAX - X_MIN;
+	private static int HEIGHT = Y_MAX - Y_MIN;
 
 	private static final int POINT_DIAMETER = 4;
 	private static final double SLOPE_TOLLERANCE = Double.MAX_VALUE;
@@ -144,8 +144,8 @@ public class Plotter extends JPanel {
 		Y_MIN = yMin;
 		VIEWPORT_MAX = X_MAX;
 		VIEWPORT_MIN = X_MIN;
-		RELATIVE_X_MAX = X_MAX * 2;
-		RELATIVE_Y_MAX = Y_MAX * 2;
+		WIDTH = X_MAX - X_MIN;
+		HEIGHT = Y_MAX - Y_MIN;
 	}
 
 	@Override
@@ -207,9 +207,9 @@ public class Plotter extends JPanel {
 		double relativeX = cartesianCoord.x + X_MAX;
 		double relativeY = cartesianCoord.y + Y_MAX;
 
-		int javaCoordX = (int) ((relativeX / RELATIVE_X_MAX) * componentWidth);
+		int javaCoordX = (int) ((relativeX / WIDTH) * componentWidth);
 		int javaCoordY = componentHeight
-				- (int) ((relativeY / RELATIVE_Y_MAX) * componentHeight);
+				- (int) ((relativeY / HEIGHT) * componentHeight);
 		return new Point(javaCoordX, javaCoordY);
 	}
 
@@ -226,15 +226,15 @@ public class Plotter extends JPanel {
 		g.drawLine(0, getHeight() / 2, getWidth(), getHeight() / 2);
 		g.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight());
 		// Mini lines
-		for (int i = 1; i < RELATIVE_X_MAX; i++) {
+		for (int i = 1; i < WIDTH; i++) {
 			// the ones on the x axis
-			g.drawLine(i * getWidth() / RELATIVE_X_MAX,
-					getHeight() / 2 - MINI_LINE_LENGTH / 2, i * getWidth() / RELATIVE_X_MAX,
+			g.drawLine(i * getWidth() / WIDTH,
+					getHeight() / 2 - MINI_LINE_LENGTH / 2, i * getWidth() / WIDTH,
 					getHeight() / 2 + MINI_LINE_LENGTH / 2);
 			// the ones on the y axis
 			g.drawLine(getWidth() / 2 - MINI_LINE_LENGTH / 2,
-					i * getHeight() / RELATIVE_Y_MAX, getWidth() / 2 + MINI_LINE_LENGTH / 2, i
-							* getHeight() / RELATIVE_Y_MAX);
+					i * getHeight() / HEIGHT, getWidth() / 2 + MINI_LINE_LENGTH / 2, i
+							* getHeight() / HEIGHT);
 		}
 
 		g.setStroke(originalStroke);

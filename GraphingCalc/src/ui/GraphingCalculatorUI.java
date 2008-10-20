@@ -4,31 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import plotter.Plotter;
-
 public class GraphingCalculatorUI {
-
-	private static final int LINE_GRAPH = 0;
-	private static final int TAN_GRAPH = 1;
-	private static final int COS_GRAPH = 2;
-	private static final int SIN_GRAPH = 3;
-	private static final int NO_GRAPH = 4;
-
-	private Plotter myPlotter;
-
-	private double gapSpacing = .1;
-	private double slope = 1;
-	private double yIntercept = 0;
-	private double amplitude = 1;
-
-	private int curType = NO_GRAPH;
-
+	private GraphingCalculatorController controller;
+	private static final boolean EXTRA_FEATURES = true;
 	private Scanner stdin;
 
-	public GraphingCalculatorUI(Plotter plotter) {
-		myPlotter = plotter;
+	public GraphingCalculatorUI(GraphingCalculatorController cont) {
+		controller = cont;
 		stdin = new Scanner(System.in);
-		myPlotter.startPlotter();
+		controller.startPlotter();
 	}
 
 	public void handleInput() {
@@ -44,31 +28,27 @@ public class GraphingCalculatorUI {
 			}
 			if (choice == 'q') {
 				System.out.println("C ya!");
-				myPlotter.stopPlotter();
+				controller.stopPlotter();
 				return;
 			}
 			if (choice == 'a') {
 				handleTrigInput();
 			} else if (choice == 'b') {
-				curType = LINE_GRAPH;
-				refreshGraph();
+				controller.updateGraphType(GraphingCalculatorController.LINE_GRAPH);
+				controller.refreshGraph();
 				handleLineInput();
 			} else if (choice == 'c') {
-				handleClear();
+				controller.clearGraph();
 			} else if (choice == 'd') {
 				handleChangeGap();
-			} else if (EXTRA_FEAURES && choice == 'e') {
+			} else if (EXTRA_FEATURES && choice == 'e') {
 				handlePolynomialInput();
-			} else if (EXTRA_FEAURES && choice == 'f') {
+			} else if (EXTRA_FEATURES && choice == 'f') {
 				handleToggleAbsMode();
-			} else if (choice == 't') {
-				myPlotter.widenView(2);
-			} else if (choice == 'r') {
-				myPlotter.thinView(2);
 			} else {
 				allertOfInvalidInput();
 			}
-			refreshGraph();
+			controller.refreshGraph();
 		}
 	}
 
@@ -91,41 +71,24 @@ public class GraphingCalculatorUI {
 				return;
 			}
 			if (choice == 'a') {
-				curType = SIN_GRAPH;
+				controller.updateGraphType(GraphingCalculatorController.SIN_GRAPH);
 			} else if (choice == 'b') {
-				curType = COS_GRAPH;
+				controller.updateGraphType(GraphingCalculatorController.COS_GRAPH);
 			} else if (choice == 'c') {
-				curType = TAN_GRAPH;
+				controller.updateGraphType(GraphingCalculatorController.TAN_GRAPH);
 			} else if (choice == 'd') {
 				double newAmplitude;
 				try {
 					newAmplitude = getUserInputNumber("Please enter the new amplitude: ");
-					amplitude = newAmplitude;
+					controller.updateAmplitude(newAmplitude);
 				} catch (IllegalArgumentException e) {
 					allertOfInvalidInput();
 				}
 			} else {
 				allertOfInvalidInput();
 			}
-			refreshGraph();
+			controller.refreshGraph();
 		}
-	}
-
-	private void refreshGraph() {
-		myPlotter.clear();
-		if (curType == NO_GRAPH)
-			return;
-		if (curType == COS_GRAPH)
-			plotCosLine();
-		if (curType == SIN_GRAPH)
-			plotSinLine();
-		if (curType == TAN_GRAPH)
-			plotTanLine();
-		if (curType == LINE_GRAPH)
-			plotStraitLine();
-		// non-homework option
-		if (curType == POLYNOMIAL_GRAPH)
-			plotPolynomialLine();
 	}
 
 	private void handleLineInput() {
@@ -145,7 +108,7 @@ public class GraphingCalculatorUI {
 				double newSlope;
 				try {
 					newSlope = getUserInputNumber("Enter the new slope please: ");
-					slope = newSlope;
+					controller.updateSlope(newSlope);
 				} catch (IllegalArgumentException e) {
 					allertOfInvalidInput();
 				}
@@ -153,18 +116,13 @@ public class GraphingCalculatorUI {
 				double newIntercept;
 				try {
 					newIntercept = getUserInputNumber("Enter the new y-intercept please: ");
-					yIntercept = newIntercept;
+					controller.updateYIntercept(newIntercept);
 				} catch (IllegalArgumentException e) {
 					allertOfInvalidInput();
 				}
 			}
-			refreshGraph();
+			controller.refreshGraph();
 		}
-	}
-
-	private void handleClear() {
-		myPlotter.clear();
-		curType = NO_GRAPH;
 	}
 
 	private void handleChangeGap() {
@@ -173,45 +131,9 @@ public class GraphingCalculatorUI {
 			newGap = getUserInputNumber("Enter the new gap spacing: ");
 			if (newGap == 0)
 				return;
-			gapSpacing = Math.abs(newGap);
+			controller.changeGap(Math.abs(newGap));
 		} catch (IllegalArgumentException e) {
 			allertOfInvalidInput();
-		}
-	}
-
-	private void plotTanLine() {
-		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			double yVal = amplitude * Math.tan(i);
-			if (absMode)
-				yVal = Math.abs(yVal);
-			myPlotter.addPoint(i, yVal);
-		}
-	}
-
-	private void plotSinLine() {
-		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			double yVal = amplitude * Math.sin(i);
-			if (absMode)
-				yVal = Math.abs(yVal);
-			myPlotter.addPoint(i, yVal);
-		}
-	}
-
-	private void plotCosLine() {
-		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			double yVal = amplitude * Math.cos(i);
-			if (absMode)
-				yVal = Math.abs(yVal);
-			myPlotter.addPoint(i, yVal);
-		}
-	}
-
-	private void plotStraitLine() {
-		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			double yVal = slope * i + yIntercept;
-			if (absMode)
-				yVal = Math.abs(yVal);
-			myPlotter.addPoint(i, yVal);
 		}
 	}
 
@@ -244,10 +166,10 @@ public class GraphingCalculatorUI {
 
 		final String optionE = "e - plot polynomial line";
 		final String optionF = "f - toggle absolute value mode (currently "
-				+ (absMode ? "ON" : "OFF") + ")";
+				+ (controller.getAbsMode() ? "ON" : "OFF") + ")";
 
 		String fullMenu = optionA + '\n' + optionB + '\n' + optionC + '\n' + optionD + '\n';
-		if (EXTRA_FEAURES)
+		if (EXTRA_FEATURES)
 			fullMenu += optionE + '\n' + optionF + '\n';
 		fullMenu += optionQ;
 
@@ -259,7 +181,7 @@ public class GraphingCalculatorUI {
 		final String optionB = "b - plot amplitude * cos(x)";
 		final String optionC = "c - plot amplitude * tan(x)";
 		final String optionD = String.format("d - change amplitude (currently %1.1f)",
-				amplitude);
+				controller.getAmplitude());
 		final String optionQ = "q - return to main menu";
 
 		final String fullMenu = optionA + '\n' + optionB + '\n' + optionC + '\n' + optionD
@@ -268,38 +190,18 @@ public class GraphingCalculatorUI {
 	}
 
 	private void lineMenu() {
-		final String optionA = String.format("a - change slope (currently %1.1f)", slope);
+		final String optionA = String.format("a - change slope (currently %1.1f)", controller
+				.getSlope());
 		final String optionB = String.format("b - change y-intercept (currently %1.1f)",
-				yIntercept);
+				controller.getYIntercept());
 		final String optionQ = "q - return to main menu";
 
 		final String fullMenu = optionA + '\n' + optionB + '\n' + optionQ;
 		System.out.println(fullMenu);
 	}
 
-	/////////////////////////////////////////////////
-	/// Begin extra code not in the homework spec //
-	///////////////////////////////////////////////
-
-	// TODO derivative mode
-
-	public static final boolean EXTRA_FEAURES = true;
-
-	private static final int POLYNOMIAL_GRAPH = 5;
-	private boolean absMode = false;
-
-	/**
-	 * Represents a polynomial function
-	 * the order of the terms is as follows:
-	 * ax^0 + bx^1 + cx^2 and so on
-	 * So, in other words the index of the coefficient is
-	 * the power of x in each term
-	 */
-	private List<Double> polynomialCoefficients;
-
 	private void handleToggleAbsMode() {
-		absMode = !absMode;
-		refreshGraph();
+		controller.toggleAbsMode();
 	}
 
 	private void handlePolynomialInput() {
@@ -316,15 +218,15 @@ public class GraphingCalculatorUI {
 				return;
 			if (choice == 'a') {
 				try {
-					polynomialCoefficients = getCoeficients("Please enter the formula: ");
-					curType = POLYNOMIAL_GRAPH;
+					controller.updateCoeficients(getCoeficients("Please enter the formula: "));
+					controller.updateGraphType(GraphingCalculatorController.POLYNOMIAL_GRAPH);
 				} catch (IllegalArgumentException e) {
 					allertOfInvalidInput();
 				}
 			} else if (choice == 'b') {
 				System.out.println("Sorry, this is not implemented yet.");
 			}
-			refreshGraph();
+			controller.refreshGraph();
 		}
 	}
 
@@ -346,22 +248,6 @@ public class GraphingCalculatorUI {
 			throw new IllegalArgumentException();
 		}
 		return ret;
-	}
-
-	private void plotPolynomialLine() {
-		if (polynomialCoefficients == null) {
-			polynomialCoefficients = new ArrayList<Double>();
-		}
-		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			double yVal = 0;
-			for (int j = 0; j < polynomialCoefficients.size(); j++) {
-				double coefficient = polynomialCoefficients.get(j);
-				yVal += coefficient * (Math.pow(i, j));
-			}
-			if (absMode)
-				yVal = Math.abs(yVal);
-			myPlotter.addPoint(i, yVal);
-		}
 	}
 
 	private void polynomialMenu() {
