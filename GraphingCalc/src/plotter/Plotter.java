@@ -68,8 +68,15 @@ public class Plotter extends JPanel {
 	}
 
 	public void clear() {
-		points.clear();
-		repaint();
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				points.clear();
+				repaint();
+			}
+		};
+		SwingUtilities.invokeLater(r);
+
 	}
 
 	public void startPlotter() {
@@ -119,10 +126,16 @@ public class Plotter extends JPanel {
 		Point oldJavaPoint = null;
 		Point2D.Double oldRegPoint = null;
 		for (Point2D.Double point : points) {
-			if (point.x > X_MAX || point.x < X_MIN)
+			if (point.x > X_MAX || point.x < X_MIN) {
+				oldJavaPoint = null;
+				oldRegPoint = null;
 				continue;
-			if (point.y > Y_MAX || point.y < Y_MIN)
+			}
+			if (point.y > Y_MAX || point.y < Y_MIN) {
+				oldJavaPoint = null;
+				oldRegPoint = null;
 				continue;
+			}
 			Point javaPoint = shiftPointToJavaCoord(point, getHeight(), getWidth());
 			if (connectedMode && oldRegPoint != null) {
 				double slope;
