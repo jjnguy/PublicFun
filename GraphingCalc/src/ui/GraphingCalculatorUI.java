@@ -230,7 +230,7 @@ public class GraphingCalculatorUI {
 		}
 	}
 
-	private List<Double> getCoeficients(String prompt) {
+	private String getCoeficients(String prompt) {
 		List<Double> ret = new ArrayList<Double>();
 		System.out.println("Use the format:  ax^0 (+/-)bx^1 (+/-)cx^3.");
 		System.out.println("Note, the spacing is important");
@@ -238,16 +238,7 @@ public class GraphingCalculatorUI {
 		System.out.println("It is legal to begin with a negtive term.");
 		System.out.print(prompt);
 		String input = stdin.nextLine();
-		String splitBy = "x\\^\\d";
-		String[] brokenDownInput = input.split(splitBy);
-		try {
-			for (String string : brokenDownInput) {
-				ret.add(Double.parseDouble(string.trim()));
-			}
-		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException();
-		}
-		return ret;
+		return input;
 	}
 
 	private void polynomialMenu() {

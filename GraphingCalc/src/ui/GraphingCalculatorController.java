@@ -101,8 +101,16 @@ public class GraphingCalculatorController {
 		curType = graphType;
 	}
 
-	public void updateCoeficients(List<Double> stuff) {
-		polynomialCoefficients = stuff;
+	public void updateCoeficients(String funct) {
+		if (polynomialCoefficients == null) {
+			polynomialCoefficients = new ArrayList<Double>();
+		}
+		polynomialCoefficients.clear();
+		String splitBy = "x\\^\\d";
+		String[] brokenDownInput = funct.split(splitBy);
+		for (String string : brokenDownInput) {
+			polynomialCoefficients.add(Double.parseDouble(string.trim()));
+		}
 	}
 
 	public void refreshGraph() {
@@ -134,7 +142,7 @@ public class GraphingCalculatorController {
 		gapSpacing = Math.abs(newGap);
 	}
 
-	public void plotTanLine() {
+	private void plotTanLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
 			double yVal = amplitude * Math.tan(i);
 			if (absMode)
@@ -143,7 +151,7 @@ public class GraphingCalculatorController {
 		}
 	}
 
-	public void plotSinLine() {
+	private void plotSinLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
 			double yVal = amplitude * Math.sin(i);
 			if (absMode)
@@ -152,7 +160,7 @@ public class GraphingCalculatorController {
 		}
 	}
 
-	public void plotCosLine() {
+	private void plotCosLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
 			double yVal = amplitude * Math.cos(i);
 			if (absMode)
@@ -161,7 +169,7 @@ public class GraphingCalculatorController {
 		}
 	}
 
-	public void plotStraitLine() {
+	private void plotStraitLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
 			double yVal = slope * i + yIntercept;
 			if (absMode)
@@ -189,5 +197,9 @@ public class GraphingCalculatorController {
 	public void toggleAbsMode() {
 		absMode = !absMode;
 		refreshGraph();
+	}
+
+	public void toggleAbsMode(boolean selected) {
+		absMode = selected;
 	}
 }
