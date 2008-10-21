@@ -2,11 +2,15 @@ package plotter;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Stroke;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +39,8 @@ public class Plotter extends JPanel {
 	private static final int POINT_DIAMETER = 4;
 	private static final double SLOPE_TOLLERANCE = Double.MAX_VALUE;
 
+	private Point mouseLoc;
+
 	private List<Point2D.Double> points;
 	private boolean connectedMode;
 	private boolean onTop = true;
@@ -49,6 +55,7 @@ public class Plotter extends JPanel {
 		points = new ArrayList<Point2D.Double>();
 		setPreferredSize(new Dimension(400, 400));
 		setBackground(B_GROUND_COLOR);
+		addMouseMotionListener(mouseMove);
 		connectedMode = connectedModeP;
 	}
 
@@ -96,6 +103,7 @@ public class Plotter extends JPanel {
 		plotHolder.pack();
 		plotHolder.setAlwaysOnTop(onTop);
 		plotHolder.setVisible(true);
+		addMouseMotionListener(mouseMove);
 	};
 
 	public void stopPlotter() {
@@ -154,6 +162,8 @@ public class Plotter extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		paintGrid(g2);
 		paintPoints(g2);
+		if (mouseLoc != null)
+			paintMouseLocation(g2);
 	}
 
 	private void paintPoints(Graphics2D g) {
@@ -204,13 +214,32 @@ public class Plotter extends JPanel {
 
 	private static Point shiftPointToJavaCoord(Point2D.Double cartesianCoord,
 			int componentHeight, int componentWidth) {
+		// this assumes the view is always centered on the origin
 		double relativeX = cartesianCoord.x + X_MAX;
 		double relativeY = cartesianCoord.y + Y_MAX;
 
 		int javaCoordX = (int) ((relativeX / WIDTH) * componentWidth);
-		int javaCoordY = componentHeight
-				- (int) ((relativeY / HEIGHT) * componentHeight);
+		int javaCoordY = componentHeight - (int) ((relativeY / HEIGHT) * componentHeight);
 		return new Point(javaCoordX, javaCoordY);
+	}
+
+	private static Point2D.Double shiftJavaPointToCartesianCoord(Point javaPoint,
+			int componentHeight, int componentWidth) {
+return null;
+	}
+
+	private void paintMouseLocation(Graphics2D g) {
+		Color originalColor = g.getColor();
+		Stroke originalStroke = g.getStroke();
+		final int RECT_HEIGHT = 15;
+		final int RECT_WIDTH = 68;
+		g.setColor(B_GROUND_COLOR);
+		g.fillRect(0, 0, RECT_WIDTH, RECT_HEIGHT);
+		g.setColor(Color.LIGHT_GRAY);
+		g.drawRect(0, 0, RECT_WIDTH, RECT_HEIGHT);
+		g.setColor(Color.BLACK);
+		String toDraw = String.format("X:%d, Y:%d", mouseLoc.x, mouseLoc.y);
+		g.drawString(toDraw, 1, 12);
 	}
 
 	private void paintGrid(Graphics2D g) {
@@ -228,16 +257,43 @@ public class Plotter extends JPanel {
 		// Mini lines
 		for (int i = 1; i < WIDTH; i++) {
 			// the ones on the x axis
-			g.drawLine(i * getWidth() / WIDTH,
-					getHeight() / 2 - MINI_LINE_LENGTH / 2, i * getWidth() / WIDTH,
-					getHeight() / 2 + MINI_LINE_LENGTH / 2);
+			g.drawLine(i * getWidth() / WIDTH, getHeight() / 2 - MINI_LINE_LENGTH / 2, i
+					* getWidth() / WIDTH, getHeight() / 2 + MINI_LINE_LENGTH / 2);
 			// the ones on the y axis
-			g.drawLine(getWidth() / 2 - MINI_LINE_LENGTH / 2,
-					i * getHeight() / HEIGHT, getWidth() / 2 + MINI_LINE_LENGTH / 2, i
-							* getHeight() / HEIGHT);
+			g.drawLine(getWidth() / 2 - MINI_LINE_LENGTH / 2, i * getHeight() / HEIGHT,
+					getWidth() / 2 + MINI_LINE_LENGTH / 2, i * getHeight() / HEIGHT);
 		}
 
 		g.setStroke(originalStroke);
 		g.setColor(originalColor);
+	}
+
+	private MouseMotionListener mouseMove = new MouseMotionListener() {
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		private JFrame getFrameContainer(Component c) {
+			Component cur = c;
+			while (c.getClass() != JFrame.class) {
+				cur = cur.getParent();
+			}
+			return (JFrame) cur;
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			final int TOP_BAR_OFFSET = 0;
+			mouseLoc = e.getPoint();
+			mouseLoc.y -= TOP_BAR_OFFSET;
+			Plotter.this.repaint(true);
+		}
+	};
+
+	private void repaint(boolean paintOnlyMouseCoord) {
+		Graphics2D g = (Graphics2D) getGraphics();
+		paintMouseLocation(g);
 	}
 }

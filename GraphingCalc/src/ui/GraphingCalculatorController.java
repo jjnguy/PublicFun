@@ -21,6 +21,7 @@ public class GraphingCalculatorController {
 	private double slope = 1;
 	private double yIntercept = 0;
 	private double amplitude = 1;
+	private double freq = 1;
 
 	/**
 	 * Represents a polynomial function
@@ -75,6 +76,14 @@ public class GraphingCalculatorController {
 
 	public double getAmplitude() {
 		return amplitude;
+	}
+
+	public double getFreq() {
+		return freq;
+	}
+
+	public void updateFreq(double fre) {
+		freq = fre;
 	}
 
 	public void updateSlope(double newSlope) {
@@ -144,7 +153,7 @@ public class GraphingCalculatorController {
 
 	private void plotTanLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			double yVal = amplitude * Math.tan(i);
+			double yVal = amplitude * Math.tan(freq * i);
 			if (absMode)
 				yVal = Math.abs(yVal);
 			myPlotter.addPoint(i, yVal);
@@ -153,7 +162,7 @@ public class GraphingCalculatorController {
 
 	private void plotSinLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			double yVal = amplitude * Math.sin(i);
+			double yVal = amplitude * Math.sin(freq * i);
 			if (absMode)
 				yVal = Math.abs(yVal);
 			myPlotter.addPoint(i, yVal);
@@ -162,7 +171,7 @@ public class GraphingCalculatorController {
 
 	private void plotCosLine() {
 		for (double i = Plotter.VIEWPORT_MIN; i <= Plotter.VIEWPORT_MAX; i += gapSpacing) {
-			double yVal = amplitude * Math.cos(i);
+			double yVal = amplitude * Math.cos(freq * i);
 			if (absMode)
 				yVal = Math.abs(yVal);
 			myPlotter.addPoint(i, yVal);

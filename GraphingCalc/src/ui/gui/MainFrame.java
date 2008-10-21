@@ -21,6 +21,7 @@ import ui.GraphingCalculatorController;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
+	public static double DEFAULT_FREQUENCY = 1;
 	public static double DEFAULT_SLOPE = 1;
 	public static double DEFAULT_INTERCEPT = 0;
 	public static double DEFAULT_AMPLITUDE = 1;
@@ -35,6 +36,9 @@ public class MainFrame extends JFrame {
 
 	private JLabel amplitudeLabel;
 	private JTextField amplitudeField;
+
+	private JLabel freqLabel;
+	private JTextField freqField;
 
 	private JLabel equationLabel;
 	private JTextField equationField;
@@ -81,6 +85,9 @@ public class MainFrame extends JFrame {
 		amplitudeLabel = new JLabel("Amplitude:");
 		amplitudeField = new JTextField(DEFAULT_AMPLITUDE + "");
 
+		freqLabel = new JLabel("Frequency:");
+		freqField = new JTextField(DEFAULT_FREQUENCY + "");
+
 		equationLabel = new JLabel("Polynomial Equation:");
 		equationField = new JTextField(DEFAULT_POLY_EQN);
 
@@ -117,18 +124,20 @@ public class MainFrame extends JFrame {
 		mainPane.add(amplitudeField, gc);
 		gc.gridx--;
 		gc.gridy++;
-		mainPane.add(equationLabel, gc);
+		mainPane.add(freqLabel, gc);
 		gc.gridx++;
-		mainPane.add(equationField, gc);
+		mainPane.add(freqField, gc);
 		gc.gridx -= 3;
 		gc.gridy++;
 		mainPane.add(gapLabel, gc);
 		gc.gridx++;
 		mainPane.add(gapField, gc);
 		gc.gridx++;
-		mainPane.add(absModeCheck, gc);
+		mainPane.add(equationLabel, gc);
+		gc.gridx++;
+		mainPane.add(equationField, gc);
 		gc.gridy++;
-		gc.gridx -= 2;
+		gc.gridx -= 3;
 		mainPane.add(graphStraitLineButton, gc);
 		gc.gridx++;
 		mainPane.add(graphSinLineButton, gc);
@@ -138,6 +147,9 @@ public class MainFrame extends JFrame {
 		mainPane.add(graphTanLineButton, gc);
 		gc.gridx++;
 		mainPane.add(graphPolynomialButton, gc);
+		gc.gridy = 0;
+		gc.gridx = 4;
+		mainPane.add(absModeCheck,gc);
 		add(mainPane);
 	}
 
@@ -154,6 +166,7 @@ public class MainFrame extends JFrame {
 		try {
 			controller.changeGap(Double.parseDouble(gapField.getText()));
 			controller.updateAmplitude(Double.parseDouble(amplitudeField.getText()));
+			controller.updateFreq(Double.parseDouble(freqField.getText()));
 			controller.updateSlope(Double.parseDouble(slopeField.getText()));
 			controller.updateYIntercept(Double.parseDouble(interceptField.getText()));
 			controller.updateCoeficients(equationField.getText());
@@ -161,10 +174,6 @@ public class MainFrame extends JFrame {
 		} catch (NumberFormatException e) {
 
 		}
-	}
-
-	public static void main(String[] args) {
-		new MainFrame(new GraphingCalculatorController(new Plotter()));
 	}
 
 	private void updateAndRefresh() {
