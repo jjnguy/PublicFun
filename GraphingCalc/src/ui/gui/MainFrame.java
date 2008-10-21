@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -11,14 +13,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import plotter.Plotter;
 import ui.GraphingCalculatorController;
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 	public static double DEFAULT_SLOPE = 1;
 	public static double DEFAULT_INTERCEPT = 0;
 	public static double DEFAULT_AMPLITUDE = 1;
+	public static double DEFAULT_GAP = .1;
 	public static String DEFAULT_POLY_EQN = "0x^0 +0x^1 +1x^2";
 
 	private JLabel slopeLabel;
@@ -33,6 +39,9 @@ public class MainFrame extends JFrame {
 	private JLabel equationLabel;
 	private JTextField equationField;
 
+	private JLabel gapLabel;
+	private JTextField gapField;
+
 	private JCheckBox absModeCheck;
 
 	private JButton graphStraitLineButton;
@@ -41,14 +50,18 @@ public class MainFrame extends JFrame {
 	private JButton graphCosLineButton;
 	private JButton graphPolynomialButton;
 
+	private TimerTask updateValues;
+
 	private GraphingCalculatorController controller;
 
 	public MainFrame(GraphingCalculatorController controllerP) {
 		controller = controllerP;
+		updateValues = new UpdateValsTimerTask();
 		createComponents();
 		layoutComponents();
 		addListeners();
 		miscInit();
+		Timer t = new Timer();
 	}
 
 	private void miscInit() {
@@ -70,6 +83,9 @@ public class MainFrame extends JFrame {
 
 		equationLabel = new JLabel("Polynomial Equation:");
 		equationField = new JTextField(DEFAULT_POLY_EQN);
+
+		gapLabel = new JLabel("Gap:");
+		gapField = new JTextField(DEFAULT_GAP + "");
 
 		absModeCheck = new JCheckBox("Absolute Value Mode");
 
@@ -104,8 +120,12 @@ public class MainFrame extends JFrame {
 		mainPane.add(equationLabel, gc);
 		gc.gridx++;
 		mainPane.add(equationField, gc);
-		gc.gridx--;
+		gc.gridx -= 3;
 		gc.gridy++;
+		mainPane.add(gapLabel, gc);
+		gc.gridx++;
+		mainPane.add(gapField, gc);
+		gc.gridx++;
 		mainPane.add(absModeCheck, gc);
 		gc.gridy++;
 		gc.gridx -= 2;
@@ -127,58 +147,83 @@ public class MainFrame extends JFrame {
 		graphCosLineButton.addActionListener(cosListener);
 		graphTanLineButton.addActionListener(tanListener);
 		graphPolynomialButton.addActionListener(polyListener);
+		absModeCheck.addChangeListener(absChange);
 	}
 
 	private void updateAllValues() {
-		controller.updateAmplitude(Double.parseDouble(amplitudeField.getText()));
-		controller.updateSlope(Double.parseDouble(slopeField.getText()));
-		controller.updateYIntercept(Double.parseDouble(interceptField.getText()));
-		controller.updateCoeficients(equationField.getText());
-		controller.toggleAbsMode(absModeCheck.isSelected());
+		try {
+			controller.changeGap(Double.parseDouble(gapField.getText()));
+			controller.updateAmplitude(Double.parseDouble(amplitudeField.getText()));
+			controller.updateSlope(Double.parseDouble(slopeField.getText()));
+			controller.updateYIntercept(Double.parseDouble(interceptField.getText()));
+			controller.updateCoeficients(equationField.getText());
+			controller.toggleAbsMode(absModeCheck.isSelected());
+		} catch (NumberFormatException e) {
+
+		}
 	}
 
 	public static void main(String[] args) {
 		new MainFrame(new GraphingCalculatorController(new Plotter()));
 	}
 
+	private void updateAndRefresh() {
+		updateAllValues();
+		controller.refreshGraph();
+	}
+
 	private ActionListener polyListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.POLYNOMIAL_GRAPH);
-			updateAllValues();
-			controller.refreshGraph();
+			updateAndRefresh();
 		}
 	};
 	private ActionListener tanListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.TAN_GRAPH);
-			updateAllValues();
-			controller.refreshGraph();
+			updateAndRefresh();
 		}
 	};
 	private ActionListener cosListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.COS_GRAPH);
-			updateAllValues();
-			controller.refreshGraph();
+			updateAndRefresh();
 		}
 	};
 	private ActionListener sinListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.SIN_GRAPH);
-			updateAllValues();
-			controller.refreshGraph();
+			updateAndRefresh();
 		}
 	};
 	private ActionListener straightListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.LINE_GRAPH);
-			updateAllValues();
-			controller.refreshGraph();
+			updateAndRefresh();
 		}
 	};
+	private ChangeListener absChange = new ChangeListener() {
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			updateAndRefresh();
+		}
+	};
+	private ChangeListener updateAndRefresh = new ChangeListener() {
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			updateAndRefresh();
+		}
+	};
+
+	class UpdateValsTimerTask extends TimerTask {
+		@Override
+		public void run() {
+			updateAndRefresh();
+		}
+	}
 }
