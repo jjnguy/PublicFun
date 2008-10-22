@@ -23,7 +23,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 @SuppressWarnings("serial")
 public class Plotter extends JPanel {
@@ -39,8 +42,8 @@ public class Plotter extends JPanel {
 	public static int Y_MIN = -10;
 	public static int X_MAX = VIEWPORT_MAX;
 	public static int X_MIN = VIEWPORT_MIN;
-	public static int X_RULE = 1;
-	public static int Y_RULE = 1;
+	public static double X_RULE = 1;
+	public static double Y_RULE = 1;
 	private static int WIDTH = X_MAX - X_MIN;
 	private static int HEIGHT = Y_MAX - Y_MIN;
 
@@ -129,27 +132,51 @@ public class Plotter extends JPanel {
 	}
 
 	public void zoomOut(int factor) {
+		X_RULE *= factor;
+		Y_RULE *= factor;
 		changeViewport(X_MAX * factor, X_MIN * factor, Y_MAX * factor, Y_MIN * factor);
 	}
 
 	public void zoomIn(int factor) {
+		X_RULE /= factor;
+		Y_RULE /= factor;
 		changeViewport(X_MAX / factor, X_MIN / factor, Y_MAX / factor, Y_MIN / factor);
 	}
 
 	public void widenView(int factor) {
+		X_RULE *= factor;
 		changeViewport(X_MAX * factor, X_MIN * factor, Y_MAX, Y_MIN);
 	}
 
 	public void thinView(int factor) {
+		X_RULE /= factor;
 		changeViewport(X_MAX / factor, X_MIN / factor, Y_MAX, Y_MIN);
 	}
 
 	public void growViewHeight(int factor) {
+		Y_RULE *= factor;
 		changeViewport(X_MAX, X_MIN, Y_MAX * factor, Y_MIN * factor);
 	}
 
 	public void shrinkViewHeight(int factor) {
+		Y_RULE /= factor;
 		changeViewport(X_MAX, X_MIN, Y_MAX / factor, Y_MIN / factor);
+	}
+
+	public void setRules(int xRule, int yRule) {
+		X_RULE = xRule;
+		Y_RULE = yRule;
+		repaint();
+	}
+
+	public void setXRule(int rule) {
+		X_RULE = rule;
+		repaint();
+	}
+
+	public void setYRule(int rule) {
+		Y_RULE = rule;
+		repaint();
 	}
 
 	private void changeViewport(int xMax, int xMin, int yMax, int yMin) {
@@ -281,13 +308,16 @@ public class Plotter extends JPanel {
 		g.drawLine(0, getHeight() / 2, getWidth(), getHeight() / 2);
 		g.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight());
 		// Mini lines
-		for (int i = 1; i < WIDTH; i++) {
+		for (double i = X_RULE; i < WIDTH; i += X_RULE) {
 			// the ones on the x axis
-			g.drawLine(i * getWidth() / WIDTH, getHeight() / 2 - MINI_LINE_LENGTH / 2, i
-					* getWidth() / WIDTH, getHeight() / 2 + MINI_LINE_LENGTH / 2);
+			g.drawLine((int) (i * getWidth() / WIDTH), getHeight() / 2 - MINI_LINE_LENGTH / 2,
+					(int) (i * getWidth() / WIDTH), getHeight() / 2 + MINI_LINE_LENGTH / 2);
+		}// Mini lines
+		for (double i = Y_RULE; i < WIDTH; i += Y_RULE) {
 			// the ones on the y axis
-			g.drawLine(getWidth() / 2 - MINI_LINE_LENGTH / 2, i * getHeight() / HEIGHT,
-					getWidth() / 2 + MINI_LINE_LENGTH / 2, i * getHeight() / HEIGHT);
+			g.drawLine(getWidth() / 2 - MINI_LINE_LENGTH / 2,
+					(int) (i * getHeight()) / HEIGHT, getWidth() / 2 + MINI_LINE_LENGTH / 2,
+					(int) (i * getHeight() / HEIGHT));
 		}
 
 		g.setStroke(originalStroke);
@@ -317,16 +347,34 @@ public class Plotter extends JPanel {
 	private class InstrumentPanel extends JFrame {
 		private JButton zoomInButton;
 		private JButton zoomOutButton;
+		private JSlider xRuleSlider;
+		private JSlider yRuleSlider;
 
 		public InstrumentPanel() {
 			super("Plotter Controls");
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
 			zoomInButton = new JButton("Zoom In");
 			zoomOutButton = new JButton("Zoom Out");
+			xRuleSlider = new JSlider(1, X_MAX / 2);
+			yRuleSlider = new JSlider(1, Y_MAX / 2);
+			xRuleSlider.setPaintLabels(true);
+			xRuleSlider.setPaintTicks(true);
+			xRuleSlider.setMajorTickSpacing(1);
+			xRuleSlider.setSnapToTicks(true);
+			yRuleSlider.setPaintLabels(true);
+			yRuleSlider.setPaintTicks(true);
+			yRuleSlider.setMajorTickSpacing(1);
+			yRuleSlider.setSnapToTicks(true);
+			xRuleSlider.addChangeListener(sliderChange);
+			yRuleSlider.addChangeListener(sliderChange);
 			JPanel mainPane = new JPanel(new GridBagLayout());
 			GridBagConstraints gc = new GridBagConstraints();
+			gc.gridy = 0;
 			mainPane.add(zoomInButton, gc);
 			mainPane.add(zoomOutButton, gc);
+			gc.gridy++;
+			mainPane.add(xRuleSlider, gc);
+			mainPane.add(yRuleSlider, gc);
 			add(mainPane);
 			zoomInButton.addActionListener(zoomInAction);
 			zoomOutButton.addActionListener(zoomOutAction);
@@ -343,6 +391,13 @@ public class Plotter extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				zoomOut(2);
+			}
+		};
+
+		private ChangeListener sliderChange = new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				setRules(xRuleSlider.getValue(), yRuleSlider.getValue());
 			}
 		};
 	}
