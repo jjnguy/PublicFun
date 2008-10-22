@@ -59,6 +59,7 @@ public class MainFrame extends JFrame {
 	private GraphingCalculatorController controller;
 
 	public MainFrame(GraphingCalculatorController controllerP) {
+		super("Graph Editor");
 		controller = controllerP;
 		updateValues = new UpdateValsTimerTask();
 		createComponents();
@@ -149,7 +150,7 @@ public class MainFrame extends JFrame {
 		mainPane.add(graphPolynomialButton, gc);
 		gc.gridy = 0;
 		gc.gridx = 4;
-		mainPane.add(absModeCheck,gc);
+		mainPane.add(absModeCheck, gc);
 		add(mainPane);
 	}
 

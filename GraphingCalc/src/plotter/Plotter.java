@@ -6,16 +6,22 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -33,6 +39,8 @@ public class Plotter extends JPanel {
 	public static int Y_MIN = -10;
 	public static int X_MAX = VIEWPORT_MAX;
 	public static int X_MIN = VIEWPORT_MIN;
+	public static int X_RULE = 1;
+	public static int Y_RULE = 1;
 	private static int WIDTH = X_MAX - X_MIN;
 	private static int HEIGHT = Y_MAX - Y_MIN;
 
@@ -46,6 +54,7 @@ public class Plotter extends JPanel {
 	private boolean onTop = true;
 
 	private JFrame plotHolder;
+	private InstrumentPanel instruments;
 
 	public Plotter() {
 		this(true);
@@ -97,12 +106,14 @@ public class Plotter extends JPanel {
 	}
 
 	private void createAndRun() {
-		plotHolder = new JFrame();
+		plotHolder = new JFrame("JPlotter");
 		plotHolder.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		plotHolder.add(this);
 		plotHolder.pack();
 		plotHolder.setAlwaysOnTop(onTop);
 		plotHolder.setVisible(true);
+		instruments = new InstrumentPanel();
+		instruments.setVisible(true);
 		addMouseMotionListener(mouseMove);
 	};
 
@@ -141,7 +152,7 @@ public class Plotter extends JPanel {
 		changeViewport(X_MAX, X_MIN, Y_MAX / factor, Y_MIN / factor);
 	}
 
-	public void changeViewport(int xMax, int xMin, int yMax, int yMin) {
+	private void changeViewport(int xMax, int xMin, int yMax, int yMin) {
 		if (xMax < 1)
 			return;
 		if (yMax < 1)
@@ -154,6 +165,7 @@ public class Plotter extends JPanel {
 		VIEWPORT_MIN = X_MIN;
 		WIDTH = X_MAX - X_MIN;
 		HEIGHT = Y_MAX - Y_MIN;
+		repaint();
 	}
 
 	@Override
@@ -225,21 +237,35 @@ public class Plotter extends JPanel {
 
 	private static Point2D.Double shiftJavaPointToCartesianCoord(Point javaPoint,
 			int componentHeight, int componentWidth) {
-return null;
+
+		double xPercent = javaPoint.x / (double) componentWidth;
+		double yPercent = javaPoint.y / (double) componentHeight;
+
+		double relativeX = xPercent * WIDTH;
+		double relativeY = yPercent * HEIGHT;
+
+		double absX = relativeX - X_MAX;
+		double absY = relativeY - Y_MAX;
+		return new Point2D.Double(absX, -absY);
 	}
 
 	private void paintMouseLocation(Graphics2D g) {
 		Color originalColor = g.getColor();
 		Stroke originalStroke = g.getStroke();
 		final int RECT_HEIGHT = 15;
-		final int RECT_WIDTH = 68;
+		final int RECT_WIDTH = 100;
 		g.setColor(B_GROUND_COLOR);
 		g.fillRect(0, 0, RECT_WIDTH, RECT_HEIGHT);
 		g.setColor(Color.LIGHT_GRAY);
 		g.drawRect(0, 0, RECT_WIDTH, RECT_HEIGHT);
 		g.setColor(Color.BLACK);
-		String toDraw = String.format("X:%d, Y:%d", mouseLoc.x, mouseLoc.y);
+		Point2D.Double cartPoint = shiftJavaPointToCartesianCoord(mouseLoc, getHeight(),
+				getWidth());
+		String toDraw = String.format("X:%.2f, Y:%.2f", cartPoint.x, cartPoint.y);
 		g.drawString(toDraw, 1, 12);
+
+		g.setStroke(originalStroke);
+		g.setColor(originalColor);
 	}
 
 	private void paintGrid(Graphics2D g) {
@@ -271,16 +297,6 @@ return null;
 	private MouseMotionListener mouseMove = new MouseMotionListener() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		private JFrame getFrameContainer(Component c) {
-			Component cur = c;
-			while (c.getClass() != JFrame.class) {
-				cur = cur.getParent();
-			}
-			return (JFrame) cur;
 		}
 
 		@Override
@@ -295,5 +311,39 @@ return null;
 	private void repaint(boolean paintOnlyMouseCoord) {
 		Graphics2D g = (Graphics2D) getGraphics();
 		paintMouseLocation(g);
+	}
+
+	@SuppressWarnings("unused")
+	private class InstrumentPanel extends JFrame {
+		private JButton zoomInButton;
+		private JButton zoomOutButton;
+
+		public InstrumentPanel() {
+			super("Plotter Controls");
+			setDefaultCloseOperation(EXIT_ON_CLOSE);
+			zoomInButton = new JButton("Zoom In");
+			zoomOutButton = new JButton("Zoom Out");
+			JPanel mainPane = new JPanel(new GridBagLayout());
+			GridBagConstraints gc = new GridBagConstraints();
+			mainPane.add(zoomInButton, gc);
+			mainPane.add(zoomOutButton, gc);
+			add(mainPane);
+			zoomInButton.addActionListener(zoomInAction);
+			zoomOutButton.addActionListener(zoomOutAction);
+			pack();
+		}
+
+		private ActionListener zoomInAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				zoomIn(2);
+			}
+		};
+		private ActionListener zoomOutAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				zoomOut(2);
+			}
+		};
 	}
 }
