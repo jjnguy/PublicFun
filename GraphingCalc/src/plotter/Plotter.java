@@ -2,13 +2,11 @@ package plotter;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
@@ -192,6 +190,7 @@ public class Plotter extends JPanel {
 		VIEWPORT_MIN = X_MIN;
 		WIDTH = X_MAX - X_MIN;
 		HEIGHT = Y_MAX - Y_MIN;
+		instruments.setSliderMax((int) Math.ceil(X_MAX / 2.0), (int) Math.ceil(Y_MAX / 2.0));
 		repaint();
 	}
 
@@ -312,8 +311,9 @@ public class Plotter extends JPanel {
 			// the ones on the x axis
 			g.drawLine((int) (i * getWidth() / WIDTH), getHeight() / 2 - MINI_LINE_LENGTH / 2,
 					(int) (i * getWidth() / WIDTH), getHeight() / 2 + MINI_LINE_LENGTH / 2);
-			g.drawLine((int) ((WIDTH - i) * getWidth() / WIDTH), getHeight() / 2 - MINI_LINE_LENGTH / 2,
-					(int) ((WIDTH - i) * getWidth() / WIDTH), getHeight() / 2 + MINI_LINE_LENGTH / 2);
+			g.drawLine((int) ((WIDTH - i) * getWidth() / WIDTH), getHeight() / 2
+					- MINI_LINE_LENGTH / 2, (int) ((WIDTH - i) * getWidth() / WIDTH),
+					getHeight() / 2 + MINI_LINE_LENGTH / 2);
 		}// Mini lines
 		for (double i = WIDTH / 2; i < WIDTH; i += Y_RULE) {
 			// the ones on the y axis
@@ -321,7 +321,8 @@ public class Plotter extends JPanel {
 					(int) (i * getHeight()) / HEIGHT, getWidth() / 2 + MINI_LINE_LENGTH / 2,
 					(int) (i * getHeight() / HEIGHT));
 			g.drawLine(getWidth() / 2 - MINI_LINE_LENGTH / 2,
-					(int) ((HEIGHT -i) * getHeight()) / HEIGHT, getWidth() / 2 + MINI_LINE_LENGTH / 2,
+					(int) ((HEIGHT - i) * getHeight()) / HEIGHT, getWidth() / 2
+							+ MINI_LINE_LENGTH / 2,
 					(int) ((HEIGHT - i) * getHeight() / HEIGHT));
 		}
 
@@ -352,6 +353,8 @@ public class Plotter extends JPanel {
 	private class InstrumentPanel extends JFrame {
 		private JButton zoomInButton;
 		private JButton zoomOutButton;
+		private JLabel xAxisLabel;
+		private JLabel yAxisLabel;
 		private JSlider xRuleSlider;
 		private JSlider yRuleSlider;
 
@@ -360,6 +363,8 @@ public class Plotter extends JPanel {
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
 			zoomInButton = new JButton("Zoom In");
 			zoomOutButton = new JButton("Zoom Out");
+			xAxisLabel = new JLabel("X Axis Rule");
+			yAxisLabel = new JLabel("Y Axis Rule");
 			xRuleSlider = new JSlider(1, X_MAX / 2);
 			yRuleSlider = new JSlider(1, Y_MAX / 2);
 			xRuleSlider.setPaintLabels(true);
@@ -379,6 +384,11 @@ public class Plotter extends JPanel {
 			gc.gridy = 0;
 			mainPane.add(zoomInButton, gc);
 			mainPane.add(zoomOutButton, gc);
+			gc.fill = GridBagConstraints.HORIZONTAL;
+			gc.weightx = 1;
+			gc.gridy++;
+			mainPane.add(xAxisLabel, gc);
+			mainPane.add(yAxisLabel, gc);
 			gc.gridy++;
 			mainPane.add(xRuleSlider, gc);
 			mainPane.add(yRuleSlider, gc);
@@ -386,6 +396,11 @@ public class Plotter extends JPanel {
 			zoomInButton.addActionListener(zoomInAction);
 			zoomOutButton.addActionListener(zoomOutAction);
 			pack();
+		}
+
+		public void setSliderMax(int xMax, int yMax) {
+			xRuleSlider.setMaximum(xMax);
+			yRuleSlider.setMaximum(yMax);
 		}
 
 		private ActionListener zoomInAction = new ActionListener() {
