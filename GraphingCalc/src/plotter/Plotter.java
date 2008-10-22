@@ -33,6 +33,7 @@ public class Plotter extends JPanel {
 	private static final Color LINE_COLOR = Color.BLUE;
 	private static final Color POINT_COLOR = Color.BLACK;
 	private static final Color RULE_COLOR = Color.LIGHT_GRAY;
+	private static final Color DRAWN_POINT_COLOR = Color.RED;
 
 	public static int VIEWPORT_MAX = 10;
 	public static int VIEWPORT_MIN = -10;
@@ -51,6 +52,7 @@ public class Plotter extends JPanel {
 	private Point mouseLoc;
 
 	private List<Point2D.Double> points;
+	private List<Point> drawnPoints;
 	private boolean connectedMode;
 	private boolean onTop = true;
 
@@ -63,6 +65,7 @@ public class Plotter extends JPanel {
 
 	public Plotter(boolean connectedModeP) {
 		points = new ArrayList<Point2D.Double>();
+		drawnPoints = new ArrayList<Point>();
 		setPreferredSize(new Dimension(400, 400));
 		setBackground(B_GROUND_COLOR);
 		addMouseMotionListener(mouseMove);
@@ -84,6 +87,10 @@ public class Plotter extends JPanel {
 		SwingUtilities.invokeLater(r);
 	}
 
+	private void drawPoint(Point point) {
+		drawnPoints.add(point);
+	}
+
 	public void clear() {
 		Runnable r = new Runnable() {
 			@Override
@@ -93,7 +100,6 @@ public class Plotter extends JPanel {
 			}
 		};
 		SwingUtilities.invokeLater(r);
-
 	}
 
 	public void startPlotter() {
@@ -199,9 +205,20 @@ public class Plotter extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		paintGrid(g2);
+		paintDrawnPoints(g2);
 		paintPoints(g2);
 		if (mouseLoc != null)
 			paintMouseLocation(g2);
+	}
+
+	private void paintDrawnPoints(Graphics2D g2) {
+		Color originalColor = g2.getColor();
+		g2.setColor(DRAWN_POINT_COLOR);
+		for (Point p : drawnPoints) {
+			g2.fillOval(p.x - (POINT_DIAMETER / 2), p.y - (POINT_DIAMETER / 2),
+					POINT_DIAMETER, POINT_DIAMETER);
+		}
+		g2.setColor(originalColor);
 	}
 
 	private void paintPoints(Graphics2D g) {
@@ -333,6 +350,7 @@ public class Plotter extends JPanel {
 	private MouseMotionListener mouseMove = new MouseMotionListener() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
+			drawPoint(e.getPoint());
 		}
 
 		@Override
@@ -349,7 +367,6 @@ public class Plotter extends JPanel {
 		paintMouseLocation(g);
 	}
 
-	@SuppressWarnings("unused")
 	private class InstrumentPanel extends JFrame {
 		private JButton zoomInButton;
 		private JButton zoomOutButton;
