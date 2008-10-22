@@ -308,16 +308,21 @@ public class Plotter extends JPanel {
 		g.drawLine(0, getHeight() / 2, getWidth(), getHeight() / 2);
 		g.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight());
 		// Mini lines
-		for (double i = X_RULE; i < WIDTH; i += X_RULE) {
+		for (double i = WIDTH / 2; i < WIDTH; i += X_RULE) {
 			// the ones on the x axis
 			g.drawLine((int) (i * getWidth() / WIDTH), getHeight() / 2 - MINI_LINE_LENGTH / 2,
 					(int) (i * getWidth() / WIDTH), getHeight() / 2 + MINI_LINE_LENGTH / 2);
+			g.drawLine((int) ((WIDTH - i) * getWidth() / WIDTH), getHeight() / 2 - MINI_LINE_LENGTH / 2,
+					(int) ((WIDTH - i) * getWidth() / WIDTH), getHeight() / 2 + MINI_LINE_LENGTH / 2);
 		}// Mini lines
-		for (double i = Y_RULE; i < WIDTH; i += Y_RULE) {
+		for (double i = WIDTH / 2; i < WIDTH; i += Y_RULE) {
 			// the ones on the y axis
 			g.drawLine(getWidth() / 2 - MINI_LINE_LENGTH / 2,
 					(int) (i * getHeight()) / HEIGHT, getWidth() / 2 + MINI_LINE_LENGTH / 2,
 					(int) (i * getHeight() / HEIGHT));
+			g.drawLine(getWidth() / 2 - MINI_LINE_LENGTH / 2,
+					(int) ((HEIGHT -i) * getHeight()) / HEIGHT, getWidth() / 2 + MINI_LINE_LENGTH / 2,
+					(int) ((HEIGHT - i) * getHeight() / HEIGHT));
 		}
 
 		g.setStroke(originalStroke);
@@ -361,10 +366,12 @@ public class Plotter extends JPanel {
 			xRuleSlider.setPaintTicks(true);
 			xRuleSlider.setMajorTickSpacing(1);
 			xRuleSlider.setSnapToTicks(true);
+			xRuleSlider.setValue(1);
 			yRuleSlider.setPaintLabels(true);
 			yRuleSlider.setPaintTicks(true);
 			yRuleSlider.setMajorTickSpacing(1);
 			yRuleSlider.setSnapToTicks(true);
+			yRuleSlider.setValue(1);
 			xRuleSlider.addChangeListener(sliderChange);
 			yRuleSlider.addChangeListener(sliderChange);
 			JPanel mainPane = new JPanel(new GridBagLayout());
