@@ -351,6 +351,7 @@ public class Plotter extends JPanel {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			drawPoint(e.getPoint());
+			repaint(true);
 		}
 
 		@Override
@@ -362,9 +363,10 @@ public class Plotter extends JPanel {
 		}
 	};
 
-	private void repaint(boolean paintOnlyMouseCoord) {
+	private void repaint(boolean skipGraphDrawing) {
 		Graphics2D g = (Graphics2D) getGraphics();
 		paintMouseLocation(g);
+		paintDrawnPoints(g);
 	}
 
 	private class InstrumentPanel extends JFrame {
