@@ -53,7 +53,7 @@ public class MinesweeperGame extends JFrame {
 		board = new Board(d.width(), d.height(), mineNumber);
 		board.addPropertyChangeListener(new PropertyChangeListener() {
 
-			@Override
+			// @Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName().equals(Board.WINLOSE_PROP)) {
 					if (evt.getNewValue().equals(Board.WIN)) {
@@ -114,7 +114,7 @@ public class MinesweeperGame extends JFrame {
 
 	public ActionListener newGameAction = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			timer.stop();
 			timer.reset();

@@ -50,7 +50,7 @@ public class MineSweeperMenuBar extends JMenuBar {
 
 	private ActionListener easy = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			owner.changeDifficulty(Difficulty.EASY);
 		}
@@ -58,7 +58,7 @@ public class MineSweeperMenuBar extends JMenuBar {
 
 	private ActionListener intermediate = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			owner.changeDifficulty(Difficulty.INTERMEDIATE);
 		}
@@ -66,14 +66,14 @@ public class MineSweeperMenuBar extends JMenuBar {
 
 	private ActionListener hard = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			owner.changeDifficulty(Difficulty.EXPERT);
 		}
 	};
 	private ActionListener highscoresAction = new ActionListener(){
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			JDialog highscores = new JDialog(owner);
 			JTextArea scores = new JTextArea(owner.getHighScores());
