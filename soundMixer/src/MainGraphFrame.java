@@ -77,8 +77,8 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 		}
 		if (!noFile) {
 			listOfSampleValues = getListOfPointsFromFile(curFileIn);
-			listOfFourierValues = getListOfFourierPointsFromSamplePoints(
-					listOfSampleValues, 256);
+			listOfFourierValues = getListOfFourierPointsFromSamplePoints(listOfSampleValues,
+					256);
 		}
 		isDancing = false;
 
@@ -99,26 +99,26 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
-		
+
 		setPreferredSize(new Dimension(800, 500));
 		setJMenuBar(menu);
 		gc.fill = GridBagConstraints.BOTH;
 		gc.weightx = 1;
 		gc.weighty = 1;
 		gc.gridy = 0;
-		mainPanel.add(upperPanel,gc);
+		mainPanel.add(upperPanel, gc);
 		gc.gridy++;
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.weighty = 0;
-		mainPanel.add(buttons,gc);
+		mainPanel.add(buttons, gc);
 		gc.fill = GridBagConstraints.BOTH;
 		gc.gridy++;
 		gc.weighty = 1;
-		mainPanel.add(fFrame,gc);
+		mainPanel.add(fFrame, gc);
 		gc.weighty = 0;
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridy++;
-		mainPanel.add(labels,gc);
+		mainPanel.add(labels, gc);
 
 		add(mainPanel);
 
@@ -131,7 +131,7 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 		new MainGraphFrame(null);
 	}
 
-	@Override
+	// @Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("exit")) {
 			System.exit(0);
@@ -146,8 +146,8 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 				return;
 			}
 			listOfSampleValues = getListOfPointsFromFile(curFileIn);
-			listOfFourierValues = getListOfFourierPointsFromSamplePoints(
-					listOfSampleValues, 256);
+			listOfFourierValues = getListOfFourierPointsFromSamplePoints(listOfSampleValues,
+					256);
 			noFile = false;
 			fFrame.repaint();
 			upperPanel.repaint();
@@ -156,11 +156,9 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 		} else if (e.getActionCommand().equals("dance")) {
 			isDancing = !isDancing;
 		} else if (e.getActionCommand().equals("foward")) {
-			buttons.slide.setValue(buttons.slide.getValue()
-					+ buttons.setJumpVal.getValue());
+			buttons.slide.setValue(buttons.slide.getValue() + buttons.setJumpVal.getValue());
 		} else if (e.getActionCommand().equals("back")) {
-			buttons.slide.setValue(buttons.slide.getValue()
-					- buttons.setJumpVal.getValue());
+			buttons.slide.setValue(buttons.slide.getValue() - buttons.setJumpVal.getValue());
 		}
 
 		repaint();
@@ -205,7 +203,7 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 		listOfFourierValues = arr;
 	}
 
-	@Override
+	// @Override
 	public void stateChanged(ChangeEvent e) {
 		if (buttons == null)
 			return;
@@ -214,8 +212,7 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 			upperPanel.repaint();
 		}
 		if (e.getSource() == buttons.setJumpVal) {
-			buttons.shiftViewBack.setText("Move Window Back "
-					+ buttons.setJumpVal.getValue());
+			buttons.shiftViewBack.setText("Move Window Back " + buttons.setJumpVal.getValue());
 			buttons.shiftViewFoward.setText("Move Window Foward "
 					+ buttons.setJumpVal.getValue());
 			buttons.shiftViewBack.repaint();
@@ -234,7 +231,7 @@ public class MainGraphFrame extends JFrame implements ActionListener, ChangeList
 
 	}
 
-	@Override
+	// @Override
 	public void mouseMoved(MouseEvent e) {
 		upperPanel.setToolTipText(upperPanel.getToolTipText(e));
 		fFrame.setToolTipText(fFrame.getToolTipText(e));

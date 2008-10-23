@@ -97,7 +97,7 @@ public class InstrumentPanel extends JPanel {
 
 	private MouseWheelListener wheelListen = new MouseWheelListener() {
 
-		@Override
+		// @Override
 		public void mouseWheelMoved(MouseWheelEvent e) {
 			int ammnt = e.getWheelRotation();
 			slide.setValue(slide.getValue() + (ammnt * 500));
