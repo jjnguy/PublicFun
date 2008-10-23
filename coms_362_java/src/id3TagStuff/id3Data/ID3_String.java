@@ -17,13 +17,13 @@ public class ID3_String implements ID3v2_XFrameData {
 		return data;
 	}
 
-	@Override
+	//@Override
 	public String getType() {
 		// TODO Auto-generated method stub
 		return "String";
 	}
 
-	@Override
+	// @Override
 	public int[] getByteRepresentation(int versionNumber) {
 		byte encoding = 0;
 		byte[] ret = new byte[1 + data.getBytes().length];

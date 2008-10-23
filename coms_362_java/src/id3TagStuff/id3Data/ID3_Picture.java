@@ -71,7 +71,7 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		return "ID3 Picture: " + description;
 	}
 
-	@Override
+	// @Override
 	public String getType() {
 		return "Picture";
 	}
@@ -86,7 +86,7 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		Util.writeIntArrToStream(out, data);
 	}
 
-	@Override
+	// @Override
 	public int[] getByteRepresentation(int majorVersion) {
 		if (majorVersion < 2 | majorVersion > 4)
 			throw new IllegalArgumentException("The version type doesnot exist");

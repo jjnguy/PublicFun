@@ -35,7 +35,7 @@ public class FileUtil {
 
 class SongFileFilter implements FileFilter {
 
-	@Override
+	// @Override
 	public boolean accept(File pathname) {
 		MP3FileFilter mp3 = new MP3FileFilter();
 		AACFileFilter aac = new AACFileFilter();
@@ -46,7 +46,7 @@ class SongFileFilter implements FileFilter {
 
 class MP3FileFilter implements FileFilter {
 
-	@Override
+	// @Override
 	public boolean accept(File pathname) {
 		if (pathname.isDirectory())
 			return false;
@@ -58,7 +58,7 @@ class MP3FileFilter implements FileFilter {
 
 class WAVFileFilter implements FileFilter {
 
-	@Override
+	// @Override
 	public boolean accept(File pathname) {
 		if (pathname.isDirectory())
 			return false;
@@ -70,7 +70,7 @@ class WAVFileFilter implements FileFilter {
 
 class AACFileFilter implements FileFilter {
 
-	@Override
+	// @Override
 	public boolean accept(File pathname) {
 		if (pathname.isDirectory())
 			return false;
