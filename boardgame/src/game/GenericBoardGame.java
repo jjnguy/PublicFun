@@ -25,12 +25,12 @@ public abstract class GenericBoardGame extends JFrame implements BoardGame {
 		Util.moveToMiddle(this);
 	}
 	
-	@Override
+	// @Override
 	public void play() {
 		setVisible(true);
 	}
 	
-	@Override
+	// @Override
 	public GenericBoard getBoard() {
 		return board;
 	}
@@ -40,7 +40,7 @@ public abstract class GenericBoardGame extends JFrame implements BoardGame {
 		addPiece(BlankPiece.BLANK(), originalPoint);
 	}
 	
-	@Override
+	// @Override
 	public GenericGamePiece getPiece(Point coord) {
 		return board.getPieceAtSquare(coord);
 	}
@@ -49,7 +49,7 @@ public abstract class GenericBoardGame extends JFrame implements BoardGame {
 		board.addPiece(coord.y, coord.x, piece);
 	}
 	
-	@Override
+	// @Override
 	public Dimension getDimension() {
 		return board.getDimenstion();
 	}

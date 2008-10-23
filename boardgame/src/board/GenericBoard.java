@@ -109,7 +109,7 @@ public class GenericBoard extends JPanel {
 
 	private PropertyChangeListener cellChange = new PropertyChangeListener() {
 
-		@Override
+		// @Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (!evt.getPropertyName().equals(BoardSquare.STATUS_CHANGE))
 				return;

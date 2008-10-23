@@ -56,7 +56,7 @@ public class CheckersGame extends GenericBoardGame {
 		// c.resetGame();
 	}
 
-	@Override
+	// @Override
 	public boolean makeMove(Point p1, Point p2) {
 		CheckersMoveVerifier verify = new CheckersMoveVerifier();
 		if (!verify.legalMove(this, turn, p1, p2)) {
@@ -95,7 +95,7 @@ public class CheckersGame extends GenericBoardGame {
 		System.out.println("Red: " + reds + "   Black: " + blacks);
 	}
 
-	@Override
+	// @Override
 	public void resetGame() {
 		// TODO fix this shit
 		board.resetBoard();
@@ -104,7 +104,7 @@ public class CheckersGame extends GenericBoardGame {
 		turn = CheckerPiece.RED();
 	}
 
-	@Override
+	// @Override
 	public String getSide(int rowNumber) {
 		if (rowNumber < 4)
 			return RED_SIDE;

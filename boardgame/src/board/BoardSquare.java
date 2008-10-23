@@ -80,7 +80,7 @@ public class BoardSquare extends JPanel {
 
 	private MouseListener mouseEnterExit = new MouseListener() {
 
-		@Override
+		// @Override
 		public void mouseClicked(MouseEvent e) {
 			int oldStatus;
 			if (status == SELECTED) {
@@ -95,7 +95,7 @@ public class BoardSquare extends JPanel {
 			repaint();
 		}
 
-		@Override
+		// @Override
 		public void mouseEntered(MouseEvent e) {
 			int oldStatus;
 			if (status != SELECTED) {
@@ -106,7 +106,7 @@ public class BoardSquare extends JPanel {
 			repaint();
 		}
 
-		@Override
+		// @Override
 		public void mouseExited(MouseEvent e) {
 			int oldStatus;
 			if (status != SELECTED) {
@@ -117,11 +117,11 @@ public class BoardSquare extends JPanel {
 			repaint();
 		}
 
-		@Override
+		// @Override
 		public void mousePressed(MouseEvent e) {
 		}
 
-		@Override
+		// @Override
 		public void mouseReleased(MouseEvent e) {
 		}
 	};
