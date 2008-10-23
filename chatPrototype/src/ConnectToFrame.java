@@ -76,7 +76,7 @@ public class ConnectToFrame extends JDialog {
 
 	private ActionListener connectAction = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			choice = ConnectToFrame.CONNECT_OPTION;
 			dispatchEvent(new WindowEvent(ConnectToFrame.this, WindowEvent.WINDOW_CLOSING));

@@ -130,12 +130,12 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		}
 	}
 
-	@Override
+	// @Override
 	public boolean hasMesageToSend() {
 		return !outgoingMessageBuffer.isEmpty();
 	}
 
-	@Override
+	// @Override
 	public void saveConversation() {
 		JFileChooser choose = new JFileChooser();
 		int choice = choose.showSaveDialog(this);
@@ -148,8 +148,8 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		try {
 			out = new PrintStream(f);
 		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(this, "Failed to save conversation.",
-					"Save Fail", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Failed to save conversation.", "Save Fail",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		out.print(conversation.getText());
 		out.close();
@@ -157,7 +157,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 
 	private ActionListener sendAction = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			if (outgoingMesages.getText().trim().equals(""))
 				return;
@@ -170,7 +170,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 
 	private KeyListener enterPress = new KeyAdapter() {
 
-		@Override
+		// @Override
 		public void keyPressed(KeyEvent e) {
 			// TODO doesn't work
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -183,14 +183,14 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 
-			@Override
+			// @Override
 			public void run() {
 				new FullChatPanel();
 			}
 		});
 	}
 
-	@Override
+	// @Override
 	public void connectToChatServer(String host, int port) {
 		if (connected())
 			return;
@@ -199,8 +199,8 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 			sockIn = connection.getInputStream();
 			socOut = connection.getOutputStream();
 		} catch (UnknownHostException e) {
-			JOptionPane.showMessageDialog(this, "Could not resolve host.",
-					"Not Connected!", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Could not resolve host.", "Not Connected!",
+					JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this, "Failed to send message.",
 					"Message Send Fail", JOptionPane.ERROR_MESSAGE);
@@ -213,13 +213,12 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		hostItem.setEnabled(false);
 	}
 
-	@Override
+	// @Override
 	public void hostConversation() throws IOException {
 		if (connected())
 			return;
 
-		WaitingForConnectionFrame f = new WaitingForConnectionFrame(
-				FullChatPanel.DEFAULT_PORT);
+		WaitingForConnectionFrame f = new WaitingForConnectionFrame(FullChatPanel.DEFAULT_PORT);
 		connection = f.showConnectionDialog();
 		if (connection == null)
 			return;
@@ -233,7 +232,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		hostItem.setEnabled(false);
 	}
 
-	@Override
+	// @Override
 	public boolean connected() {
 		return connected;
 	}
@@ -256,18 +255,18 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		double hour = (day - Math.floor(day)) * 24;
 		double min = (hour - Math.floor(hour)) * 60;
 		double sec = (min - Math.floor(min)) * 60;
-		return (hour < 10 ? "0" : "") + (int) hour + ":" + (min < 10 ? "0" : "")
-				+ (int) min + ":" + (Math.round(sec) < 10 ? "0" : "") + Math.round(sec);
+		return (hour < 10 ? "0" : "") + (int) hour + ":" + (min < 10 ? "0" : "") + (int) min
+				+ ":" + (Math.round(sec) < 10 ? "0" : "") + Math.round(sec);
 	}
 
-	@Override
+	// @Override
 	public InputStream getIStream() {
 		return sockIn;
 	}
 
 	private ActionListener connectAction = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			ConnectToFrame connect = new ConnectToFrame();
 			int choice = connect.showConnectDialog();
@@ -279,20 +278,20 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 	};
 	private ActionListener hostAction = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			try {
 				hostConversation();
 			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(FullChatPanel.this,
-						"Failed to host conversation.", "Host Fail",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane
+						.showMessageDialog(FullChatPanel.this, "Failed to host conversation.",
+								"Host Fail", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	};
 	private ActionListener saveAction = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			saveConversation();
 		}
