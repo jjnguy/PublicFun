@@ -77,7 +77,7 @@ public class PlaylistSelecterGui extends JDialog {
 	}
 
 	private ActionListener okAction = new ActionListener() {
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			okPressed = true;
 			setVisible(false);

@@ -138,7 +138,7 @@ public class SetupGui extends JFrame {
 	};
 	
 	private ActionListener selectionSongActionWindows = new ActionListener() {
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			if (songs == null) {
 				songs = new ArrayList<File>();
@@ -173,7 +173,7 @@ public class SetupGui extends JFrame {
 	};
 	
 	private ActionListener startAction = new ActionListener() {
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			if (!new File(vlcLocationText.getText()).exists()) {
 				JOptionPane.showMessageDialog(SetupGui.this, "Please find VLC on your computer");
