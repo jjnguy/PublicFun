@@ -183,55 +183,55 @@ public class MainFrame extends JFrame {
 	}
 
 	private ActionListener polyListener = new ActionListener() {
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.POLYNOMIAL_GRAPH);
 			updateAndRefresh();
 		}
 	};
 	private ActionListener tanListener = new ActionListener() {
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.TAN_GRAPH);
 			updateAndRefresh();
 		}
 	};
 	private ActionListener cosListener = new ActionListener() {
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.COS_GRAPH);
 			updateAndRefresh();
 		}
 	};
 	private ActionListener sinListener = new ActionListener() {
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.SIN_GRAPH);
 			updateAndRefresh();
 		}
 	};
 	private ActionListener straightListener = new ActionListener() {
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent e) {
 			controller.updateGraphType(GraphingCalculatorController.LINE_GRAPH);
 			updateAndRefresh();
 		}
 	};
 	private ChangeListener absChange = new ChangeListener() {
-		@Override
+		// @Override
 		public void stateChanged(ChangeEvent e) {
 			updateAndRefresh();
 		}
 	};
 	private ChangeListener updateAndRefresh = new ChangeListener() {
-		@Override
+		// @Override
 		public void stateChanged(ChangeEvent e) {
 			updateAndRefresh();
 		}
 	};
 
 	class UpdateValsTimerTask extends TimerTask {
-		@Override
+		// @Override
 		public void run() {
 			updateAndRefresh();
 		}

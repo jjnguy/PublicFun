@@ -79,7 +79,7 @@ public class Plotter extends JPanel {
 
 	public void addPoint(final double x, final double y) {
 		Runnable r = new Runnable() {
-			@Override
+			// @Override
 			public void run() {
 				plotPoint(new Point2D.Double(x, y));
 			}
@@ -93,7 +93,7 @@ public class Plotter extends JPanel {
 
 	public void clear() {
 		Runnable r = new Runnable() {
-			@Override
+			// @Override
 			public void run() {
 				points.clear();
 				repaint();
@@ -104,7 +104,7 @@ public class Plotter extends JPanel {
 
 	public void startPlotter() {
 		Runnable r = new Runnable() {
-			@Override
+			// @Override
 			public void run() {
 				createAndRun();
 			}
@@ -126,7 +126,7 @@ public class Plotter extends JPanel {
 
 	public void stopPlotter() {
 		Runnable r = new Runnable() {
-			@Override
+			// @Override
 			public void run() {
 				points.clear();
 				plotHolder.dispose();
@@ -348,13 +348,13 @@ public class Plotter extends JPanel {
 	}
 
 	private MouseMotionListener mouseMove = new MouseMotionListener() {
-		@Override
+		// @Override
 		public void mouseDragged(MouseEvent e) {
 			drawPoint(e.getPoint());
 			repaint(true);
 		}
 
-		@Override
+		// @Override
 		public void mouseMoved(MouseEvent e) {
 			final int TOP_BAR_OFFSET = 0;
 			mouseLoc = e.getPoint();
@@ -423,20 +423,20 @@ public class Plotter extends JPanel {
 		}
 
 		private ActionListener zoomInAction = new ActionListener() {
-			@Override
+			// @Override
 			public void actionPerformed(ActionEvent e) {
 				zoomIn(2);
 			}
 		};
 		private ActionListener zoomOutAction = new ActionListener() {
-			@Override
+			// @Override
 			public void actionPerformed(ActionEvent e) {
 				zoomOut(2);
 			}
 		};
 
 		private ChangeListener sliderChange = new ChangeListener() {
-			@Override
+			// @Override
 			public void stateChanged(ChangeEvent e) {
 				setRules(xRuleSlider.getValue(), yRuleSlider.getValue());
 			}
