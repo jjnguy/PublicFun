@@ -66,7 +66,7 @@ public class MainFrame extends JFrame {
 	}
 
 	private ChangeListener valueChanged = new ChangeListener() {
-		@Override
+		//@Override
 		public void stateChanged(ChangeEvent e) {
 			timeLable.setText(delaySelector.getValue() + "");
 		}
@@ -83,7 +83,7 @@ public class MainFrame extends JFrame {
 	};
 	private ActionListener start = new ActionListener() {
 
-		@Override
+		// @Override
 		public void actionPerformed(ActionEvent arg0) {
 			timeLable.setForeground(Color.RED);
 			WaitAndGoThread th = new WaitAndGoThread(delaySelector.getValue(),
