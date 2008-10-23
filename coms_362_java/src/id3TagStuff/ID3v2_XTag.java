@@ -110,6 +110,7 @@ public class ID3v2_XTag {
 
 	public void addPaddingToFile(int ammountToAdd) throws IOException {
 		// TODO Now I need to figure out how to grow the padding...
+		// TODO error might be in the util methods
 		// First we save the tag
 		InputStream in = new FileInputStream(mp3File);
 		int[] tagBytes = Util.getBytesFromStream(in, header.getHeaderSize()
