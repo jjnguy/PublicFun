@@ -1,5 +1,6 @@
 package plotter;
 
+import java.awt.AWTException;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,16 +9,23 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -100,6 +108,24 @@ public class Plotter extends JPanel {
 			}
 		};
 		SwingUtilities.invokeLater(r);
+	}
+
+	public void saveToFile(final File toSaveTo) throws AWTException, IOException {
+		plotHolder.toFront();
+		final Robot r = new Robot();
+		repaint();
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				BufferedImage i = r.createScreenCapture(new Rectangle(getLocationOnScreen(),
+						getSize()));
+				try {
+					ImageIO.write(i, "png", toSaveTo);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	public void startPlotter() {
@@ -376,6 +402,7 @@ public class Plotter extends JPanel {
 		private JLabel yAxisLabel;
 		private JSlider xRuleSlider;
 		private JSlider yRuleSlider;
+		private JButton save;
 
 		public InstrumentPanel() {
 			super("Plotter Controls");
@@ -398,6 +425,8 @@ public class Plotter extends JPanel {
 			yRuleSlider.setValue(1);
 			xRuleSlider.addChangeListener(sliderChange);
 			yRuleSlider.addChangeListener(sliderChange);
+			save = new JButton("Save");
+			save.addActionListener(saveAction);
 			JPanel mainPane = new JPanel(new GridBagLayout());
 			GridBagConstraints gc = new GridBagConstraints();
 			gc.gridy = 0;
@@ -411,6 +440,8 @@ public class Plotter extends JPanel {
 			gc.gridy++;
 			mainPane.add(xRuleSlider, gc);
 			mainPane.add(yRuleSlider, gc);
+			gc.gridy++;
+			mainPane.add(save, gc);
 			add(mainPane);
 			zoomInButton.addActionListener(zoomInAction);
 			zoomOutButton.addActionListener(zoomOutAction);
@@ -439,6 +470,27 @@ public class Plotter extends JPanel {
 			// @Override
 			public void stateChanged(ChangeEvent e) {
 				setRules(xRuleSlider.getValue(), yRuleSlider.getValue());
+			}
+		};
+
+		private ActionListener saveAction = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFileChooser choose = new JFileChooser();
+				int action = choose.showSaveDialog(Plotter.this);
+				if (action == JFileChooser.CANCEL_OPTION)
+					return;
+				File saveLoc = choose.getSelectedFile();
+				try {
+					saveToFile(saveLoc);
+				} catch (AWTException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		};
 	}
