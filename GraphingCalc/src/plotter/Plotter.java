@@ -377,15 +377,14 @@ public class Plotter extends JPanel {
 		// @Override
 		public void mouseDragged(MouseEvent e) {
 			drawPoint(e.getPoint());
+			mouseLoc = e.getPoint();
 			repaint(true);
 		}
 
 		// @Override
 		public void mouseMoved(MouseEvent e) {
-			final int TOP_BAR_OFFSET = 0;
 			mouseLoc = e.getPoint();
-			mouseLoc.y -= TOP_BAR_OFFSET;
-			Plotter.this.repaint(true);
+			repaint(true);
 		}
 	};
 
