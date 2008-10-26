@@ -110,12 +110,18 @@ public class Plotter extends JPanel {
 		SwingUtilities.invokeLater(r);
 	}
 
-	public void saveToFile(final File toSaveTo) throws AWTException, IOException {
+	public void saveToFile(final File toSaveTo) throws IOException {
 		plotHolder.toFront();
-		final Robot r = new Robot();
 		repaint();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				Robot r = null;
+				try {
+					r = new Robot();
+				} catch (AWTException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				BufferedImage i = r.createScreenCapture(new Rectangle(getLocationOnScreen(),
 						getSize()));
 				try {
@@ -481,11 +487,13 @@ public class Plotter extends JPanel {
 				if (action == JFileChooser.CANCEL_OPTION)
 					return;
 				File saveLoc = choose.getSelectedFile();
+				String fname = saveLoc.getName();
+				if (!(fname.endsWith("png") || fname.endsWith("PNG"))) {
+					fname += ".png";
+				}
+				saveLoc = new File(fname);
 				try {
 					saveToFile(saveLoc);
-				} catch (AWTException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
