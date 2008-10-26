@@ -1,22 +1,17 @@
 package id3TagStuff;
 
 import id3TagStuff.frames.ID3v2_XFrame;
-import id3TagStuff.id3Data.ID3v2_XFrameData;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
-import sun.security.action.GetBooleanAction;
 import util.Util;
 
 public class ID3v2_XTag {
@@ -87,6 +82,7 @@ public class ID3v2_XTag {
 	 * @throws UnsupportedOperationException
 	 *             Throws the exception if the new frame will not fit within the paddin that we
 	 *             have left
+	 * @deprecated
 	 */
 	public void addID3v2_XFrame(ID3v2_XFrame toAdd) throws IOException {
 		int[] toWrite = toAdd.getFrameData(header.getMajorVersion());
@@ -108,6 +104,12 @@ public class ID3v2_XTag {
 		file.write(Util.castIntArrToByteArr(toWrite));
 	}
 
+	/**
+	 * 
+	 * @param ammountToAdd
+	 * @throws IOException
+	 * @deprecated
+	 */
 	public void addPaddingToFile(int ammountToAdd) throws IOException {
 		// TODO Now I need to figure out how to grow the padding...
 		// TODO error might be in the util methods

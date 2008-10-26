@@ -65,5 +65,4 @@ public class Util {
 			ammntLeft -= s.skip(ammntLeft);
 		}
 	}
-
 }
