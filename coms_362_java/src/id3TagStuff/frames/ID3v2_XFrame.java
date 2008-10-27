@@ -18,7 +18,10 @@ public class ID3v2_XFrame {
 	public ID3v2_XFrame(int[] headerBytes, InputStream tagFile) throws IOException {
 		header = new ID3v2_XFrameHeader(headerBytes);
 		byte[] frameBytes = new byte[header.getSize()];
-		tagFile.read(frameBytes);
+		int bytesREad = tagFile.read(frameBytes);
+		if (bytesREad != frameBytes.length) {
+			throw new IOException("WTF Mate?");
+		}
 		if (header.getID().startsWith("T", 0)) {
 			data = new ID3_String(Util.castByteArrToIntArr(frameBytes));
 		} else if (header.getID().matches("COM|COMM")) {
@@ -86,7 +89,8 @@ public class ID3v2_XFrame {
 
 		int[] ret = new int[totalLength];
 		int offset = 0;
-		System.arraycopy(Util.castByteArrToIntArr(headerStr.getBytes()), 0, ret, offset, headerStr.getBytes().length);
+		System.arraycopy(Util.castByteArrToIntArr(headerStr.getBytes()), 0, ret, offset,
+				headerStr.getBytes().length);
 		offset += headerStr.getBytes().length;
 
 		int size = header.getSize();

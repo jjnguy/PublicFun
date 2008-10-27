@@ -38,8 +38,10 @@ public class ID3v2_XTag {
 		// read the bytes in from the file for the header
 		InputStream in = new FileInputStream(mp3File);
 		byte[] headerBytes = new byte[10];
-		in.read(headerBytes);
-
+		int bytesRead = in.read(headerBytes);
+		if (bytesRead != headerBytes.length){
+			throw new IOException("WTF Mate?");
+		}
 		// create the meat of the tag object
 		header = new ID3v2_XTagHeader(Util.castByteArrToIntArr(headerBytes));
 		frames = new ArrayList<ID3v2_XFrame>();

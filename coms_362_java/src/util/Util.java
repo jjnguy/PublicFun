@@ -43,7 +43,9 @@ public class Util {
 
 	public static int[] getBytesFromFile(File file) throws IOException {
 		InputStream in = new FileInputStream(file);
-		return getBytesFromStream(in);
+		int[] ret =  getBytesFromStream(in);
+		in.close();
+		return ret;
 	}
 
 	public static int[] getBytesFromStream(InputStream in, int size) throws IOException {

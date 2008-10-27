@@ -88,6 +88,8 @@ public class ID3v2_XFrameHeader {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Could not find translator file");
+			return null;
 		}
 		while (fin.hasNextLine()) {
 			String line = fin.nextLine().trim();
