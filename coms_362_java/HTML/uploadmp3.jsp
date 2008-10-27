@@ -12,6 +12,13 @@
 			String localPath = request.getLocalAddr();
 			String fullPath = localPath + "/" + filePath;
 		%>
+		<p>
+			<% if (false) { %>
+			happy
+			<% } else { %>
+			sad
+			<% } %>
+		</p>
 		<%= fullPath %>
 	</body>
 </html>
