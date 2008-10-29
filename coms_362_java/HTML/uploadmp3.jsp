@@ -15,7 +15,7 @@
 	<%
 		String loc = request.getParameter("fileLoc");
 		ID3v2_XTag fileTag = new ID3v2_XTag(new File(loc));
-		List<ID3v2_XFrame> frames;
+		List<ID3v2_XFrame> frames; 
 		frames = fileTag.getAllFrames();
 		for (ID3v2_XFrame frame: frames) {
 			frame.getEnglishTagDescription();
