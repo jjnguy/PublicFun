@@ -9,8 +9,12 @@
 	</head>
 	<body>
 	<%
-		int primeLim = Integer.parseInt(request.getParameter("primeLim"));
-		byte[] bytes = new byte[primeLim];
+		String loc = request.getParameter("fileLoc");
 	%>
+	<% if (true) { %>
+	<h1><%= loc %></h1>
+	<%} else { %>
+	<h2><%= loc %></h2>
+	<% } %>
 	</body>
 </html>
