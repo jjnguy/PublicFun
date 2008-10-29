@@ -21,14 +21,11 @@ public class TestDB {
 			// name of the database is test.
 			String url = "jdbc:mysql://129.186.150.51";
 
-			String pword = "test";
-			String user = "test";
+			String pword = "root";
+			String user = "root";
 			// We have to establish a jdbc connection to the database
 			Connection connection = DriverManager.getConnection(url, user, pword);
 
-			/*
-			 * The insert statement will insert the record into the defined table.
-			 */
 			String qs2 = "create database madeByJustinNow;";
 			Statement st = connection.createStatement();
 			st.execute(qs2);
