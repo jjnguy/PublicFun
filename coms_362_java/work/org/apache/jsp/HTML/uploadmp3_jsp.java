@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import java.io.InputStream;
 import java.io.FileOutputStream;
 import javax.swing.*;
+import id3TagStuff.id3Data.ID3_Picture;
 
 public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -62,8 +63,10 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
-      out.write("<html>\r\n");
       out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("<html>\r\n");
       out.write("\t<head>\r\n");
       out.write("\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\r\n");
       out.write("\t\t<title>Upload Results</title>\r\n");
@@ -78,6 +81,12 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
 			List<FileItem> items = serv.parseRequest(request);
 			File file = null;
 			String fullPath = "fail";
+			String pictureSaveDir = "C:/pics/";
+			{File existTest = new File(pictureSaveDir);
+			if (!existTest.exists()){
+				existTest.mkdirs();
+			}}
+			String nameOnly = null;
 			for (FileItem fItem: items){
 				fullPath = fItem.getName();
 				String firstPart = "C:/uploads2/";
@@ -86,10 +95,9 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
 					existTest.mkdirs();
 				}
 				int sepIdx = fullPath.indexOf(File.separator);
-				String nameOnly;
 				if (sepIdx == -1){
 					nameOnly = fullPath;
-				}else {
+				} else {
 					nameOnly = fullPath.substring(fullPath.lastIndexOf(File.separatorChar));
 				}
 				file = new File(firstPart + nameOnly);
@@ -107,9 +115,16 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
 			frames = fileTag.getAllFrames();
 			String html = "";
 			for (ID3v2_XFrame frame: frames) {
-				html += frame.getEnglishTagDescription() + "<br>";
+				html += frame.getFrameType() + "<br>";
 				html += frame.getData() + "<br>";
 				html += "<br>";
+				if (frame.getFrameType().matches("APIC|PIC")){
+					ID3_Picture pic = (ID3_Picture)frame.getData();
+					String picLoc = pictureSaveDir + nameOnly + ".png";
+					System.out.println("Saving pic in location: " + picLoc);
+					pic.saveAs(new File(pictureSaveDir));
+					html += "<img src=\"" + picLoc + "\">";
+				}
 			}
 		
       out.write("\r\n");

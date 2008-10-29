@@ -77,11 +77,12 @@ public class ID3_Picture implements ID3v2_XFrameData {
 	}
 
 	public void saveAs(File loc) throws IOException {
-		String name = loc.getName();
+		String name = loc.getCanonicalPath();
 		if (!name.endsWith("." + format_MIME.toLowerCase())
 				&& !name.endsWith("." + format_MIME.toUpperCase())) {
 			name += "." + format_MIME;
 		}
+		System.out.println("ACTUALLY Saving pic in location: " + name);
 		PrintStream out = new PrintStream(new File(name));
 		Util.writeIntArrToStream(out, data);
 	}

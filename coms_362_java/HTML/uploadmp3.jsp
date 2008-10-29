@@ -11,8 +11,10 @@
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@page import="java.io.InputStream"%>
-<%@page import="java.io.FileOutputStream"%><html>
+<%@page import="java.io.FileOutputStream"%>
 <%@page import="javax.swing.*" %>
+
+<%@page import="id3TagStuff.id3Data.ID3_Picture"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Upload Results</title>
@@ -26,6 +28,12 @@
 			List<FileItem> items = serv.parseRequest(request);
 			File file = null;
 			String fullPath = "fail";
+			String pictureSaveDir = "C:/pics/";
+			{File existTest = new File(pictureSaveDir);
+			if (!existTest.exists()){
+				existTest.mkdirs();
+			}}
+			String nameOnly = null;
 			for (FileItem fItem: items){
 				fullPath = fItem.getName();
 				String firstPart = "C:/uploads2/";
@@ -34,10 +42,9 @@
 					existTest.mkdirs();
 				}
 				int sepIdx = fullPath.indexOf(File.separator);
-				String nameOnly;
 				if (sepIdx == -1){
 					nameOnly = fullPath;
-				}else {
+				} else {
 					nameOnly = fullPath.substring(fullPath.lastIndexOf(File.separatorChar));
 				}
 				file = new File(firstPart + nameOnly);
@@ -55,9 +62,16 @@
 			frames = fileTag.getAllFrames();
 			String html = "";
 			for (ID3v2_XFrame frame: frames) {
-				html += frame.getEnglishTagDescription() + "<br>";
+				html += frame.getFrameType() + "<br>";
 				html += frame.getData() + "<br>";
 				html += "<br>";
+				if (frame.getFrameType().matches("APIC|PIC")){
+					ID3_Picture pic = (ID3_Picture)frame.getData();
+					String picLoc = pictureSaveDir + nameOnly + ".png";
+					System.out.println("Saving pic in location: " + picLoc);
+					pic.saveAs(new File(pictureSaveDir));
+					html += "<img src=\"" + picLoc + "\">";
+				}
 			}
 		%>
 		<%= html %>
