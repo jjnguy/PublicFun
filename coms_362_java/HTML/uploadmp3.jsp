@@ -73,7 +73,7 @@
 					System.out.println("Created the file obj");
 					pic.getType();
 					pic.saveAs(picSaveFile);
-					html += "<img src=\"" + picLoc + "\"></img>";
+					html += "<img src=\"localhost/mp3tools/" + picLoc + "\"></img>";
 				}
 			}
 		%>
