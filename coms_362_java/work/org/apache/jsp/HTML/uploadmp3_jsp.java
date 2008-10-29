@@ -122,7 +122,10 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
 					ID3_Picture pic = (ID3_Picture)frame.getData();
 					String picLoc = pictureSaveDir + nameOnly + ".png";
 					System.out.println("Saving pic in location: " + picLoc);
-					pic.saveAs(new File(pictureSaveDir));
+					File picSaveFile = new File(picLoc);
+					System.out.println("Created the file obj");
+					pic.getType();
+					pic.saveAs(picSaveFile);
 					html += "<img src=\"" + picLoc + "\">";
 				}
 			}

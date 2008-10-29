@@ -1,9 +1,13 @@
 package id3TagStuff.id3Data;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+
+import javax.swing.JOptionPane;
 
 import util.Util;
 
@@ -73,18 +77,16 @@ public class ID3_Picture implements ID3v2_XFrameData {
 
 	// @Override
 	public String getType() {
+		System.out.println("In the get type code");
 		return "Picture";
 	}
 
 	public void saveAs(File loc) throws IOException {
-		String name = loc.getCanonicalPath();
-		if (!name.endsWith("." + format_MIME.toLowerCase())
-				&& !name.endsWith("." + format_MIME.toUpperCase())) {
-			name += "." + format_MIME;
-		}
-		System.out.println("ACTUALLY Saving pic in location: " + name);
-		PrintStream out = new PrintStream(new File(name));
+		System.out.println("Saving shit");
+		System.out.println(loc.getAbsolutePath());
+		OutputStream out = new FileOutputStream(loc);
 		Util.writeIntArrToStream(out, data);
+		out.close();
 	}
 
 	// @Override
