@@ -24,7 +24,7 @@
 			// f.setRepository(filx);
 			ServletFileUpload serv = new ServletFileUpload(f);
 			List<FileItem> items = serv.parseRequest(request);
-			File file;
+			File file = null;
 			String fullPath = "fail";
 			for (FileItem fItem: items){
 				fullPath = fItem.getName();
@@ -33,7 +33,13 @@
 				if (!existTest.exists()){
 					existTest.mkdirs();
 				}
-				String nameOnly = fullPath.substring(fullPath.lastIndexOf(File.separatorChar));
+				int sepIdx = fullPath.indexOf(File.separator);
+				String nameOnly;
+				if (sepIdx == -1){
+					nameOnly = fullPath;
+				}else {
+					nameOnly = fullPath.substring(fullPath.lastIndexOf(File.separatorChar));
+				}
 				file = new File(firstPart + nameOnly);
 				InputStream s = fItem.getInputStream();
 				FileOutputStream fOs = new FileOutputStream(file);
@@ -43,15 +49,17 @@
 				fOs.close();
 				s.close();
 			}
-			/*String loc = request.getParameter("fileLoc");
-			ID3v2_XTag fileTag = new ID3v2_XTag(new File(loc));
+			
+			ID3v2_XTag fileTag = new ID3v2_XTag(file);
 			List<ID3v2_XFrame> frames; 
 			frames = fileTag.getAllFrames();
+			String html = "";
 			for (ID3v2_XFrame frame: frames) {
-				frame.getEnglishTagDescription();
-				frame.getData();
-			}*/
+				html += frame.getEnglishTagDescription() + "<br>";
+				html += frame.getData() + "<br>";
+				html += "<br>";
+			}
 		%>
-		<%= fullPath %>
+		<%= html %>
 	</body>
 </html>
