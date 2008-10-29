@@ -71,43 +71,42 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t<body>\r\n");
       out.write("\t\t");
 
-			FileItemFactory f = new DiskFileItemFactory();
+			DiskFileItemFactory f = new DiskFileItemFactory();
+			File filx = new File("files");
+			// f.setRepository(filx);
 			ServletFileUpload serv = new ServletFileUpload(f);
 			List<FileItem> items = serv.parseRequest(request);
 			File file;
+			String fullPath = "fail";
 			for (FileItem fItem: items){
-				file = new File(fItem.getName());
+				fullPath = fItem.getName();
+				String firstPart = "C:/uploads2/";
+				File existTest = new File(firstPart);
+				if (!existTest.exists()){
+					existTest.mkdirs();
+				}
+				String nameOnly = fullPath.substring(fullPath.lastIndexOf(File.separatorChar));
+				file = new File(firstPart + nameOnly);
 				InputStream s = fItem.getInputStream();
 				FileOutputStream fOs = new FileOutputStream(file);
 				while (s.available() > 0){
 					fOs.write(s.read());
 				}
+				fOs.close();
+				s.close();
 			}
-			
-			String loc = request.getParameter("fileLoc");
+			/*String loc = request.getParameter("fileLoc");
 			ID3v2_XTag fileTag = new ID3v2_XTag(new File(loc));
 			List<ID3v2_XFrame> frames; 
 			frames = fileTag.getAllFrames();
 			for (ID3v2_XFrame frame: frames) {
 				frame.getEnglishTagDescription();
 				frame.getData();
-			}
+			}*/
 		
       out.write("\r\n");
       out.write("\t\t");
- if (false) { 
-      out.write("\r\n");
-      out.write("\t\t<h1>");
-      out.print( loc );
-      out.write("</h1>\r\n");
-      out.write("\t\t");
-} else { 
-      out.write("\r\n");
-      out.write("\t\t<h2>");
-      out.print( loc );
-      out.write("</h2>\r\n");
-      out.write("\t\t");
- } 
+      out.print( fullPath );
       out.write("\r\n");
       out.write("\t</body>\r\n");
       out.write("</html>\r\n");
