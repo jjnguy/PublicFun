@@ -124,7 +124,7 @@ public class MP3FileUploadContainer {
 			List<ID3v2_XFrame> frames;
 			frames = tag.getAllFrames();
 			for (ID3v2_XFrame frame : frames) {
-				html += frame.getFrameType() + "<br>";
+				html += frame.getEnglishTagDescription() + "<br>";
 				html += frame.getData() + "<br>";
 				html += "<br>";
 			}

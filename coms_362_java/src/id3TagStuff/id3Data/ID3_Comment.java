@@ -15,7 +15,9 @@ public class ID3_Comment implements ID3v2_XFrameData {
 
 	// @Override
 	public String toString() {
-		return String.format("Language: %s, Comment: %s", language, comment);
+		// the substrings trim off null bytes
+		return String.format("Language: %s, Comment: %s", language.substring(1, language
+				.length()), comment.substring(0, comment.length() - 1));
 	}
 
 	// @Override

@@ -53,6 +53,7 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t<head>\r\n");
       out.write("\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\r\n");
       out.write("\t\t<title>Upload Results</title>\r\n");
+      out.write("\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"mainstylesheet.css\" />\r\n");
       out.write("\t</head>\r\n");
       out.write("\t<body>\r\n");
       out.write("\t\t");
@@ -63,9 +64,11 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
 			List<String> songData = upload.getHTMLRepresentation();
 		
       out.write("\r\n");
-      out.write("\t\t");
+      out.write("\t\t<div class=\"center group plainText\">\r\n");
+      out.write("\t\t\t");
       out.print( songData.get(0) );
       out.write("\r\n");
+      out.write("\t\t</div>\r\n");
       out.write("\t</body>\r\n");
       out.write("</html>\r\n");
     } catch (Throwable t) {

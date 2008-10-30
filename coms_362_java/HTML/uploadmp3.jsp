@@ -9,6 +9,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Upload Results</title>
+		<link rel="stylesheet" type="text/css" href="mainstylesheet.css" />
 	</head>
 	<body>
 		<%
@@ -17,6 +18,8 @@
 			
 			List<String> songData = upload.getHTMLRepresentation();
 		%>
-		<%= songData.get(0) %>
+		<div class="center group plainText">
+			<%= songData.get(0) %>
+		</div>
 	</body>
 </html>
