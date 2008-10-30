@@ -1,12 +1,19 @@
 <html>
 	<head>
 		<title>Upload a file to the server</title>
+		<link rel="stylesheet" type="text/css" href="mainstylesheet.css" />
 	</head>
 	<body>
-		<form method="post" action="uploadmp3.jsp" method="get" enctype="multipart/form-data">
-			<input type="file" name="fileLoc" size="40">
-			<br>
-			<input type="submit" value="Submit">
-		</form>
+		<div class="center header" title="Hi, I'm tool-tip">
+			<h1>Welcome to the Online-iTunes</h1>
+			<h2>Find an MP3 file that you would like to upload to our servers.</h2>
+		</div>
+		<div class="input-form ceter" title="MP3 File location">
+			<form method="post" action="uploadmp3.jsp" method="get" enctype="multipart/form-data">
+				<input type="file" name="fileLoc" size="40">
+				<br>
+				<input type="submit" value="Submit">
+			</form>
+		</div>
 	</body>
 </html>

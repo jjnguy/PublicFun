@@ -4,7 +4,6 @@ import id3TagStuff.ID3v2_XTag;
 import id3TagStuff.frames.ID3v2_XFrame;
 import id3TagStuff.id3Data.ID3_Picture;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,13 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+/**
+ * This class is used to manage the upload of an MP3 file.
+ * 
+ * @author Justin Nelson
+ * 
+ */
 public class MP3FileUploadContainer {
 
 	public static final String UPLOAD_DIRECTORY = "C:/uploads/";
@@ -42,6 +46,7 @@ public class MP3FileUploadContainer {
 	 * Derived from fileItems
 	 */
 	private List<File> savedFilesLoc;
+	private List<ID3v2_XTag> tags;
 
 	public MP3FileUploadContainer(HttpServletRequest request) {
 		this.request = request;
@@ -94,6 +99,8 @@ public class MP3FileUploadContainer {
 	}
 
 	public List<ID3v2_XTag> getListOfTags() {
+		if (tags != null)
+			return tags;
 		List<ID3v2_XTag> ret = new ArrayList<ID3v2_XTag>(savedFilesLoc.size());
 		for (File file : savedFilesLoc) {
 			try {
@@ -105,6 +112,7 @@ public class MP3FileUploadContainer {
 				System.out.println("A null tag was created due to a IO error.");
 			}
 		}
+		tags = ret;
 		return ret;
 	}
 
@@ -119,7 +127,6 @@ public class MP3FileUploadContainer {
 				html += frame.getFrameType() + "<br>";
 				html += frame.getData() + "<br>";
 				html += "<br>";
-
 			}
 			ret.add(html);
 		}
