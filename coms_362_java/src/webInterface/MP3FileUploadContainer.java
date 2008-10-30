@@ -1,7 +1,10 @@
 package webInterface;
 
 import id3TagStuff.ID3v2_XTag;
+import id3TagStuff.frames.ID3v2_XFrame;
+import id3TagStuff.id3Data.ID3_Picture;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,15 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-public class FileUploadContainer {
+public class MP3FileUploadContainer {
 
 	public static final String UPLOAD_DIRECTORY = "C:/uploads/";
+	public static final String PICTURE_SAVE_DIR = UPLOAD_DIRECTORY + "pics/";
 
 	static {
 		File existTest = new File(UPLOAD_DIRECTORY);
@@ -38,7 +43,7 @@ public class FileUploadContainer {
 	 */
 	private List<File> savedFilesLoc;
 
-	public FileUploadContainer(HttpServletRequest request) {
+	public MP3FileUploadContainer(HttpServletRequest request) {
 		this.request = request;
 
 		DiskFileItemFactory f = new DiskFileItemFactory();
@@ -102,7 +107,54 @@ public class FileUploadContainer {
 		}
 		return ret;
 	}
-	
+
+	public List<String> getHTMLRepresentation() {
+		List<String> ret = new ArrayList<String>(fileItems.size());
+
+		for (ID3v2_XTag tag : getListOfTags()) {
+			String html = "";
+			List<ID3v2_XFrame> frames;
+			frames = tag.getAllFrames();
+			for (ID3v2_XFrame frame : frames) {
+				html += frame.getFrameType() + "<br>";
+				html += frame.getData() + "<br>";
+				html += "<br>";
+
+			}
+			ret.add(html);
+		}
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @param index
+	 * @return true if a picture was saved, false otherwise.
+	 */
+	public boolean savePicsFromTag(int index) {
+		boolean ret = false;
+		ID3v2_XTag tag = getListOfTags().get(index);
+		int picNum = 0;
+		for (ID3v2_XFrame frame : tag.getAllFrames()) {
+			if (frame.getFrameType().matches("APIC|PIC")) {
+				ID3_Picture pic = (ID3_Picture) frame.getData();
+				String picLoc = PICTURE_SAVE_DIR + savedFilesLoc.get(index).getName() + picNum
+						+ ".png";
+				System.out.println("Saving pic in location: " + picLoc);
+				File picSaveFile = new File(picLoc);
+				System.out.println("Created the file obj");
+				pic.getType();
+				try {
+					pic.saveAs(picSaveFile);
+					ret = true;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return ret;
+	}
+
 	public List<FileItem> getFileItems() {
 		return fileItems;
 	}

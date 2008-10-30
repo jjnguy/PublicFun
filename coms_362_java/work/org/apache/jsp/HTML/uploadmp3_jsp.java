@@ -4,18 +4,9 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import id3TagStuff.ID3v2_XTag;
-import java.io.File;
 import java.util.List;
-import id3TagStuff.frames.ID3v2_XFrame;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import java.io.InputStream;
-import java.io.FileOutputStream;
-import javax.swing.*;
 import id3TagStuff.id3Data.ID3_Picture;
-import webInterface.FileUploadContainer;
+import webInterface.MP3FileUploadContainer;
 
 public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -58,16 +49,6 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
       out.write("<html>\r\n");
       out.write("\t<head>\r\n");
       out.write("\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\r\n");
@@ -76,33 +57,14 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t<body>\r\n");
       out.write("\t\t");
 
-			FileUploadContainer upload = new FileUploadContainer(request);
+			MP3FileUploadContainer upload = new MP3FileUploadContainer(request);
 			List<ID3v2_XTag> tags = upload.getListOfTags();
-			String html = "";
-			for(ID3v2_XTag tag: tags){
-				List<ID3v2_XFrame> frames; 
-				frames = tag.getAllFrames();
-				for (ID3v2_XFrame frame: frames) {
-					html += frame.getFrameType() + "<br>";
-					html += frame.getData() + "<br>";
-					html += "<br>";
-					/*if (frame.getFrameType().matches("APIC|PIC")){
-						ID3_Picture pic = (ID3_Picture)frame.getData();
-						String picLoc = pictureSaveDir + nameOnly + ".png";
-						System.out.println("Saving pic in location: " + picLoc);
-						File picSaveFile = new File(picLoc);
-						System.out.println("Created the file obj");
-						pic.getType();
-						pic.saveAs(picSaveFile);
-						html += "<img src=\"localhost/mp3tools/" + picLoc + "\"></img>";
-					}*/
-				}
-				html += "<br><br><br>";
-			}
+			
+			List<String> songData = upload.getHTMLRepresentation();
 		
       out.write("\r\n");
       out.write("\t\t");
-      out.print( html );
+      out.print( songData.get(0) );
       out.write("\r\n");
       out.write("\t</body>\r\n");
       out.write("</html>\r\n");
