@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.FileOutputStream;
 import javax.swing.*;
 import id3TagStuff.id3Data.ID3_Picture;
+import webInterface.FileUploadContainer;
 
 public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -66,6 +67,7 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
+      out.write("\r\n");
       out.write("<html>\r\n");
       out.write("\t<head>\r\n");
       out.write("\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\r\n");
@@ -74,60 +76,28 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t<body>\r\n");
       out.write("\t\t");
 
-			DiskFileItemFactory f = new DiskFileItemFactory();
-			File filx = new File("files");
-			// f.setRepository(filx);
-			ServletFileUpload serv = new ServletFileUpload(f);
-			List<FileItem> items = serv.parseRequest(request);
-			File file = null;
-			String fullPath = "fail";
-			String pictureSaveDir = "C:/pics/";
-			{File existTest = new File(pictureSaveDir);
-			if (!existTest.exists()){
-				existTest.mkdirs();
-			}}
-			String nameOnly = null;
-			for (FileItem fItem: items){
-				fullPath = fItem.getName();
-				String firstPart = "C:/uploads2/";
-				File existTest = new File(firstPart);
-				if (!existTest.exists()){
-					existTest.mkdirs();
-				}
-				int sepIdx = fullPath.indexOf(File.separator);
-				if (sepIdx == -1){
-					nameOnly = fullPath;
-				} else {
-					nameOnly = fullPath.substring(fullPath.lastIndexOf(File.separatorChar));
-				}
-				file = new File(firstPart + nameOnly);
-				InputStream s = fItem.getInputStream();
-				FileOutputStream fOs = new FileOutputStream(file);
-				while (s.available() > 0){
-					fOs.write(s.read());
-				}
-				fOs.close();
-				s.close();
-			}
-			
-			ID3v2_XTag fileTag = new ID3v2_XTag(file);
-			List<ID3v2_XFrame> frames; 
-			frames = fileTag.getAllFrames();
+			FileUploadContainer upload = new FileUploadContainer(request);
+			List<ID3v2_XTag> tags = upload.getListOfTags();
 			String html = "";
-			for (ID3v2_XFrame frame: frames) {
-				html += frame.getFrameType() + "<br>";
-				html += frame.getData() + "<br>";
-				html += "<br>";
-				if (frame.getFrameType().matches("APIC|PIC")){
-					ID3_Picture pic = (ID3_Picture)frame.getData();
-					String picLoc = pictureSaveDir + nameOnly + ".png";
-					System.out.println("Saving pic in location: " + picLoc);
-					File picSaveFile = new File(picLoc);
-					System.out.println("Created the file obj");
-					pic.getType();
-					pic.saveAs(picSaveFile);
-					html += "<img src=\"localhost/mp3tools/" + picLoc + "\"></img>";
+			for(ID3v2_XTag tag: tags){
+				List<ID3v2_XFrame> frames; 
+				frames = tag.getAllFrames();
+				for (ID3v2_XFrame frame: frames) {
+					html += frame.getFrameType() + "<br>";
+					html += frame.getData() + "<br>";
+					html += "<br>";
+					/*if (frame.getFrameType().matches("APIC|PIC")){
+						ID3_Picture pic = (ID3_Picture)frame.getData();
+						String picLoc = pictureSaveDir + nameOnly + ".png";
+						System.out.println("Saving pic in location: " + picLoc);
+						File picSaveFile = new File(picLoc);
+						System.out.println("Created the file obj");
+						pic.getType();
+						pic.saveAs(picSaveFile);
+						html += "<img src=\"localhost/mp3tools/" + picLoc + "\"></img>";
+					}*/
 				}
+				html += "<br><br><br>";
 			}
 		
       out.write("\r\n");
