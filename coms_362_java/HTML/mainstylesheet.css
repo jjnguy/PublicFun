@@ -4,3 +4,14 @@
 	text-align: center
 }
 
+.plainText {
+	font-family: sans-serif
+}
+
+.group {
+	border: solid #0000FF
+}
+
+body {
+	background-color: #00ff00
+}
