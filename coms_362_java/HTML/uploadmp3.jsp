@@ -21,5 +21,11 @@
 		<div class="center group plainText">
 			<%= songData.get(0) %>
 		</div>
+		<div class="footer">
+			<center class="whiteOnBlack" style="font-weight: bold">
+				<a href="http://www.google.com"  class="button plainText">Click to search</a>
+				by Justin Nelson, Ben Peterson, and Shaun SomeLastname (sorry Shaun)
+			</center>
+		</div>
 	</body>
 </html>
