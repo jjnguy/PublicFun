@@ -3,10 +3,7 @@ package org.apache.jsp.HTML;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
-import id3TagStuff.ID3v2_XTag;
-import java.util.List;
-import id3TagStuff.id3Data.ID3_Picture;
-import webInterface.MP3FileUploadContainer;
+import webInterface.HTMLFooter;
 
 public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -46,29 +43,38 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\r\n");
       out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
       out.write("<html>\r\n");
       out.write("\t<head>\r\n");
-      out.write("\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\r\n");
-      out.write("\t\t<title>Upload Results</title>\r\n");
+      out.write("\t\t<title>Upload a file to the server</title>\r\n");
       out.write("\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"mainstylesheet.css\" />\r\n");
       out.write("\t</head>\r\n");
       out.write("\t<body>\r\n");
-      out.write("\t\t");
-
-			MP3FileUploadContainer upload = new MP3FileUploadContainer(request);
-			List<ID3v2_XTag> tags = upload.getListOfTags();
-			
-			List<String> songData = upload.getHTMLRepresentation();
-		
-      out.write("\r\n");
-      out.write("\t\t<div class=\"center group plainText\">\r\n");
-      out.write("\t\t\t");
-      out.print( songData.get(0) );
-      out.write("\r\n");
+      out.write("\t\t<div class=\"group\">\r\n");
+      out.write("\t\t\t<div class=\"center plainText\" title=\"Hi, I'm tool-tip\">\r\n");
+      out.write("\t\t\t\t<table class=\"center\" border=\"0\" >\r\n");
+      out.write("\t\t\t\t\t<tr>\r\n");
+      out.write("\t\t\t\t\t\t<td width=\"18%\" ></td>\r\n");
+      out.write("\t\t\t\t\t\t<td style=\"padding: 0\">\r\n");
+      out.write("\t\t\t\t\t\t\t<img src=\"images/iTunesLogo.PNG\">\r\n");
+      out.write("\t\t\t\t\t\t</td>\r\n");
+      out.write("\t\t\t\t\t\t<td>\r\n");
+      out.write("\t\t\t\t\t\t\t<h1>Welcome to the Online-iTunes</h1>\r\n");
+      out.write("\t\t\t\t\t\t\t<h2>Find an MP3 file that you would like to upload to our servers.</h2>\r\n");
+      out.write("\t\t\t\t\t\t</td>\r\n");
+      out.write("\t\t\t\t\t</tr>\r\n");
+      out.write("\t\t\t\t</table>\r\n");
+      out.write("\t\t\t</div>\r\n");
+      out.write("\t\t\t<div class=\"input-form center\" title=\"MP3 File location\">\r\n");
+      out.write("\t\t\t\t<form method=\"post\" action=\"uploadresult.jsp\" method=\"get\" enctype=\"multipart/form-data\">\r\n");
+      out.write("\t\t\t\t\t<input type=\"file\" name=\"fileLoc\" size=\"40\">\r\n");
+      out.write("\t\t\t\t\t<br>\r\n");
+      out.write("\t\t\t\t\t<input type=\"submit\" value=\"Submit\">\r\n");
+      out.write("\t\t\t\t</form>\r\n");
+      out.write("\t\t\t</div>\r\n");
       out.write("\t\t</div>\r\n");
+      out.write("\t\t");
+      out.print( HTMLFooter.getFooter() );
+      out.write("\r\n");
       out.write("\t</body>\r\n");
       out.write("</html>\r\n");
     } catch (Throwable t) {
