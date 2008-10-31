@@ -27,3 +27,4 @@
 		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
+<!-- ass --!>

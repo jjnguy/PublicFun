@@ -20,6 +20,7 @@
 							<h1>Welcome to the Online-iTunes</h1>
 							<h2>Find an MP3 file that you would like to upload to our servers.</h2>
 						</td>
+						<td width="18%" ></td>
 					</tr>
 				</table>
 			</div>
@@ -31,6 +32,7 @@
 				</form>
 			</div>
 		</div>
-		<%= HTMLFooter.getFooter()  %>
+		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
+<!-- ass --!>
