@@ -31,6 +31,6 @@
 				</form>
 			</div>
 		</div>
-		<%= HTMLFooter.getFooter() %>
+		<%= HTMLFooter.getFooter()  %>
 	</body>
 </html>

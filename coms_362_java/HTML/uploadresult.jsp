@@ -17,7 +17,7 @@
 	<body>
 		<%
 			MP3FileUploadContainer upload = new MP3FileUploadContainer(request);
-			List<ID3v2_XTag> tags = upload.getListOfTags();
+			List<ID3v2_XTag> tags = upload.getListOfTags(); 
 			
 			List<String> songData = upload.getHTMLRepresentation();
 		%>
