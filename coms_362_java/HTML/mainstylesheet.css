@@ -5,7 +5,10 @@
 }
 
 .plainText {
-	font-family: sans-serif
+	color: black;
+	font-family: sans-serif;
+	text-decoration: none;
+	font-weight: bold;
 }
 
 .group {
@@ -14,4 +17,21 @@
 
 body {
 	background-color: #00ff00
+}
+
+.extraBottomPad {
+}
+
+.button {
+	background-color: orange;
+	padding: .2cm;
+}
+
+.footer {
+	background-color: black;
+	padding: .4cm;
+}
+
+.whiteOnBlack {
+	color: white;	
 }

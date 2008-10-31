@@ -5,12 +5,20 @@
 	</head>
 	<body>
 		<div class="group">
-			<div class="center">
-				<img src="images/iTunesLogo.PNG">
-			</div>
 			<div class="center plainText" title="Hi, I'm tool-tip">
-				<h1>Welcome to the Online-iTunes</h1>
-				<h2>Find an MP3 file that you would like to upload to our servers.</h2>
+				<!-- remove the 1 after testing -->
+				<table class="center" border="0" >
+					<tr>
+						<td width="10%" ></td>
+						<td style="padding: 0">
+							<img src="images/iTunesLogo.PNG">
+						</td>
+						<td>
+							<h1>Welcome to the Online-iTunes</h1>
+							<h2>Find an MP3 file that you would like to upload to our servers.</h2>
+						</td>
+					</tr>
+				</table>
 			</div>
 			<div class="input-form center" title="MP3 File location">
 				<form method="post" action="uploadmp3.jsp" method="get" enctype="multipart/form-data">
@@ -19,6 +27,12 @@
 					<input type="submit" value="Submit">
 				</form>
 			</div>
+		</div>
+		<div class="footer">
+			<center class="whiteOnBlack" style="font-weight: bold">
+				<a href="http://www.google.com"  class="button plainText">Click to search</a>
+				by Justin Nelson, Ben Peterson, and Shaun SomeLastname (sorry Shaun)
+			</center>
 		</div>
 	</body>
 </html>
