@@ -9,9 +9,17 @@ public class HTMLFooter {
 	static {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<div class=\"footer center whiteOnBlack\">\n");
-		builder.append("\t<a href=\"http://www.google.com\"  class=\"button plainText\">Click to search</a>\n");
+		builder
+				.append("\t<a href=\"http://www.google.com\"  class=\"button plainText\">Click to search</a>\n");
 		// TODO this should use the author names
-		builder.append("\tby Justin Nelson, Ben Petersen, and Shaun SomeLastname (sorry Shaun)\n");
+		builder.append("\tby ");
+		for (int i = 0; i < authorNames.length; i++) {
+			builder.append(authorNames[i]);
+			if (i < authorNames.length - 1)
+				builder.append(", ");
+			else
+				builder.append(".");
+		}
 		builder.append("</div>");
 		code = builder.toString();
 	}
@@ -19,7 +27,7 @@ public class HTMLFooter {
 	private HTMLFooter() {
 	}
 
-	public static String getFooter(){
+	public static String getFooter() {
 		return code;
 	}
 }

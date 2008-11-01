@@ -12,15 +12,15 @@
 			<div class="center plainText" title="Hi, I'm tool-tip">
 				<table class="center" border="0" >
 					<tr>
-						<td width="18%" ></td>
+						<td width="15%" ></td>
 						<td style="padding: 0">
-							<img src="images/iTunesLogo.PNG">
+							<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
 						</td>
 						<td>
 							<h1>Welcome to the Online-iTunes</h1>
 							<h2>Find an MP3 file that you would like to upload to our servers.</h2>
 						</td>
-						<td width="18%" ></td>
+						<td width="15%" ></td>
 					</tr>
 				</table>
 			</div>
@@ -28,7 +28,7 @@
 				<form method="post" action="uploadresult.jsp" method="get" enctype="multipart/form-data">
 					<input type="file" name="fileLoc" size="40">
 					<br>
-					<input type="submit" value="Submit">
+					<input type="submit" value="Submit" title="Submit File for Upload">
 				</form>
 			</div>
 		</div>

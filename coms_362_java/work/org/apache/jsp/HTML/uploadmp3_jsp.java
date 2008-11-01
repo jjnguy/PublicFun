@@ -53,15 +53,15 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t<div class=\"center plainText\" title=\"Hi, I'm tool-tip\">\r\n");
       out.write("\t\t\t\t<table class=\"center\" border=\"0\" >\r\n");
       out.write("\t\t\t\t\t<tr>\r\n");
-      out.write("\t\t\t\t\t\t<td width=\"18%\" ></td>\r\n");
+      out.write("\t\t\t\t\t\t<td width=\"15%\" ></td>\r\n");
       out.write("\t\t\t\t\t\t<td style=\"padding: 0\">\r\n");
-      out.write("\t\t\t\t\t\t\t<img src=\"images/iTunesLogo.PNG\">\r\n");
+      out.write("\t\t\t\t\t\t\t<img src=\"images/iTunesLogo.PNG\" title=\"Online-iTunes Logo\">\r\n");
       out.write("\t\t\t\t\t\t</td>\r\n");
       out.write("\t\t\t\t\t\t<td>\r\n");
       out.write("\t\t\t\t\t\t\t<h1>Welcome to the Online-iTunes</h1>\r\n");
       out.write("\t\t\t\t\t\t\t<h2>Find an MP3 file that you would like to upload to our servers.</h2>\r\n");
       out.write("\t\t\t\t\t\t</td>\r\n");
-      out.write("\t\t\t\t\t\t<td width=\"18%\" ></td>\r\n");
+      out.write("\t\t\t\t\t\t<td width=\"15%\" ></td>\r\n");
       out.write("\t\t\t\t\t</tr>\r\n");
       out.write("\t\t\t\t</table>\r\n");
       out.write("\t\t\t</div>\r\n");
@@ -69,7 +69,7 @@ public final class uploadmp3_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t\t<form method=\"post\" action=\"uploadresult.jsp\" method=\"get\" enctype=\"multipart/form-data\">\r\n");
       out.write("\t\t\t\t\t<input type=\"file\" name=\"fileLoc\" size=\"40\">\r\n");
       out.write("\t\t\t\t\t<br>\r\n");
-      out.write("\t\t\t\t\t<input type=\"submit\" value=\"Submit\">\r\n");
+      out.write("\t\t\t\t\t<input type=\"submit\" value=\"Submit\" title=\"Submit File for Upload\">\r\n");
       out.write("\t\t\t\t</form>\r\n");
       out.write("\t\t\t</div>\r\n");
       out.write("\t\t</div>\r\n");
