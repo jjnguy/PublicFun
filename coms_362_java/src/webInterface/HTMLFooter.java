@@ -2,7 +2,7 @@ package webInterface;
 
 public class HTMLFooter {
 
-	public static final int FOOTER_HEIGHT = 30;
+	public static final int FOOTER_HEIGHT = 25;
 	public static final String WRAPPER_FOOTER_STYLE;
 	
 	private static final String[] authorNames = new String[] { "Justin Nelson",

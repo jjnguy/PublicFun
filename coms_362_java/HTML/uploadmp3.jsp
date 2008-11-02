@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="mainstylesheet.css" />
 	</head>
 	<body>
-		<div class="group wrapper">
+		<div class="group wrapper" <%= HTMLFooter.WRAPPER_FOOTER_STYLE %>>
 			<div class="center plainText" title="Hi, I'm tool-tip">
 				<table class="center" border="0" >
 					<tr>
@@ -17,7 +17,6 @@
 							<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
 						</td>
 						<td>
-							<h1>Welcome to the Online-iTunes</h1>
 							<h2>Find an MP3 file that you would like to upload to our servers.</h2>
 						</td>
 						<td width="15%" ></td>
@@ -26,9 +25,9 @@
 			</div>
 			<div class="input-form center" title="MP3 File location">
 				<form method="post" action="uploadresult.jsp" method="get" enctype="multipart/form-data">
-					<input type="file" name="fileLoc" size="40">
+					<input type="file" name="fileLoc" size="40" style="margin-top: .2cm">
 					<br>
-					<input type="submit" value="Submit" title="Submit File for Upload">
+					<input type="submit" value="Submit" title="Submit File for Upload" style="margin-top: .2cm">
 				</form>
 			</div>
 		</div>

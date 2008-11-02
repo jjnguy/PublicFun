@@ -21,12 +21,18 @@ html, body {
 }
 
 .group {
-	border: solid #000000
+	border: solid #000000;
 }
 
-.button {
+a.button {
 	background-color: orange;
+	margin: .2cm;
 	padding: .2cm;
+	color: black;
+	font-family: sans-serif;
+	text-decoration: none;
+	font-weight: bold;
+	border: solid #000000;
 }
 
 .wrapper {
@@ -42,4 +48,7 @@ html, body {
 
 .whiteOnBlack {
 	color: white;	
+}
+li {
+	list-style-type: none;
 }
