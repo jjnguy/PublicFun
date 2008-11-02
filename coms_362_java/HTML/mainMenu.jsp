@@ -11,21 +11,7 @@
 	</head>
 	<body>
 		<div class="wrapper" <%= HTMLFooter.WRAPPER_FOOTER_STYLE %>>
-			<div class="group center">
-				<table class="center" border="0" >
-					<tr>
-						<td width="27%" ></td>
-						<td style="padding: 0">
-							<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
-						</td>
-						<td>
-							<h1>Welcome to Online iTunes</h1>
-						</td>
-						<td width="27%" ></td>
-					</tr>
-				</table>
-			</div>
-			<div style="float: left">
+			<div style="float: left; padding-top: 3cm">
 				<ul style="padding: 0">
 					<li style="margin-top: .4cm">
 						<a class="button" href="uploadmp3.jsp">Upload Music to the Collection</a>
@@ -37,6 +23,22 @@
 						<a class="button" href="http://www.youtube.com/user/YTRickRollsYou">See a Silly Video</a>
 					</li>
 				</ul>
+			</div>
+			<div class="group center">
+				<table class="center" border="0" >
+					<tr>
+						<td style="padding: 0">
+							<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
+						</td>
+						<td>
+							<h1>Welcome to Online iTunes</h1>
+						</td>
+						<td width="27%" ></td>
+					</tr>
+				</table>
+				<div style="text-align: left">
+					This is actual content describing the website.
+				</div>
 			</div>
 		</div>
 		<%= HTMLFooter.getFooter() %>
