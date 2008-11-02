@@ -32,7 +32,9 @@
 				</form>
 			</div>
 		</div>
+		<div class="plainText" style="float: left; width: 20px">
+			Some test text
+		</div>
 		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
-<!-- ass --!>
