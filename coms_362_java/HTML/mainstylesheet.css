@@ -1,5 +1,14 @@
 @CHARSET "ISO-8859-1";
 
+* {
+	margin: 0;
+}
+
+html, body {
+	height: 100%;
+	background-color: #0582f7;
+}
+
 .center {
 	text-align: center;
 }
@@ -15,16 +24,15 @@
 	border: solid #000000
 }
 
-body {
-	background-color: #0582f7
-}
-
-.extraBottomPad {
-}
-
 .button {
 	background-color: orange;
 	padding: .2cm;
+}
+
+.wrapper {
+	min-height: 100%;
+	height: auto;
+	height: 100%;
 }
 
 .footer {

@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="mainstylesheet.css" />
 	</head>
 	<body>
-		<div class="group">
+		<div class="group wrapper">
 			<div class="center plainText" title="Hi, I'm tool-tip">
 				<table class="center" border="0" >
 					<tr>
@@ -31,9 +31,6 @@
 					<input type="submit" value="Submit" title="Submit File for Upload">
 				</form>
 			</div>
-		</div>
-		<div class="plainText" style="float: left; width: 20px">
-			Some test text
 		</div>
 		<%= HTMLFooter.getFooter() %>
 	</body>

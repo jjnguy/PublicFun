@@ -21,7 +21,7 @@
 			
 			List<String> songData = upload.getHTMLRepresentation();
 		%>
-		<div class="center group plainText">
+		<div class="center group plainText wrapper">
 			<%= songData.get(0) %>
 		</div>
 		<%= HTMLFooter.getFooter() %>
