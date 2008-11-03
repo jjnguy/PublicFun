@@ -8,6 +8,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
 		<script>
+		// TODO these are broken.  It sets the atribute to be a.button i think
 		function backgroundChangeIn(element){
 			if (element.className = "a.button"){element.className = "buttonMouseover";}
 		}
@@ -22,13 +23,13 @@
 			<div style="float: left; padding-top: 100px; padding-bottom: 150px">
 				<ul style="padding: 0">
 					<li style="margin-top: 17px">
-						<a class="button" href="uploadmp3.jsp" onmouseover="backgroundChangeIn(this)" onmouseout="backgroundChangeOut(this)">Upload Music to the Collection</a>
+						<a class="button" href="uploadmp3.jsp" >Upload Music to the Collection</a>
 					</li>
 					<li style="margin-top: 17px">
-						<a class="button" href="" onmouseover="backgroundChangeIn(this)" onmouseout="backgroundChangeOut(this)">View Music Collection</a>
+						<a class="button" href="" >View Music Collection</a>
 					</li>
 					<li style="margin-top: 17px">
-						<a class="button" href="http://www.youtube.com/user/YTRickRollsYou" onmouseover="backgroundChangeIn(this)" onmouseout="backgroundChangeOut(this)">See a Silly Video</a>
+						<a class="button" href="http://www.youtube.com/user/YTRickRollsYou">See a Silly Video</a>
 					</li>
 				</ul>
 			</div>
