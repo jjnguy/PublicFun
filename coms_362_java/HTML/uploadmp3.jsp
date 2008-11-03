@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="mainstylesheet.css" />
 	</head>
 	<body>
-		<div class="group wrapper" <%= HTMLFooter.WRAPPER_FOOTER_STYLE %>>
+		<div class="group" >
 			<div class="center plainText" title="Hi, I'm tool-tip">
 				<table class="center" border="0" >
 					<tr>
@@ -27,7 +27,7 @@
 				<form method="post" action="uploadresult.jsp" method="get" enctype="multipart/form-data">
 					<input type="file" name="fileLoc" size="40" style="margin-top: .2cm">
 					<br>
-					<input type="submit" value="Submit" title="Submit File for Upload" style="margin-top: .2cm">
+					<input type="submit" value="Submit" title="Submit File for Upload" style="margin-top: .2cm; margin-bottom: .1cm">
 				</form>
 			</div>
 		</div>

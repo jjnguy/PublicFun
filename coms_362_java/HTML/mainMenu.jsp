@@ -10,22 +10,22 @@
 		<title>Online iTunes - Main Menu</title>
 	</head>
 	<body>
-		<div class="wrapper" <%= HTMLFooter.WRAPPER_FOOTER_STYLE %>>
-			<div style="float: left; padding-top: 3cm">
+		<div>
+			<div style="float: left; padding-top: 100px; padding-bottom: 150px">
 				<ul style="padding: 0">
-					<li style="margin-top: .4cm">
+					<li style="margin-top: 17px">
 						<a class="button" href="uploadmp3.jsp">Upload Music to the Collection</a>
 					</li>
-					<li style="margin-top: .4cm">
+					<li style="margin-top: 17px">
 						<a class="button" href="">View Music Collection</a>
 					</li>
-					<li style="margin-top: .4cm">
+					<li style="margin-top: 17px">
 						<a class="button" href="http://www.youtube.com/user/YTRickRollsYou">See a Silly Video</a>
 					</li>
 				</ul>
 			</div>
 			<div class="group center">
-				<table class="center" border="0" >
+				<table class="center" border="0" style="margin-bottom: 10px">
 					<tr>
 						<td style="padding: 0">
 							<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
@@ -36,10 +36,18 @@
 						<td width="27%" ></td>
 					</tr>
 				</table>
-				<div style="text-align: left">
-					This is actual content describing the website.
+				<div class="plainText" style="text-align: left; margin-bottom: 5px">
+					<h3>Online iTunes is what it sounds like.</h3>
+					It is a online music library that you can access from anywhere.<br>
+					It allows users to add songs to the online library, sort the songs by many attributes,
+					stream the songs straight from the server, and download the songs to the machine they are using currently.
+					<br><br>
+					<h3>Getting Started</h3>
+					To begin, simply upload some songs to the library.  Then feel free to view, sort, and stream the songs from anywhere.
 				</div>
 			</div>
+		</div>
+		<div style="margin-top: 100px">
 		</div>
 		<%= HTMLFooter.getFooter() %>
 	</body>

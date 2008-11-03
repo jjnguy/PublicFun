@@ -2,11 +2,13 @@
 
 * {
 	margin: 0;
+	font-family: sans-serif;
 }
 
 html, body {
 	height: 100%;
 	background-color: #0582f7;
+	font-family: sans-serif;
 }
 
 .center {
