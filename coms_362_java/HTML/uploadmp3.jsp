@@ -5,7 +5,12 @@
 <html>
 	<head>
 		<title>Upload a file to the server</title>
-		<link rel="stylesheet" type="text/css" href="mainstylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
+		<script type="text/javascript">
+			function firstTry(){
+				alert("This alert box was called with the onload event");
+			}
+		</script>
 	</head>
 	<body>
 		<div class="group" >
@@ -14,7 +19,7 @@
 					<tr>
 						<td width="15%" ></td>
 						<td style="padding: 0">
-							<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
+							<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo" ondblclick="firstTry()">
 						</td>
 						<td>
 							<h2>Find an MP3 file that you would like to upload to our servers.</h2>

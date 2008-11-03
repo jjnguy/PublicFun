@@ -22,7 +22,7 @@ public class HTMLFooter {
 		builder.append("<div class=\"footer center whiteOnBlack\" style=\"height: "
 				+ FOOTER_HEIGHT + "px  \">\n");
 		builder
-				.append("\t<a href=\"" + URL + "\"  class=\"button plainText\">" + BUTTON_TEXT + "</a>\n");
+				.append("\t<a href=\"" + URL + "\"  class=\"button\" onmouseover=\"backgroundChangeIn(this)\" onmouseout=\"backgroundChangeOut(this)\">" + BUTTON_TEXT + "</a>\n");
 		builder.append("\tby ");
 		for (int i = 0; i < authorNames.length; i++) {
 			builder.append(authorNames[i]);
