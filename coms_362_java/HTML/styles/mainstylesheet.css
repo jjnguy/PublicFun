@@ -38,6 +38,22 @@ a.button {
 	border: solid #000000;
 }
 
+input.button {
+	background-color: orange;
+	margin: .2cm;
+	padding: .2cm;
+	color: black;
+	font-family: sans-serif;
+	text-decoration: none;
+	font-weight: bold;
+	border: solid #000000;
+	cursor: pointer;
+}
+
+input.button:hover {
+	background-color: darkGoldenRod;
+}
+
 a.button:hover {
 	background-color: darkGoldenRod;
 }
@@ -60,4 +76,23 @@ a.button:visited {
 
 li {
 	list-style-type: none;
+	margin-top: 17px
+}
+
+table.mainMenuHeaderTable {
+	text-align: center;
+	border: 0;
+	margin-bottom: 10px;
+}
+
+.mainMenuContent {
+	text-align: left;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.menu {
+	float: left;
+	padding-top: 100px;
+	padding-bottom: 150px;
 }
