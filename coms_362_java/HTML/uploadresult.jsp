@@ -11,7 +11,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Upload Results</title>
+		<title>Online iTunes - Upload Results</title>
 		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
 	</head>
 	<body>
@@ -22,9 +22,20 @@
 			List<String> songData = upload.getHTMLRepresentation();
 		%>
 		<div class="center group plainText">
+			<table class="mainMenuHeaderTable" style="width: 100%;">
+				<tr>
+					<td width="36%" ></td>
+					<td style="padding: 0">
+						<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
+					</td>
+					<td>
+						<h1>Song Data</h1>
+					</td>
+					<td width="36%" ></td>
+				</tr>
+			</table>
 			<%= songData.get(0) %>
 		</div>
 		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
-<!-- ass --!>

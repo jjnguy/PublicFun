@@ -24,7 +24,7 @@
 			</ul>
 		</div>
 		<div class="group center">
-			<table class="mainMenuHeader">
+			<table class="mainMenuHeaderTable">
 				<tr>
 					<td style="padding: 0">
 						<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
@@ -46,8 +46,7 @@
 				To begin, simply upload some songs to the library.  Then feel free to view, sort, and stream the songs from anywhere.
 			</div>
 		</div>
-		<div style="margin-top: 100px">
-		</div>
+		<div style="margin-top: 80px"></div>
 		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
