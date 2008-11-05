@@ -37,7 +37,7 @@
 			</table>
 			<div class="mainMenuContent">
 				<h3>What is Online iTunes?</h3>
-				Online iTunes is what it sounds like.<br>
+				Online iTunes is exactly what it sounds like.<br>
 				It is a online music library that you can access from anywhere.<br>
 				It allows users to add songs to the online library, sort the songs by many attributes,
 				stream the songs straight from the server, and download the songs to the machine they are using currently.

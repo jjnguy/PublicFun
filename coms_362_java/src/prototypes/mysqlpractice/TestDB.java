@@ -15,13 +15,13 @@ public class TestDB {
 			/**
 			 * Load jdbc driver for MySQL
 			 */
-			// Class c = Class.forName("com.mysql.jdbc.Driver");
+			Class c = Class.forName("com.mysql.jdbc.Driver");
 			// Loads database name of a mysql database into url
 			// localhost says that it is on the current machine and test says that the
 			// name of the database is test.
-			String url = "jdbc:mysql://129.186.150.51";
+			String url = "jdbc:mysql://localhost";
 
-			String pword = "root";
+			String pword = "CH0C0LATEM1LK";
 			String user = "root";
 			// We have to establish a jdbc connection to the database
 			Connection connection = DriverManager.getConnection(url, user, pword);
