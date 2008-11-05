@@ -7,7 +7,7 @@ public class HTMLFooter {
 	private static String BUTTON_TEXT = "Programming Question?  Click Here!";
 	
 	private static final String[] authorNames = new String[] { "Justin Nelson",
-			"Ben Petersen", "Shaun SomeLastName" };
+			"Ben Petersen", "Shaun Brockhoff" };
 
 	private static String pushDiv;
 	private static String code;
