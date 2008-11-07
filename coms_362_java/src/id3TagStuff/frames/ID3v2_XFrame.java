@@ -55,7 +55,7 @@ public class ID3v2_XFrame {
 		return String.format("Type: %s, Data: %s", header.getID(), data.toString());
 	}
 
-	public String getFrameType() {
+	public String getFrameID() {
 		return header.getID();
 	}
 

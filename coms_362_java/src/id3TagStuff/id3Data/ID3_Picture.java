@@ -96,6 +96,10 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		out.close();
 	}
 
+	public int[] getPicData(){
+		return data;
+	}
+	
 	@Override
 	public int[] getByteRepresentation(int majorVersion) {
 		if (majorVersion < 2 | majorVersion > 4)

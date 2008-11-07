@@ -150,7 +150,7 @@ public class MP3FileUploadContainer {
 			List<ID3v2_XFrame> frames;
 			frames = tag.getAllFrames();
 			for (ID3v2_XFrame frame : frames) {
-				html += frame.getFrameType() + "<br>";
+				html += frame.getFrameID() + "<br>";
 				html += frame.getData() + "<br>";
 				html += "<br>";
 			}
@@ -171,7 +171,7 @@ public class MP3FileUploadContainer {
 		ID3v2_XTag tag = getListOfTags().get(index);
 		int picNum = 0;
 		for (ID3v2_XFrame frame : tag.getAllFrames()) {
-			if (frame.getFrameType().matches("APIC|PIC")) {
+			if (frame.getFrameID().matches("APIC|PIC")) {
 				ID3_Picture pic = (ID3_Picture) frame.getData();
 				String picLoc = PICTURE_SAVE_DIR + savedFilesLoc.get(index).getName() + picNum
 						+ ".png";

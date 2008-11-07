@@ -34,7 +34,7 @@ public class MP3TagExtract {
 		List<ID3v2_XFrame> frames = theTag.getAllFrames();
 		boolean hasPic = false;
 		for (ID3v2_XFrame frame : frames) {
-			if (frame.getFrameType().matches("APIC|PIC")) {
+			if (frame.getFrameID().matches("APIC|PIC")) {
 				hasPic = true;
 				break;
 			}
@@ -83,7 +83,7 @@ public class MP3TagExtract {
 			// TODO extract stuff
 			ID3v2_XFrame picFrame = null;
 			for (ID3v2_XFrame frame : frames) {
-				if (frame.getFrameType().matches("PIC|APIC")) {
+				if (frame.getFrameID().matches("PIC|APIC")) {
 					picFrame = frame;
 					break;
 				}
