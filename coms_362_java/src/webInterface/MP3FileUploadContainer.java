@@ -20,16 +20,25 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
- * This class is used to manage the upload of an MP3 file.
+ * This class is used to manage the upload of an MP3 file in a JSP invironment.
  * 
  * @author Justin Nelson
  * 
  */
 public class MP3FileUploadContainer {
 
+	/**
+	 * The top directory where files are stored.
+	 */
 	public static final String UPLOAD_DIRECTORY = "C:/uploads/";
+	/**
+	 * The directory where pictures extracted from tags are to be stored.
+	 */
 	public static final String PICTURE_SAVE_DIR = UPLOAD_DIRECTORY + "pics/";
-	
+
+	/*
+	 * Checks for existence of the necessary directory to save the uploads
+	 */
 	static {
 		File existTest = new File(UPLOAD_DIRECTORY);
 		if (!existTest.exists()) {
@@ -48,6 +57,13 @@ public class MP3FileUploadContainer {
 	private List<File> savedFilesLoc;
 	private List<ID3v2_XTag> tags;
 
+	/**
+	 * Creates a new mp3 upload container.
+	 * 
+	 * Saves all of the files to the disk
+	 * 
+	 * @param request
+	 */
 	public MP3FileUploadContainer(HttpServletRequest request) {
 		this.request = request;
 
@@ -98,6 +114,11 @@ public class MP3FileUploadContainer {
 		}
 	}
 
+	/**
+	 * Uses the files and creates {@link ID3v2_XTag}s from all of the files.
+	 * 
+	 * @return the List of tags
+	 */
 	public List<ID3v2_XTag> getListOfTags() {
 		if (tags != null)
 			return tags;
@@ -116,6 +137,11 @@ public class MP3FileUploadContainer {
 		return ret;
 	}
 
+	/**
+	 * Turns the uploaded files into an html representation.
+	 * 
+	 * @return a list of html representations for each file
+	 */
 	public List<String> getHTMLRepresentation() {
 		List<String> ret = new ArrayList<String>(fileItems.size());
 
@@ -134,8 +160,10 @@ public class MP3FileUploadContainer {
 	}
 
 	/**
+	 * Method to save an embedded picture to a file.
 	 * 
 	 * @param index
+	 *            the index of the file to extract the picture from.
 	 * @return true if a picture was saved, false otherwise.
 	 */
 	public boolean savePicsFromTag(int index) {
@@ -162,6 +190,11 @@ public class MP3FileUploadContainer {
 		return ret;
 	}
 
+	/**
+	 * Gets the fileitems from the request
+	 * 
+	 * @return List of fileitems
+	 */
 	public List<FileItem> getFileItems() {
 		return fileItems;
 	}

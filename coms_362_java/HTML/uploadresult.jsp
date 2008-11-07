@@ -16,6 +16,7 @@
 	</head>
 	<body>
 		<%
+			// Creates a new file upload container to easily encapsulate an upload
 			MP3FileUploadContainer upload = new MP3FileUploadContainer(request);
 			List<ID3v2_XTag> tags = upload.getListOfTags(); 
 			

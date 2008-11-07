@@ -1,13 +1,16 @@
 package id3TagStuff.id3Data;
 
-import java.util.Arrays;
-
 import util.Util;
 
 public class ID3_String implements ID3v2_XFrameData {
 
 	private String data;
 
+	/**
+	 * Creates an ID3_String out of some bytes
+	 * 
+	 * @param dataP
+	 */
 	public ID3_String(int[] dataP) {
 		data = new String(Util.castIntArrToByteArr(dataP));
 	}
@@ -17,13 +20,12 @@ public class ID3_String implements ID3v2_XFrameData {
 		return data;
 	}
 
-	// @Override
+	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
 		return "String";
 	}
 
-	// @Override
+	@Override
 	public int[] getByteRepresentation(int versionNumber) {
 		byte encoding = 0;
 		byte[] ret = new byte[1 + data.getBytes().length];

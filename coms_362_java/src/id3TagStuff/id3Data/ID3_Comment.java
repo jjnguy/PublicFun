@@ -13,20 +13,20 @@ public class ID3_Comment implements ID3v2_XFrameData {
 				dataP.length)));
 	}
 
-	// @Override
+	@Override
 	public String toString() {
 		// the substrings trim off null bytes
 		return String.format("Language: %s, Comment: %s", language.substring(1, language
 				.length()), comment.substring(0, comment.length() - 1));
 	}
 
-	// @Override
+	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
 		return "Comment";
 	}
 
-	// @Override
+	@Override
 	public int[] getByteRepresentation(int versionNumber) {
 		// encoding + language + empty comment description + comment
 		byte[] ret = new byte[1 + 3 + 1 + comment.length()];

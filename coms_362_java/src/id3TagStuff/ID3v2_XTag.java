@@ -14,6 +14,16 @@ import java.util.List;
 
 import util.Util;
 
+/**
+ * An ID3v2_XTag represents an entire ID3 tag. It can be artifically created from a fake mp3
+ * file.
+ * 
+ * It holds no information about the actual music data, save a copy of the file it was
+ * generated from.
+ * 
+ * @author Justin Nelson
+ * 
+ */
 public class ID3v2_XTag {
 
 	// For now we add a kilobyte of extra padding
@@ -25,10 +35,14 @@ public class ID3v2_XTag {
 	private int paddingSize;
 
 	/**
-	 * Creates a new ID3v2.X tag.
+	 * Creates a new ID3v2.X tag from a given mp3 file.
+	 * 
+	 * The actual song data is not checked, nor is the file extension. No error is created if
+	 * the song data is corrupt but the tag is correct. Various bad things may happen if the
+	 * ID3 tag is missing or corrupt.
 	 * 
 	 * @param mp3FileP
-	 *            The mp3 file that contains the tag
+	 *            The mp3 file that contains the tag to be created
 	 * @throws IOException
 	 */
 	public ID3v2_XTag(File mp3FileP) throws IOException {
@@ -39,7 +53,7 @@ public class ID3v2_XTag {
 		InputStream in = new FileInputStream(mp3File);
 		byte[] headerBytes = new byte[10];
 		int bytesRead = in.read(headerBytes);
-		if (bytesRead != headerBytes.length){
+		if (bytesRead != headerBytes.length) {
 			throw new IOException("WTF Mate?");
 		}
 		// create the meat of the tag object
@@ -129,7 +143,8 @@ public class ID3v2_XTag {
 		int[] paddingToAdd = new int[ammountToAdd];
 		Util.writeIntArrToStream(out, paddingToAdd);
 		Util.writeIntArrToStream(out, songBytes);
-		// Idealy this should put the file back where it was with some extra tag bytes in the middle
+		// Idealy this should put the file back where it was with some extra tag bytes in the
+		// middle
 	}
 
 	@Override
@@ -138,10 +153,16 @@ public class ID3v2_XTag {
 				.getName());
 	}
 
+	/**
+	 * @return the size of the padding after the tag and before the song data.
+	 */
 	public int getPaddingSize() {
 		return paddingSize;
 	}
 
+	/**
+	 * @return the version of the ID3 tag.
+	 */
 	public int getVersion() {
 		return header.getMajorVersion();
 	}
@@ -149,7 +170,7 @@ public class ID3v2_XTag {
 	/**
 	 * Allows access to the frames of the Tag
 	 * 
-	 * @return the tag frames
+	 * @return a List containing all of the {@link ID3v2_XFrame}s in the tag.
 	 */
 	public List<ID3v2_XFrame> getAllFrames() {
 		return frames;

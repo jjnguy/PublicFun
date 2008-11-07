@@ -6,10 +6,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * A Utility file for dealing with menial tasks.
+ * 
+ * @author Justin Nelson
+ */
 public class Util {
 
+	/**
+	 * Debug mode...or not
+	 */
 	public static final boolean DEBUG = true;
-
+	
+	/**
+	 * Casts an int array into a byte array.
+	 * @param arr
+	 * @return
+	 */
 	public static byte[] castIntArrToByteArr(int[] arr) {
 		byte[] ret = new byte[arr.length];
 		for (int i = 0; i < arr.length; i++) {
@@ -43,7 +56,7 @@ public class Util {
 
 	public static int[] getBytesFromFile(File file) throws IOException {
 		InputStream in = new FileInputStream(file);
-		int[] ret =  getBytesFromStream(in);
+		int[] ret = getBytesFromStream(in);
 		in.close();
 		return ret;
 	}
@@ -61,6 +74,12 @@ public class Util {
 		return getBytesFromStream(in, in.available());
 	}
 
+	/**
+	 * Because skip may not fully skip we have this.
+	 * @param s
+	 * @param skipAmmnt
+	 * @throws IOException
+	 */
 	public static void skipFully(InputStream s, long skipAmmnt) throws IOException {
 		long ammntLeft = skipAmmnt;
 		while (ammntLeft < 0) {

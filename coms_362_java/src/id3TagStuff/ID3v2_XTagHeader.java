@@ -4,6 +4,12 @@ import java.util.Arrays;
 
 import util.Util;
 
+/**
+ * A ID3v2_XTagHeader represents the first few (10) bytes in an ID3 tag.
+ * 
+ * @author Justin Nelson
+ * 
+ */
 public class ID3v2_XTagHeader {
 
 	private String tagIdentifier;
@@ -11,6 +17,14 @@ public class ID3v2_XTagHeader {
 	private int tagSize;
 	private int headerSize;
 
+	/**
+	 * Creates an {@link ID3v2_XTagHeader} given the byte array
+	 * 
+	 * @param bytes
+	 *            the header bytes
+	 * @throws IllegalArgumentException
+	 *             if the length of the header bytes given is not ten bytes long.
+	 */
 	public ID3v2_XTagHeader(int[] bytes) {
 		headerSize = bytes.length;
 		if (bytes.length != 10)
@@ -23,10 +37,16 @@ public class ID3v2_XTagHeader {
 		tagSize = (bytes[6] << 21) + (bytes[7] << 14) + (bytes[8] << 7) + bytes[9];
 	}
 
+	/**
+	 * @return the size ing bytes of the tag
+	 */
 	public int getTagSize() {
 		return tagSize;
 	}
 
+	/**
+	 * @return the major version of the ID3 tag
+	 */
 	public int getMajorVersion() {
 		return majorVersion;
 	}
@@ -38,10 +58,19 @@ public class ID3v2_XTagHeader {
 
 	}
 
+	/**
+	 * @return the lenght of the header. Better be ten bytes or something is completely wrong.
+	 */
 	public int getHeaderSize() {
 		return headerSize;
 	}
 
+	/**
+	 * Tells the tag header that the tag has grown due to padding addition or adding of a tag.
+	 * 
+	 * @param totalSize
+	 *            the size to increment the tag by.
+	 */
 	public void incrementTagSize(int totalSize) {
 		if (totalSize < 0)
 			throw new IllegalArgumentException("A framse size cannot be negative.");

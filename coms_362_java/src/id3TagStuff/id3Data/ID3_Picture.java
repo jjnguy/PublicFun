@@ -75,12 +75,19 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		return "ID3 Picture: " + description;
 	}
 
-	// @Override
+	@Override
 	public String getType() {
 		System.out.println("In the get type code");
 		return "Picture";
 	}
 
+	/**
+	 * Saves a picture to the specified file.
+	 * 
+	 * @param loc
+	 *            THe destination for the picture.
+	 * @throws IOException
+	 */
 	public void saveAs(File loc) throws IOException {
 		System.out.println("Saving shit");
 		System.out.println(loc.getAbsolutePath());
@@ -89,7 +96,7 @@ public class ID3_Picture implements ID3v2_XFrameData {
 		out.close();
 	}
 
-	// @Override
+	@Override
 	public int[] getByteRepresentation(int majorVersion) {
 		if (majorVersion < 2 | majorVersion > 4)
 			throw new IllegalArgumentException("The version type doesnot exist");

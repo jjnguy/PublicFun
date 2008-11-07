@@ -5,15 +5,25 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A utility class to handle operations dealing with the filesystem.
+ * 
+ * @author Justin Nelson
+ * 
+ */
 public class FileUtil {
 
-	public static void main(String[] args) {
-		System.out.println(System.getProperty("user.name"));
-	}
-	
 	private FileUtil() {
 	}
 
+	/**
+	 * Returns a list containing all of the song files located in the given directory
+	 * determined by {@link SongFileFilter}.
+	 * 
+	 * @param topDirectory
+	 *            the directory to search.
+	 * @return List of song files. If the directory contains no files, then the List is empty.
+	 */
 	public static List<File> getAllSongFiles(File topDirectory) {
 		FileFilter fileFilter = new SongFileFilter();
 		List<File> ret = new ArrayList<File>();

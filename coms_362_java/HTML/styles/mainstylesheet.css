@@ -60,10 +60,6 @@ a.button:hover {
 	background-color: darkGoldenRod;
 }
 
-a.button:visited {
-	background-color: darkOrange;
-}
-
 .wrapper {
 	min-height: 100%;
 	height: auto;
