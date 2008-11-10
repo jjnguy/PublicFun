@@ -38,6 +38,18 @@ a.button {
 	border: solid #000000;
 }
 
+input.formButton {
+	background-color: orange;
+	padding: .2cm;
+	color: black;
+	font-family: sans-serif;
+	text-decoration: none;
+	font-weight: bold;
+	border: solid #000000;
+	font-family: sans-serif;
+	font-size: 12pt;
+}
+
 input.button {
 	background-color: orange;
 	margin: .2cm;

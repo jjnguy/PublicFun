@@ -104,11 +104,7 @@ public class MP3FileUploadContainer {
 				InputStream fileItemInputStream = fileItems.get(i).getInputStream();
 				OutputStream saveFileStream = new FileOutputStream(savedFilesLoc.get(i));
 				// TODO faster prototype, it is faster, i hope it doesn't corrupt the file
-				int[] buffer;
-				while (fileItemInputStream.available() > 0) {
-					buffer = Util.getBytesFromStream(fileItemInputStream);
-					Util.writeIntArrToStream(saveFileStream, buffer);
-				}
+				Util.copyStream(fileItemInputStream, saveFileStream);
 				saveFileStream.close();
 				fileItemInputStream.close();
 			} catch (IOException e) {
