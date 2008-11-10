@@ -19,6 +19,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import util.Util;
+
 /**
  * This class is used to manage the upload of an MP3 file in a JSP invironment.
  * 
@@ -101,8 +103,11 @@ public class MP3FileUploadContainer {
 			try {
 				InputStream fileItemInputStream = fileItems.get(i).getInputStream();
 				OutputStream saveFileStream = new FileOutputStream(savedFilesLoc.get(i));
+				// TODO faster prototype, it is faster, i hope it doesn't corrupt the file
+				int[] buffer;
 				while (fileItemInputStream.available() > 0) {
-					saveFileStream.write(fileItemInputStream.read());
+					buffer = Util.getBytesFromStream(fileItemInputStream);
+					Util.writeIntArrToStream(saveFileStream, buffer);
 				}
 				saveFileStream.close();
 				fileItemInputStream.close();
