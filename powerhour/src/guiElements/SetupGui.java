@@ -28,7 +28,7 @@ import util.Util;
 @SuppressWarnings( { "serial" })
 public class SetupGui extends JFrame {
 	
-	private static final String ITUNES_LIB_DEFAULT_LOC = System.getProperty("user.home") + "/My Documents/My Music/iTunes/iTunes Music Library.xml";
+	public static final String ITUNES_LIB_DEFAULT_LOC = System.getProperty("user.home") + "/My Documents/My Music/iTunes/iTunes Music Library.xml";
 	private JLabel iconLable;
 	private JLabel vlcLocationLable;
 	private JTextField vlcLocationText;

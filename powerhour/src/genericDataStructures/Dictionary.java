@@ -18,15 +18,14 @@ public class Dictionary {
 	/**
 	 * 
 	 * @param s
-	 *            The Scanner represents a text file in the iTunes library
-	 *            format. Assumes directly following a <dict> tag.
+	 *            The Scanner represents a text file in the iTunes library format. Assumes
+	 *            directly following a <dict> tag.
 	 */
 	public Dictionary(Scanner s) {
 		this();
 		String line = s.nextLine().trim();
 		while (!line.toLowerCase().equals("</dict>")) {
-			String key = line.substring(line.indexOf("<key>") + 5, line
-					.indexOf("</key>"));
+			String key = line.substring(line.indexOf("<key>") + 5, line.indexOf("</key>"));
 			keys.add(key);
 			if (key.equals("Comments")) { // comments throw off the single line
 				// way i parse this
@@ -75,20 +74,19 @@ public class Dictionary {
 	 */
 	private void addSmallerData(String line) {
 		String valuePart = line.substring(line.indexOf("><") + 2);
-		String type = valuePart.substring(0, valuePart.indexOf('>'))
-				.toLowerCase();
+		String type = valuePart.substring(0, valuePart.indexOf('>')).toLowerCase();
 		if (type.equals("string")) {
-			String value = valuePart.substring(valuePart.indexOf('>') + 1,
-					valuePart.indexOf('<'));
+			String value = valuePart.substring(valuePart.indexOf('>') + 1, valuePart
+					.indexOf('<'));
 			values.add(value);
 		} else if (type.equals("integer")) {
-			String value = valuePart.substring(valuePart.indexOf('>') + 1,
-					valuePart.indexOf('<'));
+			String value = valuePart.substring(valuePart.indexOf('>') + 1, valuePart
+					.indexOf('<'));
 			values.add(Long.parseLong(value));
 		} else if (type.equals("date")) {
 			// just do a string deal for now
-			String value = valuePart.substring(valuePart.indexOf('>') + 1,
-					valuePart.indexOf('<'));
+			String value = valuePart.substring(valuePart.indexOf('>') + 1, valuePart
+					.indexOf('<'));
 			values.add(value);
 		} else if (type.equals("true/")) {
 			values.add(new Boolean(true));
@@ -104,8 +102,8 @@ public class Dictionary {
 	 * 
 	 * @param key
 	 * @param value
-	 * @return true if the key was already in the Dictionary and the value was
-	 *         replaced and false otherwise
+	 * @return true if the key was already in the Dictionary and the value was replaced and
+	 *         false otherwise
 	 */
 	public boolean add(String key, Object value) {
 		int keyIndex = keys.indexOf(key);
@@ -121,8 +119,7 @@ public class Dictionary {
 	public Object get(String key) {
 		int keyIndex = keys.indexOf(key);
 		if (keyIndex == -1) {
-			throw new NoSuchElementException("The key '" + key
-					+ "' was not found.");
+			throw new NoSuchElementException("The key '" + key + "' was not found.");
 		}
 		return values.get(keyIndex);
 	}
