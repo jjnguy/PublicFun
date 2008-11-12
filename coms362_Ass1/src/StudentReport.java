@@ -56,14 +56,14 @@ public class StudentReport {
 		}
 		int numCourses = data.size();
 		// now what the fuck TODO
-		
+
 		RandomAccessFile file = null;
 		try {
 			file = new RandomAccessFile(loc, "rw");
 		} catch (FileNotFoundException e) {
 			return false;
 		}
-		
+
 		try {
 			file.close();
 		} catch (IOException e) {
