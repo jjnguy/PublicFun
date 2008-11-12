@@ -13,6 +13,8 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
+import dataContainers.StudentData;
+
 public class Program {
 
 	private File objectFileLoc;
