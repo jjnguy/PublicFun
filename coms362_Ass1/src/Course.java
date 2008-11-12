@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class SchoolClass implements Serializable {
+public class Course implements Serializable {
 
 	/**
 	 * Generated UID
@@ -9,7 +9,7 @@ public class SchoolClass implements Serializable {
 	private Grade grade;
 	private String name;
 
-	public SchoolClass(String name, Grade g) {
+	public Course(String name, Grade g) {
 		grade = g;
 		this.name = name;
 	}
