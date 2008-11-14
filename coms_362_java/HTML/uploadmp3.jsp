@@ -25,9 +25,14 @@
 			</div>
 			<div class="input-form center" title="MP3 File location">
 				<form method="post" action="uploadresult.jsp" method="get" enctype="multipart/form-data">
-					<input class="formButton" type="file" name="fileLoc" size="40" style="margin-top: .2cm">
+					<input class="formButton" type="file" name="fileLoc" size="40" style="margin-top: .2cm" />
 					<br>
 					<input class="button" type="submit" value="Submit" title="Submit File for Upload" style="margin-top: .2cm; margin-bottom: .1cm">
+					<div class="plainText">
+						OR ...
+						Upload an iTunes playlist.
+						<input type="submit" class="button" title="Find iTunes playlists">
+					</div>
 				</form>
 			</div>
 		</div>
