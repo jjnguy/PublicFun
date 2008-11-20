@@ -15,7 +15,7 @@ import java.util.List;
  * Main database interface for all database tasks including connecting to the database,
  * inserting song data, and retrieving songs based on search strings
  * 
- * @author Justin Nelson
+ * @author Justin Nelson, Shaun
  * 
  */
 public class DatabaseUtil {
