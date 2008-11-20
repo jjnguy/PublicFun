@@ -38,12 +38,13 @@ public class Controller implements UploadSong, DatabaseSearch {
 	@Override
 	public String uploadSong(InputStream fileStream) 
 	{
-		
+		String fileLocation;
 		try {
 			
 			// TODO Needs to call the appropriate classes to store
-			// the song into a DB and save the file in the correct location
-			return "saved to " + SaveSong.SaveASong(fileStream) ;
+			// the song into a DB
+			fileLocation = SaveSong.SaveASong(fileStream);
+			return "Saved to: " + fileLocation) ;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
