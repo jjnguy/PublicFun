@@ -5,7 +5,8 @@
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
-<%@page import="webViewInterface.UploadSong"%><html>
+<%@page import="webViewInterface.UploadSong"%>
+<%@page import="controller.Controller"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Upload Results</title>
@@ -17,7 +18,7 @@
 		ServletFileUpload serv = new ServletFileUpload(f);
 		FileItem file = (FileItem)serv.parseRequest(request).get(0);
 		// TODO instance
-		UploadSong up = null;
+		UploadSong up = Controller.getController();
 		String message = null;
 		try {
 			message = up.uploadSong(file.getInputStream());
