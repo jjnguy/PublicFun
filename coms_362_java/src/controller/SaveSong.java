@@ -1,15 +1,16 @@
 package controller;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.Scanner;
 
-import util.Util;
+
 
 
 public class SaveSong 
@@ -17,61 +18,49 @@ public class SaveSong
 	private static final String  SONG_DIRECTORY = "c:/SONGS/";
 	private static final String FILE_NAME = "file_number.txt";
 
-	public static boolean SaveASong(InputStream fileStream) throws IOException// throws IOException 
-	{
-		String sInt = "";
-		String songLocation = "";
+	public static String SaveASong(InputStream fileStream) throws IOException
+	{	
+		OutputStream f_song;
 		int fileInt;
-
-	
-		
-		Scanner fin = new Scanner (new File (SONG_DIRECTORY + FILE_NAME));
-		//File f_fileLocation = new File (SONG_DIRECTORY + FILE_NAME);
-		
-		//FileInputStream fis_fileLocation = new FileInputStream(f_fileLocation);
-		
-		//InputStreamReader in = new InputStreamReader(fis_fileLocation); 
-		
-		
+		File intFile = new File(SONG_DIRECTORY + FILE_NAME);
+		Scanner fin = new Scanner (intFile);
 		fileInt = fin.nextInt();
+		File song = new File(SONG_DIRECTORY + fileInt + ".mp3");
 		
-		sInt = fileInt + "";
-		
-		
-		
-		
-		File song = new File(SONG_DIRECTORY + sInt + ".mp3");
 		if(!song.exists())
 			song.createNewFile();
-		else return false;
+		else return null;
 
-		OutputStream f_song;
-		
-			try {
-				f_song = new FileOutputStream(song);
-			} catch (FileNotFoundException e1) {
-				
-			return false;
-			}
 		
 		
-		try {
-			util.Util.copyStream(fileStream, f_song);
-		} catch (IOException e) {
-			f_song.close();
-			return false;
+		try 
+		{
+			f_song = new FileOutputStream(song);
+		} 
+		catch (FileNotFoundException e1) 
+		{
+			fin.close();
+			return null;
 		}
 		
-			
-			f_song.close();
-			
-			return true;
-
 		
-	}
-	
-	
-	
-	
-	
+		try 
+		{
+			util.Util.copyStream(fileStream, f_song);
+		} 
+		catch (IOException e) 
+		{
+			f_song.close();
+			fin.close();
+			return null;
+		}
+		
+			fin.close();
+			f_song.close();
+		
+			Writer output = new BufferedWriter(new FileWriter(intFile));
+			output.write((fileInt + 1) + "");
+			output.close();
+			return (SONG_DIRECTORY + fileInt + ".mp3");
+	}	
 }
