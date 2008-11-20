@@ -12,6 +12,8 @@ public class SongData {
 	private String fileName;
 	private String pictureName;
 	
+	public SongData(){};
+	
 	public SongData(String t, String a, String p[], String c[], String tr, 
 			String y, String e, String co, String fp, String pp){
 		title = t;

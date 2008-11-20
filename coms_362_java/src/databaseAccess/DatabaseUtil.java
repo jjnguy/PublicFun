@@ -5,8 +5,11 @@ import infoExpert.SongData;
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main database interface for all database tasks including connecting to the database,
@@ -22,7 +25,7 @@ public class DatabaseUtil {
 	/*Create a new database connection and return true if successful, false otherwise.*/
 	public boolean startDatabase(String url, String user, String pass) throws SQLException{
 		try {
-			Class driver = Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,9 +59,103 @@ public class DatabaseUtil {
 			handleSQLException(e);
 			return false;
 		}
+		try {
+			insert.close();
+		} catch (SQLException e) {
+			handleSQLException(e);
+		}
 		return true;
 	}
 	
+	/*Take in a search string and query all database fields for the string. Used also to simply return everything
+	 * as in "View Music Collection" link for instance.*/
+	public List<SongData> simpleSearch(String searchString){
+		Statement q = null;
+		ResultSet rs = null;
+		List<SongData> songList = new ArrayList<SongData>();
+		try {
+			q = conn.createStatement();
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return null;
+		}
+		
+		/*Form Query*/
+		String query = "SELECT * FROM " + TABLE_NAME + "s ";
+		query += "WHERE s.title LIKE %" + searchString + "% OR "; 
+		query += "s.album LIKE %" + searchString + "% OR ";
+		query += "s.year LIKE %" + searchString + "% OR ";
+		query += "s.composer LIKE %" + searchString + "% OR ";
+		query += "s.artist LIKE %" + searchString + "%;";
+		
+		/*Execute Query*/
+		try {
+			rs = q.executeQuery(query);
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return null;
+		}
+		
+		/*Process Results and return List<SongData>*/
+		try {
+			while(rs.next()){
+				SongData s = new SongData();
+				s.setTitle(rs.getString("title"));
+				s.setAlbum(rs.getString("album"));
+				s.setPerformer(0, rs.getString("performers0"));
+				s.setPerformer(1, rs.getString("performers1"));
+				s.setPerformer(2, rs.getString("performers2"));
+				s.setComment(0, rs.getString("comments0"));
+				s.setComment(1, rs.getString("comments1"));
+				s.setComment(2, rs.getString("comments2"));
+				s.setTrackNum(rs.getString("trackNum"));
+				s.setYear(rs.getString("year"));
+				s.setEncodedBy(rs.getString("encodedBy"));
+				s.setComposer(rs.getString("composer"));
+				s.setFileName(rs.getString("fileName"));
+				s.setPictureName(rs.getString("pictureName"));
+				songList.add(s);
+			}
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return null;
+		}
+		
+		return songList;	
+	}
+	
+	/*advancedSearch takes in a search string like simple search but then only searches specific fields, which are
+	 * passed in as true if the user wants to check them.  Boolean and specifies if the searches are combined using
+	 * AND or OR*/
+	public List<SongData> advancedSearch(String searchString, boolean artist, 
+			boolean title,boolean album, boolean composer, boolean year, boolean AND){
+		Statement q = null;
+		ResultSet rs = null;
+		List<SongData> songList = new ArrayList<SongData>();
+		String andOr;
+		try {
+			q = conn.createStatement();
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return null;
+		}
+		
+		/*Set and/or boolean value*/
+		if(AND) andOr = "AND";
+		else andOr = "OR";
+		
+		/*simple search*/
+		if(!artist && !title && !album && !composer && !year){
+			return simpleSearch(searchString);
+		}
+		
+		/*Form Query*/
+		String query = "SELECT * FROM " + TABLE_NAME + "s WHERE ";
+		if(artist){
+			query += "s.artist LIKE %" + searchString + "% " + andOr + " ";
+		}
+		return null;
+	}
 	
 	
 	/**
