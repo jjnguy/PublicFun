@@ -17,10 +17,10 @@
 					<a class="button" href="uploadmp3.jsp" >Upload Music to the Collection</a>
 				</li>
 				<li>
-					<a class="button" href="" >View Music Collection</a>
+					<a class="button" href="">Search Music Collection</a>
 				</li>
 				<li>
-					<a class="button" href="http://www.youtube.com/user/YTRickRollsYou">See a Silly Video</a>
+					<a class="button" href="" >View Music Collection</a>
 				</li>
 			</ul>
 		</div>

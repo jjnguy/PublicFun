@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%@page import="id3TagStuff.ID3v2_XTag"%>
+<%@page import="java.util.List"%>
+<%@page import="id3TagStuff.id3Data.ID3_Picture"%>
+<%@page import="webInterface.MP3FileUploadContainer"%>
+<%@page import="webInterface.HTMLFooter"%>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title>Online iTunes - Upload Results</title>
+		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
+	</head>
+	<body>
+		<%
+			// Creates a new file upload container to easily encapsulate an upload
+			MP3FileUploadContainer upload = new MP3FileUploadContainer(request);
+			List<ID3v2_XTag> tags = upload.getListOfTags(); 
+			
+			List<String> songData = upload.getHTMLRepresentation();
+		%>
+		<div class="center group plainText">
+			<table class="mainMenuHeaderTable" style="width: 100%;">
+				<tr>
+					<td width="36%" ></td>
+					<td style="padding: 0">
+						<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
+					</td>
+					<td>
+						<h1>Song Data</h1>
+					</td>
+					<td width="36%" ></td>
+				</tr>
+			</table>
+			<%= songData.get(0) %>
+		</div>
+		<%= HTMLFooter.getFooter() %>
+	</body>
+</html>
