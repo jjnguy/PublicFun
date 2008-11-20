@@ -23,13 +23,17 @@ public class ID3v2_XTagHeader {
 	 * @param bytes
 	 *            the header bytes
 	 * @throws IllegalArgumentException
-	 *             if the length of the header bytes given is not ten bytes long.
+	 *             if the length of the header bytes given is not ten bytes long, or the first
+	 *             three bytes aren't id3
 	 */
 	public ID3v2_XTagHeader(int[] bytes) {
 		headerSize = bytes.length;
 		if (bytes.length != 10)
 			throw new IllegalArgumentException(
 					"The byte string must be exactly 10 bytes long.");
+		String id3 = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(bytes, 0, 2)));
+		if (!id3.equalsIgnoreCase("id3"))
+			throw new IllegalArgumentException("The file doesn't contain an ID3 tag.");
 		tagIdentifier = new String(Util.castIntArrToByteArr(Arrays.copyOfRange(bytes, 0, 3)));
 		majorVersion = bytes[3];
 		minorVersion = bytes[4];
