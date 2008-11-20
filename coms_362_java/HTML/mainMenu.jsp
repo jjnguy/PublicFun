@@ -31,14 +31,14 @@
 						<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
 					</td>
 					<td>
-						<h1>Welcome to Online iTunes</h1>
+						<h1>Welcome to Online jTunes</h1>
 					</td>
 					<td width="27%" ></td>
 				</tr>
 			</table>
 			<div class="mainMenuContent">
-				<h3>What is Online iTunes?</h3>
-				Online iTunes is exactly what it sounds like.<br>
+				<h3>What is Online jTunes?</h3>
+				Online jTunes is exactly what it sounds like.<br>
 				It is a online music library that you can access from anywhere.<br>
 				It allows users to add songs to the online library, sort the songs by many attributes,
 				stream the songs straight from the server, and download the songs to the machine they are using currently.
