@@ -5,7 +5,6 @@ import infoExpert.SongData;
 import java.io.InputStream;
 import java.util.List;
 
-import webViewInterface.UploadSong;
 
 public class Controller implements UploadSong, DatabaseSearch {
 
@@ -26,4 +25,11 @@ public class Controller implements UploadSong, DatabaseSearch {
 		return new Controller();
 	}
 	private Controller(){}
+
+	@Override
+	public List<SongData> advancedSearch(String artist, String title, String album,
+			String composer, String year, boolean AND) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

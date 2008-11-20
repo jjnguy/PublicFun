@@ -21,22 +21,25 @@ import java.util.List;
 public class DatabaseUtil {
 	private static final String TABLE_NAME = "songdata";
 	private Connection conn = null;
-	
-	/*Create a new database connection and return true if successful, false otherwise.*/
-	public boolean startDatabase(String url, String user, String pass) throws SQLException{
+
+	/* Create a new database connection and return true if successful, false otherwise. */
+	public boolean startDatabase(String url, String user, String pass) throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		} 
+		}
 		conn = DriverManager.getConnection(url, user, pass);
 		return true;
 	}
-	
-	/*Attempts to insert a new song into the database and returns true if successful, false otherwise.*/
-	public boolean insertSongIntoDatabase(SongData song){
+
+	/*
+	 * Attempts to insert a new song into the database and returns true if successful, false
+	 * otherwise.
+	 */
+	public boolean insertSongIntoDatabase(SongData song) {
 		Statement insert;
 		try {
 			insert = conn.createStatement();
@@ -45,14 +48,17 @@ public class DatabaseUtil {
 			return false;
 		}
 		String query = "INSERT INTO " + TABLE_NAME;
-		
+
 		query += " (title, album, performers0, performers1, performers2, comments0, comments1, comments2";
 		query += " trackNum, year, encodedBy, composer, fileName, pictureName)";
-		query += "values ("+song.getTitle()+", "+song.getAlbum()+", "+song.getPerformer(0)+", "+song.getPerformer(1);
-		query += ", "+song.getPerformer(2)+", "+song.getComment(0)+", "+song.getComment(1)+", "+song.getComment(2);
-		query += ", "+song.getTrackNum()+", "+song.getYear()+", "+song.getEncodedBy()+", "+song.getComposer();
-		query += ", "+song.getFileName()+", "+song.getPictureName()+");";
-		
+		query += "values (" + song.getTitle() + ", " + song.getAlbum() + ", "
+				+ song.getPerformer(0) + ", " + song.getPerformer(1);
+		query += ", " + song.getPerformer(2) + ", " + song.getComment(0) + ", "
+				+ song.getComment(1) + ", " + song.getComment(2);
+		query += ", " + song.getTrackNum() + ", " + song.getYear() + ", "
+				+ song.getEncodedBy() + ", " + song.getComposer();
+		query += ", " + song.getFileName() + ", " + song.getPictureName() + ");";
+
 		try {
 			insert.executeUpdate(query);
 		} catch (SQLException e) {
@@ -66,102 +72,111 @@ public class DatabaseUtil {
 		}
 		return true;
 	}
-	
-	/*Take in a search string and query all database fields for the string. Used also to simply return everything
-	 * as in "View Music Collection" link for instance.*/
-	public List<SongData> simpleSearch(String searchString){
+
+	/*
+	 * Take in a search string and query all database fields for the string. Used also to
+	 * simply return everything as in "View Music Collection" link for instance.
+	 */
+	public List<SongData> simpleSearch(String searchString) {
 		Statement q = null;
 		ResultSet rs = null;
-		
+
 		try {
 			q = conn.createStatement();
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
 		}
-		
-		/*Form Query*/
+
+		/* Form Query */
 		String query = "SELECT * FROM " + TABLE_NAME + "s ";
-		query += "WHERE s.title LIKE %" + searchString + "% OR "; 
+		query += "WHERE s.title LIKE %" + searchString + "% OR ";
 		query += "s.album LIKE %" + searchString + "% OR ";
 		query += "s.year LIKE %" + searchString + "% OR ";
 		query += "s.composer LIKE %" + searchString + "% OR ";
 		query += "s.artist LIKE %" + searchString + "%;";
-		
-		/*Execute Query*/
+
+		/* Execute Query */
 		try {
 			rs = q.executeQuery(query);
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
 		}
-		
-		/*Process Results and return List<SongData>*/
-		return processResults(rs);	
+
+		/* Process Results and return List<SongData> */
+		return processResults(rs);
 	}
-	
-	/*advancedSearch takes in a search string like simple search but then only searches specific fields, which are
-	 * passed in as true if the user wants to check them.  Boolean and specifies if the searches are combined using
-	 * AND or OR*/
-	public List<SongData> advancedSearch(String artist, String title,
-			String album, String composer, String year, boolean AND){
+
+	/*
+	 * advancedSearch takes in a search string like simple search but then only searches
+	 * specific fields, which are passed in as true if the user wants to check them. Boolean
+	 * and specifies if the searches are combined using AND or OR
+	 */
+	public List<SongData> advancedSearch(String artist, String title, String album,
+			String composer, String year, boolean AND) {
 		Statement q = null;
 		ResultSet rs = null;
 		List<SongData> songList = new ArrayList<SongData>();
-		String andOr = "AND";	//default to AND search
+		String andOr = "AND"; // default to AND search
 		try {
 			q = conn.createStatement();
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
 		}
-		
-		/*Set and/or boolean value*/
-		if(AND) andOr = "AND";
-		else andOr = "OR";
-		
-		/*user entered no data, return null*/
-		if(artist == null && title == null && album == null && composer == null && year == null){
+
+		/* Set and/or boolean value */
+		if (AND)
+			andOr = "AND";
+		else
+			andOr = "OR";
+
+		/* user entered no data, return null */
+		if (artist == null && title == null && album == null && composer == null
+				&& year == null) {
 			return null;
 		}
-		
-		/*Form Query*/
+
+		/* Form Query */
 		String query = "SELECT * FROM " + TABLE_NAME + "s WHERE ";
-		if(artist != null){
+		if (artist != null) {
 			query += "s.artist LIKE %" + artist + "% " + andOr + " ";
 		}
-		if(title != null){
+		if (title != null) {
 			query += "s.title LIKE %" + title + "% " + andOr + " ";
 		}
-		if(album != null){
+		if (album != null) {
 			query += "s.album LIKE %" + album + "% " + andOr + " ";
 		}
-		if(composer != null){
+		if (composer != null) {
 			query += "s.composer LIKE %" + composer + "% " + andOr + " ";
 		}
-		if(year != null){
+		if (year != null) {
 			query += "s.year LIKE %" + year + "% " + andOr + " ";
 		}
-		
-		/*Execute Query*/
+
+		/* Execute Query */
 		try {
 			rs = q.executeQuery(query);
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
 		}
-		
-		/*Process Results and return List<SongData>*/
-		return processResults(rs);	
-		
+
+		/* Process Results and return List<SongData> */
+		return processResults(rs);
+
 	}
-	
-	/*processResults takes in a ResultSet from a query and extracts each field into a new
-	 * SongData object which are added to a List and then returned.*/
-	private List<SongData> processResults(ResultSet rs){
+
+	/*
+	 * processResults takes in a ResultSet from a query and extracts each field into a new
+	 * SongData object which are added to a List and then returned.
+	 */
+	private List<SongData> processResults(ResultSet rs) {
 		List<SongData> songList = new ArrayList<SongData>();
 		try {
-			while(rs.next()){
+			while (rs.next()) {
 				SongData s = new SongData();
 				s.setTitle(rs.getString("title"));
 				s.setAlbum(rs.getString("album"));
@@ -185,8 +200,7 @@ public class DatabaseUtil {
 		}
 		return songList;
 	}
-	
-	
+
 	/**
 	 * Simple method to handle {@link SQLException}s. Loops through generated SQLExceptions and
 	 * prints them the the specified {@link PrintStream}.

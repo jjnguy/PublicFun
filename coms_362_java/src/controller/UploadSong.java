@@ -1,4 +1,4 @@
-package webViewInterface;
+package controller;
 
 import java.io.InputStream;
 

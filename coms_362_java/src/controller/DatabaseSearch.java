@@ -6,5 +6,6 @@ import infoExpert.SongData;
 
 public interface DatabaseSearch {
 	public List<SongData> simpleSearch(String term);
-	// TODO public List<SongData> advancedSearch(Some Parameter List);
+	public List<SongData> advancedSearch(String artist, String title, String album,
+			String composer, String year, boolean AND);
 }

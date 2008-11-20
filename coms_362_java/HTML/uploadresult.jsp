@@ -5,7 +5,7 @@
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
-<%@page import="webViewInterface.UploadSong"%>
+<%@page import="controller.UploadSong"%>
 <%@page import="controller.Controller"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -14,17 +14,17 @@
 	</head>
 	<body>
 		<%
-		DiskFileItemFactory f = new DiskFileItemFactory();
-		ServletFileUpload serv = new ServletFileUpload(f);
-		FileItem file = (FileItem)serv.parseRequest(request).get(0);
-		// TODO instance
-		UploadSong up = Controller.getController();
-		String message = null;
-		try {
+			DiskFileItemFactory f = new DiskFileItemFactory();
+				ServletFileUpload serv = new ServletFileUpload(f);
+				FileItem file = (FileItem)serv.parseRequest(request).get(0);
+				// TODO instance
+				UploadSong up = Controller.getController();
+				String message = null;
+				try {
 			message = up.uploadSong(file.getInputStream());
-		} catch (NullPointerException e) {
+				} catch (NullPointerException e) {
 			message = "There was an error uploading your song.  Sorry, try again later.";
-		}
+				}
 		%>
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >
