@@ -30,7 +30,7 @@ public class ID3TagToDB {
 		try {
 			storeStatement = connection.createStatement();
 		} catch (SQLException e) {
-			DatabaseUtil.handleSQLException(e);
+			Database.handleSQLException(e);
 			return false;
 		}
 		int rowCount;
@@ -38,7 +38,7 @@ public class ID3TagToDB {
 		try {
 			rowCount = storeStatement.executeUpdate(command);
 		} catch (SQLException e) {
-			DatabaseUtil.handleSQLException(e);
+			Database.handleSQLException(e);
 			return false;
 		}
 		return true;

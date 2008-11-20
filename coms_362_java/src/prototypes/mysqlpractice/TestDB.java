@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import databaseAccess.DatabaseUtil;
+import databaseAccess.Database;
 
 public class TestDB {
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
@@ -33,7 +33,7 @@ public class TestDB {
 			connection.close();
 
 		} catch (SQLException sqle) {
-			DatabaseUtil.handleSQLException(sqle);
+			Database.handleSQLException(sqle);
 		}
 	}
 }
