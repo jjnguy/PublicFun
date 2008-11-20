@@ -42,7 +42,7 @@ public class Controller implements UploadSong, DatabaseSearch {
 	}
 
 	public boolean insertSongIntoDatabase(SongData song) {
-		return insertSongIntoDatabase(song);
+		return db.insertSongIntoDatabase(song);
 	}
 
 	@Override
