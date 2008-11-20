@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<%
-		String term  = (String)request.getParameter("searchTerm");
+		String term  = (String) request.getParameter("searchTerm");
 		List<SongData> data = Controller.getController().simpleSearch(term);
 		%>
 		<%= term %>

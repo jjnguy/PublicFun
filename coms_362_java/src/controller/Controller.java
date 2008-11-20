@@ -1,11 +1,13 @@
 package controller;
+
 import infoExpert.SongData;
+
+import java.io.File;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 
 import databaseAccess.Database;
-
 
 public class Controller implements UploadSong, DatabaseSearch {
 	public static final String MP3_PATH = "C:/uploads/mp3/";
@@ -15,14 +17,31 @@ public class Controller implements UploadSong, DatabaseSearch {
 	public static final String DB_PW = "root";
 	private Database db;
 
+	static {
+		File existTest = new File(MP3_PATH);
+		if (!existTest.exists()) {
+			boolean created = existTest.mkdirs();
+			if (!created) {
+				// TODO throw new IOException("Could not access the uploads directory!");
+			}
+		}
+		existTest = new File(PIC_PATH);
+		if (!existTest.exists()) {
+			boolean created = existTest.mkdirs();
+			if (!created) {
+				// TODO throw new IOException("Could not access the uploads directory!");
+			}
+		}
+	}
+
 	@Override
 	public String uploadSong(InputStream fileStream) {
 		// TODO Needs to call the appropriate classes to store
 		// the song into a DB and save the file in the correct location
 		return "OOps, this isn't implemented yet";
 	}
-	
-	public boolean insertSongIntoDatabase(SongData song){
+
+	public boolean insertSongIntoDatabase(SongData song) {
 		return insertSongIntoDatabase(song);
 	}
 
@@ -30,11 +49,12 @@ public class Controller implements UploadSong, DatabaseSearch {
 	public List<SongData> simpleSearch(String term) {
 		return db.simpleSearch(term);
 	}
-	
-	public static Controller getController(){
+
+	public static Controller getController() {
 		return new Controller();
 	}
-	private Controller(){
+
+	private Controller() {
 		db = new Database();
 		try {
 			db.startDatabase(DB_URL, DB_USR, DB_PW);
