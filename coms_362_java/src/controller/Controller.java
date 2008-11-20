@@ -35,7 +35,8 @@ public class Controller implements UploadSong, DatabaseSearch {
 	}
 
 	@Override
-	public String uploadSong(InputStream fileStream) {
+	public String uploadSong(InputStream fileStream) 
+	{
 		// TODO Needs to call the appropriate classes to store
 		// the song into a DB and save the file in the correct location
 		return "OOps, this isn't implemented yet";
