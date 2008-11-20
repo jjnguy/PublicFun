@@ -8,7 +8,7 @@
 <%@page import="webViewInterface.UploadSong"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Insert title here</title>
+		<title>Upload Results</title>
 		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
 	</head>
 	<body>
