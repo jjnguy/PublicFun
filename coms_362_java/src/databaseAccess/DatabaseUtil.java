@@ -19,7 +19,7 @@ public class DatabaseUtil {
 	private static final String TABLE_NAME = "songdata";
 	private Connection conn = null;
 	
-	/*Create a new database connection and return true if successful*/
+	/*Create a new database connection and return true if successful, false otherwise.*/
 	public boolean startDatabase(String url, String user, String pass) throws SQLException{
 		try {
 			Class driver = Class.forName("com.mysql.jdbc.Driver");
@@ -32,10 +32,34 @@ public class DatabaseUtil {
 		return true;
 	}
 	
-	public boolean insertSongIntoDatabase(SongData song) throws SQLException{
-		Statement insert = conn.createStatement();
+	/*Attempts to insert a new song into the database and returns true if successful, false otherwise.*/
+	public boolean insertSongIntoDatabase(SongData song){
+		Statement insert;
+		try {
+			insert = conn.createStatement();
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return false;
+		}
 		String query = "INSERT INTO " + TABLE_NAME;
+		
+		query += " (title, album, performers0, performers1, performers2, comments0, comments1, comments2";
+		query += " trackNum, year, encodedBy, composer, fileName, pictureName)";
+		query += "values ("+song.getTitle()+", "+song.getAlbum()+", "+song.getPerformer(0)+", "+song.getPerformer(1);
+		query += ", "+song.getPerformer(2)+", "+song.getComment(0)+", "+song.getComment(1)+", "+song.getComment(2);
+		query += ", "+song.getTrackNum()+", "+song.getYear()+", "+song.getEncodedBy()+", "+song.getComposer();
+		query += ", "+song.getFileName()+", "+song.getPictureName()+");";
+		
+		try {
+			insert.executeUpdate(query);
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return false;
+		}
+		return true;
 	}
+	
+	
 	
 	/**
 	 * Simple method to handle {@link SQLException}s. Loops through generated SQLExceptions and

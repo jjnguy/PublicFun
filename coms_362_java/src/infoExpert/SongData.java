@@ -99,4 +99,12 @@ public class SongData {
 	public void setPerformer(int i, String p){
 		performers[i] = p;
 	}
+
+	public String getComposer() {
+		return composer;
+	}
+
+	public void setComposer(String c) {
+		this.composer = c;
+	}
 }
