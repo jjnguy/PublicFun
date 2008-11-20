@@ -8,11 +8,11 @@ import databaseAccess.Database;
 
 
 public class Controller implements UploadSong, DatabaseSearch {
-	public static final String mp3path = "C:/uploads/mp3/";
-	public static final String picpath = "C:/uploads/pic/";
-	public static final String dburl = "jdbc:mysql://localhost";
-	public static final String dbusr = "root";
-	public static final String dbpw = "root";
+	public static final String MP3_PATH = "C:/uploads/mp3/";
+	public static final String PIC_PATH = "C:/uploads/pic/";
+	public static final String DB_URL = "jdbc:mysql://localhost";
+	public static final String DB_USR = "root";
+	public static final String DB_PW = "root";
 	private Database db;
 
 	@Override
@@ -37,7 +37,7 @@ public class Controller implements UploadSong, DatabaseSearch {
 	private Controller(){
 		db = new Database();
 		try {
-			db.startDatabase(dburl, dbusr, dbpw);
+			db.startDatabase(DB_URL, DB_USR, DB_PW);
 		} catch (SQLException e) {
 			Database.handleSQLException(e);
 		}
