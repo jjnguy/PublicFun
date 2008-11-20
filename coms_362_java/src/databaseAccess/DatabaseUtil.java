@@ -1,18 +1,44 @@
 package databaseAccess;
 
+import infoExpert.SongData;
+
 import java.io.PrintStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
- * A Utility class containing general database tasks.
+ * Main database interface for all database tasks including connecting to the database,
+ * inserting song data, and retrieving songs based on search strings
  * 
  * @author Justin Nelson
  * 
  */
 public class DatabaseUtil {
-
+	private static final String TABLE_NAME = "songdata";
+	private Connection conn = null;
+	
+	/*Create a new database connection and return true if successful*/
+	public boolean startDatabase(String url, String user, String pass) throws SQLException{
+		try {
+			Class driver = Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} 
+		conn = DriverManager.getConnection(url, user, pass);
+		return true;
+	}
+	
+	public boolean insertSongIntoDatabase(SongData song) throws SQLException{
+		Statement insert = conn.createStatement();
+		String query = "INSERT INTO " + TABLE_NAME;
+	}
+	
 	/**
-	 * Simple methd to handle {@link SQLException}s. Loops through generated SQLExceptions and
+	 * Simple method to handle {@link SQLException}s. Loops through generated SQLExceptions and
 	 * prints them the the specified {@link PrintStream}.
 	 * 
 	 * @param sqle

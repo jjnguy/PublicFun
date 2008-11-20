@@ -119,6 +119,7 @@ public class ID3TagToDB {
 				System.err.println("Skipped a tag with ID: " + frame.getFrameID());
 			}
 		}
+		
 		StringBuilder ret = new StringBuilder();
 		ret.append("INSERT INTO " + DB_AND_TABLE_NAME + " ");
 		ret.append(title + ", ");
