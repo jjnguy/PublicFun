@@ -6,7 +6,7 @@
 	font-family: sans-serif;
 }
 
-html, body {
+html,body {
 	height: 100%;
 	background-color: #0582f7;
 	font-family: sans-serif;
@@ -81,7 +81,7 @@ a.button:hover {
 .footer {
 	background-color: black;
 	padding: .4cm;
-	color: white;	
+	color: white;
 }
 
 li {
@@ -98,6 +98,23 @@ table.mainMenuHeaderTable {
 	text-align: left;
 	margin-bottom: 5px;
 	font-weight: bold;
+}
+
+br {
+	margin-bottom: 10px;
+}
+
+input {
+	margin-left: 10px;
+}
+
+form.basicSearch {
+	padding-bottom: 10px;;
+	border-bottom: 2px dotted black;
+}
+
+form.advancedSearch {
+	padding-top: 10px;
 }
 
 .menu {

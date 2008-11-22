@@ -16,16 +16,24 @@
 						<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
 					</td>
 					<td>
-						<h2>Search for Songs!</h2>
+						<h2>Search Your Music!</h2>
 					</td>
 					<td width="35%" ></td>
 				</tr>
 			</table>
 		</div>
 		<div class="center plainText">
-			<form method="get" action="searchresult.jsp" enctype="multipart/form-data" >
-				<input type="text" name="searchTerm" >
-				<input type="submit" value="Search" title="hi">
+			<form class="basicSearch" method="get" action="searchresult.jsp" enctype="multipart/form-data" >
+				Basic Search:  Type a term to do a broad search <br />
+				<input type="text" name="broadSearchTerm" >
+				<input type="submit" value="Search" title="hi" style="margin-left:0">
+			</form>
+			<form class="advancedSearch" method="get" action="searchresult.jsp" enctype="multipart/form-data" >
+				Advanced Search: Search one or More Fields<br />
+				Song Title<input type="text" name="songTitle" /><br />
+				Artist Name<input type="text" name="artistName" /><br />
+				Album Title<input type="text" name="albumTitle" /><br  />
+				<input type="submit" value="Search" title="hi" >
 			</form>
 		</div>
 	</body>

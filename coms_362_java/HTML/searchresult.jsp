@@ -12,9 +12,19 @@
 	</head>
 	<body>
 		<%
-		String term  = (String) request.getParameter("searchTerm");
-		List<SongData> data = Controller.getController().simpleSearch(term);
+		String term  = (String) request.getParameter("broadSearchTerm");
+		String artist = null, title = null, album = null;
+		// if its an advanced search
+		if (term == null){
+			artist = (String) request.getParameter("artistName");
+			title = (String) request.getParameter("songTitle");
+			album = (String) request.getParameter("albumTitle");
+		}
+		// List<SongData> data = Controller.getController().simpleSearch(term);
 		%>
-		<%= term %>
+		Broad Search: <%= term %><br />
+		Title: <%= title %><br />
+		Artist: <%= artist %><br />
+		Album: <%= album %><br />
 	</body>
 </html>

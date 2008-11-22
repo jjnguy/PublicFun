@@ -51,7 +51,7 @@ public class Controller implements UploadSong, DatabaseSearch {
 			return "Error: Song not saved";
 		}
 	}
-
+	
 	public boolean insertSongIntoDatabase(SongData song) {
 		return db.insertSongIntoDatabase(song);
 	}
