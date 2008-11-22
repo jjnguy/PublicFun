@@ -38,11 +38,11 @@
 			</table>
 			<div class="mainMenuContent">
 				<h3>What is Online jTunes?</h3>
-				Online jTunes is exactly what it sounds like.<br>
-				It is a online music library that you can access from anywhere.<br>
+				Online jTunes is exactly what it sounds like.<br class="noPad" />
+				It is a online music library that you can access from anywhere.<br class="noPad" />
 				It allows users to add songs to the online library, sort the songs by many attributes,
 				stream the songs straight from the server, and download the songs to the machine they are using currently.
-				<br><br>
+				<br class="nopad" /><br class="nopad" />
 				<h3>Getting Started</h3>
 				To begin, simply upload some songs to the library.  Then feel free to view, sort, and stream the songs from anywhere.
 			</div>

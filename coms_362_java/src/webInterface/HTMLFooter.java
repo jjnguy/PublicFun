@@ -47,6 +47,7 @@ public class HTMLFooter {
 			else
 				builder.append(".");
 		}
+		builder.append("  Copyright 2008, all rights reserved.");
 		builder.append("</div>");
 		code = builder.toString();
 	}

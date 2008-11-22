@@ -5,7 +5,9 @@
 <html>
 	<head>
 		<title>Upload a file to the server</title>
-		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="/styles/mainstylesheet.css" />
+		<link rel="icon" href="/images/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="/favicon.ico" />
 	</head>
 	<body>
 		<div class="group" >
@@ -29,11 +31,12 @@
 					<br>
 					<input class="button" type="submit" value="Submit" title="Submit File for Upload" style="margin-top: .2cm; margin-bottom: .1cm" >
 				</form>
-				<div class="plainText">
+				<form class="plainText" action="uploadresult.jsp" method="get" enctype="multipart/form-data">
 						OR ...
 						Upload an iTunes playlist.
-					<input type="submit" class="button" title="Find iTunes playlists">
-				</div>
+					<input type="submit" class="button" value="Find iTunes playlists" />
+					<input type="hidden" value="iTunes" />
+				</form>
 			</div>
 		</div>
 		<%= HTMLFooter.getFooter() %>

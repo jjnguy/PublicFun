@@ -14,17 +14,17 @@
 	</head>
 	<body>
 		<%
+		String message = null;
+		try {
 			DiskFileItemFactory f = new DiskFileItemFactory();
-				ServletFileUpload serv = new ServletFileUpload(f);
-				FileItem file = (FileItem)serv.parseRequest(request).get(0);
-				// TODO instance
-				UploadSong up = Controller.getController();
-				String message = null;
-				try {
+			ServletFileUpload serv = new ServletFileUpload(f);
+			FileItem file = (FileItem)serv.parseRequest(request).get(0);
+			// TODO instance
+			UploadSong up = Controller.getController();
 			message = up.uploadSong(file.getInputStream());
-				} catch (NullPointerException e) {
+		} catch (NullPointerException e) {
 			message = "There was an error uploading your song.  Sorry, try again later.";
-				}
+		}
 		%>
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >

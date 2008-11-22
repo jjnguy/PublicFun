@@ -4,7 +4,8 @@
 
 <%@page import="java.util.List"%>
 <%@page import="infoExpert.SongData"%>
-<%@page import="controller.Controller"%><html>
+<%@page import="controller.Controller"%>
+<%@page import="webInterface.HTMLFooter"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
@@ -26,5 +27,7 @@
 		Title: <%= title %><br />
 		Artist: <%= artist %><br />
 		Album: <%= album %><br />
+		Sort: <%= (String) request.getParameter("sort") %>
+		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>

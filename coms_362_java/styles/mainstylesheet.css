@@ -40,7 +40,7 @@ a.button {
 
 input.formButton {
 	background-color: orange;
-	padding: .2cm;
+	padding: 4px;
 	color: black;
 	font-family: sans-serif;
 	text-decoration: none;
@@ -52,8 +52,8 @@ input.formButton {
 
 input.button {
 	background-color: orange;
-	margin: .2cm;
-	padding: .2cm;
+	margin: 4px;
+	padding: 4px;
 	color: black;
 	font-family: sans-serif;
 	text-decoration: none;
@@ -104,6 +104,10 @@ br {
 	margin-bottom: 10px;
 }
 
+br.noPad {
+	margin-bottom: 0px;
+}
+
 input {
 	margin-left: 10px;
 }
@@ -115,6 +119,13 @@ form.basicSearch {
 
 form.advancedSearch {
 	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+img.picLink {
+	padding:0px;
+	margin: 0px;
+	border: 0px dotted black;
 }
 
 .menu {
