@@ -5,9 +5,9 @@
 <html>
 	<head>
 		<title>Upload a file to the server</title>
-		<link rel="stylesheet" type="text/css" href="/styles/mainstylesheet.css" />
-		<link rel="icon" href="/images/favicon.png" type="image/png" />
-		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
+		<link rel="icon" href="../images/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="../favicon.ico" />
 	</head>
 	<body>
 		<div class="group" >
@@ -16,7 +16,9 @@
 					<tr>
 						<td width="15%" ></td>
 						<td style="padding: 0">
-							<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
+							<a href="mainMenu.jsp">
+								<img class="picLink" src="../images/iTunesLogo.PNG" title="Online-iTunes Logo" />
+							</a>
 						</td>
 						<td>
 							<h2>Find an MP3 file that you would like to upload to our servers.</h2>
@@ -31,12 +33,12 @@
 					<br>
 					<input class="button" type="submit" value="Submit" title="Submit File for Upload" style="margin-top: .2cm; margin-bottom: .1cm" >
 				</form>
-				<form class="plainText" action="uploadresult.jsp" method="get" enctype="multipart/form-data">
+				<!--<form class="plainText" action="uploadresult.jsp" method="get" enctype="multipart/form-data">
 						OR ...
 						Upload an iTunes playlist.
 					<input type="submit" class="button" value="Find iTunes playlists" />
 					<input type="hidden" value="iTunes" />
-				</form>
+				</form>-->
 			</div>
 		</div>
 		<%= HTMLFooter.getFooter() %>

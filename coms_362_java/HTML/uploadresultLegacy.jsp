@@ -12,7 +12,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Online jTunes - Upload Results</title>
-		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
+		<link rel="icon" href="../images/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="../favicon.ico" />
 	</head>
 	<body>
 		<%
@@ -27,7 +29,9 @@
 				<tr>
 					<td width="36%" ></td>
 					<td style="padding: 0">
-						<img src="images/iTunesLogo.PNG" title="Online-iTunes Logo">
+						<a href="mainMenu.jsp">
+						<img class="picLink" src="../images/iTunesLogo.PNG" title="Online-iTunes Logo" />
+						</a>
 					</td>
 					<td>
 						<h1>Song Data</h1>

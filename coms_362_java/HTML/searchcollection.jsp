@@ -6,7 +6,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>jTunes - Search Song Collection</title>
-		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
+		<link rel="icon" href="../images/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="../favicon.ico" />
 	</head>
 	<body>
 		<div class="center plainText" title="Hi, I'm tool-tip">
@@ -15,7 +17,7 @@
 					<td width="35%" ></td>
 					<td style="padding: 0">
 						<a href="mainMenu.jsp">
-						<img class="picLink" src="images/iTunesLogo.PNG" title="Online-iTunes Logo" />
+							<img class="picLink" src="../images/iTunesLogo.PNG" title="Online-iTunes Logo" />
 						</a>
 					</td>
 					<td>

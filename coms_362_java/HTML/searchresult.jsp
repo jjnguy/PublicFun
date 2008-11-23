@@ -5,10 +5,13 @@
 <%@page import="java.util.List"%>
 <%@page import="infoExpert.SongData"%>
 <%@page import="controller.Controller"%>
-<%@page import="webInterface.HTMLFooter"%><html>
+<%@page import="webInterface.HTMLFooter"%>
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link rel="stylesheet" type="text/css" href="styles/mainstylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
+		<link rel="icon" href="../images/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="../favicon.ico" />
 		<title>jTunes - Search Results</title>
 	</head>
 	<body>
