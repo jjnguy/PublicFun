@@ -46,7 +46,6 @@ public class Controller implements UploadSong, DatabaseSearch {
 			fileLocation = SaveSong.SaveASong(fileStream);
 			return "Saved to: " + fileLocation;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "Error: Song not saved";
 		}
