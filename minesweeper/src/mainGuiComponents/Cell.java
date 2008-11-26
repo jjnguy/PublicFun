@@ -1,9 +1,11 @@
 package mainGuiComponents;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -96,9 +98,9 @@ public class Cell extends JPanel {
 				if (surroundedBy == 3)
 					g.setColor(Color.RED);
 				if (surroundedBy == 4)
-					g.setColor(new Color(128,0,0));
+					g.setColor(new Color(128, 0, 0));
 				if (surroundedBy == 5)
-					g.setColor(new Color(117,7,120));
+					g.setColor(new Color(117, 7, 120));
 				g.setFont(new Font("Ariel", Font.BOLD, 16));
 				g.drawString(surroundedBy + "", 5, CELL_SIZE - 4);
 				g.setColor(Color.BLACK);
@@ -118,7 +120,12 @@ public class Cell extends JPanel {
 					return;
 				pressed = true;
 				stillInCell = true;
-				status = Cell.IMPRESSED;
+				if (MouseEvent.getMouseModifiersText(e.getModifiers()).equals(
+						"Alt+Ctrl+Shift+Button1+Button2")) {
+					status = Cell.UNCOVERED;
+				} else {
+					status = Cell.IMPRESSED;
+				}
 				repaint();
 			} else {
 				if (status == FLAGGED) {
