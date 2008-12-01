@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.Writer;
 import java.util.Scanner;
 
@@ -20,6 +21,11 @@ public class SaveSong {
 		OutputStream f_song;
 		int fileInt;
 		File intFile = new File(Controller.MP3_PATH + FILE_NAME);
+		if (!intFile.exists()) {
+			PrintStream out = new PrintStream(intFile);
+			out.print(0);
+			out.close();
+		}
 		Scanner fin = new Scanner(intFile);
 		fileInt = fin.nextInt();
 		fin.close();
