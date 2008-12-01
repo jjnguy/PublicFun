@@ -61,8 +61,8 @@ public class GravitySphere implements Dragable, Collidable {
 
 	private void checkForBounce() {
 		if (pos_y < DIAMETER / 2 && vel_y < 0) {
-			vel_y = -vel_y * BOUNCE_FACTOR;
 			pos_y = DIAMETER / 2;
+			vel_y = -vel_y * BOUNCE_FACTOR;
 		}
 	}
 

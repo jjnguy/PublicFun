@@ -40,6 +40,8 @@ public class GravityPane extends JPanel {
 	public void advanceFrame() {
 		for (GravityObject obj : objects) {
 			obj.fall(INTERVAL);
+			log.println(String.format("Y Pos: %8f  Y Vel: %8f", obj.getPosition_Y(), obj
+					.getVelocity_Y()));
 		}
 		repaint();
 	}
