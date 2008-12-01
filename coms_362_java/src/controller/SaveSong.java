@@ -14,19 +14,18 @@ import java.util.Scanner;
 import util.Util;
 
 public class SaveSong {
-	private static final String SONG_DIRECTORY = "c:/SONGS/";
 	private static final String FILE_NAME = "file_number.txt";
 
 	public static String SaveASong(InputStream fileStream) throws IOException {
 		OutputStream f_song;
 		int fileInt;
-		File intFile = new File(SONG_DIRECTORY + FILE_NAME);
+		File intFile = new File(Controller.MP3_PATH + FILE_NAME);
 		Scanner fin = new Scanner(intFile);
 		fileInt = fin.nextInt();
 		fin.close();
-		File song = new File(SONG_DIRECTORY + fileInt + ".mp3");
+		File song = new File(Controller.MP3_PATH + fileInt + ".mp3");
 
-		if (!song.createNewFile()){
+		if (!song.createNewFile()) {
 			return "Could not create song, location already exists, this is a bug";
 		}
 
@@ -48,6 +47,6 @@ public class SaveSong {
 		Writer output = new BufferedWriter(new FileWriter(intFile));
 		output.write((fileInt + 1) + "");
 		output.close();
-		return (SONG_DIRECTORY + fileInt + ".mp3");
+		return (Controller.MP3_PATH + fileInt + ".mp3");
 	}
 }
