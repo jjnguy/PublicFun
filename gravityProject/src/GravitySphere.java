@@ -1,13 +1,14 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
-public class GravitySphere implements Dragable {
-	
+public class GravitySphere implements Dragable, Collidable {
+
 	private int DIAMETER = 50;
-	private double BOUNCE_FACTOR = .8;
+	private double BOUNCE_FACTOR = .6;
 	private Color color = Color.RED;
 
 	private boolean held;
@@ -97,7 +98,12 @@ public class GravitySphere implements Dragable {
 		g.setColor(color);
 		g.fillOval((int) pos_x - (DIAMETER / 2), (int) (gravPaneHeight - pos_y)
 				- (DIAMETER / 2), DIAMETER, DIAMETER);
+		g.setStroke(new BasicStroke(2));
+		g.setColor(Color.BLACK);
+		g.drawOval((int) pos_x - (DIAMETER / 2), (int) (gravPaneHeight - pos_y)
+				- (DIAMETER / 2), DIAMETER, DIAMETER);
 
+		g.setStroke(originalStroke);
 		g.setColor(originalColor);
 	}
 
@@ -126,6 +132,24 @@ public class GravitySphere implements Dragable {
 	@Override
 	public boolean isHeld() {
 		return held;
+	}
+
+	@Override
+	public void collide(Collidable other) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateVelocity_X(double newVel_x) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateVelocity_Y(double newVel_y) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

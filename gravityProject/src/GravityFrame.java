@@ -30,9 +30,9 @@ public class GravityFrame extends JFrame {
 		pack();
 		int hiehgt = gravPane.getHeight();
 		gravPane.addObject(new GravitySphere(200, hiehgt - 30));
-		gravPane.addObject(new GravitySphere(90, 0, 120, 5, .6, 60, Color.BLUE));
-		gravPane.addObject(new GravitySphere(80, 0, 120, 5, 1, 40, Color.GREEN));
-		gravPane.addObject(new GravitySphere(100, 0, 120, 5));
+		gravPane.addObject(new GravitySphere(90, 0, 120, 0, .6, 60, Color.BLUE));
+		gravPane.addObject(new GravitySphere(80, 0, 120, 0, .8, 40, Color.GREEN));
+		gravPane.addObject(new GravitySphere(100, 0, 120, 1));
 		gravPane.addObject(new GravitySphere(300, hiehgt + 1000));
 		running = false;
 		t = new Timer();

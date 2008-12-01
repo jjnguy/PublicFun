@@ -22,6 +22,7 @@ public class GravityPane extends JPanel {
 	private final Color BGROUND_COLOR = Color.WHITE;
 
 	private List<GravityObject> objects;
+	private Wall floor;
 
 	private PrintStream log;
 
@@ -31,6 +32,7 @@ public class GravityPane extends JPanel {
 		setBackground(BGROUND_COLOR);
 		setPreferredSize(new Dimension(500, 500));
 		objects = new ArrayList<GravityObject>();
+		floor = new Wall(new Point(00, 00), 0, false);
 		addMouseListener(clickListener);
 		addMouseMotionListener(mouseMoveListener);
 	}
@@ -38,11 +40,6 @@ public class GravityPane extends JPanel {
 	public void advanceFrame() {
 		for (GravityObject obj : objects) {
 			obj.fall(INTERVAL);
-			/*
-			 * log.println(String.format("Position: %8f, %8f   Velocity: %8f, %8f" ,
-			 * obj.getPosition_X(), obj.getPosition_Y(), obj .getVelocity_X(),
-			 * obj.getVelocity_Y()));
-			 */
 		}
 		repaint();
 	}
@@ -53,6 +50,7 @@ public class GravityPane extends JPanel {
 		for (GravityObject obj : objects) {
 			obj.draw((Graphics2D) g, getHeight());
 		}
+		floor.draw((Graphics2D) g, getHeight(), getWidth());
 	}
 
 	public void addObject(GravityObject obj) {
@@ -66,11 +64,14 @@ public class GravityPane extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			Point xFormedPoint = new Point(e.getX(), e.getComponent().getHeight() - e.getY());
-			for (GravityObject obj : objects) {
+			// going backwards here so that the objects on top will be the ones that are
+			// grabbed
+			for (int i = objects.size() - 1; i >= 0; i--) {
+				GravityObject obj = objects.get(i);
 				if (obj instanceof Dragable && ((Dragable) obj).containsPoint(xFormedPoint)) {
-					System.out.println("Grabbed something");
 					Dragable objD = (Dragable) obj;
 					objD.grabedOnto(e);
+					break;
 				}
 			}
 		}
@@ -93,7 +94,6 @@ public class GravityPane extends JPanel {
 			for (GravityObject obj : objects) {
 				if (obj instanceof Dragable && ((Dragable) obj).containsPoint(xFormedPoint)
 						&& ((Dragable) obj).isHeld()) {
-					System.out.println("Grabbed something");
 					Dragable objD = (Dragable) obj;
 					objD.grabedOnto(e);
 				}
@@ -102,8 +102,6 @@ public class GravityPane extends JPanel {
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 	};
 }
