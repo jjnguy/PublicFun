@@ -37,11 +37,9 @@ public class Controller implements UploadSong, DatabaseSearch {
 	}
 
 	@Override
-	public String uploadSong(InputStream fileStream) 
-	{
+	public String uploadSong(InputStream fileStream) {
 		String fileLocation;
 		try {
-			
 			// TODO Needs to call the appropriate classes to store
 			// the song into a DB
 			fileLocation = SaveSong.SaveASong(fileStream);
