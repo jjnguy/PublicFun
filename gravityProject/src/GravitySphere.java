@@ -1,10 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
-public class GravitySphere implements GravityObject {
+public class GravitySphere implements GravityObject, Dragable {
 	private int DIAMETER = 50;
 	private double BOUNCE_FACTOR = .8;
 	private Color color = Color.RED;
@@ -45,21 +46,20 @@ public class GravitySphere implements GravityObject {
 	 */
 	@Override
 	public void fall(long miliseconds) {
-		if (!held) {
-			double seconds = miliseconds / 1000.0;
-			pos_y = pos_y + vel_y * seconds + .5
-					* (GravityObject.GRAVITATIONAL_CONSTANT) * seconds
-					* seconds;
+		if (held)
+			return;
+		double seconds = miliseconds / 1000.0;
+		pos_y = pos_y + vel_y * seconds + .5
+				* (GravityObject.GRAVITATIONAL_CONSTANT) * seconds * seconds;
 
-			pos_x = pos_x + vel_x * seconds;
+		pos_x = pos_x + vel_x * seconds;
 
-			vel_y = vel_y + GRAVITATIONAL_CONSTANT * seconds;
-			checkForBounce();
-		}
+		vel_y = vel_y + GRAVITATIONAL_CONSTANT * seconds;
+		checkForBounce();
 	}
 
 	private void checkForBounce() {
-		if (pos_y < DIAMETER / 2 && vel_y < 0) {
+		if (!held && pos_y < DIAMETER / 2 && vel_y < 0) {
 			vel_y = -vel_y * BOUNCE_FACTOR;
 			pos_y = DIAMETER / 2;
 		}
@@ -99,6 +99,28 @@ public class GravitySphere implements GravityObject {
 				- (DIAMETER / 2), DIAMETER, DIAMETER);
 
 		g.setColor(originalColor);
+	}
+
+	@Override
+	public void grabedOnto(MouseEvent e) {
+		held = true;
+		pos_x = e.getX();
+		pos_y = e.getComponent().getHeight() - e.getY();
+		vel_x = vel_y = 0;
+	}
+
+	@Override
+	public void letGo() {
+		held = false;
+	}
+
+	@Override
+	public boolean containsPoint(Point p) {
+		// basically, if the point is farther than the
+		// radius away, it is not contained
+		double distance = Math.sqrt((p.x - pos_x) * (p.x - pos_x)
+				+ (p.y - pos_y) * (p.y - pos_y));
+		return distance <= DIAMETER / 2;
 	}
 
 }

@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 public class GravityFrame extends JFrame {
 
 	private GravityPane gravPane;
-	JButton advanceButton;
+	private JButton advanceButton;
 	private boolean running;
 	private Timer t;
 

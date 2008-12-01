@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 public interface GravityObject {
 	// gravity is sped up
@@ -22,4 +23,6 @@ public interface GravityObject {
 	public void fall(long miliseconds);
 
 	public void draw(Graphics2D g, int gravPaneHeight);
+	
+	public boolean containsPoint(Point p);
 }
