@@ -1,7 +1,8 @@
 import java.awt.Graphics2D;
 
 public interface GravityObject {
-	public static final double GRAVITATIONAL_CONSTANT = -9.80665; // 9.81
+	// gravity is sped up
+	public static final double GRAVITATIONAL_CONSTANT = -15.80665; // 9.81
 
 	public double getPosition_Y();
 
@@ -18,7 +19,7 @@ public interface GravityObject {
 	 * @param seconds
 	 *            the length of the fall in seconds
 	 */
-	public void fall(double seconds);
+	public void fall(long miliseconds);
 
-	public void draw(Graphics2D g);
+	public void draw(Graphics2D g, int gravPaneHeight);
 }
