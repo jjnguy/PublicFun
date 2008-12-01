@@ -7,6 +7,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +17,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class GravityPane extends JPanel {
-	private long INTERVAL = 150;
+	private long INTERVAL = 100;
 	private final Color BGROUND_COLOR = Color.WHITE;
 
 	private List<GravityObject> objects;
 
-	public GravityPane() {
+	private PrintStream log;
+
+	public GravityPane() throws FileNotFoundException {
 		super();
+		log = new PrintStream(new File("PhysLog"));
 		setBackground(BGROUND_COLOR);
 		setPreferredSize(new Dimension(500, 500));
 		objects = new ArrayList<GravityObject>();
@@ -29,6 +35,9 @@ public class GravityPane extends JPanel {
 	public void advanceFrame() {
 		for (GravityObject obj : objects) {
 			obj.fall(INTERVAL);
+			/*log.println(String.format("Position: %8f, %8f   Velocity: %8f, %8f",
+					obj.getPosition_X(), obj.getPosition_Y(), obj
+							.getVelocity_X(), obj.getVelocity_Y()));*/
 		}
 		repaint();
 	}

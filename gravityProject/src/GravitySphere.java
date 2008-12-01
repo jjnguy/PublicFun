@@ -5,8 +5,9 @@ import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
 public class GravitySphere implements GravityObject {
-	private final int DIAMETER = 50;
-	private final Color color = Color.RED;
+	private int DIAMETER = 50;
+	private double BOUNCE_FACTOR = .8;
+	private Color color = Color.RED;
 
 	private boolean held;
 
@@ -31,6 +32,14 @@ public class GravitySphere implements GravityObject {
 		vel_x = xvel;
 	}
 
+	public GravitySphere(double xpos, double ypos, double yvel, double xvel,
+			double bounceFactor, int diameter, Color color) {
+		this(xpos, ypos, yvel, xvel);
+		DIAMETER = diameter;
+		BOUNCE_FACTOR = bounceFactor;
+		this.color = color;
+	}
+
 	/**
 	 * The shorter fall time the more accurate the calculation
 	 */
@@ -38,19 +47,22 @@ public class GravitySphere implements GravityObject {
 	public void fall(long miliseconds) {
 		if (!held) {
 			double seconds = miliseconds / 1000.0;
-			pos_y = pos_y + vel_y * seconds + .5 * (GravityObject.GRAVITATIONAL_CONSTANT)
-					* seconds * seconds;
+			pos_y = pos_y + vel_y * seconds + .5
+					* (GravityObject.GRAVITATIONAL_CONSTANT) * seconds
+					* seconds;
 
 			pos_x = pos_x + vel_x * seconds;
 
 			vel_y = vel_y + GRAVITATIONAL_CONSTANT * seconds;
-			checkForNeg();
+			checkForBounce();
 		}
 	}
 
-	private void checkForNeg() {
-		pos_x = Math.max(pos_x, 0);
-		pos_y = Math.max(pos_y, 0);
+	private void checkForBounce() {
+		if (pos_y < DIAMETER / 2 && vel_y < 0) {
+			vel_y = -vel_y * BOUNCE_FACTOR;
+			pos_y = DIAMETER / 2;
+		}
 	}
 
 	@Override
@@ -59,7 +71,7 @@ public class GravitySphere implements GravityObject {
 	}
 
 	@Override
-	public double getVolicity_X() {
+	public double getVelocity_X() {
 		return vel_x;
 	}
 

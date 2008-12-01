@@ -10,7 +10,7 @@ public interface GravityObject {
 
 	public double getVelocity_Y();
 
-	public double getVolicity_X();
+	public double getVelocity_X();
 
 	/**
 	 * Falling will update the objects velocity and position based on it's acceleration due to
