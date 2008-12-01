@@ -1,11 +1,11 @@
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
-public class GravitySphere implements GravityObject, Dragable {
+public class GravitySphere implements Dragable {
+	
 	private int DIAMETER = 50;
 	private double BOUNCE_FACTOR = .8;
 	private Color color = Color.RED;
@@ -49,8 +49,8 @@ public class GravitySphere implements GravityObject, Dragable {
 		if (held)
 			return;
 		double seconds = miliseconds / 1000.0;
-		pos_y = pos_y + vel_y * seconds + .5
-				* (GravityObject.GRAVITATIONAL_CONSTANT) * seconds * seconds;
+		pos_y = pos_y + vel_y * seconds + .5 * (GravityObject.GRAVITATIONAL_CONSTANT)
+				* seconds * seconds;
 
 		pos_x = pos_x + vel_x * seconds;
 
@@ -118,9 +118,14 @@ public class GravitySphere implements GravityObject, Dragable {
 	public boolean containsPoint(Point p) {
 		// basically, if the point is farther than the
 		// radius away, it is not contained
-		double distance = Math.sqrt((p.x - pos_x) * (p.x - pos_x)
-				+ (p.y - pos_y) * (p.y - pos_y));
+		double distance = Math.sqrt((p.x - pos_x) * (p.x - pos_x) + (p.y - pos_y)
+				* (p.y - pos_y));
 		return distance <= DIAMETER / 2;
+	}
+
+	@Override
+	public boolean isHeld() {
+		return held;
 	}
 
 }

@@ -24,5 +24,4 @@ public interface GravityObject {
 
 	public void draw(Graphics2D g, int gravPaneHeight);
 	
-	public boolean containsPoint(Point p);
 }

@@ -39,8 +39,8 @@ public class GravityPane extends JPanel {
 		for (GravityObject obj : objects) {
 			obj.fall(INTERVAL);
 			/*
-			 * log.println(String.format("Position: %8f, %8f   Velocity: %8f, %8f"
-			 * , obj.getPosition_X(), obj.getPosition_Y(), obj .getVelocity_X(),
+			 * log.println(String.format("Position: %8f, %8f   Velocity: %8f, %8f" ,
+			 * obj.getPosition_X(), obj.getPosition_Y(), obj .getVelocity_X(),
 			 * obj.getVelocity_Y()));
 			 */
 		}
@@ -65,11 +65,9 @@ public class GravityPane extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			Point xFormedPoint = new Point(e.getX(), e.getComponent()
-					.getHeight()
-					- e.getY());
+			Point xFormedPoint = new Point(e.getX(), e.getComponent().getHeight() - e.getY());
 			for (GravityObject obj : objects) {
-				if (obj instanceof Dragable && obj.containsPoint(xFormedPoint)) {
+				if (obj instanceof Dragable && ((Dragable)obj).containsPoint(xFormedPoint)) {
 					System.out.println("Grabbed something");
 					Dragable objD = (Dragable) obj;
 					objD.grabedOnto(e);
@@ -91,11 +89,9 @@ public class GravityPane extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			Point xFormedPoint = new Point(e.getX(), e.getComponent()
-					.getHeight()
-					- e.getY());
+			Point xFormedPoint = new Point(e.getX(), e.getComponent().getHeight() - e.getY());
 			for (GravityObject obj : objects) {
-				if (obj instanceof Dragable && obj.containsPoint(xFormedPoint)) {
+				if (obj instanceof Dragable && ((Dragable) obj).containsPoint(xFormedPoint)  && ((Dragable) obj).isHeld()) {
 					System.out.println("Grabbed something");
 					Dragable objD = (Dragable) obj;
 					objD.grabedOnto(e);
