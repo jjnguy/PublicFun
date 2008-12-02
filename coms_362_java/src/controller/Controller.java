@@ -1,5 +1,6 @@
 package controller;
 
+import id3TagStuff.ID3v2_XTag;
 import infoExpert.SongData;
 
 import java.io.File;
@@ -16,22 +17,16 @@ public class Controller implements UploadSong, DatabaseSearch {
 	public static final String DB_URL = "jdbc:mysql://65.110.247.189";
 	public static final String DB_USR = "root";
 	public static final String DB_PW = "hotdog";
-	private static Database db;
+	private Database db;
 
 	static {
 		File existTest = new File(MP3_PATH);
 		if (!existTest.exists()) {
-			boolean created = existTest.mkdirs();
-			if (!created) {
-				// TODO throw new IOException("Could not access the uploads directory!");
-			}
+			existTest.mkdirs();
 		}
 		existTest = new File(PIC_PATH);
 		if (!existTest.exists()) {
-			boolean created = existTest.mkdirs();
-			if (!created) {
-				// TODO throw new IOException("Could not access the uploads directory!");
-			}
+			existTest.mkdirs();
 		}
 	}
 
@@ -39,9 +34,14 @@ public class Controller implements UploadSong, DatabaseSearch {
 	public String uploadSong(InputStream fileStream) {
 		String fileLocation;
 		try {
-			// TODO Needs to call the appropriate classes to store
-			// the song into a DB
 			fileLocation = SaveSong.SaveASong(fileStream);
+			
+			/*Create SongData class from the ID3 tag and insert it into the DB*/
+			ID3v2_XTag newTag = new ID3v2_XTag(new File(fileLocation));
+			SongData sd = createSongData.tagToSongData(newTag);
+			sd.setFileName(fileLocation);
+			insertSongIntoDatabase(sd);
+			
 			return "Saved to: " + fileLocation;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class Controller implements UploadSong, DatabaseSearch {
 		}
 	}
 	
-	public static boolean insertSongIntoDatabase(SongData song) {
+	public boolean insertSongIntoDatabase(SongData song) {
 		return db.insertSongIntoDatabase(song);
 	}
 
@@ -75,26 +75,6 @@ public class Controller implements UploadSong, DatabaseSearch {
 	public List<SongData> advancedSearch(String artist, String title, String album,
 			String composer, String year, boolean AND) {
 		return db.advancedSearch(artist, title, album, AND);
-	}
-	
-	//TODO::REMOVE - testing db access
-	
-	//TODO::CHANGED INSERTSONGINTODATABASE AND DB VARIABLE TO STATIC, CHANGE BACK..
-	public static void main(String args[]){
-		String perfs[] = {"perf1", "perf2", "perf2"};
-		String comms[] = {"comm1", "comm2", "comm3"};
-		db = new Database();
-		try {
-			db.startDatabase(DB_URL, DB_USR, DB_PW);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//SongData test = new SongData("title2", "album5", perfs, comms, 
-		//		"12", "2005", "encoded", "composer", "file.mp3", "picture.jpg");
-		
-		//insertSongIntoDatabase(test);
-		db.advancedSearch(null, "title5", "artist5", true);
 	}
 	
 }
