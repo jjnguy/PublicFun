@@ -19,7 +19,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import util.Util;
+import controller.Util;
+
 
 /**
  * This class is used to manage the upload of an MP3 file in a JSP invironment.

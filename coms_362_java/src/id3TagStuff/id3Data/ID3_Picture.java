@@ -9,7 +9,8 @@ import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
-import util.Util;
+import controller.Util;
+
 
 public class ID3_Picture implements ID3v2_XFrameData {
 

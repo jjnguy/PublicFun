@@ -12,7 +12,8 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.Util;
+import controller.Util;
+
 
 /**
  * An ID3v2_XTag represents an entire ID3 tag. It can be artifically created from a fake mp3

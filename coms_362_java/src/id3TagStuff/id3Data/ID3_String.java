@@ -1,6 +1,6 @@
 package id3TagStuff.id3Data;
 
-import util.Util;
+import controller.Util;
 
 public class ID3_String implements ID3v2_XFrameData {
 

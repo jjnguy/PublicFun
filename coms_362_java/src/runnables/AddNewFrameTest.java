@@ -3,7 +3,8 @@ package runnables;
 import java.io.File;
 import java.io.IOException;
 
-import util.Util;
+import controller.Util;
+
 
 import id3TagStuff.ID3v2_XTag;
 import id3TagStuff.frames.ID3v2_XFrame;

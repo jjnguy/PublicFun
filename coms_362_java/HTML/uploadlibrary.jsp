@@ -9,7 +9,9 @@
 <%@page import="java.io.File"%>
 <%@page import="java.io.FileOutputStream"%>
 <%@page import="java.util.List"%>
-<%@page import="controller.SaveSong"%><html>
+<%@page import="controller.SaveSong"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItem"%>
+<%@page import="controller.Controller"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Insert title here</title>
@@ -18,12 +20,12 @@
 		<%
 		DiskFileItemFactory f = new DiskFileItemFactory();
 		ServletFileUpload serv = new ServletFileUpload(f);
-		FileItem file = (FileItem)serv.parseRequest(request).get(0);
+		FileItem file = new DiskFileItem("iTunes", null, true, 
+				request.getParameter("iTunes"), 10000, new File(Controller.MP3_PATH));
 		File fileF = new File("C:/hotcrossbunns");
 		SaveSong.copyStream(file.getInputStream(), new FileOutputStream(fileF));
 		ITunesLibFile lib = new ITunesLibFile(fileF);
 		List<File> allFiles = lib.getListOfFiles("Library");
-		
 		%>
 		<%
 		for(File fil: allFiles) { 

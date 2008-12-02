@@ -2,7 +2,8 @@ package id3TagStuff.id3Data;
 
 import java.util.Arrays;
 
-import util.Util;
+import controller.Util;
+
 
 public class ID3_Comment implements ID3v2_XFrameData {
 	private String language, comment;

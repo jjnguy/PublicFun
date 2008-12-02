@@ -2,7 +2,8 @@ package id3TagStuff;
 
 import java.util.Arrays;
 
-import util.Util;
+import controller.Util;
+
 
 /**
  * A ID3v2_XTagHeader represents the first few (10) bytes in an ID3 tag.

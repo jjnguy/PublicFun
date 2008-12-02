@@ -24,13 +24,10 @@
 			title = (String) request.getParameter("songTitle");
 			album = (String) request.getParameter("albumTitle");
 		}
-		// List<SongData> data = Controller.getController().simpleSearch(term);
+		List<SongData> data = Controller.getController().simpleSearch(term);
 		%>
 		Broad Search: <%= term %><br />
-		Title: <%= title %><br />
-		Artist: <%= artist %><br />
-		Album: <%= album %><br />
-		Sort: <%= (String) request.getParameter("sort") %>
+		<%= data.get(0).getTitle() %>
 		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
