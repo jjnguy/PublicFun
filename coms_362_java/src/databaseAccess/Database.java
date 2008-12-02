@@ -82,7 +82,7 @@ public class Database {
 	}
 	
 	/*Take in a search string and query all database fields for the string. Used also to simply return everything
-	 * as in "View Music Collection" link for instance.*/
+	 * as in "View Music Collection" link for instance*/
 	public List<SongData> simpleSearch(String searchString){
 		Statement q = null;
 		ResultSet rs = null;
