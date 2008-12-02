@@ -19,7 +19,7 @@ import java.util.List;
  * 
  */
 public class Database {
-	private static final String TABLE_NAME = "songdata";
+	private static final String TABLE_NAME = "mp3table";
 	private Connection conn = null;
 	
 	/*Create a new database connection and return true if successful, false otherwise.*/
@@ -32,6 +32,9 @@ public class Database {
 			return false;
 		} 
 		conn = DriverManager.getConnection(url, user, pass);
+		
+		Statement use = conn.createStatement();
+		use.execute("USE mp3db;");
 		return true;
 	}
 	
@@ -54,12 +57,15 @@ public class Database {
 		}
 		String query = "INSERT INTO " + TABLE_NAME;
 		
-		query += " (title, album, performers0, performers1, performers2, comments0, comments1, comments2";
-		query += " trackNum, year, encodedBy, composer, fileName, pictureName)";
-		query += "values ("+song.getTitle()+", "+song.getAlbum()+", "+song.getPerformer(0)+", "+song.getPerformer(1);
-		query += ", "+song.getPerformer(2)+", "+song.getComment(0)+", "+song.getComment(1)+", "+song.getComment(2);
-		query += ", "+song.getTrackNum()+", "+song.getYear()+", "+song.getEncodedBy()+", "+song.getComposer();
-		query += ", "+song.getFileName()+", "+song.getPictureName()+");";
+		query += " (title, album, performers0, performers1, performers2, comments0, comments1, comments2,";
+		query += " trackNum, pubYear, encodedBy, composer, fileName, pictureName)";
+		query += " VALUES ("+ "\'"+song.getTitle()+"\'" +", "+"\'"+song.getAlbum()+"\'" +", "+
+		"\'"+song.getPerformer(0)+"\'"+", "+"\'"+song.getPerformer(1)+"\'";
+		query += ", "+"\'"+song.getPerformer(2)+"\'" +", "+"\'"+song.getComment(0)+"\'"+", "+
+		"\'"+song.getComment(1)+"\'"+", "+"\'"+song.getComment(2)+"\'";
+		query += ", "+"\'"+song.getTrackNum()+"\'"+", "+"\'"+song.getYear()+"\'"+", "+"\'"+
+		song.getEncodedBy()+"\'"+", "+"\'"+song.getComposer()+"\'";
+		query += ", "+"\'"+song.getFileName()+"\'"+", "+"\'"+song.getPictureName()+"\'"+");";
 		
 		try {
 			insert.executeUpdate(query);
@@ -89,10 +95,10 @@ public class Database {
 		}
 		
 		/*Form Query*/
-		String query = "SELECT * FROM " + TABLE_NAME + "s ";
+		String query = "USE mp3db; SELECT * FROM " + TABLE_NAME + "s ";
 		query += "WHERE s.title LIKE %" + searchString + "% OR "; 
 		query += "s.album LIKE %" + searchString + "% OR ";
-		query += "s.year LIKE %" + searchString + "% OR ";
+		query += "s.pubYear LIKE %" + searchString + "% OR ";
 		query += "s.composer LIKE %" + searchString + "% OR ";
 		query += "s.artist LIKE %" + searchString + "%;";
 		
@@ -112,7 +118,7 @@ public class Database {
 	 * passed in as true if the user wants to check them.  Boolean and specifies if the searches are combined using
 	 * AND or OR*/
 	public List<SongData> advancedSearch(String artist, String title,
-			String album, String composer, String year, boolean AND){
+			String album, String composer, String pubYear, boolean AND){
 		Statement q = null;
 		ResultSet rs = null;
 		List<SongData> songList = new ArrayList<SongData>();
@@ -129,12 +135,12 @@ public class Database {
 		else andOr = "OR";
 		
 		/*user entered no data, return null*/
-		if(artist == null && title == null && album == null && composer == null && year == null){
+		if(artist == null && title == null && album == null && composer == null && pubYear == null){
 			return null;
 		}
 		
 		/*Form Query*/
-		String query = "SELECT * FROM " + TABLE_NAME + "s WHERE ";
+		String query = "USE mp3db; SELECT * FROM " + TABLE_NAME + "s WHERE ";
 		if(artist != null){
 			query += "s.artist LIKE %" + artist + "% " + andOr + " ";
 		}
@@ -147,8 +153,8 @@ public class Database {
 		if(composer != null){
 			query += "s.composer LIKE %" + composer + "% " + andOr + " ";
 		}
-		if(year != null){
-			query += "s.year LIKE %" + year + "% " + andOr + " ";
+		if(pubYear != null){
+			query += "s.pubYear LIKE %" + pubYear + "% " + andOr + " ";
 		}
 		
 		/*Execute Query*/
@@ -180,7 +186,7 @@ public class Database {
 				s.setComment(1, rs.getString("comments1"));
 				s.setComment(2, rs.getString("comments2"));
 				s.setTrackNum(rs.getString("trackNum"));
-				s.setYear(rs.getString("year"));
+				s.setYear(rs.getString("pubYear"));
 				s.setEncodedBy(rs.getString("encodedBy"));
 				s.setComposer(rs.getString("composer"));
 				s.setFileName(rs.getString("fileName"));
