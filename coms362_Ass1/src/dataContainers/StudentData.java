@@ -42,4 +42,11 @@ public class StudentData implements Serializable {
 	public List<Course> getCourses() {
 		return classes;
 	}
+	
+	public byte[] getBytes(){
+		byte[] ret = new byte[id.getBytes().length + name.getBytes().length];
+		System.arraycopy(id.getBytes(), 0, ret, 0, id.getBytes().length);
+		System.arraycopy(name.getBytes(), 0, ret, id.getBytes().length, name.getBytes().length);
+		return ret;
+	}
 }
