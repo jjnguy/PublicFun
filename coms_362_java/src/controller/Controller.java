@@ -16,7 +16,7 @@ public class Controller implements UploadSong, DatabaseSearch {
 	public static final String DB_URL = "jdbc:mysql://65.110.247.189";
 	public static final String DB_USR = "root";
 	public static final String DB_PW = "hotdog";
-	private Database db;
+	private static Database db;
 
 	static {
 		File existTest = new File(MP3_PATH);
@@ -49,7 +49,7 @@ public class Controller implements UploadSong, DatabaseSearch {
 		}
 	}
 	
-	public boolean insertSongIntoDatabase(SongData song) {
+	public static boolean insertSongIntoDatabase(SongData song) {
 		return db.insertSongIntoDatabase(song);
 	}
 
@@ -74,9 +74,9 @@ public class Controller implements UploadSong, DatabaseSearch {
 	@Override
 	public List<SongData> advancedSearch(String artist, String title, String album,
 			String composer, String year, boolean AND) {
-		return db.advancedSearch(artist, title, album, composer, year, AND);
+		return db.advancedSearch(artist, title, album, AND);
 	}
-	/*
+	
 	//TODO::REMOVE - testing db access
 	
 	//TODO::CHANGED INSERTSONGINTODATABASE AND DB VARIABLE TO STATIC, CHANGE BACK..
@@ -90,10 +90,11 @@ public class Controller implements UploadSong, DatabaseSearch {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		SongData test = new SongData("title2", "artist5", perfs, comms, 
-				"12", "2005", "encoded", "composer", "file.mp3", "picture.jpg");
+		//SongData test = new SongData("title2", "album5", perfs, comms, 
+		//		"12", "2005", "encoded", "composer", "file.mp3", "picture.jpg");
 		
-		insertSongIntoDatabase(test);
+		//insertSongIntoDatabase(test);
+		db.advancedSearch(null, "title5", "artist5", true);
 	}
-	*/
+	
 }

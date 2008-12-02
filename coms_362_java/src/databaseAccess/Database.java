@@ -95,12 +95,12 @@ public class Database {
 		}
 		
 		/*Form Query*/
-		String query = "SELECT * FROM " + TABLE_NAME + "s ";
-		query += "WHERE s.title LIKE %" + searchString + "% OR "; 
-		query += "s.album LIKE %" + searchString + "% OR ";
-		query += "s.pubYear LIKE %" + searchString + "% OR ";
-		query += "s.composer LIKE %" + searchString + "% OR ";
-		query += "s.artist LIKE %" + searchString + "%;";
+		String query = "SELECT * FROM " + TABLE_NAME + " s ";
+		query += "WHERE s.title LIKE \'%" + searchString + "%\' OR "; 
+		query += "s.album LIKE \'%" + searchString + "%\' OR ";
+		query += "s.performers0 LIKE \'%" + searchString + "%\' OR ";
+		query += "s.performers1 LIKE \'%" + searchString + "%\' OR ";
+		query += "s.performers2 LIKE \'%" + searchString + "%\';";
 		
 		/*Execute Query*/
 		try {
@@ -118,11 +118,11 @@ public class Database {
 	 * passed in as true if the user wants to check them.  Boolean and specifies if the searches are combined using
 	 * AND or OR*/
 	public List<SongData> advancedSearch(String artist, String title,
-			String album, String composer, String pubYear, boolean AND){
+			String album, boolean AND){
 		Statement q = null;
 		ResultSet rs = null;
-		List<SongData> songList = new ArrayList<SongData>();
 		String andOr;	//default to AND search
+		boolean useAndOr = false;
 		try {
 			q = conn.createStatement();
 		} catch (SQLException e) {
@@ -135,27 +135,28 @@ public class Database {
 		else andOr = "OR";
 		
 		/*user entered no data, return null*/
-		if(artist == null && title == null && album == null && composer == null && pubYear == null){
+		if(artist == null && title == null && album == null){
 			return null;
 		}
 		
 		/*Form Query*/
-		String query = "SELECT * FROM " + TABLE_NAME + "s WHERE ";
+		String query = "SELECT * FROM " + TABLE_NAME + " s WHERE";
 		if(artist != null){
-			query += "s.artist LIKE %" + artist + "% " + andOr + " ";
+			query += " s.performers0 LIKE \'%" + artist + "%\' " + "OR" + " ";
+			query += "s.performers1 LIKE \'%" + artist + "%\' " + "OR" + " ";
+			query += "s.performers2 LIKE \'%" + artist + "%\'";
+			useAndOr = true;
 		}
 		if(title != null){
-			query += "s.title LIKE %" + title + "% " + andOr + " ";
+			if(useAndOr) query += " " + andOr;
+			query += " s.title LIKE \'%" + title + "%\'";
+			useAndOr = true;
 		}
 		if(album != null){
-			query += "s.album LIKE %" + album + "% " + andOr + " ";
+			if(useAndOr) query += " " + andOr;
+			query += " s.album LIKE \'%" + album + "%\'";
 		}
-		if(composer != null){
-			query += "s.composer LIKE %" + composer + "% " + andOr + " ";
-		}
-		if(pubYear != null){
-			query += "s.pubYear LIKE %" + pubYear + "% " + andOr + " ";
-		}
+		query += ";";
 		
 		/*Execute Query*/
 		try {
