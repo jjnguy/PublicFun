@@ -15,7 +15,7 @@ import java.util.Scanner;
 import util.Util;
 
 public class SaveSong {
-	//TODO: Reuse Numbers?
+	// TODO: Reuse Numbers?
 	private static final String FILE_NAME = "file_number.txt";
 
 	public static String SaveASong(InputStream fileStream) throws IOException {
@@ -43,7 +43,7 @@ public class SaveSong {
 		}
 
 		try {
-			Util.copyStream(fileStream, f_song);
+			SaveSong.copyStream(fileStream, f_song);
 		} catch (IOException e) {
 			f_song.close();
 			return null;
@@ -55,5 +55,13 @@ public class SaveSong {
 		output.write((fileInt + 1) + "");
 		output.close();
 		return (Controller.MP3_PATH + fileInt + ".mp3");
+	}
+
+	public static void copyStream(InputStream input, OutputStream output) throws IOException {
+		byte[] buffer = new byte[32 * 1024];
+		int bytesRead;
+		while ((bytesRead = input.read(buffer, 0, buffer.length)) > 0) {
+			output.write(buffer, 0, bytesRead);
+		}
 	}
 }

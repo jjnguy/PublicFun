@@ -6,7 +6,11 @@
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="controller.UploadSong"%>
-<%@page import="controller.Controller"%><html>
+<%@page import="controller.Controller"%>
+
+<%@page import="org.apache.commons.fileupload.FileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.DefaultFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItem"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Upload Results</title>
@@ -16,12 +20,13 @@
 	</head>
 	<body>
 		<%
+		boolean iTunesUpload = request.getParameter("iTunes") != null;
 		String message = null;
 		try {
 			DiskFileItemFactory f = new DiskFileItemFactory();
 			ServletFileUpload serv = new ServletFileUpload(f);
 			FileItem file = (FileItem)serv.parseRequest(request).get(0);
-			// TODO instance
+			
 			UploadSong up = Controller.getController();
 			message = up.uploadSong(file.getInputStream());
 		} catch (NullPointerException e) {
@@ -46,6 +51,9 @@
 		</div>
 		<div class="center">
 			<span class="plainText" ><%= message %></span>
+		</div>
+		<div class="center" style="margin-top:20px" >
+			<a class="button" href="uploadmp3.jsp">UploadAnother?</a>
 		</div>
 	</body>
 </html>

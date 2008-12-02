@@ -10,6 +10,9 @@
 		<link rel="shortcut icon" href="../favicon.ico" />
 	</head>
 	<body>
+	<%
+	String iTunesLibLocation = System.getProperty("user.home")+"/My Music/iTunes/iTunes Music Library.xml";
+	%>
 		<div class="group" >
 			<div class="center plainText" title="Hi, I'm tool-tip">
 				<table class="center" border="0" >
@@ -33,12 +36,12 @@
 					<br>
 					<input class="button" type="submit" value="Submit" title="Submit File for Upload" style="margin-top: .2cm; margin-bottom: .1cm" >
 				</form>
-				<!--<form class="plainText" action="uploadresult.jsp" method="get" enctype="multipart/form-data">
+				<form class="plainText" action="uploadlibrary.jsp" method="get" enctype="multipart/form-data">
 						OR ...
-						Upload an iTunes playlist.
-					<input type="submit" class="button" value="Find iTunes playlists" />
-					<input type="hidden" value="iTunes" />
-				</form>-->
+						Upload your iTunes Library.
+					<input type="submit" class="button" value="Find iTunes Library" />
+					<input type="hidden" value="<%=	iTunesLibLocation %>" name="iTunes" />
+				</form>
 			</div>
 		</div>
 		<%= HTMLFooter.getFooter() %>
