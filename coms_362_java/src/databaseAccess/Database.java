@@ -95,7 +95,7 @@ public class Database {
 		}
 		
 		/*Form Query*/
-		String query = "USE mp3db; SELECT * FROM " + TABLE_NAME + "s ";
+		String query = "SELECT * FROM " + TABLE_NAME + "s ";
 		query += "WHERE s.title LIKE %" + searchString + "% OR "; 
 		query += "s.album LIKE %" + searchString + "% OR ";
 		query += "s.pubYear LIKE %" + searchString + "% OR ";
@@ -140,7 +140,7 @@ public class Database {
 		}
 		
 		/*Form Query*/
-		String query = "USE mp3db; SELECT * FROM " + TABLE_NAME + "s WHERE ";
+		String query = "SELECT * FROM " + TABLE_NAME + "s WHERE ";
 		if(artist != null){
 			query += "s.artist LIKE %" + artist + "% " + andOr + " ";
 		}
