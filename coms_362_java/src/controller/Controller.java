@@ -22,11 +22,11 @@ public class Controller implements UploadSong, DatabaseSearch {
 	static {
 		File existTest = new File(MP3_PATH);
 		if (!existTest.exists()) {
-			existTest.mkdirs();
+			boolean created = existTest.mkdirs();
 		}
 		existTest = new File(PIC_PATH);
 		if (!existTest.exists()) {
-			existTest.mkdirs();
+			boolean created = existTest.mkdirs();
 		}
 	}
 
@@ -70,10 +70,8 @@ public class Controller implements UploadSong, DatabaseSearch {
 			Database.handleSQLException(e);
 		}
 	}
-
 	@Override
-	public List<SongData> advancedSearch(String artist, String title, String album,
-			String composer, String year, boolean AND) {
+	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND) {
 		return db.advancedSearch(artist, title, album, AND);
 	}
 	
