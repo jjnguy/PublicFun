@@ -3,7 +3,7 @@ import java.awt.Point;
 
 public interface GravityObject {
 	// gravity is sped up
-	public static final double GRAVITATIONAL_CONSTANT = -15; // 9.81
+	public static final double GRAVITATIONAL_CONSTANT = -15; // 9.80665
 
 	public double getPosition_Y();
 
