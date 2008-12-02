@@ -12,6 +12,7 @@ public class createSongData
 	{
 		SongData SD = new SongData();
 		int commentCount = 0;
+		int performerCount = 0;
 		
 		for (ID3v2_XFrame frame : tag.getAllFrames()) 
 		{
@@ -27,13 +28,13 @@ public class createSongData
 			else if (frame.getFrameID().matches("A?PIC")) 
 				SD.setPictureName(frame.getData().toString());
 			
-			 else if (frame.getFrameID().matches("TALB?")) 
+			else if (frame.getFrameID().matches("TALB?")) 
 				SD.setAlbum(frame.getData().toString());
 				 
-			 else if (frame.getFrameID().matches("TCO?M")) 
+			else if (frame.getFrameID().matches("TCO?M")) 
 				 SD.setComposer(frame.getData().toString());
 			
-			 else if (frame.getFrameID().matches("TI?T2")) 
+			else if (frame.getFrameID().matches("TI?T2")) 
 				 SD.setTitle(frame.getData().toString());
 			
 			else if (frame.getFrameID().matches("TRC?K")) 
@@ -47,8 +48,11 @@ public class createSongData
 			
 			else if (frame.getFrameID().matches("TPE?1")) 
 			{
-				if (SD.getPerformer(0) == null)
-					SD.setPerformer(0,frame.getData().toString());
+				if (performerCount < 3)
+				{	
+					SD.setPerformer(performerCount,frame.getData().toString());
+					performerCount++;
+				}
 			} 
 		}
 		return SD;
