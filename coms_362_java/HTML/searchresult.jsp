@@ -39,11 +39,11 @@
 		<% for (SongData song: data) {%>
 			<div>
 				<%= String.format("Title: %s, Artist: %s, Album: %s",song.getTitle(), song.getPerformer(0), song.getAlbum()) %>
-				<form method="post" action="streammp3.jsp" method="get" enctype="multipart/form-data">
+				<form action="streammp3.jsp" method="get" enctype="multipart/form-data">
 					<input type="hidden"  name="fileURL" value="<%= Controller.MP3_URL + song.getFileName() %>" />
 					<input type="submit" class="button" name="submit" value="Stream Song" />
 				</form>
-				<form method="post" action="downloadmp3.jsp" enctype="multipart/form-data">
+				<form method="get" action="downloadmp3.jsp" enctype="multipart/form-data">
 					<input type="hidden"  name="title" value="<%= song.getTitle() %>" />
 					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
 					<input type="submit" class="button" name="fileName" value="Download Song" />
