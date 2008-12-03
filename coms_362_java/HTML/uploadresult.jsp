@@ -32,6 +32,7 @@
 		} catch (NullPointerException e) {
 			message = "There was an error uploading your song.  Sorry, try again later.";
 		}
+		message = "Your song was successfully uploaded to the music collection!";
 		%>
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >
