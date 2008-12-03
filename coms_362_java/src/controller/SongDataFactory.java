@@ -5,7 +5,7 @@ import id3TagStuff.ID3v2_XTag;
 import id3TagStuff.frames.ID3v2_XFrame;
 import infoExpert.SongData;
 
-public class createSongData
+public class SongDataFactory
 {
 	
 	public static SongData tagToSongData (ID3v2_XTag tag)

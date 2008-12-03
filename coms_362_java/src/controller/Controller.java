@@ -12,7 +12,7 @@ import java.util.List;
 import controller.DatabaseSearch;
 import controller.SaveSong;
 import controller.UploadSong;
-import controller.createSongData;
+import controller.SongDataFactory;
 import databaseAccess.Database;
 
 public class Controller implements UploadSong, DatabaseSearch {
@@ -42,7 +42,7 @@ public class Controller implements UploadSong, DatabaseSearch {
 
 			/* Create SongData class from the ID3 tag and insert it into the DB */
 			ID3v2_XTag newTag = new ID3v2_XTag(new File(fileLocation));
-			SongData sd = createSongData.tagToSongData(newTag);
+			SongData sd = SongDataFactory.tagToSongData(newTag);
 			sd.setFileName(fileLocation);
 			insertSongIntoDatabase(sd);
 
