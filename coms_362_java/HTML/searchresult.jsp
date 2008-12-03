@@ -43,7 +43,7 @@
 					<input type="hidden"  name="fileURL" value="<%= Controller.MP3_URL + song.getFileName() %>" />
 					<input type="submit" class="button" name="submit" value="Stream Song" />
 				</form>
-				<form method="post" action="downloadmp3.jsp" method="get" enctype="multipart/form-data">
+				<form method="post" action="downloadmp3.jsp" enctype="multipart/form-data">
 					<input type="hidden"  name="title" value="<%= song.getTitle() %>" />
 					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
 					<input type="submit" class="button" name="fileName" value="Download Song" />
