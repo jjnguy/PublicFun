@@ -9,6 +9,9 @@
 <%@page import="webInterface.HTMLFooter"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
+		<link rel="icon" href="../images/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="../favicon.ico" />
 		<title>Stream Song</title>
 	</head>
 	<body>
