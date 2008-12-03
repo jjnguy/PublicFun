@@ -44,7 +44,11 @@ public class Controller implements UploadSong, DatabaseSearch {
 			ID3v2_XTag newTag = new ID3v2_XTag(new File(fileLocation));
 			SongData sd = SongDataFactory.tagToSongData(newTag);
 			sd.setFileName(fileLocation);
-			insertSongIntoDatabase(sd);
+			if (!insertSongIntoDatabase(sd)) {
+				File f = new File(fileLocation);
+				f.delete();
+				return "Database access failed";
+			}
 
 			return "Saved to: " + fileLocation;
 		} catch (IOException e) {
@@ -54,12 +58,16 @@ public class Controller implements UploadSong, DatabaseSearch {
 	}
 
 	public boolean insertSongIntoDatabase(SongData song) {
-		return db.insertSongIntoDatabase(song);
+		boolean ret = db.insertSongIntoDatabase(song);
+		db.closeDatabase();
+		return ret;
 	}
 
 	@Override
 	public List<SongData> simpleSearch(String term) {
-		return db.simpleSearch(term);
+		List<SongData> ret = db.simpleSearch(term);
+		db.closeDatabase();
+		return ret;
 	}
 
 	public static Controller getController() {
@@ -77,7 +85,9 @@ public class Controller implements UploadSong, DatabaseSearch {
 
 	@Override
 	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND) {
-		return db.advancedSearch(artist, title, album, AND);
+		List<SongData> ret = db.advancedSearch(artist, title, album, AND);
+		db.closeDatabase();
+		return ret;
 	}
 
 }
