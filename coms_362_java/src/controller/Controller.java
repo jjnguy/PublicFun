@@ -4,6 +4,8 @@ import id3TagStuff.ID3v2_XTag;
 import infoExpert.SongData;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -15,7 +17,8 @@ import controller.UploadSong;
 import controller.SongDataFactory;
 import databaseAccess.Database;
 
-public class Controller implements UploadSong, DatabaseSearch {
+public class Controller implements UploadSong, DatabaseSearch, DownloadSong 
+{
 	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";	//hard coded...we can change later
 	public static final String PIC_PATH = "C:/uploads/pic/";
 	public static final String DB_URL = "jdbc:mysql://65.110.247.189";
@@ -95,6 +98,24 @@ public class Controller implements UploadSong, DatabaseSearch {
 		List<SongData> ret = db.advancedSearch(artist, title, album, AND, sortType);
 		db.closeDatabase();
 		return ret;
+	}
+
+	@Override
+	public FileInputStream downloadSong(String fileName) 
+	{
+		
+		   File fileToDownload = new File(MP3_PATH + fileName);
+		   
+	
+			  try {
+				return new FileInputStream(fileToDownload);
+			} catch (FileNotFoundException e) {
+				
+				e.printStackTrace();
+				return null;
+			}
+
+		
 	}
 
 }
