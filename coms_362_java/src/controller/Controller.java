@@ -64,7 +64,7 @@ public class Controller implements UploadSong, DatabaseSearch {
 		}
 	}
 
-	public boolean insertSongIntoDatabase(SongData song) {
+	private boolean insertSongIntoDatabase(SongData song) {
 		boolean ret = db.insertSongIntoDatabase(song);
 		db.closeDatabase();
 		return ret;
