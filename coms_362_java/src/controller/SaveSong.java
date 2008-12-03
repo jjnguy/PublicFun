@@ -12,7 +12,15 @@ import java.io.PrintStream;
 import java.io.Writer;
 import java.util.Scanner;
 
-
+/**
+ * Saves a mp3 file to the filesystem and returns the address it's saved to.
+ * 
+ * Files are named numerically  (ex: 1.mp3) and a text file is kept in the 
+ * same directory that holds the next available number
+ * 
+ * @author Benjamin, Justin
+ *
+ */
 public class SaveSong {
 	// TODO: Reuse Numbers?
 	private static final String FILE_NAME = "file_number.txt";
