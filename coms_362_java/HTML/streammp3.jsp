@@ -15,14 +15,32 @@
 		<title>Stream Song</title>
 	</head>
 	<body>
+		<div class="center plainText" title="Hi, I'm tool-tip">
+			<table class="center" border="0" >
+				<tr>
+					<td width="35%" ></td>
+					<td style="padding: 0">
+						<a href="mainMenu.jsp">
+							<img class="picLink" src="../images/iTunesLogo.PNG" title="Online-iTunes Logo" />
+						</a>
+					</td>
+					<td>
+						<h2>Stream Song</h2>
+					</td>
+					<td width="35%" ></td>
+				</tr>
+			</table>
+		</div>
 		<script language="JavaScript" src="audio/audio-player.js"></script>
-		<object type="application/x-shockwave-flash" data="audio/player.swf" id="audioplayer1" height="24" width="290">
+		<center>
+		<object class="mp3player" type="application/x-shockwave-flash" data="audio/player.swf" id="audioplayer1" height="24" width="290">
 			<param name="movie" value="audio/player.swf">
 			<param name="FlashVars" value="playerID=1&amp;soundFile=<%=request.getParameter("fileURL") %>">
 			<param name="quality" value="high">
 			<param name="menu" value="false">
 			<param name="wmode" value="transparent">
 		</object> 
+		</center>
 		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
