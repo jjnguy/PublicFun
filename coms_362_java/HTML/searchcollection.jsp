@@ -30,17 +30,23 @@
 		<div class="center plainText">
 			<form class="basicSearch" method="get" action="searchresult.jsp" enctype="multipart/form-data" >
 				Basic Search:  Type a term to do a broad search <br />
-				<input type="text" name="broadSearchTerm" >
+				<input type="text" name="broadSearchTerm" ><br />
+				Sort By: <br />
+				<input type="radio" name="sort"  value="song" />Song<br />
+				<input type="radio" name="sort"  value="artist" />Artist<br />
+				<input type="radio" name="sort"  value="album" />Album<br />
 				<input type="submit" value="Search" title="hi" style="margin-left:0">
-				<input type="hidden" name="sort"  value="song" />
 			</form>
 			<form class="advancedSearch" method="get" action="searchresult.jsp" enctype="multipart/form-data" >
 				Advanced Search: Search one or More Fields<br />
 				Song Title<input type="text" name="songTitle" /><br />
 				Artist Name<input type="text" name="artistName" /><br />
 				Album Title<input type="text" name="albumTitle" /><br />
+				Sort By: <br />
+				<input type="radio" name="sort"  value="song" />Song<br />
+				<input type="radio" name="sort"  value="artist" />Artist<br />
+				<input type="radio" name="sort"  value="album" />Album<br />
 				<input type="submit" value="Search" title="hi" />
-				<input type="hidden" name="sort"  value="song" />
 			</form>
 		</div>
 		<%= HTMLFooter.getFooter() %>

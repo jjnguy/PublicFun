@@ -7,7 +7,9 @@
 <%@page import="controller.Controller"%>
 <%@page import="webInterface.HTMLFooter"%>
 
-<%@page import="databaseAccess.Database"%><html>
+<%@page import="databaseAccess.Database"%>
+
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
