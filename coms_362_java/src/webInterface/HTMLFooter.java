@@ -27,6 +27,8 @@ public class HTMLFooter {
 	static {
 		pushDiv = "<div style=\"height: " + FOOTER_HEIGHT + "px\">";
 		pushDiv += "\n</div>\n";
+		
+		
 	}
 
 	/*
