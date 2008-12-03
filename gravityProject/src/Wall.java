@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Wall implements Collidable {
 
@@ -57,20 +59,38 @@ public class Wall implements Collidable {
 
 	@Override
 	public void updateVelocity_X(double newVel_x) {
-		// TODO Auto-generated method stub
-		
+		// Left blank, walls cannot change
 	}
 
 	@Override
 	public void updateVelocity_Y(double newVel_y) {
-		// TODO Auto-generated method stub
-		
+		// Left blank, walls cannot change
 	}
 
 	@Override
 	public void collide(Collidable other) {
-		// TODO Auto-generated method stub
-		
+		double oldVel_x = other.getVelocity_X();
+		double oldVel_y = other.getVelocity_Y();
+		other.updateVelocity_X((1 - 2 * Math.PI - degreeToRadians(angle) / Math.PI / 2)
+				* oldVel_x);
+		other.updateVelocity_Y((2 * Math.PI - degreeToRadians(angle) / Math.PI / 2 - 1)
+				* oldVel_y);
 	}
 
+	public List<Point> getPoints(int dist, int gravPaneHeight) {
+		List<Point> ret = new ArrayList<Point>();
+		Point cur = center;
+		while (cur.x < 1000) {
+			ret.add(cur);
+			cur.x += Math.cos(degreeToRadians(angle)) * dist;
+			cur.y += Math.sin(degreeToRadians(angle)) * dist;
+		}
+		cur = center;
+		while (cur.x > -10) {
+			ret.add(cur);
+			cur.x -= Math.cos(degreeToRadians(angle)) * dist;
+			cur.y -= Math.sin(degreeToRadians(angle)) * dist;
+		}
+		return ret;
+	}
 }

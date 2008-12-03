@@ -22,7 +22,7 @@ public class GravityPane extends JPanel {
 	private final Color BGROUND_COLOR = Color.WHITE;
 
 	private List<GravityObject> objects;
-	private Wall floor;
+	private List<Wall> walls;
 
 	private PrintStream log;
 
@@ -32,7 +32,8 @@ public class GravityPane extends JPanel {
 		setBackground(BGROUND_COLOR);
 		setPreferredSize(new Dimension(500, 500));
 		objects = new ArrayList<GravityObject>();
-		floor = new Wall(new Point(00, 00), 0, false);
+		walls = new ArrayList<Wall>();
+		walls.add(new Wall(new Point(getHeight() / 2, 0), 0, false));
 		addMouseListener(clickListener);
 		addMouseMotionListener(mouseMoveListener);
 	}
@@ -43,6 +44,19 @@ public class GravityPane extends JPanel {
 			log.println(String.format("Y Pos: %8f  Y Vel: %8f", obj.getPosition_Y(), obj
 					.getVelocity_Y()));
 		}
+		for (Wall w : walls) {
+			for (GravityObject obj : objects) {
+				if (obj instanceof Collidable) {
+					for (Point p : w.getPoints(5, getHeight())) {
+						if (((Dragable) obj).containsPoint(p)) {
+							w.collide((Collidable) obj);
+							System.out.println("Collision detected");
+							break;
+						}
+					}
+				}
+			}
+		}
 		repaint();
 	}
 
@@ -52,7 +66,9 @@ public class GravityPane extends JPanel {
 		for (GravityObject obj : objects) {
 			obj.draw((Graphics2D) g, getHeight());
 		}
-		floor.draw((Graphics2D) g, getHeight(), getWidth());
+		for (Wall w : walls) {
+			w.draw((Graphics2D) g, getHeight(), getWidth());
+		}
 	}
 
 	public void addObject(GravityObject obj) {
