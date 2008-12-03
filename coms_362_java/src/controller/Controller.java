@@ -37,9 +37,12 @@ public class Controller implements UploadSong, DatabaseSearch {
 	@Override
 	public String uploadSong(InputStream fileStream) {
 		String fileLocation;
+		
 		try {
-			fileLocation = SaveSong.SaveASong(fileStream);
-
+			SaveSong SS = new SaveSong(fileStream);
+			fileLocation = SS.getPathToMP3();
+			
+		
 			/* Create SongData class from the ID3 tag and insert it into the DB */
 			ID3v2_XTag newTag = new ID3v2_XTag(new File(fileLocation));
 			SongData sd = SongDataFactory.tagToSongData(newTag);

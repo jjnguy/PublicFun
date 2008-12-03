@@ -13,7 +13,9 @@ import java.io.Writer;
 import java.util.Scanner;
 
 /**
- * Saves a mp3 file to the filesystem and returns the address it's saved to.
+ * Saves a mp3 file to the file system of the host computer
+ * 
+ * A path to the saved mp3 can be then retrieved
  * 
  * Files are named numerically  (ex: 1.mp3) and a text file is kept in the 
  * same directory that holds the next available number
@@ -27,15 +29,16 @@ public class SaveSong {
 	//file that holds one number that will be the next filename
 	private static final String FILE_NAME = "file_number.txt";
 
-	
+	//String to hold path to mp3 file thats saved
+	private String pathToMP3 = null;
 	/**
 	 * 
 	 * @param fileStream the mp3 file that we are saving
-	 * @return String of the path to the saved mp3
+	 * 
 	 * 
 	 * @throws IOException
 	 */
-	public static String SaveASong(InputStream fileStream) throws IOException {
+	public SaveSong(InputStream fileStream) throws IOException {
 		OutputStream f_song;
 		int fileInt;
 		File intFile = new File(Controller.MP3_PATH + FILE_NAME);
@@ -55,13 +58,15 @@ public class SaveSong {
 
 		//shouldn't happen unless mp3's or text file gets corrupted
 		if (!song.createNewFile()) {
-			return "Could not create song, location already exists, this is a bug";
+			System.err.println("Could not create song, location already exists, this is a bug");
+			return;
 		}
 
 		try {
 			f_song = new FileOutputStream(song);
 		} catch (FileNotFoundException e1) {
-			return "Could not save song, opening the stream caused an exception";
+			System.err.println("Could not save song, opening the stream caused an exception");
+			return;
 		}
 
 		try {
@@ -69,7 +74,7 @@ public class SaveSong {
 			Util.copyStream(fileStream, f_song);
 		} catch (IOException e) {
 			f_song.close();
-			return null;
+			return;
 		}
 
 		f_song.close();
@@ -79,8 +84,18 @@ public class SaveSong {
 		output.write((fileInt + 1) + "");
 		output.close();
 		
-		//return path to newly saved mp3
-		return (Controller.MP3_PATH + fileInt + ".mp3");
+		//path to newly saved mp3
+		pathToMP3 = Controller.MP3_PATH + fileInt + ".mp3";
+	}
+	
+	
+	/**
+	 * 
+	 * @return String containing path to saved mp3 file.  String will be null if mp3 was not saved in constructor
+	 */
+	public String getPathToMP3()
+	{
+		return pathToMP3;
 	}
 
 }
