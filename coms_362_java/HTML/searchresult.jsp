@@ -18,16 +18,20 @@
 		<%
 		String term  = (String) request.getParameter("broadSearchTerm");
 		String artist = null, title = null, album = null;
+		List<SongData> data;
+		boolean braodSearch = term != null;
 		// if its an advanced search
-		if (term == null){
+		if (!braodSearch){
 			artist = (String) request.getParameter("artistName");
 			title = (String) request.getParameter("songTitle");
 			album = (String) request.getParameter("albumTitle");
+			data = Controller.getController().advancedSearch(artist,title, album, false);
+		}else{
+			data = Controller.getController().simpleSearch(term);
 		}
-		List<SongData> data = Controller.getController().simpleSearch(term);
 		%>
-		Broad Search: <%= term %><br />
-		<%= data.get(0).getTitle() %>
-		<%= HTMLFooter.getFooter() %>
+		<% for (SongData song: data) {%>
+			<%= song.getTitle() %><br />
+		<%} %>
 	</body>
 </html>
