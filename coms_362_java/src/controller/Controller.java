@@ -16,7 +16,7 @@ import controller.SongDataFactory;
 import databaseAccess.Database;
 
 public class Controller implements UploadSong, DatabaseSearch {
-	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s";	//hard coded...we can change later
+	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";	//hard coded...we can change later
 	public static final String PIC_PATH = "C:/uploads/pic/";
 	public static final String DB_URL = "jdbc:mysql://65.110.247.189";
 	public static final String DB_USR = "root";
