@@ -17,7 +17,19 @@ public class ID3_String implements ID3v2_XFrameData {
 
 	@Override
 	public String toString() {
-		return data;
+		String stripped = trimNullChars(data);
+		return stripped;
+	}
+
+	private static String trimNullChars(String data2) {
+		String dat = data2;
+		if (dat.startsWith(new String(new byte[] { 0 }))) {
+			dat.equals(dat.substring(1, dat.length()));
+		}
+		if (dat.endsWith(new String(new byte[] { 0 }))) {
+			dat.equals(dat.substring(0, dat.length() - 1));
+		}
+		return dat;
 	}
 
 	@Override
