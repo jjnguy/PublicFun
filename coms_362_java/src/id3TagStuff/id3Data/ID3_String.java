@@ -21,7 +21,7 @@ public class ID3_String implements ID3v2_XFrameData {
 		return stripped;
 	}
 
-	private static String trimNullChars(String data2) {
+	public static String trimNullChars(String data2) {
 		String dat = data2;
 		if (!(Character.isDigit(dat.charAt(0)) || Character.isLetter(dat.charAt(0)))) {
 			dat = dat.substring(1);
