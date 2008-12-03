@@ -9,6 +9,10 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 
+import controller.DatabaseSearch;
+import controller.SaveSong;
+import controller.UploadSong;
+import controller.createSongData;
 import databaseAccess.Database;
 
 public class Controller implements UploadSong, DatabaseSearch {
@@ -35,20 +39,20 @@ public class Controller implements UploadSong, DatabaseSearch {
 		String fileLocation;
 		try {
 			fileLocation = SaveSong.SaveASong(fileStream);
-			
-			/*Create SongData class from the ID3 tag and insert it into the DB*/
+
+			/* Create SongData class from the ID3 tag and insert it into the DB */
 			ID3v2_XTag newTag = new ID3v2_XTag(new File(fileLocation));
 			SongData sd = createSongData.tagToSongData(newTag);
 			sd.setFileName(fileLocation);
 			insertSongIntoDatabase(sd);
-			
+
 			return "Saved to: " + fileLocation;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "Error: Song not saved";
 		}
 	}
-	
+
 	public boolean insertSongIntoDatabase(SongData song) {
 		return db.insertSongIntoDatabase(song);
 	}
@@ -70,9 +74,10 @@ public class Controller implements UploadSong, DatabaseSearch {
 			Database.handleSQLException(e);
 		}
 	}
+
 	@Override
 	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND) {
 		return db.advancedSearch(artist, title, album, AND);
 	}
-	
+
 }

@@ -1,8 +1,8 @@
 package controller;
 
-import java.util.List;
-
 import infoExpert.SongData;
+
+import java.util.List;
 
 public interface DatabaseSearch {
 	public List<SongData> simpleSearch(String term);

@@ -1,9 +1,9 @@
 package runnables;
 
+import id3TagStuff.ID3v2_XTag;
+
 import java.io.File;
 import java.io.IOException;
-
-import id3TagStuff.ID3v2_XTag;
 
 public class AddPaddingToFile {
 	public static void main(String[] args) throws IOException {

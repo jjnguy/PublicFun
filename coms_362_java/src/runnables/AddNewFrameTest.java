@@ -1,14 +1,13 @@
 package runnables;
 
+import id3TagStuff.ID3v2_XTag;
+import id3TagStuff.frames.ID3v2_XFrame;
+import id3TagStuff.id3Data.ID3_Picture;
+
 import java.io.File;
 import java.io.IOException;
 
 import controller.Util;
-
-
-import id3TagStuff.ID3v2_XTag;
-import id3TagStuff.frames.ID3v2_XFrame;
-import id3TagStuff.id3Data.ID3_Picture;
 
 public class AddNewFrameTest {
 

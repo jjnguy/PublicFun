@@ -3,7 +3,6 @@ package controller;
 
 import id3TagStuff.ID3v2_XTag;
 import id3TagStuff.frames.ID3v2_XFrame;
-import id3TagStuff.id3Data.ID3_Picture;
 import infoExpert.SongData;
 
 public class createSongData
