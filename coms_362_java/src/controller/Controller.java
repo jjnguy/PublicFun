@@ -21,6 +21,10 @@ public class Controller implements UploadSong, DatabaseSearch {
 	public static final String DB_URL = "jdbc:mysql://65.110.247.189";
 	public static final String DB_USR = "root";
 	public static final String DB_PW = "hotdog";
+	public static final String MP3_URL = "http://65.110.247.189/sharedmp3s/";
+	public static final int SORT_BY_TITLE = 0;
+	public static final int SORT_BY_ARTIST = 1;
+	public static final int SORT_BY_ALBUM = 2;
 	private Database db;
 
 	static {
@@ -67,8 +71,8 @@ public class Controller implements UploadSong, DatabaseSearch {
 	}
 
 	@Override
-	public List<SongData> simpleSearch(String term) {
-		List<SongData> ret = db.simpleSearch(term);
+	public List<SongData> simpleSearch(String term, int sortType) {
+		List<SongData> ret = db.simpleSearch(term, sortType);
 		db.closeDatabase();
 		return ret;
 	}
@@ -87,8 +91,8 @@ public class Controller implements UploadSong, DatabaseSearch {
 	}
 
 	@Override
-	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND) {
-		List<SongData> ret = db.advancedSearch(artist, title, album, AND);
+	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND, int sortType) {
+		List<SongData> ret = db.advancedSearch(artist, title, album, AND, sortType);
 		db.closeDatabase();
 		return ret;
 	}

@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.Controller;
+
 /**
  * Main database interface for all database tasks including connecting to the database,
  * inserting song data, and retrieving songs based on search strings
@@ -84,7 +86,7 @@ public class Database {
 	
 	/*Take in a search string and query all database fields for the string. Used also to simply return everything
 	 * as in "View Music Collection" link for instance*/
-	public List<SongData> simpleSearch(String searchString){
+	public List<SongData> simpleSearch(String searchString, int sortType){
 		Statement q = null;
 		ResultSet rs = null;
 		
@@ -101,7 +103,9 @@ public class Database {
 		query += "s.album LIKE \'%" + searchString + "%\' OR ";
 		query += "s.performers0 LIKE \'%" + searchString + "%\' OR ";
 		query += "s.performers1 LIKE \'%" + searchString + "%\' OR ";
-		query += "s.performers2 LIKE \'%" + searchString + "%\';";
+		query += "s.performers2 LIKE \'%" + searchString + "%\' ";
+		
+		addSortBy(query, sortType);
 		
 		/*Execute Query*/
 		try {
@@ -119,7 +123,7 @@ public class Database {
 	 * passed in as true if the user wants to check them.  Boolean and specifies if the searches are combined using
 	 * AND or OR*/
 	public List<SongData> advancedSearch(String artist, String title,
-			String album, boolean AND){
+			String album, boolean AND, int sortType){
 		Statement q = null;
 		ResultSet rs = null;
 		String andOr;	//default to AND search
@@ -155,9 +159,9 @@ public class Database {
 		}
 		if(album != null){
 			if(useAndOr) query += " " + andOr;
-			query += " s.album LIKE \'%" + album + "%\'";
+			query += " s.album LIKE \'%" + album + "%\' ";
 		}
-		query += ";";
+		addSortBy(query, sortType);
 		
 		/*Execute Query*/
 		try {
@@ -172,6 +176,20 @@ public class Database {
 		
 	}
 	
+	/*Add an order by clause to the end of the query string to sort by one of 3 criteria. Sort by Title is default.*/
+	private void addSortBy(String query, int sortType){
+		query += "ORDER BY ";
+		if(sortType == Controller.SORT_BY_ALBUM){
+			query += "album;";
+		}
+		else if(sortType == Controller.SORT_BY_ARTIST){
+			query += "performers0;";
+		}
+		else{
+			query += "title;";
+		}
+	}
+
 	/*processResults takes in a ResultSet from a query and extracts each field into a new
 	 * SongData object which are added to a List and then returned.*/
 	private List<SongData> processResults(ResultSet rs){
