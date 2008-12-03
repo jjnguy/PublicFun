@@ -77,6 +77,7 @@ public class Database {
 			insert.close();
 		} catch (SQLException e) {
 			handleSQLException(e);
+			return false;
 		}
 		return true;
 	}
@@ -211,7 +212,7 @@ public class Database {
 	 * @param out
 	 *            The PrintStream to print the error messages to.
 	 */
-	public static void handleSQLException(SQLException sqle, PrintStream out) {
+	private static void handleSQLException(SQLException sqle, PrintStream out) {
 		sqle.printStackTrace(out);
 		while (sqle != null) {
 			String logMessage = "\n SQL Error: " + sqle.getMessage() + "\n\t\t"
