@@ -45,6 +45,7 @@
 				</form>
 				<form method="get" action="downloadmp3.jsp" enctype="multipart/form-data">
 					<input type="hidden"  name="title" value="<%= song.getTitle() %>" />
+					<% System.err.println(song.getTitle()); %>
 					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
 					<input type="submit" class="button" name="fileName" value="Download Song" />
 				</form>
