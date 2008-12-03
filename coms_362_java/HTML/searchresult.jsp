@@ -26,6 +26,7 @@
 		String sortName = request.getParameter("sort");
 		int sortTerm = sortName.equals("album") ? Controller.SORT_BY_ALBUM : 
 				(sortName.equals("artist") ? Controller.SORT_BY_ARTIST:Controller.SORT_BY_TITLE);
+		System.err.println(sortTerm + " " + sortName);
 		// if its an advanced search
 		if (!braodSearch){
 			artist = (String) request.getParameter("artistName");
