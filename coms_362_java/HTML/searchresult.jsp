@@ -23,15 +23,18 @@
 		// if its an advanced search
 		if (!braodSearch){
 			artist = (String) request.getParameter("artistName");
+			if (artist.trim().equals("")) artist = null;
 			title = (String) request.getParameter("songTitle");
+			if (title.trim().equals("")) title = null;
 			album = (String) request.getParameter("albumTitle");
+			if (album.trim().equals("")) album = null;
 			data = Controller.getController().advancedSearch(artist,title, album, false);
 		}else{
 			data = Controller.getController().simpleSearch(term);
 		}
 		%>
 		<% for (SongData song: data) {%>
-			<%= song.getTitle() %><br />
+			<%= String.format("Title: %s, Artist: %s, Album: %s",song.getTitle(), song.getPerformer(0), song.getAlbum()) %><br />
 		<%} %>
 	</body>
 </html>
