@@ -23,6 +23,9 @@
 		String artist = null, title = null, album = null;
 		List<SongData> data;
 		boolean braodSearch = term != null;
+		String sortName = request.getParameter("sort");
+		int sortTerm = sortName.equals("album") ? Controller.SORT_BY_ALBUM : 
+				(sortName.equals("artist") ? Controller.SORT_BY_ARTIST:Controller.SORT_BY_TITLE);
 		// if its an advanced search
 		if (!braodSearch){
 			artist = (String) request.getParameter("artistName");
@@ -31,9 +34,9 @@
 			if (title.trim().equals("")) title = null;
 			album = (String) request.getParameter("albumTitle");
 			if (album.trim().equals("")) album = null;
-			data = Controller.getController().advancedSearch(artist,title, album, false, Controller.SORT_BY_TITLE);
+			data = Controller.getController().advancedSearch(artist,title, album, false, sortTerm);
 		}else{
-			data = Controller.getController().simpleSearch(term, Controller.SORT_BY_TITLE);
+			data = Controller.getController().simpleSearch(term, sortTerm);
 		}
 		%>
 		<% for (SongData song: data) {%>
