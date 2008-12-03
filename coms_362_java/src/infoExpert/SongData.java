@@ -3,7 +3,7 @@ package infoExpert;
 public class SongData {
 	private String title;
 	private String album;
-	private String performers[] = new String[3];	//up to 3 performers and comments
+	private String performers[] = new String[3]; // up to 3 performers and comments
 	private String comments[] = new String[3];
 	private String trackNum;
 	private String year;
@@ -11,14 +11,15 @@ public class SongData {
 	private String composer;
 	private String fileName;
 	private String pictureName;
-	
-	public SongData(){};
-	
-	public SongData(String t, String a, String p[], String c[], String tr, 
-			String y, String e, String co, String fp, String pp){
+
+	public SongData() {
+	};
+
+	public SongData(String t, String a, String p[], String c[], String tr, String y, String e,
+			String co, String fp, String pp) {
 		title = t;
 		album = a;
-		for(int i = 0; i < 3; i++){
+		for (int i = 0; i < 3; i++) {
 			performers[i] = p[i];
 			comments[i] = c[i];
 		}
@@ -70,8 +71,12 @@ public class SongData {
 		this.encodedBy = e;
 	}
 
-	public String getFileName() {
+	public String getPathName() {
 		return fileName;
+	}
+
+	public String getFileName() {
+		return fileName.substring(fileName.lastIndexOf("/") + 1);
 	}
 
 	public void setFileName(String f) {
@@ -85,20 +90,20 @@ public class SongData {
 	public void setPictureName(String p) {
 		this.pictureName = p;
 	}
-	
-	public String getComment(int i){
+
+	public String getComment(int i) {
 		return comments[i];
 	}
-	
-	public void setComment(int i, String c){
+
+	public void setComment(int i, String c) {
 		comments[i] = c;
 	}
-	
-	public String getPerformer(int i){
+
+	public String getPerformer(int i) {
 		return performers[i];
 	}
-	
-	public void setPerformer(int i, String p){
+
+	public void setPerformer(int i, String p) {
 		performers[i] = p;
 	}
 

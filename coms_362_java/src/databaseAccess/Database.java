@@ -67,7 +67,7 @@ public class Database {
 		"\'"+song.getComment(1)+"\'"+", "+"\'"+song.getComment(2)+"\'";
 		query += ", "+"\'"+song.getTrackNum()+"\'"+", "+"\'"+song.getYear()+"\'"+", "+"\'"+
 		song.getEncodedBy()+"\'"+", "+"\'"+song.getComposer()+"\'";
-		query += ", "+"\'"+song.getFileName()+"\'"+", "+"\'"+song.getPictureName()+"\'"+");";
+		query += ", "+"\'"+song.getPathName()+"\'"+", "+"\'"+song.getPictureName()+"\'"+");";
 		
 		try {
 			insert.executeUpdate(query);
