@@ -22,23 +22,38 @@ import java.util.Scanner;
  *
  */
 public class SaveSong {
-	// TODO: Reuse Numbers?
+	// TODO: Reuse numbers after a file gets removed in the future?
+	
+	//file that holds one number that will be the next filename
 	private static final String FILE_NAME = "file_number.txt";
 
+	
+	/**
+	 * 
+	 * @param fileStream the mp3 file that we are saving
+	 * @return String of the path to the saved mp3
+	 * 
+	 * @throws IOException
+	 */
 	public static String SaveASong(InputStream fileStream) throws IOException {
 		OutputStream f_song;
 		int fileInt;
 		File intFile = new File(Controller.MP3_PATH + FILE_NAME);
+		
+		//if file doesn't exist create it and start with 0
 		if (!intFile.exists()) {
 			PrintStream out = new PrintStream(intFile);
 			out.print(0);
 			out.close();
 		}
+		
+		//get number from file and create a file to save mp3 data into 
 		Scanner fin = new Scanner(intFile);
 		fileInt = fin.nextInt();
 		fin.close();
 		File song = new File(Controller.MP3_PATH + fileInt + ".mp3");
 
+		//shouldn't happen unless mp3's or text file gets corrupted
 		if (!song.createNewFile()) {
 			return "Could not create song, location already exists, this is a bug";
 		}
@@ -50,6 +65,7 @@ public class SaveSong {
 		}
 
 		try {
+			// save mp3 data into file
 			Util.copyStream(fileStream, f_song);
 		} catch (IOException e) {
 			f_song.close();
@@ -58,9 +74,12 @@ public class SaveSong {
 
 		f_song.close();
 
+		//increment number in text file by 1 
 		Writer output = new BufferedWriter(new FileWriter(intFile));
 		output.write((fileInt + 1) + "");
 		output.close();
+		
+		//return path to newly saved mp3
 		return (Controller.MP3_PATH + fileInt + ".mp3");
 	}
 
