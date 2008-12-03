@@ -13,7 +13,8 @@
 		response.setContentType("audio/mpeg");
    
 		String title = (String)request.getParameter("title");
-		response.setHeader("Content-Disposition", "Attachment; Filename=\"" + title + ".mp3\"");
+		response.setHeader("Content-Disposition", "Attachment; Filename=\"" 
+				+ title + ".mp3\"");
 		FileInputStream fileInputStream;
    
 		DownloadSong down = Controller.getController();
@@ -29,6 +30,5 @@
 		e.printStackTrace();
 	}
 	%>
-
-</body>
+	</body>
 </html>

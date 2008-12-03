@@ -11,7 +11,8 @@
 <%@page import="java.util.List"%>
 <%@page import="controller.SaveSong"%>
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItem"%>
-<%@page import="controller.Controller"%><html>
+<%@page import="controller.Controller"%>
+<%@page import="controller.Util"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Insert title here</title>
@@ -23,7 +24,7 @@
 		FileItem file = new DiskFileItem("iTunes", null, true, 
 				request.getParameter("iTunes"), 10000, new File(Controller.MP3_PATH));
 		File fileF = new File("C:/hotcrossbunns");
-		SaveSong.copyStream(file.getInputStream(), new FileOutputStream(fileF));
+		Util.copyStream(file.getInputStream(), new FileOutputStream(fileF));
 		ITunesLibFile lib = new ITunesLibFile(fileF);
 		List<File> allFiles = lib.getListOfFiles("Library");
 		%>

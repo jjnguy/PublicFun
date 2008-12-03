@@ -9,8 +9,8 @@
 <%@page import="controller.Controller"%>
 
 <%@page import="org.apache.commons.fileupload.FileItemFactory"%>
-<%@page import="org.apache.commons.fileupload.DefaultFileItemFactory"%>
-<%@page import="org.apache.commons.fileupload.disk.DiskFileItem"%><html>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItem"%>
+<%@page import="webInterface.HTMLFooter"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Upload Results</title>
@@ -56,5 +56,6 @@
 		<div class="center" style="margin-top:20px" >
 			<a class="button" href="uploadmp3.jsp">UploadAnother?</a>
 		</div>
+		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
