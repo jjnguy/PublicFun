@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Download Song</title>
+		<title>Stream Song</title>
 	</head>
 	<body>
 		<script language="JavaScript" src="audio/audio-player.js"></script>
