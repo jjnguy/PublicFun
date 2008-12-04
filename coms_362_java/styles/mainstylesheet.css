@@ -152,6 +152,7 @@ input.smallButton:hover {
 }
 
 .searchResultText {
+	width:auto;
 	background-color: yellow;
 	border: solid #000000;
 	margin-left: 5px;
