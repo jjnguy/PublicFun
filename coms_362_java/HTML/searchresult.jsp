@@ -49,18 +49,18 @@
 				<div class="searchResultText" >
 					<%= String.format("Title: %s, Artist: %s, Album: %s",song.getTitle(), song.getPerformer(0), song.getAlbum()) %>
 				</div>
-				<form style="margin-left: 20px" action="streammp3.jsp" method="get" enctype="multipart/form-data">
+				<form style="margin-left: 40px" action="streammp3.jsp" method="get" enctype="multipart/form-data">
 					<input type="hidden"  name="fileURL" value="<%= Controller.MP3_URL + song.getFileName() %>" />
-					<input type="submit" class="button" name="submit" value="Stream Song" />
+					<input type="submit" class="smallButton" name="submit" value="Stream Song" />
 				</form>
-				<form style="margin-left: 20px" method="get" action="downloadmp3.jsp" enctype="multipart/form-data">
+				<form style="margin-left: 40px" method="get" action="downloadmp3.jsp" enctype="multipart/form-data">
 					<input type="hidden"  name="title" value="<%= song.getTitle() %>" />
 					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
-					<input type="submit" class="button" name="fileName" value="Download Song" />
+					<input type="submit" class="smallButton" name="fileName" value="Download Song" />
 				</form>
 			</div>
 		<%} else { %>
-			<center>Your search did not return any results.</center>
+			<center style="font-weight:bold; font-size:large;">Your search did not return any results.</center>
 		<%}%>
 		<%= HTMLFooter.getFooter() %>
 	</body>
