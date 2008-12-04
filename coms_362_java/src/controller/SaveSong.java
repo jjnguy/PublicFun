@@ -93,8 +93,7 @@ public class SaveSong {
 	 * 
 	 * @return String containing path to saved mp3 file.  String will be null if mp3 was not saved in constructor
 	 */
-	public String getPathToMP3()
-	{
+	public String getPathToMP3() {
 		return pathToMP3;
 	}
 

@@ -35,7 +35,7 @@
 				<input type="radio" name="sort"  value="song" />Song<br />
 				<input type="radio" name="sort"  value="artist" />Artist<br />
 				<input type="radio" name="sort"  value="album" />Album<br />
-				<input type="submit" value="Search" title="hi" style="margin-left:0">
+				<input class="button" type="submit" value="Search" title="hi" style="margin-left:0">
 			</form>
 			<form class="advancedSearch" method="get" action="searchresult.jsp" enctype="multipart/form-data" >
 				Advanced Search: Search one or More Fields<br />
@@ -46,7 +46,7 @@
 				<input type="radio" name="sort"  value="song" />Song<br />
 				<input type="radio" name="sort"  value="artist" />Artist<br />
 				<input type="radio" name="sort"  value="album" />Album<br />
-				<input type="submit" value="Search" title="hi" />
+				<input class="button" type="submit" value="Search" title="hi" />
 			</form>
 		</div>
 		<%= HTMLFooter.getFooter() %>

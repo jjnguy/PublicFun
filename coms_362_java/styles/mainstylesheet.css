@@ -141,13 +141,19 @@ input.smallButton {
 	text-decoration: none;
 	font-weight: bold;
 	border: solid #000000;
-	border-width: 1px;
+	border-width: 2px;
 	cursor: pointer;
 	font-family: sans-serif;
 	font-size: 10pt;
 }
 
+input.smallButton:hover {
+	background-color: darkGoldenRod;
+}
+
 .searchResultText {
+	background-color: yellow;
+	border: solid #000000;
 	margin-left: 5px;
 	font-size: large;
 	font-weight: bold;
