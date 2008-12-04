@@ -21,7 +21,7 @@
 					<td width="37%" ></td>
 					<td style="padding: 0">
 						<a href="mainMenu.jsp">
-							<img class="picLink" src="../images/MusicNote.png" title="Online-iTunes Logo" />
+							<img class="picLink" src="../images/iTunesLogo.PNG" title="Online-iTunes Logo" />
 						</a>
 					</td>
 					<td>

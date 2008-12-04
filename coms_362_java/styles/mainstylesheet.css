@@ -131,7 +131,12 @@ img.picLink {
 .mp3player {
 	margin:20px;
 }
-	
+
+.searchResultText {
+	font-size: large;
+	font-weight: bold;
+}
+
 .menu {
 	float: left;
 	padding-top: 100px;

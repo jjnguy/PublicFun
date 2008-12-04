@@ -6,11 +6,10 @@
 <%@page import="infoExpert.SongData"%>
 <%@page import="controller.Controller"%>
 <%@page import="webInterface.HTMLFooter"%>
-
 <%@page import="databaseAccess.Database"%>
+<%@page import="java.util.Collection"%>
 
-
-<%@page import="java.util.Collection"%><html>
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
@@ -43,21 +42,26 @@
 			data = Controller.getController().simpleSearch(term, sortTerm);
 		}
 		%>
-		<% for (SongData song: data) {%>
+		<% 
+		if (data.size() != 0)
+		for (SongData song: data) {%>
 			<div>
-				<%= String.format("Title: %s, Artist: %s, Album: %s",song.getTitle(), song.getPerformer(0), song.getAlbum()) %>
-				<form action="streammp3.jsp" method="get" enctype="multipart/form-data">
+				<div class="searchResultText" >
+					<%= String.format("Title: %s, Artist: %s, Album: %s",song.getTitle(), song.getPerformer(0), song.getAlbum()) %>
+				</div>
+				<form style="margin-left: 20px" action="streammp3.jsp" method="get" enctype="multipart/form-data">
 					<input type="hidden"  name="fileURL" value="<%= Controller.MP3_URL + song.getFileName() %>" />
 					<input type="submit" class="button" name="submit" value="Stream Song" />
 				</form>
-				<form method="get" action="downloadmp3.jsp" enctype="multipart/form-data">
+				<form style="margin-left: 20px" method="get" action="downloadmp3.jsp" enctype="multipart/form-data">
 					<input type="hidden"  name="title" value="<%= song.getTitle() %>" />
 					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
 					<input type="submit" class="button" name="fileName" value="Download Song" />
 				</form>
 			</div>
-		<%} %>
-		
+		<%} else { %>
+			<center>Your search did not return any results.</center>
+		<%}%>
 		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
