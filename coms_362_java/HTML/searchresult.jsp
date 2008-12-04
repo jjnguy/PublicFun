@@ -43,7 +43,7 @@
 		}
 		%>
 		<% 
-		if (data.size() != 0)
+		if (data != null && data.size() != 0)
 		for (SongData song: data) {%>
 			<div>
 				<div class="searchResultText" >
