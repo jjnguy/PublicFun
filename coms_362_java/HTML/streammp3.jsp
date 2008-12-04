@@ -18,16 +18,16 @@
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >
 				<tr>
-					<td width="35%" ></td>
+					<td width="37%" ></td>
 					<td style="padding: 0">
 						<a href="mainMenu.jsp">
-							<img class="picLink" src="../images/iTunesLogo.PNG" title="Online-iTunes Logo" />
+							<img class="picLink" src="../images/MusicNote.png" title="Online-iTunes Logo" />
 						</a>
 					</td>
 					<td>
 						<h2>Stream Song</h2>
 					</td>
-					<td width="35%" ></td>
+					<td width="37%" ></td>
 				</tr>
 			</table>
 		</div>

@@ -9,7 +9,8 @@
 
 <%@page import="databaseAccess.Database"%>
 
-<html>
+
+<%@page import="java.util.Collection"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
@@ -24,7 +25,9 @@
 		List<SongData> data;
 		boolean braodSearch = term != null;
 		String sortName = request.getParameter("sort");
-		int sortTerm = sortName.equals("album") ? Controller.SORT_BY_ALBUM : 
+		int sortTerm = Controller.SORT_BY_TITLE;
+		if (sortName != null)
+			sortTerm = sortName.equals("album") ? Controller.SORT_BY_ALBUM : 
 				(sortName.equals("artist") ? Controller.SORT_BY_ARTIST:Controller.SORT_BY_TITLE);
 		System.err.println(sortTerm + " " + sortName);
 		// if its an advanced search
