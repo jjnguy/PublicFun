@@ -151,13 +151,31 @@ input.smallButton:hover {
 	background-color: darkGoldenRod;
 }
 
-.searchResultText {
-	width:auto;
+.allResults {
+	height: auto;
+}
+
+.searchResult {
+	/*float:left;*/
+	width:66%;
 	background-color: yellow;
 	border: solid #000000;
 	margin-left: 5px;
+	padding-left: 5px;
+	margin-right: 5px;
+	padding-right: 5px;
+	margin-bottom: 10px;
 	font-size: large;
 	font-weight: bold;
+}
+
+.searchAgain {
+	position: absolute;
+	top: 90px;
+	left: 720px;
+	float: right;
+	padding: 10px;
+	background-color: yellow;
 }
 
 .menu {

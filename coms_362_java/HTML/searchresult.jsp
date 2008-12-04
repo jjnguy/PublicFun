@@ -18,6 +18,22 @@
 		<title>jTunes - Search Results</title>
 	</head>
 	<body>
+		<div class="center plainText" title="Hi, I'm tool-tip">
+			<table class="center" border="0" >
+				<tr>
+					<td width="37%" ></td>
+					<td style="padding: 0">
+						<a href="mainMenu.jsp">
+							<img class="picLink" src="../images/iTunesLogo.PNG" title="Online-iTunes Logo" />
+						</a>
+					</td>
+					<td>
+						<h2>Search Results</h2>
+					</td>
+					<td width="37%" ></td>
+				</tr>
+			</table>
+		</div>
 		<%
 		String term  = (String) request.getParameter("broadSearchTerm");
 		String artist = null, title = null, album = null;
@@ -42,11 +58,12 @@
 			data = Controller.getController().simpleSearch(term, sortTerm);
 		}
 		%>
+		<div class="allResults">
 		<% 
 		if (data != null && data.size() != 0)
 		for (SongData song: data) {%>
-			<div>
-				<div class="searchResultText" >
+			<div class="searchResult" >
+				<div>
 					<%= String.format("Title: %s, Artist: %s, Album: %s",song.getTitle(), song.getPerformer(0), song.getAlbum()) %>
 				</div>
 				<form style="margin-left: 40px" action="streammp3.jsp" method="get" enctype="multipart/form-data">
@@ -62,6 +79,20 @@
 		<%} else { %>
 			<center style="font-weight:bold; font-size:large;">Your search did not return any results.</center>
 		<%}%>
+		</div>
+		<div class="group center searchAgain plainText">
+			Advanced Search<br />
+			<form method="get" action="searchresult.jsp" enctype="multipart/form-data" >
+				Song Title<input type="text" name="songTitle" /><br />
+				Artist Name<input type="text" name="artistName" /><br />
+				Album Title<input type="text" name="albumTitle" /><br />
+				Sort By: <br />
+				<input type="radio" name="sort"  value="song" />Song<br />
+				<input type="radio" name="sort"  value="artist" />Artist<br />
+				<input type="radio" name="sort"  value="album" />Album<br />
+				<input class="button" type="submit" value="Search" title="hi" />
+			</form>
+		</div>
 		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
