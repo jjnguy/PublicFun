@@ -98,4 +98,9 @@ public class Statement implements Executable {
 	public String toString(){
 		return command + " " + value;
 	}
+
+	@Override
+	public void resetExecution() {
+		executed = false;
+	}
 }

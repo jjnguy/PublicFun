@@ -22,7 +22,7 @@ public class TurtleFrame extends JFrame {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		LanguageParser parse = new LanguageParser(new File("firstprogram.tur"));
-		TurtlePane p = new TurtlePane(new Dimension(400,400), parse.parseFile());
+		TurtlePane p = new TurtlePane(new Dimension(500,500), parse.parseFile());
 		new TurtleFrame(p);
 	}
 	

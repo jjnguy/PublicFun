@@ -15,4 +15,6 @@ public interface Executable {
 	public boolean hasNextStatement();
 	
 	public List<TurtleOrientation> executeFully(TurtleOrientation originalOrientation);
+	
+	public void resetExecution();
 }
