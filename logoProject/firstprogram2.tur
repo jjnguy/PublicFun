@@ -1,0 +1,14 @@
+start;
+	repeat 16;
+		move 60;
+		rotateclockwise 45;
+		repeat 8;
+			move 12;
+			rotateclockwise 110;
+		end;
+		repeat 8;
+			move 12;
+			rotatecounterclockwise 110;
+		end;
+	end;
+end;

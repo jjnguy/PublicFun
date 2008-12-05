@@ -2,10 +2,19 @@ package turtledisplay;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Scanner;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -17,13 +26,17 @@ public class TurtleFrame extends JFrame {
 	private TurtlePane pane;
 	private JTextArea textPane;
 
-	public TurtleFrame(TurtlePane p) {
-		pane = p;
+	private LanguageParser parse;
+
+	public TurtleFrame() {
+		setJMenuBar(getMenu());
 		JSplitPane main = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		pane = new TurtlePane(new Dimension(300, 300));
 		main.add(pane);
 		textPane = new JTextArea();
 		textPane.setFont(new Font("Courier New", Font.PLAIN, 12));
 		textPane.setPreferredSize(pane.getPreferredSize());
+		textPane.setTabSize(3);
 		main.add(textPane);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		add(main);
@@ -31,10 +44,98 @@ public class TurtleFrame extends JFrame {
 		setVisible(true);
 	}
 
+	private JMenuBar getMenu() {
+		JMenuBar ret = new JMenuBar();
+		JMenu file = new JMenu("File");
+		JMenuItem run = new JMenuItem("Run");
+		run.addActionListener(runAction);
+		file.add(run);
+		JMenuItem save = new JMenuItem("Save");
+		save.addActionListener(saveAction);
+		file.add(save);
+		JMenuItem load = new JMenuItem("Load");
+		load.addActionListener(loadAction);
+		file.add(load);
+		ret.add(file);
+		return ret;
+	}
+
+	private ActionListener runAction = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			File f = null;
+			try {
+				f = File.createTempFile("turt", "tur");
+			} catch (IOException e2) {
+				e2.printStackTrace();
+				return;
+			}
+			PrintStream out = null;
+			try {
+				out = new PrintStream(f);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+				return;
+			}
+			String[] text = textPane.getText().split("\n");
+			for (String string : text) {
+				out.println(string);
+			}
+			out.close();
+			try {
+				parse = new LanguageParser(f);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+				return;
+			}
+			pane.setExecutable(parse.parseFile());
+		}
+	};
+
+	private ActionListener loadAction = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser choose = new JFileChooser(new File(System.getProperty("user.dir")));
+			int choice = choose.showOpenDialog(TurtleFrame.this);
+			if (choice == JFileChooser.CANCEL_OPTION)
+				return;
+			Scanner in = null;
+			try {
+				in = new Scanner(choose.getSelectedFile());
+			} catch (FileNotFoundException e1) {
+				return;
+			}
+			textPane.setText("");
+			while (in.hasNextLine()) {
+				textPane.append(in.nextLine() + "\n");
+			}
+			in.close();
+		}
+	};
+
+	private ActionListener saveAction = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser choose = new JFileChooser(new File(System.getProperty("user.dir")));
+			int choice = choose.showSaveDialog(TurtleFrame.this);
+			if (choice == JFileChooser.CANCEL_OPTION)
+				return;
+			PrintStream out = null;
+			try {
+				out = new PrintStream(choose.getSelectedFile());
+			} catch (FileNotFoundException e1) {
+				return;
+			}
+			String[] text = textPane.getText().split("\n");
+			for (String string : text) {
+				out.println(string);
+			}
+			out.close();
+		}
+	};
+
 	public static void main(String[] args) throws FileNotFoundException {
-		LanguageParser parse = new LanguageParser(new File("firstprogram.tur"));
-		TurtlePane p = new TurtlePane(new Dimension(500, 500), parse.parseFile());
-		new TurtleFrame(p);
+		new TurtleFrame();
 	}
 
 }

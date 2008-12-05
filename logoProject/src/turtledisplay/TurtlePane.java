@@ -19,21 +19,31 @@ public class TurtlePane extends JPanel {
 
 	private List<TurtleOrientation> points;
 
-	public TurtlePane(Dimension size, Executable commands) {
+	public TurtlePane(Dimension size) {
 		TurtleOrientation o = new TurtleOrientation();
 		o.angle = 0;
 		o.x = size.width / 2;
 		o.y = size.height / 2;
 		points = new ArrayList<TurtleOrientation>();
 		points.add(o);
-		while(commands.hasNextStatement()){
-			o = commands.execute(o).copy();
-			points.add(o);
-		}
 		setBackground(Color.WHITE);
 		setPreferredSize(size);
 	}
 
+	public void setExecutable(Executable ex){
+		points.clear();
+		TurtleOrientation o = new TurtleOrientation();
+		o.angle = 0;
+		o.x = getWidth() / 2;
+		o.y = getHeight() / 2;
+		points.add(o);
+		while(ex.hasNextStatement()){
+			o = ex.execute(o).copy();
+			points.add(o);
+		}
+		repaint();
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
