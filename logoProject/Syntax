@@ -1,0 +1,11 @@
+Case doesn't matter
+files must begin with: start; and end with: end;
+move x;
+(where x is the distance)
+rotatecounterclockwise x;
+(where x is the angle in degrees)
+rotateclockwise x; // comment here too
+(where x is the angle in degrees)
+// this is a comment
+repeat x;
+end;

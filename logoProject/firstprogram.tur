@@ -1,0 +1,9 @@
+start;
+	repeat 4;
+		move 80;
+		rotateclockwise 90;
+	end;
+	move 60;
+	rotatecounterclockwise 10;
+	move 30;
+end;
