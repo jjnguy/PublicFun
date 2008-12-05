@@ -5,6 +5,7 @@ import infoExpert.SongData;
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -50,71 +51,88 @@ public class Database {
 	
 	/*Attempts to insert a new song into the database and returns true if successful, false otherwise.*/
 	public boolean insertSongIntoDatabase(SongData song){
-		Statement insert;
+		/*Prepare statement with wildcards*/
+		PreparedStatement insert;
 		try {
-			insert = conn.createStatement();
+			insert = conn.prepareStatement(
+					"INSERT INTO " + TABLE_NAME + 
+					" (title, album, performers0, performers1, performers2, comments0, comments1, comments2," +
+					" trackNum, pubYear, encodedBy, composer, fileName, pictureName)" +
+					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return false;
+		}	
+		/*Fill in statement data.*/
+		try {
+			insert.setString(1, song.getTitle());
+			insert.setString(2, song.getAlbum());
+			insert.setString(3, song.getPerformer(0));
+			insert.setString(4, song.getPerformer(1));
+			insert.setString(5, song.getPerformer(2));
+			insert.setString(6, song.getComment(0));
+			insert.setString(7, song.getComment(1));
+			insert.setString(8, song.getComment(2));
+			insert.setString(9, song.getTrackNum());
+			insert.setString(10, song.getYear());
+			insert.setString(11, song.getEncodedBy());
+			insert.setString(12, song.getComposer());
+			insert.setString(13, song.getFileName());
+			insert.setString(14, song.getPictureName());
+			
+			insert.executeUpdate();
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return false;
 		}
-		String query = "INSERT INTO " + TABLE_NAME;
 		
-		query += " (title, album, performers0, performers1, performers2, comments0, comments1, comments2,";
-		query += " trackNum, pubYear, encodedBy, composer, fileName, pictureName)";
-		query += " VALUES ("+ "\'"+song.getTitle()+"\'" +", "+"\'"+song.getAlbum()+"\'" +", "+
-		"\'"+song.getPerformer(0)+"\'"+", "+"\'"+song.getPerformer(1)+"\'";
-		query += ", "+"\'"+song.getPerformer(2)+"\'" +", "+"\'"+song.getComment(0)+"\'"+", "+
-		"\'"+song.getComment(1)+"\'"+", "+"\'"+song.getComment(2)+"\'";
-		query += ", "+"\'"+song.getTrackNum()+"\'"+", "+"\'"+song.getYear()+"\'"+", "+"\'"+
-		song.getEncodedBy()+"\'"+", "+"\'"+song.getComposer()+"\'";
-		query += ", "+"\'"+song.getPathName()+"\'"+", "+"\'"+song.getPictureName()+"\'"+");";
-		
-		try {
-			insert.executeUpdate(query);
-		} catch (SQLException e) {
-			handleSQLException(e);
-			return false;
-		}
-		try {
-			insert.close();
-		} catch (SQLException e) {
-			handleSQLException(e);
-			return false;
-		}
 		return true;
 	}
 	
 	/*Take in a search string and query all database fields for the string. Used also to simply return everything
 	 * as in "View Music Collection" link for instance*/
 	public List<SongData> simpleSearch(String searchString, int sortType){
-		Statement q = null;
+		PreparedStatement q = null;
 		ResultSet rs = null;
 		
+		/*Prepare query statement with wildcards*/
 		try {
-			q = conn.createStatement();
+			q = conn.prepareStatement(
+					"SELECT * FROM " + TABLE_NAME + " s " +
+					"WHERE s.title LIKE ? OR " +
+					"s.album LIKE ? OR " +
+					"s.performers0 LIKE ? OR " +
+					"s.performers1 LIKE ? OR " +
+					"s.performers2 LIKE ? " +
+					"ORDER BY ?;");
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
 		}
 		
-		/*Form Query*/
-		String query = "SELECT * FROM " + TABLE_NAME + " s ";
-		query += "WHERE s.title LIKE \'%" + searchString + "%\' OR "; 
-		query += "s.album LIKE \'%" + searchString + "%\' OR ";
-		query += "s.performers0 LIKE \'%" + searchString + "%\' OR ";
-		query += "s.performers1 LIKE \'%" + searchString + "%\' OR ";
-		query += "s.performers2 LIKE \'%" + searchString + "%\' ";
-		
-		addSortBy(query, sortType);
-		
-		/*Execute Query*/
+		/*Fill in wildcards with search string and the sort type*/
 		try {
-			rs = q.executeQuery(query);
+			q.setString(1, "%"+searchString+"%");
+			q.setString(2, "%"+searchString+"%");
+			q.setString(3, "%"+searchString+"%");
+			q.setString(4, "%"+searchString+"%");
+			q.setString(5, "%"+searchString+"%");
+			if(sortType == Controller.SORT_BY_ALBUM){
+				q.setString(6, "album");
+			}
+			else if(sortType == Controller.SORT_BY_ARTIST){
+				q.setString(6, "performers0");
+			}
+			else{
+				q.setString(6, "title");
+			}
+			
+			rs = q.executeQuery();
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
 		}
-		
+	
 		/*Process Results and return List<SongData>*/
 		return processResults(rs);	
 	}
@@ -122,19 +140,16 @@ public class Database {
 	/*advancedSearch takes in a search string like simple search but then only searches specific fields, which are
 	 * passed in as true if the user wants to check them.  Boolean and specifies if the searches are combined using
 	 * AND or OR*/
-	public List<SongData> advancedSearch(String artist, String title,
-			String album, boolean AND, int sortType){
-		Statement q = null;
+	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND, int sortType){
+		PreparedStatement q = null;
 		ResultSet rs = null;
+		String query;
 		String andOr;	//default to AND search
 		boolean useAndOr = false;
-		try {
-			q = conn.createStatement();
-		} catch (SQLException e) {
-			handleSQLException(e);
-			return null;
-		}
-		
+		int wcNum = 0;
+		String wcArr[] = new String[6];	//Keeps track of which wildcards are used where since not all parts of
+										//the prepared statement are used.
+				
 		/*Set and/or boolean value*/
 		if(AND) andOr = "AND";
 		else andOr = "OR";
@@ -144,51 +159,69 @@ public class Database {
 			return null;
 		}
 		
-		/*Form Query*/
-		String query = "SELECT * FROM " + TABLE_NAME + " s WHERE";
+		/*Form query statement with wildcards*/
+		query = "SELECT * FROM " + TABLE_NAME + " s WHERE";
 		if(artist != null){
-			query += " s.performers0 LIKE \'%" + artist + "%\' " + "OR" + " ";
-			query += "s.performers1 LIKE \'%" + artist + "%\' " + "OR" + " ";
-			query += "s.performers2 LIKE \'%" + artist + "%\'";
+			query += " s.performers0 LIKE ?" + " OR ";
+			query += "s.performers1 LIKE ?" + " OR ";
+			query += "s.performers2 LIKE ?";
+			
 			useAndOr = true;
+			wcArr[0] = artist;
+			wcArr[1] = artist;
+			wcArr[2] = artist;
+			wcNum = 3;
 		}
 		if(title != null){
 			if(useAndOr) query += " " + andOr;
-			query += " s.title LIKE \'%" + title + "%\'";
+			query += " s.title LIKE ?";
 			useAndOr = true;
+			wcArr[wcNum] = title;
+			wcNum++;
 		}
 		if(album != null){
 			if(useAndOr) query += " " + andOr;
-			query += " s.album LIKE \'%" + album + "%\' ";
+			query += " s.album LIKE ?";
+			wcArr[wcNum] = album;
+			wcNum++;
 		}
-		addSortBy(query, sortType);
 		
-		/*Execute Query*/
+		query += " ORDER BY ?;";
+		if(sortType == Controller.SORT_BY_ALBUM){
+			wcArr[wcNum] = "album";
+		}
+		else if(sortType == Controller.SORT_BY_ARTIST){
+			wcArr[wcNum] = "artist";
+		}
+		else{
+			wcArr[wcNum] = "title";
+		}
+		
 		try {
-			rs = q.executeQuery(query);
+			q = conn.prepareStatement(query);
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
 		}
 		
-		/*Process Results and return List<SongData>*/
-		return processResults(rs);	
+		/*Fill in wildcards in statement*/
+		try {
+			int i;
+			for(i = 0; i < wcNum; i++){
+				q.setString(i+1, "%"+wcArr[i]+"%");
+			}
+			q.setString(i+1, wcArr[i]);	//set order by - needs no % characters
+			
+			rs = q.executeQuery();
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return null;
+		}
 		
+	/*Process Results and return List<SongData>*/
+		return processResults(rs);	
 	}
 	
-	/*Add an order by clause to the end of the query string to sort by one of 3 criteria. Sort by Title is default.*/
-	private void addSortBy(String query, int sortType){
-		query += "ORDER BY ";
-		if(sortType == Controller.SORT_BY_ALBUM){
-			query += "album;";
-		}
-		else if(sortType == Controller.SORT_BY_ARTIST){
-			query += "performers0;";
-		}
-		else{
-			query += "title;";
-		}
-	}
 
 	/*processResults takes in a ResultSet from a query and extracts each field into a new
 	 * SongData object which are added to a List and then returned.*/
