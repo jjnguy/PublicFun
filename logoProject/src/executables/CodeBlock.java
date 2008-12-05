@@ -64,7 +64,6 @@ public class CodeBlock implements Executable {
 			ex = commands.get(curPos % commands.size());
 			// need to reset in case we have passed by here already
 			ex.resetExecution();
-			System.out.println(curPos + " " + commands.size() + " " + exectueCount);
 			if (curPos >= commands.size() * exectueCount)
 				hasNext = false;
 			else
