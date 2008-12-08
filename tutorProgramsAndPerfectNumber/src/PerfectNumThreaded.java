@@ -4,7 +4,7 @@ public class PerfectNumThreaded {
 
 	public static void main(String[] args) throws Exception {
 		int curNum = 4;
-		// Loop untill we found the fifth perfect number
+		// Loop until we found the fifth perfect number
 		while (found != 5) {
 			if (numthreads < 3) {
 				PerfectNumThread th = new PerfectNumThread(curNum);
@@ -43,6 +43,14 @@ class PerfectNumThread extends Thread {
 	@Override
 	public void run() {
 		if (PerfectNumThreaded.isPerfect(num)) {
+			
+			/*
+			return break continue goto protected boolean for while do if else char 
+			class enum interface extends implements this super try catch throws throw 
+			abstract float double assert switch case default finally package import 
+			null instanceof strictfp transient native const new true false null 
+			*/
+			
 			PerfectNumThreaded.found++;
 			System.out.println(num);
 		}

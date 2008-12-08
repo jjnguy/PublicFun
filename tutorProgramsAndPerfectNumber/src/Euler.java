@@ -1,4 +1,3 @@
-import java.io.Console;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -175,8 +174,8 @@ public class Euler {
 				continue;
 			int numFactors = countFactors(integer);
 			if (numFactors > 200) {
-				System.out.println("The number: " + integer + " has " + numFactors
-						+ " factors.");
+				System.out.println("The number: " + integer + " has "
+						+ numFactors + " factors.");
 			}
 			// 76576500 the answer
 			if (numFactors > 500) {
@@ -238,7 +237,42 @@ public class Euler {
 		System.out.println("Done looking, make the lists bigger maybe");
 	}
 
+	public static int parseInt(String s) {
+		if (!s.matches("\\d+")) {
+			throw new NumberFormatException("The string: '" + s
+					+ "' is not an integer....");
+		}
+		int sum = 0;
+		int power = 1;
+		for (int i = s.length() - 1; i >= 0; i--) {
+			sum += power * (int) (s.charAt(i) - 48);
+			power *= 10;
+		}
+		return sum;
+	}
+
+	public static int parseIni(String s) {
+		if (!s.matches("\\d+")) {
+			throw new NumberFormatException("The string: '" + s
+					+ "' is not an integer....");
+		}
+		int sum = 0;
+		for (int i = 0; i < s.length(); i++) {
+			sum = sum * 10 + (int) (s.charAt(i) - 48);
+		}
+		return sum;
+	}
+
+	public static void bitOps() {
+		byte b1 = 90;
+		byte b2 = 83;
+		byte b3 = 56;
+		byte b4 = 67;
+		int i = (b1 << 3) + (b2 << 2) + (b3 << 1) + b4;
+		System.out.println(i);
+	}
+
 	public static void main(String[] args) {
-		getHexPentTri();
+		bitOps();
 	}
 }
