@@ -94,6 +94,17 @@ public class Database {
 	public List<SongData> simpleSearch(String searchString, int sortType){
 		PreparedStatement q = null;
 		ResultSet rs = null;
+		String sort;
+		
+		if(sortType == Controller.SORT_BY_ALBUM){
+			sort = "album";
+		}
+		else if(sortType == Controller.SORT_BY_ARTIST){
+			sort = "performers0";
+		}
+		else{
+			sort = "title";
+		}
 		
 		/*Prepare query statement with wildcards*/
 		try {
@@ -104,7 +115,7 @@ public class Database {
 					"s.performers0 LIKE ? OR " +
 					"s.performers1 LIKE ? OR " +
 					"s.performers2 LIKE ? " +
-					"ORDER BY ?;");
+					"ORDER BY " + sort + ";");
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
@@ -117,15 +128,7 @@ public class Database {
 			q.setString(3, "%"+searchString+"%");
 			q.setString(4, "%"+searchString+"%");
 			q.setString(5, "%"+searchString+"%");
-			if(sortType == Controller.SORT_BY_ALBUM){
-				q.setString(6, "album");
-			}
-			else if(sortType == Controller.SORT_BY_ARTIST){
-				q.setString(6, "performers0");
-			}
-			else{
-				q.setString(6, "title");
-			}
+
 			
 			rs = q.executeQuery();
 		} catch (SQLException e) {
@@ -141,6 +144,7 @@ public class Database {
 	 * passed in as true if the user wants to check them.  Boolean and specifies if the searches are combined using
 	 * AND or OR*/
 	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND, int sortType){
+		String sort;
 		PreparedStatement q = null;
 		ResultSet rs = null;
 		String query;
@@ -149,6 +153,16 @@ public class Database {
 		int wcNum = 0;
 		String wcArr[] = new String[6];	//Keeps track of which wildcards are used where since not all parts of
 										//the prepared statement are used.
+		
+		if(sortType == Controller.SORT_BY_ALBUM){
+			sort = "album";
+		}
+		else if(sortType == Controller.SORT_BY_ARTIST){
+			sort = "performers0";
+		}
+		else{
+			sort = "title";
+		}
 				
 		/*Set and/or boolean value*/
 		if(AND) andOr = "AND";
@@ -156,7 +170,7 @@ public class Database {
 		
 		/*user entered no data, return null*/
 		if(artist == null && title == null && album == null){
-			return null;
+			return(simpleSearch("", sortType));
 		}
 		
 		/*Form query statement with wildcards*/
@@ -186,16 +200,7 @@ public class Database {
 			wcNum++;
 		}
 		
-		query += " ORDER BY ?;";
-		if(sortType == Controller.SORT_BY_ALBUM){
-			wcArr[wcNum] = "album";
-		}
-		else if(sortType == Controller.SORT_BY_ARTIST){
-			wcArr[wcNum] = "artist";
-		}
-		else{
-			wcArr[wcNum] = "title";
-		}
+		query += " ORDER BY " + sort + ";";
 		
 		try {
 			q = conn.prepareStatement(query);
@@ -210,7 +215,6 @@ public class Database {
 			for(i = 0; i < wcNum; i++){
 				q.setString(i+1, "%"+wcArr[i]+"%");
 			}
-			q.setString(i+1, wcArr[i]);	//set order by - needs no % characters
 			
 			rs = q.executeQuery();
 		} catch (SQLException e) {
