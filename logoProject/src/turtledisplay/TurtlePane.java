@@ -21,7 +21,7 @@ public class TurtlePane extends JPanel {
 
 	public TurtlePane(Dimension size) {
 		TurtleOrientation o = new TurtleOrientation();
-		o.angle = 0;
+		o.angle = 90 + 180;
 		o.x = size.width / 2;
 		o.y = size.height / 2;
 		points = new ArrayList<TurtleOrientation>();
@@ -33,7 +33,7 @@ public class TurtlePane extends JPanel {
 	public void setExecutable(Executable ex){
 		points.clear();
 		TurtleOrientation o = new TurtleOrientation();
-		o.angle = 0;
+		o.angle = 90 + 180;
 		o.x = getWidth() / 2;
 		o.y = getHeight() / 2;
 		points.add(o);
