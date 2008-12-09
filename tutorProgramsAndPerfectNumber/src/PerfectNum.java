@@ -2,7 +2,7 @@ public class PerfectNum {
 	public static void main(String[] args) {
 		int curNum = 4;
 		int found = 0;
-		// Loop untill we found the fifth perfect number
+		// Loop until we found the fifth perfect number
 		while (found != 5) {
 			int factorSum = 0;
 			int halfnum = curNum / 2 + 1;
