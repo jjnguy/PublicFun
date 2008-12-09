@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -31,14 +33,8 @@ public class LanguageParser {
 			line = filein.nextLine();
 		}
 
-		Executable next = new CodeBlock(filein, 1);
+		Executable next = new CodeBlock(filein, 1, new HashMap<String, CodeBlock>());
 		filein.close();
 		return next;
-	}
-
-	public static void main(String[] args) throws FileNotFoundException {
-		LanguageParser p = new LanguageParser(new File("firstprogram.tur"));
-		Executable ex = p.parseFile();
-		ex.equals(null);
 	}
 }

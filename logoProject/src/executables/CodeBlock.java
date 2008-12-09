@@ -1,16 +1,20 @@
 package executables;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import TurtleInterpreter.IllegalStatementException;
 import TurtleInterpreter.TurtleOrientation;
 
 public class CodeBlock implements Executable {
 
 	private List<Executable> commands;
+	private Map<String, CodeBlock> functions;
 	private int exectueCount;
 	private boolean hasNext;
 	private int curPos;
@@ -27,12 +31,19 @@ public class CodeBlock implements Executable {
 	 * 
 	 * @param s
 	 */
-	public CodeBlock(Scanner s, int repeatAmmnt) {
+	public CodeBlock(Scanner s, int repeatAmmnt, Map<String, CodeBlock> functions2) {
+		this.functions = new HashMap<String, CodeBlock>();
+		this.functions.putAll(functions2);
 		exectueCount = repeatAmmnt;
 		commands = new ArrayList<Executable>();
 		String line = "";
 		while (true) {
-			line = s.nextLine().trim();
+			try {
+				line = s.nextLine().trim();
+			} catch (NoSuchElementException e) {
+				throw new IllegalStatementException(
+						"A codeblock was not propperly closed with 'end;'");
+			}
 			if (line.trim().equals("end;"))
 				break;
 			if (line.length() == 0)
@@ -44,7 +55,23 @@ public class CodeBlock implements Executable {
 			if (line.startsWith("repeat")) {
 				line = line.split(" +")[1].trim();
 				int repeatCount = Integer.parseInt(line.substring(0, line.length() - 1));
-				commands.add(new CodeBlock(s, repeatCount));
+				commands.add(new CodeBlock(s, repeatCount, this.functions));
+			} else if (line.startsWith("def")) {
+				line = line.split(" +")[1].trim();
+				String name = line.substring(0, line.length() - 1);
+				if (functions.containsKey(name))
+					throw new IllegalStatementException("The function '" + name
+							+ "' was already defined.");
+				functions.put(name, new CodeBlock(s, 1, functions));
+			} else if (line.startsWith("draw")) {
+				line = line.split(" +")[1].trim();
+				String name = line.substring(0, line.length() - 1);
+				if (!functions.containsKey(name))
+					throw new IllegalStatementException("The function '" + name
+							+ "' was never defined.");
+				commands.add(functions.get(name));// TODO this might cause a bug...putting the
+				// same code block all over might be a
+				// problem.
 			} else {
 				commands.add(new Statement(line));
 			}
@@ -56,6 +83,7 @@ public class CodeBlock implements Executable {
 	@Override
 	public TurtleOrientation execute(TurtleOrientation originalOrientation) {
 		TurtleOrientation currentOr = originalOrientation.copy();
+		if (commands.size() == 0) {hasNext = false;return currentOr;}
 		Executable ex = commands.get(curPos % commands.size());
 		if (ex.hasNextStatement()) {
 			currentOr = ex.execute(originalOrientation);

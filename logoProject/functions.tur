@@ -1,0 +1,12 @@
+start;
+	def square;
+		repeat 4;
+			move 20;
+			rotateclockwise 90;
+		end;
+	end;
+	repeat 8;
+		draw square;
+		rotateclockwise 45;
+	end;
+end;

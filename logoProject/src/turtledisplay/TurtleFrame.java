@@ -19,16 +19,20 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
+import TurtleInterpreter.IllegalStatementException;
 import TurtleInterpreter.LanguageParser;
 
 public class TurtleFrame extends JFrame {
-
+	public static ErrorWindow errorlog;
+	static {
+		errorlog = new ErrorWindow();
+	}
 	private TurtlePane pane;
 	private JTextArea textPane;
-
 	private LanguageParser parse;
 
 	public TurtleFrame() {
+		super("Etch-A-Sketch");
 		setJMenuBar(getMenu());
 		JSplitPane main = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		pane = new TurtlePane(new Dimension(300, 300));
@@ -88,7 +92,12 @@ public class TurtleFrame extends JFrame {
 				e1.printStackTrace();
 				return;
 			}
-			pane.setExecutable(parse.parseFile());
+			try {
+				pane.setExecutable(parse.parseFile());
+			} catch (IllegalStatementException e2) {
+				TurtleFrame.errorlog.writeException(e2);
+				TurtleFrame.errorlog.setVisible(true);
+			}
 		}
 	};
 

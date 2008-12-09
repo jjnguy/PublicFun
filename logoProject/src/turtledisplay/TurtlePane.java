@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import executables.Executable;
 
+import TurtleInterpreter.IllegalStatementException;
 import TurtleInterpreter.TurtleOrientation;
 
 public class TurtlePane extends JPanel {
@@ -30,20 +31,20 @@ public class TurtlePane extends JPanel {
 		setPreferredSize(size);
 	}
 
-	public void setExecutable(Executable ex){
+	public void setExecutable(Executable ex) {
 		points.clear();
 		TurtleOrientation o = new TurtleOrientation();
 		o.angle = 90 + 180;
 		o.x = getWidth() / 2;
 		o.y = getHeight() / 2;
 		points.add(o);
-		while(ex.hasNextStatement()){
+		while (ex.hasNextStatement()) {
 			o = ex.execute(o).copy();
 			points.add(o);
 		}
 		repaint();
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
