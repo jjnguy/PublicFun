@@ -1,6 +1,5 @@
 package turtledisplay;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -13,7 +12,6 @@ import javax.swing.JPanel;
 
 import executables.Executable;
 
-import TurtleInterpreter.IllegalStatementException;
 import TurtleInterpreter.TurtleOrientation;
 
 public class TurtlePane extends JPanel {
