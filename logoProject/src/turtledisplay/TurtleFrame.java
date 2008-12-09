@@ -33,6 +33,7 @@ public class TurtleFrame extends JFrame {
 
 	public TurtleFrame() {
 		super("Etch-A-Sketch");
+		// ----->>>
 		setJMenuBar(getMenu());
 		JSplitPane main = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		pane = new TurtlePane(new Dimension(300, 300));
@@ -63,6 +64,8 @@ public class TurtleFrame extends JFrame {
 		ret.add(file);
 		return ret;
 	}
+
+	Dog dog = new Shoe();
 
 	private ActionListener runAction = new ActionListener() {
 		@Override
@@ -104,7 +107,8 @@ public class TurtleFrame extends JFrame {
 	private ActionListener loadAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JFileChooser choose = new JFileChooser(new File(System.getProperty("user.dir")));
+			JFileChooser choose = new JFileChooser(new File(System
+					.getProperty("user.dir")));
 			int choice = choose.showOpenDialog(TurtleFrame.this);
 			if (choice == JFileChooser.CANCEL_OPTION)
 				return;
@@ -125,7 +129,8 @@ public class TurtleFrame extends JFrame {
 	private ActionListener saveAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JFileChooser choose = new JFileChooser(new File(System.getProperty("user.dir")));
+			JFileChooser choose = new JFileChooser(new File(System
+					.getProperty("user.dir")));
 			int choice = choose.showSaveDialog(TurtleFrame.this);
 			if (choice == JFileChooser.CANCEL_OPTION)
 				return;
@@ -142,9 +147,10 @@ public class TurtleFrame extends JFrame {
 			out.close();
 		}
 	};
+	
+	
 
 	public static void main(String[] args) throws FileNotFoundException {
 		new TurtleFrame();
 	}
-
 }
