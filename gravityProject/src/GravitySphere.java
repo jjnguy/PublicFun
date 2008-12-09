@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 
 public class GravitySphere implements Dragable, Collidable {
 
-	private int DIAMETER = 10;
+	private int DIAMETER = 30;
 	private double BOUNCE_FACTOR = .6;
 	private Color color = Color.RED;
 
