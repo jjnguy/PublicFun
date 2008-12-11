@@ -59,6 +59,7 @@
 		}
 		%>
 		<div class="allResults">
+			<div style="float:left;">
 		<% 
 		if (data != null && data.size() != 0)
 		for (SongData song: data) {%>
@@ -79,20 +80,22 @@
 		<%} else { %>
 			<center style="font-weight:bold; font-size:large;">Your search did not return any results.</center>
 		<%}%>
-		</div>
-		<div class="group center searchAgain plainText">
-			Advanced Search<br />
-			<form method="get" action="searchresult.jsp" enctype="multipart/form-data" >
-				Song Title<input type="text" name="songTitle" /><br />
-				Artist Name<input type="text" name="artistName" /><br />
-				Album Title<input type="text" name="albumTitle" /><br />
-				Sort By: <br />
-				<input type="radio" name="sort"  value="song" />Song<br />
-				<input type="radio" name="sort"  value="artist" />Artist<br />
-				<input type="radio" name="sort"  value="album" />Album<br />
-				<input class="button" type="submit" value="Search" title="hi" />
-			</form>
-		</div>
+			</div>
+			<div class="group center searchAgain plainText">
+				Advanced Search<br />
+				<form method="get" action="searchresult.jsp" enctype="multipart/form-data" >
+					Song Title<input type="text" name="songTitle" /><br />
+					Artist Name<input type="text" name="artistName" /><br />
+					Album Title<input type="text" name="albumTitle" /><br />
+					Sort By: <br />
+					<input type="radio" name="sort"  value="song" />Song<br />
+					<input type="radio" name="sort"  value="artist" />Artist<br />
+					<input type="radio" name="sort"  value="album" />Album<br />
+					<input class="button" type="submit" value="Search" title="hi" />
+				</form>
+			</div>
 		<%= HTMLFooter.getFooter() %>
+		</div>
+		
 	</body>
 </html>

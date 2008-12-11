@@ -79,9 +79,11 @@ a.button:hover {
 }
 
 .footer {
+	clear: both;
 	background-color: black;
 	padding: .4cm;
 	color: white;
+	width: 100%;
 }
 
 li {
@@ -152,12 +154,12 @@ input.smallButton:hover {
 }
 
 .allResults {
-	height: auto;
+	float: left;
+	width: 650px;
+	height: 100%;
 }
 
 .searchResult {
-	/*float:left;*/
-	width:66%;
 	background-color: yellow;
 	border: solid #000000;
 	margin-left: 5px;
@@ -170,10 +172,8 @@ input.smallButton:hover {
 }
 
 .searchAgain {
-	position: absolute;
-	top: 90px;
-	left: 720px;
-	float: right;
+	margin-left: 660px;
+	width: 200px;
 	padding: 10px;
 	background-color: yellow;
 }
