@@ -299,7 +299,7 @@ public class Database {
 		if(!owner.equals("admin")){
 			try{
 				q1 = conn.prepareStatement("SELECT owner FROM " + MP3_TABLE + " WHERE fileName = ?;");
-				q1.setString(1, owner);
+				q1.setString(1, fileName);
 				
 				rs1 = q1.executeQuery();
 				rs1.next();
