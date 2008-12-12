@@ -57,9 +57,9 @@
 			if (title.trim().equals("")) title = null;
 			album = (String) request.getParameter("albumTitle");
 			if (album.trim().equals("")) album = null;
-			data = Controller.getController().advancedSearch(artist,title, album, false, sortTerm);
+			data = Controller.getController().advancedSearch(artist,title, album, false, sortTerm, username);
 		}else{
-			data = Controller.getController().simpleSearch(term, sortTerm);
+			data = Controller.getController().simpleSearch(term, sortTerm, username);
 		}
 		%>
 		<div class="allResults">
