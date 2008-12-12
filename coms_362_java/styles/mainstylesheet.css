@@ -178,6 +178,16 @@ input.smallButton:hover {
 	background-color: yellow;
 }
 
+.login {
+	background-color: yellow;
+	float: left;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 10px;
+	margin-top: 100px;
+	margin-bottom: 110px;
+}
+
 .menu {
 	float: left;
 	padding-top: 100px;

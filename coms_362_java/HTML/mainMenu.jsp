@@ -4,7 +4,8 @@
 
 <%@page import="webInterface.HTMLFooter"%>
 
-<html>
+
+<%@page import="controller.Controller"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
@@ -13,6 +14,24 @@
 		<title>Online jTunes - Main Menu</title>
 	</head>
 	<body>
+		<%
+		String username;
+		boolean hasCookie = false;
+		Cookie[] cookies = request.getCookies();
+		if (cookies == null || cookies.length == 0){
+			hasCookie = false;
+		}
+		if (cookies != null) {
+			for(Cookie cookie: cookies){
+				if (cookie.getName().equals(Controller.USERNAME_COOKIENAME)){
+					hasCookie = true;
+					username = cookie.getValue();
+					break;
+				}
+			}
+		}
+		%>
+		<% if (hasCookie){ %>
 		<div class="menu">
 			<ul>
 				<li>
@@ -26,6 +45,18 @@
 				</li>
 			</ul>
 		</div>
+		<% } else { %>
+		<div class="login group plainText" >
+			<h2>Login</h2>
+			<form class="loginForm" method="get" action="" enctype="multipart/form-data" >
+				Username: <br />
+				<input type="text" name="username" /><br />
+				Password: <br />
+				<input type="password" name="password" /><br />
+				<input type="submit" class="smallButton" value="Log On" />
+			</form>
+		</div>
+		<% } %>
 		<div class="group center">
 			<table class="mainMenuHeaderTable">
 				<tr>
