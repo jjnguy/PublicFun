@@ -13,13 +13,9 @@
 </head>
 <body>
 <%
-	Cookie[] cookies = request.getCookies();
-	for (Cookie cook : cookies) {
-		if (cook.getName().equals(Controller.USERNAME_COOKIENAME)){
-			cook.setMaxAge(1);
-			break;
-		}
-	}
+	Cookie die = new Cookie(Controller.USERNAME_COOKIENAME, Controller.USERNAME_COOKIENAME);
+	die.setMaxAge(0);
+	response.addCookie(die);
 	response.sendRedirect("mainMenu.jsp");
 %>
 </body>
