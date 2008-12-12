@@ -36,12 +36,6 @@
 					<br>
 					<input class="button" type="submit" value="Submit" title="Submit File for Upload" style="margin-top: .2cm; margin-bottom: .1cm" >
 				</form>
-				<form class="plainText" action="uploadlibrary.jsp" method="get" enctype="multipart/form-data">
-						OR ...DO NOT USE THIS NOW
-						Upload your iTunes Library.
-					<input type="submit" class="button" value="Find iTunes Library" />
-					<input type="hidden" value="<%=	iTunesLibLocation %>" name="iTunes" />
-				</form>
 			</div>
 		</div>
 		<%= HTMLFooter.getFooter() %>
