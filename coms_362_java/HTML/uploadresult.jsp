@@ -25,14 +25,14 @@
 		boolean iTunesUpload = request.getParameter("iTunes") != null;
 			String message = null;
 			try {
-		DiskFileItemFactory f = new DiskFileItemFactory();
-		ServletFileUpload serv = new ServletFileUpload(f);
-		FileItem file = (FileItem)serv.parseRequest(request).get(0);
+				DiskFileItemFactory f = new DiskFileItemFactory();
+				ServletFileUpload serv = new ServletFileUpload(f);
+				FileItem file = (FileItem)serv.parseRequest(request).get(0);
 		
-		UploadSong up = Controller.getController();
-		message = up.uploadSong(file.getInputStream(), username);
+				Controller up = Controller.getController();
+				message = up.uploadSong(file.getInputStream(), username);
 			} catch (NullPointerException e) {
-		message = "There was an error uploading your song.  Sorry, try again later.";
+				message = "There was an error uploading your song.  Sorry, try again later.";
 			}
 			message = "Your song was successfully uploaded to the music collection!";
 		%>
