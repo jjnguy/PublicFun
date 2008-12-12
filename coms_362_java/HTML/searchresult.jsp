@@ -89,7 +89,7 @@
 				<form style="margin-left: 40px" method="get" action="searchresult.jsp" enctype="multipart/form-data">
 					<input type="hidden"  name="delete" value="gtfo" />
 					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
-					<input type="hidden" name="broadSearchTerm" value="" ><br />
+					<input type="hidden" name="broadSearchTerm" value="" >
 					<input type="submit" class="smallButton" name="fileName" value="Delete Song" />
 				</form>
 			</div>
