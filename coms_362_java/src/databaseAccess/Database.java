@@ -350,7 +350,7 @@ public class Database {
 	
 	/*Return the hashed password from a user in the database. Can be used to verify login credentials of
 	 * a user that already exists.  If the user does not exist, returns a null to indicate that the username
-	 * attempted to login with was invalid.*/
+	 * attempted to login with was invalid.  */
 	public byte[] getHashedPassword(String user){
 		PreparedStatement q;
 		ResultSet rs;
