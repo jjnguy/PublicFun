@@ -29,9 +29,6 @@
 						<img class="picLink" src="../images/iTunesLogo.PNG" title="Online-iTunes Logo" />
 					</a>
 				</td>
-				<td>
-					<h2>Search Your Music!</h2>
-				</td>
 				<td width="35%" ></td>
 			</tr>
 		</table>
