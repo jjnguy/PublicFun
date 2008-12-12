@@ -18,12 +18,8 @@
 		boolean loggedin = false;
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		System.err.println(username);
-		System.err.println(password);
 		Controller c = Controller.getController();
 		byte[] passowrd = c.getHashedPassword(username);
-		System.out.println(Arrays.toString(passowrd));
-		System.out.println(Arrays.toString(Util.getHashedBytes(password.getBytes())));
 		if (Arrays.equals(passowrd, Util.getHashedBytes(password.getBytes()))){
 			loggedin = true;
 		}
