@@ -20,7 +20,7 @@
 		if (delete != null){
 			Controller c = Controller.getController();
 			message = c.removeSong(fileName, username);
-			message = "alert(\"" + message + "\")";
+			message = "alert('" + message + "')";
 		}
 		%>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
