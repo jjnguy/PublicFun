@@ -27,11 +27,11 @@
 			if(password.equals(password2)){
 				String result = c.createUser(username, Util.getHashedBytes(password.getBytes()));
 				if(result.equals("User could not be created.")){
-					response.sendRedirect("createNewUser.jsp?error=Username already in use!");
+					response.sendRedirect("createnewuser.jsp?error=Username already in use!");
 				}
 			}
 			else{
-				response.sendRedirect("createNewUser.jsp?error=Passwords did not match!");
+				response.sendRedirect("createnewuser.jsp?error=Passwords did not match!");
 			}
 		}
 		

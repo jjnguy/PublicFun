@@ -101,7 +101,25 @@ public class Controller implements DatabaseSearch
 		return "User was successfully created!";
 	}
 	
+	public String deleteUser(String userToDelete, String currentUser){
+		if(userToDelete.equals("admin")){
+			return "Username admin cannot be deleted.";
+		}
+		if(!db.deleteUser(userToDelete, currentUser)){
+			return "User could not be deleted or insufficient rights.";
+		}
+		
+		return "User was successfully deleted!";
+	}
+	
 	public byte[] getHashedPassword(String user){
 		return db.getHashedPassword(user);
+	}
+
+
+
+	@Override
+	public List<String> getAllUsers() {
+		return db.getAllUsers();
 	}
 }

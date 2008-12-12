@@ -28,6 +28,14 @@
 				<li>
 					<a class="button" href="searchresult.jsp?broadSearchTerm=" >View Music Collection</a>
 				</li>
+				<%if(username.equals("admin")){
+						%>
+						<li>
+						<a class="button" href="manageusers.jsp" >Manage Users</a>
+						</li>
+						<%
+					}
+				%>
 				<li>
 					<a class="button" href="logout.jsp" >Logout</a>
 				</li>
@@ -44,7 +52,7 @@
 				<input type="submit" class="smallButton" value="Log On" />
 			</form>
 			<li>
-			<a class="button" href="createNewUser.jsp" >Create New User</a><br />
+			<a class="button" href="createnewuser.jsp" >Create New User</a><br />
 			</li>
 		</div>
 		<% } %>

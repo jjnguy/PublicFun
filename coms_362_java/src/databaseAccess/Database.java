@@ -326,6 +326,28 @@ public class Database {
 		return true;
 	}
 	
+	/*Delete a user from the database. Verifies that user is admin. Returns true if successful,
+	 * false otherwise.*/
+	public boolean deleteUser(String nameToDelete, String currentUser){
+		PreparedStatement q;	//query statement
+		
+		if(currentUser.equals("admin")){
+			try{
+				q = conn.prepareStatement("DELETE FROM " + USER_TABLE + " WHERE username = ?;");
+				q.setString(1, nameToDelete);
+				
+				q.execute();
+				return true;
+			} catch (SQLException e) {
+				handleSQLException(e);
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
+	}
+	
 	/*Create a new user in the database. Provide a username and a hashed password.  Returns true if the user
 	 * was created successfully, false otherwise. Query will fail if the user attempts to create a user that
 	 * already exists.*/
@@ -362,6 +384,29 @@ public class Database {
 			rs = q.executeQuery();
 			rs.next();
 			return rs.getBytes("pass");
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return null;
+		}
+	}
+	
+	/*Returns a list of all the users for administration purposes.  Returns null if any error.*/
+	public List<String> getAllUsers(){
+		Statement s;
+		ResultSet rs;
+		List<String> userList = new ArrayList<String>();
+		
+		/*Get all users from database*/
+		try {
+			s = conn.createStatement();
+			rs = s.executeQuery("SELECT username FROM " + USER_TABLE + " ORDER BY username ASC;");
+			
+			/*Add user results to List and return*/
+			while(rs.next()){
+				userList.add(rs.getString(1));
+			}
+			
+			return userList;
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
