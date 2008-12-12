@@ -5,7 +5,7 @@
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
-<%@page import="controller.interfaces.UploadSong"%>
+<%@page import="actual.UploadSong"%>
 <%@page import="controller.Controller"%>
 
 <%@page import="org.apache.commons.fileupload.FileItemFactory"%>

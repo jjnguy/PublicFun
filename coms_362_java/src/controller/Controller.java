@@ -2,7 +2,6 @@ package controller;
 
 import id3TagStuff.ID3v2_XTag;
 import infoExpert.SongData;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,12 +10,11 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 
+import actual.DatabaseSearch;
+import actual.DownloadSong;
+import actual.RemoveSong;
+import actual.UploadSong;
 import util.SongDataFactory;
-
-import controller.interfaces.DatabaseSearch;
-import controller.interfaces.DownloadSong;
-import controller.interfaces.RemoveSong;
-import controller.interfaces.UploadSong;
 import databaseAccess.Database;
 import file.DeleteSong;
 import file.SaveSong;
@@ -119,8 +117,6 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong, Rem
 				e.printStackTrace();
 				return null;
 			}
-
-		
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 <%@page import="java.io.FileInputStream"%>
-<%@page import="controller.interfaces.DownloadSong"%>
+<%@page import="actual.DownloadSong"%>
 <%@page import="controller.Controller"%>
 
 <html>

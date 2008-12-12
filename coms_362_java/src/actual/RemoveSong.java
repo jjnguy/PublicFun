@@ -1,4 +1,4 @@
-package controller.interfaces;
+package actual;
 
 public interface RemoveSong 
 {
