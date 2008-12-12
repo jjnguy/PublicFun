@@ -8,7 +8,8 @@ import id3TagStuff.id3Data.ID3v2_XFrameData;
 import java.io.IOException;
 import java.io.InputStream;
 
-import controller.Util;
+import util.Util;
+
 
 
 public class ID3v2_XFrame {

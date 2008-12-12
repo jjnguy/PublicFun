@@ -11,13 +11,16 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 
-import controller.DatabaseSearch;
-import controller.SaveSong;
-import controller.UploadSong;
-import controller.SongDataFactory;
-import databaseAccess.Database;
+import util.SongDataFactory;
 
-public class Controller implements UploadSong, DatabaseSearch, DownloadSong 
+import controller.interfaces.DatabaseSearch;
+import controller.interfaces.DownloadSong;
+import controller.interfaces.RemoveSong;
+import controller.interfaces.UploadSong;
+import databaseAccess.Database;
+import file.SaveSong;
+
+public class Controller implements UploadSong, DatabaseSearch, DownloadSong, RemoveSong 
 {
 	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";	//hard coded...we can change later
 	public static final String PIC_PATH = "C:/uploads/pic/";
@@ -116,6 +119,12 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong
 			}
 
 		
+	}
+
+	@Override
+	public String removeSong(String fileName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

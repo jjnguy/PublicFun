@@ -1,4 +1,4 @@
-package controller;
+package file;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,6 +11,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Writer;
 import java.util.Scanner;
+
+import util.Util;
+import controller.Controller;
 
 /**
  * Saves a mp3 file to the file system of the host computer

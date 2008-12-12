@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import controller.Util;
+import util.Util;
+
 
 
 public class ID3v2_XFrameHeader {

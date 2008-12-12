@@ -7,7 +7,8 @@ import java.io.InputStream;
 
 import javax.swing.JFileChooser;
 
-import controller.SaveSong;
+import file.SaveSong;
+
 
 public class SaveSongTest {
 	public static void main(String[] args) throws IOException {

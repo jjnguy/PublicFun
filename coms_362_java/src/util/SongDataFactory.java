@@ -1,5 +1,5 @@
 
-package controller;
+package util;
 
 import id3TagStuff.ID3v2_XTag;
 import id3TagStuff.frames.ID3v2_XFrame;

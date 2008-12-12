@@ -7,7 +7,8 @@ import id3TagStuff.id3Data.ID3_Picture;
 import java.io.File;
 import java.io.IOException;
 
-import controller.Util;
+import util.Util;
+
 
 public class AddNewFrameTest {
 

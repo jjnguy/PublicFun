@@ -7,7 +7,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 
-import controller.Util;
+import util.Util;
+
 
 
 public class ID3_Picture implements ID3v2_XFrameData {
