@@ -18,6 +18,7 @@ import controller.interfaces.DownloadSong;
 import controller.interfaces.RemoveSong;
 import controller.interfaces.UploadSong;
 import databaseAccess.Database;
+import file.DeleteSong;
 import file.SaveSong;
 
 public class Controller implements UploadSong, DatabaseSearch, DownloadSong, RemoveSong 
@@ -123,9 +124,20 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong, Rem
 	}
 
 	@Override
-	public String removeSong(String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+	public String removeSong(String fileName) 
+	{
+		DeleteSong ds = new DeleteSong(fileName);
+		
+		if (!ds.successfulDelete())
+			return "Physical removal failed";
+		
+		if (!db.deleteSong(fileName))
+			return "Song was deleted from the physical disk, but a Database error prevented it from being removed from the database."; 
+		
+		
+		
+		return "Song was successfully deleted!";
 	}
+	
 
 }
