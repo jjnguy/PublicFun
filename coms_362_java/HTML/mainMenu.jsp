@@ -22,9 +22,7 @@
 					<a class="button" href="searchcollection.jsp">Search Music Collection</a>
 				</li>
 				<li>
-				
-					<a class="button" href="" >View Music Collection</a>
-					
+					<a class="button" href="searchresult.jsp?broadSearchTerm=" >View Music Collection</a>
 				</li>
 			</ul>
 		</div>
