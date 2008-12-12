@@ -88,9 +88,9 @@ public class Controller implements DatabaseSearch
 	}
 
 	
-	public String removeSong(String fileName) 
+	public String removeSong(String fileName, String owner) 
 	{
-		return (new RemoveSong()).removeSong(fileName, db);
+		return (new RemoveSong()).removeSong(fileName, db, owner);
 	}
 	
 	public String createUser(String user, byte[] pass){

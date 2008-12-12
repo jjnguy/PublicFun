@@ -97,6 +97,8 @@ public class Database {
 		PreparedStatement q = null;
 		ResultSet rs = null;
 		String sort;
+		String query;
+		int index = 1;
 		
 		if(sortType == Controller.SORT_BY_ALBUM){
 			sort = "album";
@@ -109,16 +111,22 @@ public class Database {
 		}
 		
 		/*Prepare query statement with wildcards*/
+		
+		query = 
+			"SELECT * FROM " + MP3_TABLE + " s " +
+			"WHERE (s.title LIKE ? OR " +
+			"s.album LIKE ? OR " +
+			"s.performers0 LIKE ? OR " +
+			"s.performers1 LIKE ? OR " +
+			"s.performers2 LIKE ?) ";
+		
+		if(!owner.equals("admin")){
+			query += "AND s.owner = ?";
+		}
+			query += "ORDER BY " + sort + ";";
 		try {
-			q = conn.prepareStatement(
-					"SELECT * FROM " + MP3_TABLE + " s " +
-					"WHERE s.owner = ? AND (" +
-					"s.title LIKE ? OR " +
-					"s.album LIKE ? OR " +
-					"s.performers0 LIKE ? OR " +
-					"s.performers1 LIKE ? OR " +
-					"s.performers2 LIKE ?) " +
-					"ORDER BY " + sort + ";");
+			q = conn.prepareStatement(query);
+					
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
@@ -126,12 +134,15 @@ public class Database {
 		
 		/*Fill in wildcards with search string and the sort type*/
 		try {
-			q.setString(1, owner);
+			q.setString(1, "%"+searchString+"%");
 			q.setString(2, "%"+searchString+"%");
 			q.setString(3, "%"+searchString+"%");
 			q.setString(4, "%"+searchString+"%");
 			q.setString(5, "%"+searchString+"%");
-			q.setString(6, "%"+searchString+"%");
+			
+			if(!owner.equals("admin")){
+				q.setString(6, owner);
+			}
 
 			
 			rs = q.executeQuery();
@@ -202,12 +213,16 @@ public class Database {
 			if(useAndOr) query += " " + andOr;
 			else query += " (";
 			query += " s.album LIKE ?";
+			useAndOr = true;
 			wcArr[wcNum] = album;
 			wcNum++;
 		}
 		
-		if(useAndOr) query += ") AND ";
-		query += "s.owner = ?";
+		if(useAndOr) query += ")";
+		if(!owner.equals("admin")){		//skip this part if user is admin - can see all songs
+			query += " AND s.owner = ?";
+		}
+		
 		query += " ORDER BY " + sort + ";";
 		
 		try {
@@ -223,7 +238,10 @@ public class Database {
 			for(i = 0; i < wcNum; i++){
 				q.setString(i+1, "%"+wcArr[i]+"%");
 			}
-			q.setString(i+1, owner);
+			if(!owner.equals("admin")){
+				q.setString(i+1, owner);
+			}
+			
 			
 			rs = q.executeQuery();
 		} catch (SQLException e) {
@@ -270,14 +288,35 @@ public class Database {
 	 * can have the same file name.  Returns true if no errors were thrown.  Does not verify if
 	 * the file exists before running the delete query and returns nothing to indicate if it already
 	 * existed or not.*/
-	public boolean deleteSong(String fileName){
-		PreparedStatement q;
+	public boolean deleteSong(String fileName, String owner){
+		PreparedStatement q1;	//query statement
+		ResultSet rs1;
+		PreparedStatement q2;	//delete statement
 		
+		
+		/*First check to see if user has rights to delete the file. Skip check if admin*/
+		if(!owner.equals("admin")){
+			try{
+				q1 = conn.prepareStatement("SELECT owner FROM " + MP3_TABLE + " WHERE fileName = ?;");
+				q1.setString(1, owner);
+				
+				rs1 = q1.executeQuery();
+				rs1.next();
+				if(!rs1.getString("owner").equals(owner)){	//return false if ownership mismatch
+					return false;
+				}
+			} catch (SQLException e) {
+				handleSQLException(e);
+				return false;
+			}
+		}
+		
+		/*If ownership matches or if logged in user is admin, execute the delete statement*/
 		try {
-			q = conn.prepareStatement("DELETE FROM " + MP3_TABLE + " WHERE fileName = ?;");
-			q.setString(1, fileName);
+			q2 = conn.prepareStatement("DELETE FROM " + MP3_TABLE + " WHERE fileName = ?;");
+			q2.setString(1, fileName);
 			
-			q.execute();
+			q2.execute();
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return false;
