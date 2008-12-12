@@ -21,6 +21,12 @@
 	<body>
 		<%
 		String username = Util.findUsername(request.getCookies());
+		String delete = request.getParameter("delete");
+		String fileName = request.getParameter("fileName");
+		if (delete != null){
+			Controller c = Controller.getController();
+			c.removeSong(fileName, username);
+		}
 		%>
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >
@@ -79,6 +85,11 @@
 					<input type="hidden"  name="title" value="<%= song.getTitle() %>" />
 					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
 					<input type="submit" class="smallButton" name="fileName" value="Download Song" />
+				</form>
+				<form style="margin-left: 40px" method="get" action="searchresult.jsp" enctype="multipart/form-data">
+					<input type="hidden"  name="delete" value="gtfo" />
+					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
+					<input type="submit" class="smallButton" name="fileName" value="Delete Song" />
 				</form>
 			</div>
 		<%} else { %>
