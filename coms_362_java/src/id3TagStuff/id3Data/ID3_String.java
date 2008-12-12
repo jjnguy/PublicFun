@@ -23,12 +23,16 @@ public class ID3_String implements ID3v2_XFrameData {
 
 	public static String trimNullChars(String data2) {
 		String dat = data2;
-		if (dat==null||dat.length()==0)
+		if ((dat==null) ||(dat.length()==0))
 			return "";
 		
 		if (!(Character.isDigit(dat.charAt(0)) || Character.isLetter(dat.charAt(0)))) {
 			dat = dat.substring(1);
 		}
+		
+		if ((dat==null) ||(dat.length()==0))
+			return "";
+		
 		if (!(Character.isDigit(dat.charAt(dat.length() - 1)) || Character.isLetter(dat
 				.charAt(dat.length() - 1)))) {
 			dat = dat.substring(0, dat.length() - 1);
