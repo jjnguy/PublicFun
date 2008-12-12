@@ -23,7 +23,7 @@
 	<div class="center plainText" title="Hi, I'm tool-tip">
 		<table class="center" border="0" >
 			<tr>
-				<td width="35%" ></td>
+				<td width="40%" ></td>
 				<td style="padding: 0">
 					<a href="mainMenu.jsp">
 						<img class="picLink" src="../images/iTunesLogo.PNG" title="Online-iTunes Logo" />
@@ -31,17 +31,21 @@
 				</td>
 				<td width="35%" ></td>
 			</tr>
+			<tr>
+				<div class="createuser plainText">
+					<form method="get" action="loggedin.jsp" enctype="multipart/form-data" >
+						<h2>Create New User</h2><br /><br />
+						*Username<input type="text" name="username" /><br /><br />
+						*Password<input type="password" name="password" /><br /><br />
+						*Confirm Password<input type="password" name="password2" /><br /><br />
+						<input class="button" type="submit" value="Submit" title="hi" />
+					</form>
+				</div>
+			</tr>
+				
 		</table>
 	</div>
-	<div class="center plainText">
-		<form method="get" action="loggedin.jsp" enctype="multipart/form-data" >
-			Create New User<br />
-			*Username<input type="text" name="username" /><br />
-			*Password<input type="password" name="password" /><br />
-			*Confirm Password<input type="password" name="password2" /><br />
-			<input class="button" type="submit" value="Submit" title="hi" />
-		</form>
-	</div>
+
 	<%= HTMLFooter.getFooter() %>
 
 </body>

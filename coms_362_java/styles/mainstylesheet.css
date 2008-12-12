@@ -187,6 +187,9 @@ input.smallButton:hover {
 	margin-top: 100px;
 	margin-bottom: 110px;
 }
+.createuser {
+	text-align: right;
+}
 
 .menu {
 	float: left;
