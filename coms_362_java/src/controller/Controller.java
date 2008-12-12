@@ -1,11 +1,11 @@
 package controller;
 
-import id3TagStuff.ID3v2_XTag;
+//import id3TagStuff.ID3v2_XTag;
 import infoExpert.SongData;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+//import java.io.FileNotFoundException;
+//import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,12 +14,12 @@ import actual.DatabaseSearch;
 import actual.DownloadSong;
 import actual.RemoveSong;
 import actual.UploadSong;
-import util.SongDataFactory;
+//import util.SongDataFactory;
 import databaseAccess.Database;
-import file.DeleteSong;
-import file.SaveSong;
 
-public class Controller implements UploadSong, DatabaseSearch, DownloadSong, RemoveSong 
+//import file.SaveSong;
+
+public class Controller implements DatabaseSearch
 {
 	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";
 	public static final String PIC_PATH = "C:/uploads/pic/";
@@ -44,37 +44,14 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong, Rem
 		}
 	}
 
-	@Override
-	public String uploadSong(InputStream fileStream, String owner) {
-		String fileLocation;
+	
+	public String uploadSong(InputStream fileStream, String owner) 
+	{
+		return (new UploadSong()).uploadSong(fileStream, owner, db);
 		
-		try {
-			SaveSong SS = new SaveSong(fileStream);
-			fileLocation = SS.getPathToMP3();
-			
-		
-			/* Create SongData class from the ID3 tag and insert it into the DB */
-			ID3v2_XTag newTag = new ID3v2_XTag(new File(fileLocation));
-			SongData sd = SongDataFactory.tagToSongData(newTag);
-			sd.setFileName(fileLocation);
-			if (!insertSongIntoDatabase(sd, owner)) {
-				File f = new File(fileLocation);
-				f.delete();
-				return "Database access failed";
-			}
-
-			return "Saved to: " + fileLocation;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "Error: Song not saved";
-		}
 	}
 
-	private boolean insertSongIntoDatabase(SongData song, String owner) {
-		boolean ret = db.insertSongIntoDatabase(song, owner);
-		db.closeDatabase();
-		return ret;
-	}
+
 
 	@Override
 	public List<SongData> simpleSearch(String term, int sortType, String owner) {
@@ -103,35 +80,17 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong, Rem
 		return ret;
 	}
 
-	@Override
+	
 	public FileInputStream downloadSong(String fileName) 
 	{
 		
-		   File fileToDownload = new File(MP3_PATH + fileName);
-		   
-	
-			  try {
-				return new FileInputStream(fileToDownload);
-			} catch (FileNotFoundException e) {
-				
-				e.printStackTrace();
-				return null;
-			}
+		return (new DownloadSong()).downloadSong(fileName, MP3_PATH);
 	}
 
-	@Override
+	
 	public String removeSong(String fileName) 
 	{
-		DeleteSong ds = new DeleteSong(fileName);
-		
-		if (!ds.successfulDelete())
-			return "Physical removal failed";
-		
-		if (!db.deleteSong(fileName))
-			return "Song was deleted from the physical disk, but a Database error prevented it from being removed from the database."; 
-		
-		
-		return "Song was successfully deleted!";
+		return (new RemoveSong()).removeSong(fileName, db);
 	}
 	
 	public String createUser(String user, byte[] pass){
