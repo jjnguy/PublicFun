@@ -17,7 +17,7 @@
 			+ title + ".mp3\"");
 			FileInputStream fileInputStream;
 	   
-			DownloadSong down = Controller.getController();
+			Controller down = Controller.getController();
 			fileInputStream = down.downloadSong((String)request.getParameter("fileName"));
 			
 			int i;
