@@ -18,16 +18,18 @@
 		<link rel="icon" href="../images/favicon.png" type="image/png" />
 		<title>jTunes - Search Results</title>
 	</head>
-	<body>
-		<%
-		String username = Util.findUsername(request.getCookies());
-		String delete = request.getParameter("delete");
-		String fileName = request.getParameter("fileName");
-		if (delete != null){
-			Controller c = Controller.getController();
-			c.removeSong(fileName, username);
-		}
-		%>
+	<%
+	String username = Util.findUsername(request.getCookies());
+	String delete = request.getParameter("delete");
+	String fileName = request.getParameter("fileName");
+	String message = "";
+	if (delete != null){
+		Controller c = Controller.getController();
+		message = c.removeSong(fileName, username); %>
+		message = "alert(\"" + message + "\")";
+	}
+	%>
+	<body onload="message">
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >
 				<tr>
