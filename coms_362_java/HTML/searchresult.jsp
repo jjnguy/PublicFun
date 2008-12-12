@@ -19,7 +19,7 @@
 		String message = "";
 		if (delete != null){
 			Controller c = Controller.getController();
-			message = c.removeSong(fileName, username); %>
+			message = c.removeSong(fileName, username);
 			message = "alert(\"" + message + "\")";
 		}
 		%>
