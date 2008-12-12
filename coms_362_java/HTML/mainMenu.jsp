@@ -33,7 +33,7 @@
 		<% } else { %>
 		<div class="login group plainText" >
 			<h2>Login</h2>
-			<form class="loginForm" method="get" action="" enctype="multipart/form-data" >
+			<form class="loginForm" method="get" action="loggedin.jsp" enctype="multipart/form-data" >
 				Username: <br />
 				<input type="text" name="username" /><br />
 				Password: <br />
