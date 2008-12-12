@@ -275,6 +275,7 @@ public class Database {
 				s.setComposer(rs.getString("composer"));
 				s.setFileName(rs.getString("fileName"));
 				s.setPictureName(rs.getString("pictureName"));
+				s.setOwner(rs.getString("owner"));
 				songList.add(s);
 			}
 		} catch (SQLException e) {

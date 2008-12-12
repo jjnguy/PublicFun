@@ -11,6 +11,7 @@ public class SongData {
 	private String composer;
 	private String fileName;
 	private String pictureName;
+	private String owner;
 
 	public SongData() {
 	};
@@ -113,5 +114,13 @@ public class SongData {
 
 	public void setComposer(String c) {
 		this.composer = c;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 }
