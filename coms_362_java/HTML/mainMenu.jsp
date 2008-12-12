@@ -28,6 +28,9 @@
 				<li>
 					<a class="button" href="searchresult.jsp?broadSearchTerm=" >View Music Collection</a>
 				</li>
+				<li>
+					<a class="button" href="logout.jsp" >Logout</a>
+				</li>
 			</ul>
 		</div>
 		<% } else { %>
