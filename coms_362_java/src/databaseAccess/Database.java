@@ -22,7 +22,8 @@ import controller.Controller;
  * 
  */
 public class Database {
-	private static final String TABLE_NAME = "mp3table";
+	private static final String MP3_TABLE = "mp3table";
+	private static final String USER_TABLE = "users";
 	private Connection conn = null;
 	
 	/*Create a new database connection and return true if successful, false otherwise.*/
@@ -55,7 +56,7 @@ public class Database {
 		PreparedStatement insert;
 		try {
 			insert = conn.prepareStatement(
-					"INSERT INTO " + TABLE_NAME + 
+					"INSERT INTO " + MP3_TABLE + 
 					" (title, album, performers0, performers1, performers2, comments0, comments1, comments2," +
 					" trackNum, pubYear, encodedBy, composer, fileName, pictureName)" +
 					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
@@ -109,7 +110,7 @@ public class Database {
 		/*Prepare query statement with wildcards*/
 		try {
 			q = conn.prepareStatement(
-					"SELECT * FROM " + TABLE_NAME + " s " +
+					"SELECT * FROM " + MP3_TABLE + " s " +
 					"WHERE s.title LIKE ? OR " +
 					"s.album LIKE ? OR " +
 					"s.performers0 LIKE ? OR " +
@@ -174,7 +175,7 @@ public class Database {
 		}
 		
 		/*Form query statement with wildcards*/
-		query = "SELECT * FROM " + TABLE_NAME + " s WHERE";
+		query = "SELECT * FROM " + MP3_TABLE + " s WHERE";
 		if(artist != null){
 			query += " s.performers0 LIKE ?" + " OR ";
 			query += "s.performers1 LIKE ?" + " OR ";
@@ -257,6 +258,95 @@ public class Database {
 		return songList;
 	}
 	
+	/*Delete a song from the database by comparing it with file names in the database. No two songs
+	 * can have the same file name.  Returns true if no errors were thrown.  Does not verify if
+	 * the file exists before running the delete query and returns nothing to indicate if it already
+	 * existed or not.*/
+	public boolean deleteSong(String fileName){
+		PreparedStatement q;
+		
+		try {
+			q = conn.prepareStatement("DELETE FROM " + MP3_TABLE + " WHERE fileName = ?;");
+			q.setString(1, fileName);
+			
+			q.execute();
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/*Create a new user in the database. Provide a username and a hashed password.  Returns true if the user
+	 * was created successfully, false otherwise. Query will fail if the user attempts to create a user that
+	 * already exists.*/
+	public boolean addUser(String user, byte password[]){
+		PreparedStatement q;
+		
+		try {
+			q = conn.prepareStatement(
+					"INSERT INTO " + USER_TABLE +
+					" (username, pass)" +
+					" VALUES (?, ?);");
+			
+			q.setString(1, user);
+			q.setBytes(2, password);
+			
+			q.execute();
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	/*TEST CODE
+	 * 
+	 * 
+	 */
+	
+	public static void main(String args[]){
+		Database db = new Database();
+		try {
+			db.startDatabase(Controller.DB_URL, Controller.DB_USR, Controller.DB_PW);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		byte[] testpw = {'t', 'e', 's', 't'};
+		db.addUser("Test",testpw);
+		
+		byte[] retrievedpw = db.getHashedPassword("Test");
+		System.out.println("Testing finished.");
+	}
+	
+	/*END TEST CODE
+	 * 
+	 * 
+	 */
+	
+	
+	/*Return the hashed password from a user in the database. Can be used to verify login credentials of
+	 * a user that already exists.  If the user does not exist, returns a null to indicate that the username
+	 * attempted to login with was invalid.*/
+	public byte[] getHashedPassword(String user){
+		PreparedStatement q;
+		ResultSet rs;
+		
+		try {
+			q = conn.prepareStatement("SELECT * FROM " + USER_TABLE + " WHERE username = ?;");
+			q.setString(1, user);
+			rs = q.executeQuery();
+			rs.next();
+			return rs.getBytes("pass");
+		} catch (SQLException e) {
+			handleSQLException(e);
+			return null;
+		}
+	}
 	
 	/**
 	 * Simple method to handle {@link SQLException}s. Loops through generated SQLExceptions and
