@@ -16,10 +16,11 @@
 	Cookie[] cookies = request.getCookies();
 	for (Cookie cook : cookies) {
 		if (cook.getName().equals(Controller.USERNAME_COOKIENAME)){
-			cook.setMaxAge(0);
+			cook.setMaxAge(1);
 			break;
 		}
-	}response.sendRedirect("mainMenu.jsp");
+	}
+	response.sendRedirect("mainMenu.jsp");
 %>
 </body>
 </html>
