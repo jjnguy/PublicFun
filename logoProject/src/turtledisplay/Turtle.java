@@ -6,7 +6,7 @@ import java.awt.Point;
 
 public class Turtle {
 	
-	private static int RAD = 5;
+	private static int RAD = 3;
 	
 	public static void draw(Graphics2D g, Point p){
 		Color orig = g.getColor();

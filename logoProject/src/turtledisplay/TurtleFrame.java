@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,8 +18,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+
+import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
 
 import TurtleInterpreter.IllegalStatementException;
 import TurtleInterpreter.LanguageParser;
@@ -40,9 +45,11 @@ public class TurtleFrame extends JFrame {
 		main.add(pane);
 		textPane = new JTextArea();
 		textPane.setFont(new Font("Courier New", Font.PLAIN, 12));
-		textPane.setPreferredSize(pane.getPreferredSize());
 		textPane.setTabSize(3);
-		main.add(textPane);
+		textPane.addKeyListener(crlS);
+		JScrollPane scrol = new JScrollPane(textPane);
+		scrol.setPreferredSize(pane.getPreferredSize());
+		main.add(scrol);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		add(main);
 		pack();
@@ -149,6 +156,35 @@ public class TurtleFrame extends JFrame {
 	};
 	
 	
+
+	private KeyListener crlS = new KeyListener() {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			int modifiers = e.getModifiersEx();
+			if (modifiers == KeyEvent.CTRL_DOWN_MASK && e.getKeyCode() == KeyEvent.VK_S) {
+				saveAction.actionPerformed(null);
+			} else if (modifiers == KeyEvent.CTRL_DOWN_MASK && e.getKeyCode() == KeyEvent.VK_O) {
+				loadAction.actionPerformed(null);
+			} else if (modifiers == KeyEvent.CTRL_DOWN_MASK && e.getKeyCode() == KeyEvent.VK_R) {
+				runAction.actionPerformed(null);
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	};
 
 	public static void main(String[] args) throws FileNotFoundException {
 		new TurtleFrame();
