@@ -29,7 +29,7 @@
 		<link rel="icon" href="../images/favicon.png" type="image/png" />
 		<title>jTunes - Search Results</title>
 	</head>
-	<body onload="message">
+	<body onload="<%= message %>">
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >
 				<tr>
