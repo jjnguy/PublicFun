@@ -43,6 +43,9 @@
 				<input type="password" name="password" /><br />
 				<input type="submit" class="smallButton" value="Log On" />
 			</form>
+			<li>
+			<a class="button" href="createNewUser.jsp" >Create New User</a><br />
+			</li>
 		</div>
 		<% } %>
 		<div class="group center">
