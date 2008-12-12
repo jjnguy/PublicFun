@@ -135,9 +135,18 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong, Rem
 			return "Song was deleted from the physical disk, but a Database error prevented it from being removed from the database."; 
 		
 		
-		
 		return "Song was successfully deleted!";
 	}
 	
-
+	public String createUser(String user, byte[] pass){
+		if(!db.addUser(user, pass)){
+			return "User could not be created.";
+		}
+		
+		return "User was successfully created!";
+	}
+	
+	public byte[] getHashedPassword(String user){
+		return db.getHashedPassword(user);
+	}
 }
