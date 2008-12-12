@@ -12,23 +12,23 @@
 
 <%@page import="util.Util"%><html>
 	<head>
+		<%
+		String username = Util.findUsername(request.getCookies());
+		String delete = request.getParameter("delete");
+		String fileName = request.getParameter("fileName");
+		String message = "";
+		if (delete != null){
+			Controller c = Controller.getController();
+			message = c.removeSong(fileName, username); %>
+			message = "alert(\"" + message + "\")";
+		}
+		%>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
 		<link rel="shortcut icon" href="../favicon.ico" />
 		<link rel="icon" href="../images/favicon.png" type="image/png" />
 		<title>jTunes - Search Results</title>
 	</head>
-	<%
-	String username = Util.findUsername(request.getCookies());
-	String delete = request.getParameter("delete");
-	String fileName = request.getParameter("fileName");
-	String message = "";
-	if (delete != null){
-		Controller c = Controller.getController();
-		message = c.removeSong(fileName, username); %>
-		message = "alert(\"" + message + "\")";
-	}
-	%>
 	<body onload="message">
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >
