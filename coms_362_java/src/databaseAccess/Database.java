@@ -51,15 +51,15 @@ public class Database {
 	}
 	
 	/*Attempts to insert a new song into the database and returns true if successful, false otherwise.*/
-	public boolean insertSongIntoDatabase(SongData song){
+	public boolean insertSongIntoDatabase(SongData song, String owner){
 		/*Prepare statement with wildcards*/
 		PreparedStatement insert;
 		try {
 			insert = conn.prepareStatement(
 					"INSERT INTO " + MP3_TABLE + 
 					" (title, album, performers0, performers1, performers2, comments0, comments1, comments2," +
-					" trackNum, pubYear, encodedBy, composer, fileName, pictureName)" +
-					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+					" trackNum, pubYear, encodedBy, composer, fileName, pictureName, owner)" +
+					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return false;
@@ -80,6 +80,7 @@ public class Database {
 			insert.setString(12, song.getComposer());
 			insert.setString(13, song.getFileName());
 			insert.setString(14, song.getPictureName());
+			insert.setString(15, owner);
 			
 			insert.executeUpdate();
 		} catch (SQLException e) {
@@ -92,7 +93,7 @@ public class Database {
 	
 	/*Take in a search string and query all database fields for the string. Used also to simply return everything
 	 * as in "View Music Collection" link for instance*/
-	public List<SongData> simpleSearch(String searchString, int sortType){
+	public List<SongData> simpleSearch(String searchString, int sortType, String owner){
 		PreparedStatement q = null;
 		ResultSet rs = null;
 		String sort;
@@ -111,11 +112,12 @@ public class Database {
 		try {
 			q = conn.prepareStatement(
 					"SELECT * FROM " + MP3_TABLE + " s " +
-					"WHERE s.title LIKE ? OR " +
+					"WHERE s.owner = ? AND (" +
+					"s.title LIKE ? OR " +
 					"s.album LIKE ? OR " +
 					"s.performers0 LIKE ? OR " +
 					"s.performers1 LIKE ? OR " +
-					"s.performers2 LIKE ? " +
+					"s.performers2 LIKE ?) " +
 					"ORDER BY " + sort + ";");
 		} catch (SQLException e) {
 			handleSQLException(e);
@@ -124,11 +126,12 @@ public class Database {
 		
 		/*Fill in wildcards with search string and the sort type*/
 		try {
-			q.setString(1, "%"+searchString+"%");
+			q.setString(1, owner);
 			q.setString(2, "%"+searchString+"%");
 			q.setString(3, "%"+searchString+"%");
 			q.setString(4, "%"+searchString+"%");
 			q.setString(5, "%"+searchString+"%");
+			q.setString(6, "%"+searchString+"%");
 
 			
 			rs = q.executeQuery();
@@ -144,7 +147,7 @@ public class Database {
 	/*advancedSearch takes in a search string like simple search but then only searches specific fields, which are
 	 * passed in as true if the user wants to check them.  Boolean and specifies if the searches are combined using
 	 * AND or OR*/
-	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND, int sortType){
+	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND, int sortType, String owner){
 		String sort;
 		PreparedStatement q = null;
 		ResultSet rs = null;
@@ -171,15 +174,15 @@ public class Database {
 		
 		/*user entered no data, return null*/
 		if(artist == null && title == null && album == null){
-			return(simpleSearch("", sortType));
+			return(simpleSearch("", sortType, owner));
 		}
 		
 		/*Form query statement with wildcards*/
 		query = "SELECT * FROM " + MP3_TABLE + " s WHERE";
 		if(artist != null){
-			query += " s.performers0 LIKE ?" + " OR ";
+			query += " ((s.performers0 LIKE ?" + " OR ";
 			query += "s.performers1 LIKE ?" + " OR ";
-			query += "s.performers2 LIKE ?";
+			query += "s.performers2 LIKE ?)";
 			
 			useAndOr = true;
 			wcArr[0] = artist;
@@ -189,6 +192,7 @@ public class Database {
 		}
 		if(title != null){
 			if(useAndOr) query += " " + andOr;
+			else query += " (";
 			query += " s.title LIKE ?";
 			useAndOr = true;
 			wcArr[wcNum] = title;
@@ -196,11 +200,14 @@ public class Database {
 		}
 		if(album != null){
 			if(useAndOr) query += " " + andOr;
+			else query += " (";
 			query += " s.album LIKE ?";
 			wcArr[wcNum] = album;
 			wcNum++;
 		}
 		
+		if(useAndOr) query += ") AND ";
+		query += "s.owner = ?";
 		query += " ORDER BY " + sort + ";";
 		
 		try {
@@ -216,6 +223,7 @@ public class Database {
 			for(i = 0; i < wcNum; i++){
 				q.setString(i+1, "%"+wcArr[i]+"%");
 			}
+			q.setString(i+1, owner);
 			
 			rs = q.executeQuery();
 		} catch (SQLException e) {
@@ -300,34 +308,6 @@ public class Database {
 		}
 		return true;
 	}
-	
-	
-	
-	/*TEST CODE
-	 * 
-	 * 
-	 */
-	
-	public static void main(String args[]){
-		Database db = new Database();
-		try {
-			db.startDatabase(Controller.DB_URL, Controller.DB_USR, Controller.DB_PW);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		byte[] testpw = {'t', 'e', 's', 't'};
-		db.addUser("Test",testpw);
-		
-		byte[] retrievedpw = db.getHashedPassword("Test");
-		System.out.println("Testing finished.");
-	}
-	
-	/*END TEST CODE
-	 * 
-	 * 
-	 */
-	
 	
 	/*Return the hashed password from a user in the database. Can be used to verify login credentials of
 	 * a user that already exists.  If the user does not exist, returns a null to indicate that the username

@@ -1,4 +1,4 @@
-package actual;
+package controller.interfaces;
 
 import java.io.InputStream;
 

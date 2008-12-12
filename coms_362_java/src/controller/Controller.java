@@ -21,7 +21,7 @@ import file.SaveSong;
 
 public class Controller implements UploadSong, DatabaseSearch, DownloadSong, RemoveSong 
 {
-	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";	//hard coded...we can change later
+	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";
 	public static final String PIC_PATH = "C:/uploads/pic/";
 	public static final String USERNAME_COOKIENAME = "username";
 	public static final String DB_URL = "jdbc:mysql://65.110.247.189";
@@ -45,7 +45,7 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong, Rem
 	}
 
 	@Override
-	public String uploadSong(InputStream fileStream) {
+	public String uploadSong(InputStream fileStream, String owner) {
 		String fileLocation;
 		
 		try {
@@ -57,7 +57,7 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong, Rem
 			ID3v2_XTag newTag = new ID3v2_XTag(new File(fileLocation));
 			SongData sd = SongDataFactory.tagToSongData(newTag);
 			sd.setFileName(fileLocation);
-			if (!insertSongIntoDatabase(sd)) {
+			if (!insertSongIntoDatabase(sd, owner)) {
 				File f = new File(fileLocation);
 				f.delete();
 				return "Database access failed";
@@ -70,15 +70,15 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong, Rem
 		}
 	}
 
-	private boolean insertSongIntoDatabase(SongData song) {
-		boolean ret = db.insertSongIntoDatabase(song);
+	private boolean insertSongIntoDatabase(SongData song, String owner) {
+		boolean ret = db.insertSongIntoDatabase(song, owner);
 		db.closeDatabase();
 		return ret;
 	}
 
 	@Override
-	public List<SongData> simpleSearch(String term, int sortType) {
-		List<SongData> ret = db.simpleSearch(term, sortType);
+	public List<SongData> simpleSearch(String term, int sortType, String owner) {
+		List<SongData> ret = db.simpleSearch(term, sortType, owner);
 		db.closeDatabase();
 		return ret;
 	}
@@ -97,8 +97,8 @@ public class Controller implements UploadSong, DatabaseSearch, DownloadSong, Rem
 	}
 
 	@Override
-	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND, int sortType) {
-		List<SongData> ret = db.advancedSearch(artist, title, album, AND, sortType);
+	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND, int sortType, String owner) {
+		List<SongData> ret = db.advancedSearch(artist, title, album, AND, sortType, owner);
 		db.closeDatabase();
 		return ret;
 	}
