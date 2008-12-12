@@ -5,6 +5,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import javax.servlet.http.Cookie;
+
+import controller.Controller;
 
 /**
  * A Utility file for dealing with menial tasks.
@@ -12,11 +18,32 @@ import java.io.OutputStream;
  * @author Justin Nelson
  */
 public class Util {
-
+	/**
+	 * The current hashing algorithm to be used, default for torrent file creation
+	 */
+	public static final String hashingAlgorithmUsed = "SHA1";
 	/**
 	 * Debug mode...or not
 	 */
 	public static final boolean DEBUG = true;
+
+	public static String findUsername(Cookie[] cookies) {
+		if (cookies == null)
+			return null;
+		String username = null;
+		if (cookies == null || cookies.length == 0) {
+			return null;
+		}
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals(Controller.USERNAME_COOKIENAME)) {
+					username = cookie.getValue();
+					break;
+				}
+			}
+		}
+		return username;
+	}
 
 	/**
 	 * Casts an int array into a byte array.
@@ -95,5 +122,26 @@ public class Util {
 		while ((bytesRead = input.read(buffer, 0, buffer.length)) > 0) {
 			output.write(buffer, 0, bytesRead);
 		}
+	}
+
+	/**
+	 * Returns the hash value of the given chars
+	 * 
+	 * Uses the default hash algorithm described above
+	 * 
+	 * @param in
+	 *            the byte[] to hash
+	 * @return a byte[] of hashed values
+	 */
+	public static byte[] getHashedBytes(byte[] in) {
+		MessageDigest msg;
+		try {
+			msg = MessageDigest.getInstance(hashingAlgorithmUsed);
+		} catch (NoSuchAlgorithmException e) {
+			throw new AssertionError(
+					"Someone chose to use a hashing algorithm that doesn't exist.  Epic fail, go change it in the Util file.  SHA(1) or MD5");
+		}
+		msg.update(in);
+		return msg.digest();
 	}
 }

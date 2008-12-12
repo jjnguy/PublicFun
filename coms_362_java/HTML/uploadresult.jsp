@@ -10,7 +10,8 @@
 
 <%@page import="org.apache.commons.fileupload.FileItemFactory"%>
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItem"%>
-<%@page import="webInterface.HTMLFooter"%><html>
+<%@page import="webInterface.HTMLFooter"%>
+<%@page import="util.Util"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Upload Results</title>
@@ -20,19 +21,20 @@
 	</head>
 	<body>
 		<%
-			boolean iTunesUpload = request.getParameter("iTunes") != null;
-				String message = null;
-				try {
-			DiskFileItemFactory f = new DiskFileItemFactory();
-			ServletFileUpload serv = new ServletFileUpload(f);
-			FileItem file = (FileItem)serv.parseRequest(request).get(0);
-			
-			UploadSong up = Controller.getController();
-			message = up.uploadSong(file.getInputStream());
-				} catch (NullPointerException e) {
-			message = "There was an error uploading your song.  Sorry, try again later.";
-				}
-				message = "Your song was successfully uploaded to the music collection!";
+		String username = Util.findUsername(request.getCookies());
+		boolean iTunesUpload = request.getParameter("iTunes") != null;
+			String message = null;
+			try {
+		DiskFileItemFactory f = new DiskFileItemFactory();
+		ServletFileUpload serv = new ServletFileUpload(f);
+		FileItem file = (FileItem)serv.parseRequest(request).get(0);
+		
+		UploadSong up = Controller.getController();
+		message = up.uploadSong(file.getInputStream());
+			} catch (NullPointerException e) {
+		message = "There was an error uploading your song.  Sorry, try again later.";
+			}
+			message = "Your song was successfully uploaded to the music collection!";
 		%>
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >

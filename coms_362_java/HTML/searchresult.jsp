@@ -9,7 +9,8 @@
 <%@page import="databaseAccess.Database"%>
 <%@page import="java.util.Collection"%>
 
-<html>
+
+<%@page import="util.Util"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
@@ -18,6 +19,9 @@
 		<title>jTunes - Search Results</title>
 	</head>
 	<body>
+		<%
+		String username = Util.findUsername(request.getCookies());
+		%>
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >
 				<tr>

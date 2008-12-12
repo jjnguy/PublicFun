@@ -3,9 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@page import="webInterface.HTMLFooter"%>
-
-
-<%@page import="controller.Controller"%><html>
+<%@page import="controller.Controller"%>
+<%@page import="util.Util"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
@@ -15,23 +14,9 @@
 	</head>
 	<body>
 		<%
-		String username;
-		boolean hasCookie = false;
-		Cookie[] cookies = request.getCookies();
-		if (cookies == null || cookies.length == 0){
-			hasCookie = false;
-		}
-		if (cookies != null) {
-			for(Cookie cookie: cookies){
-				if (cookie.getName().equals(Controller.USERNAME_COOKIENAME)){
-					hasCookie = true;
-					username = cookie.getValue();
-					break;
-				}
-			}
-		}
+		String username = Util.findUsername(request.getCookies());
 		%>
-		<% if (hasCookie){ %>
+		<% if (username != null){ %>
 		<div class="menu">
 			<ul>
 				<li>
