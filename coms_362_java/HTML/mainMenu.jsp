@@ -67,7 +67,7 @@
 					<td>
 						<h1>Welcome to Online jTunes</h1>
 					</td>
-					<td width="27%" ></td>
+					<td width="27%" ><%= username %></td>
 				</tr>
 			</table>
 
