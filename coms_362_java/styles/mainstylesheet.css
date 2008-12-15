@@ -108,7 +108,7 @@ img.picLink {
 }
 
 .searchAgain {
-	margin-left: 660px;
+	margin-left: 720px;
 	width: 200px;
 	padding: 10px;
 	background-color: yellow;
@@ -136,4 +136,15 @@ img.picLink {
 
 td.username {
 	text-align:right;
+}
+
+.songInfo {
+	float: left;
+	width: 300px;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+
+.songOptions {
+	margin-left: 310px;
 }
