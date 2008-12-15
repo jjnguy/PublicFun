@@ -11,9 +11,6 @@
 		<link rel="shortcut icon" href="../favicon.ico" />
 	</head>
 	<body>
-	<%
-	String iTunesLibLocation = System.getProperty("user.home")+"/My Music/iTunes/iTunes Music Library.xml";
-	%>
 		<div class="group" >
 			<div class="center plainText" title="Hi, I'm tool-tip">
 				<table class="center" border="0" >

@@ -15,12 +15,9 @@
 <body>
 	<%
 	String error = request.getParameter("error");	//output error if there is one
-	if(error != null){
-		%>
-		<h3><%=error%><h3><br />
-		<%
-	}
-	%>
+	if(error != null){ %>
+		<h3><%=error%></h3>
+	<% } %>
 	<div class="center plainText" title="Hi, I'm tool-tip">
 		<table class="center" border="0" >
 			<tr>

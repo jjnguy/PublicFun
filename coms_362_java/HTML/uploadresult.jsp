@@ -23,19 +23,18 @@
 	<body>
 		<%
 		String username = Util.findUsername(request.getCookies());
-		boolean iTunesUpload = request.getParameter("iTunes") != null;
-			String message = null;
-			try {
-				DiskFileItemFactory f = new DiskFileItemFactory();
-				ServletFileUpload serv = new ServletFileUpload(f);
-				FileItem file = (FileItem)serv.parseRequest(request).get(0);
-		
-				Controller up = Controller.getController();
-				message = up.uploadSong(file.getInputStream(), username);
-			} catch (NullPointerException e) {
-				message = "There was an error uploading your song.  Sorry, try again later.";
-			}
-			message = "Your song was successfully uploaded to the music collection!";
+		String message = null;
+		try {
+			DiskFileItemFactory f = new DiskFileItemFactory();
+			ServletFileUpload serv = new ServletFileUpload(f);
+			FileItem file = (FileItem)serv.parseRequest(request).get(0);
+	
+			Controller up = Controller.getController();
+			message = up.uploadSong(file.getInputStream(), username);
+		} catch (NullPointerException e) {
+			message = "There was an error uploading your song.  Sorry, try again later.";
+		}
+		message = "Your song was successfully uploaded to the music collection!";
 		%>
 		<div class="center plainText" title="Hi, I'm tool-tip">
 			<table class="center" border="0" >

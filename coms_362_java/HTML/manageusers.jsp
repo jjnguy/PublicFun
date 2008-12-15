@@ -13,14 +13,10 @@
 	<head>
 		<%
 		String username = Util.findUsername(request.getCookies());
-		if (!username.equals("admin")){
-			response.sendRedirect("mainMenue.jsp");
-		}
 		String nameToDelete = request.getParameter("nametodelete");
 		String message = "";
 		if (nameToDelete != null) {
-			Controller c = Controller.getController();
-			message = c.deleteUser(nameToDelete, username);
+			message = Controller.getController().deleteUser(nameToDelete, username);
 			message = "alert('" + message + "')";
 		}
 		%>
