@@ -7,16 +7,18 @@
 <%@page import="webInterface.HTMLFooter"%>
 <%@page import="databaseAccess.Database"%>
 <%@page import="java.util.Collection"%>
+<%@page import="util.Util"%>
 
-
-<%@page import="util.Util"%><html>
+<html>
 	<head>
 		<%
 		String username = Util.findUsername(request.getCookies());
-		String delete = request.getParameter("delete");
+		if (!username.equals("admin")){
+			response.sendRedirect("mainMenue.jsp");
+		}
 		String nameToDelete = request.getParameter("nametodelete");
 		String message = "";
-		if (delete != null){
+		if (nameToDelete != null) {
 			Controller c = Controller.getController();
 			message = c.deleteUser(nameToDelete, username);
 			message = "alert('" + message + "')";
@@ -47,37 +49,22 @@
 			</table>
 		</div>
 		<%
-		
-		if(username.equals("admin")){
-			List<String> users = null;
-			users = Controller.getController().getAllUsers();
-			%>
-			<div class="allResults">
-			<div style="float:left;">
-			<% 
-			if (users != null && users.size() != 0)
-				for (String user: users) {%>
-					<div class="searchResult" >
-						<div>
-							<%=user%>
-						</div>
-						<form style="margin-left: 40px" method="get" action="manageusers.jsp" enctype="multipart/form-data">
-							<input type="hidden" name="delete" value="gtfo" />
-							<input type="hidden" name="nametodelete" value="<%=user%>" />
-							<input type="submit" class="smallButton" name="nameToDelete" value="Delete User" />
-						</form>
-					</div>
-				<%} 
-			else { %>
-			<center style="font-weight:bold; font-size:large;">Your search did not return any results.</center>
-			<%}%>
-			</div>
-		<%}
-		else{
-			response.sendRedirect("mainMenu.jsp");
-		}
+		List<String> users = Controller.getController().getAllUsers();
 		%>
-			
+		<div class="allResults">
+		<div style="float:left;">
+		<% 
+		for (String user: users) { %>
+			<div class="searchResult" >
+				<div>
+					<%= user %>
+				</div>
+				<form style="margin-left: 40px" method="get" action="manageusers.jsp" enctype="multipart/form-data">
+					<input type="hidden" name="nametodelete" value="<%=user%>" />
+					<input type="submit" class="smallButton" name="nameToDelete" value="Delete User" />
+				</form>
+			</div>
+		<% } %>
 		<%= HTMLFooter.getFooter() %>
 		</div>
 		

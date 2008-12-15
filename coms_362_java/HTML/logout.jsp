@@ -14,10 +14,11 @@
 </head>
 <body>
 <%
-	Cookie die = new Cookie(Controller.USERNAME_COOKIENAME, Controller.USERNAME_COOKIENAME);
-	die.setMaxAge(0);
-	response.addCookie(die);
-	response.sendRedirect("mainMenu.jsp");
+Cookie die = new Cookie(Controller.USERNAME_COOKIENAME,
+		Controller.USERNAME_COOKIENAME);
+die.setMaxAge(0);
+response.addCookie(die);
+response.sendRedirect("mainMenu.jsp");
 %>
 </body>
 </html>

@@ -3,8 +3,7 @@ package controller;
 //import id3TagStuff.ID3v2_XTag;
 import infoExpert.SongData;
 import java.io.File;
-import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
+import java.io.FileInputStream; //import java.io.FileNotFoundException;
 //import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -13,14 +12,12 @@ import java.util.List;
 import actual.DatabaseSearch;
 import actual.DownloadSong;
 import actual.RemoveSong;
-import actual.UploadSong;
-//import util.SongDataFactory;
+import actual.UploadSong; //import util.SongDataFactory;
 import databaseAccess.Database;
 
 //import file.SaveSong;
 
-public class Controller implements DatabaseSearch
-{
+public class Controller implements DatabaseSearch {
 	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";
 	public static final String PIC_PATH = "C:/uploads/pic/";
 	public static final String USERNAME_COOKIENAME = "username";
@@ -44,20 +41,9 @@ public class Controller implements DatabaseSearch
 		}
 	}
 
-	
-	public String uploadSong(InputStream fileStream, String owner) 
-	{
+	public String uploadSong(InputStream fileStream, String owner) {
 		return (new UploadSong()).uploadSong(fileStream, owner, db);
-		
-	}
 
-
-
-	@Override
-	public List<SongData> simpleSearch(String term, int sortType, String owner) {
-		List<SongData> ret = db.simpleSearch(term, sortType, owner);
-		db.closeDatabase();
-		return ret;
 	}
 
 	public static Controller getController() {
@@ -72,51 +58,47 @@ public class Controller implements DatabaseSearch
 			Database.handleSQLException(e);
 		}
 	}
-
+	
 	@Override
-	public List<SongData> advancedSearch(String artist, String title, String album, boolean AND, int sortType, String owner) {
-		List<SongData> ret = db.advancedSearch(artist, title, album, AND, sortType, owner);
+	public List<SongData> search(String broadTerm, String title, String artist,
+			String album, int sortBy, String usename) {
+		List<SongData> ret = db.search(broadTerm, title, artist, album, sortBy,
+				usename);
 		db.closeDatabase();
 		return ret;
 	}
 
-	
-	public FileInputStream downloadSong(String fileName) 
-	{
-		
+	public FileInputStream downloadSong(String fileName) {
 		return (new DownloadSong()).downloadSong(fileName, MP3_PATH);
 	}
 
-	
-	public String removeSong(String fileName, String owner) 
-	{
+	public String removeSong(String fileName, String owner) {
 		return (new RemoveSong()).removeSong(fileName, db, owner);
 	}
-	
-	public String createUser(String user, byte[] pass){
-		if(!db.addUser(user, pass)){
+
+	public String createUser(String user, byte[] pass) {
+		if (!db.addUser(user, pass)) {
 			return "User could not be created.";
 		}
-		
 		return "User was successfully created!";
 	}
-	
-	public String deleteUser(String userToDelete, String currentUser){
-		if(userToDelete.equals("admin")){
+
+	public String deleteUser(String userToDelete, String currentUser) {
+		if (userToDelete.equals("admin")) {
 			return "Username admin cannot be deleted.";
 		}
-		if(!db.deleteUser(userToDelete, currentUser)){
+		if (userToDelete.equals(currentUser)) {
+			return "You cannot delete yourself.";
+		}
+		if (!db.deleteUser(userToDelete, currentUser)) {
 			return "User could not be deleted or insufficient rights.";
 		}
-		
 		return "User was successfully deleted!";
 	}
-	
-	public byte[] getHashedPassword(String user){
+
+	public byte[] getHashedPassword(String user) {
 		return db.getHashedPassword(user);
 	}
-
-
 
 	@Override
 	public List<String> getAllUsers() {

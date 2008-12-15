@@ -27,12 +27,6 @@ html,body {
 	border: solid #000000;
 }
 
-.wrapper {
-	min-height: 100%;
-	height: auto;
-	height: 100%;
-}
-
 .footer {
 	clear: both;
 	background-color: black;
@@ -148,3 +142,4 @@ td.username {
 .songOptions {
 	margin-left: 310px;
 }
+

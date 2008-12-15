@@ -48,28 +48,17 @@
 			</table>
 		</div>
 		<%
-		String term  = (String) request.getParameter("broadSearchTerm");
-		String artist = null, title = null, album = null;
-		List<SongData> data;
-		boolean braodSearch = term != null;
 		String sortName = request.getParameter("sort");
 		int sortTerm = Controller.SORT_BY_TITLE;
 		if (sortName != null)
 			sortTerm = sortName.equals("album") ? Controller.SORT_BY_ALBUM : 
 				(sortName.equals("artist") ? Controller.SORT_BY_ARTIST:Controller.SORT_BY_TITLE);
-		System.err.println(sortTerm + " " + sortName);
-		// if its an advanced search
-		if (!braodSearch){
-			artist = (String) request.getParameter("artistName");
-			if (artist.trim().equals("")) artist = null;
-			title = (String) request.getParameter("songTitle");
-			if (title.trim().equals("")) title = null;
-			album = (String) request.getParameter("albumTitle");
-			if (album.trim().equals("")) album = null;
-			data = Controller.getController().advancedSearch(artist,title, album, false, sortTerm, username);
-		}else{
-			data = Controller.getController().simpleSearch(term, sortTerm, username);
-		}
+		String term  = (String) request.getParameter("broadSearchTerm");
+		String artist = (String) request.getParameter("artistName");
+		String title = (String) request.getParameter("songTitle");
+		String album = (String) request.getParameter("albumTitle");
+		
+		List<SongData> data = Controller.getController().search(term, title, artist, album, sortTerm, Util.findUsername(request.getCookies()));
 		%>
 		<div class="allResults">
 			<div style="float:left;">
@@ -119,6 +108,5 @@
 			</div>
 		<%= HTMLFooter.getFooter() %>
 		</div>
-		
 	</body>
 </html>

@@ -46,15 +46,5 @@
 		}
 		response.sendRedirect("mainMenu.jsp");
 		%>
-		<% if (loggedin) { %>
-		<div>
-			Your Login was successful
-		</div>
-		<%} else { %>
-		<div>
-			Your Login <h2>FAILD</h2>
-		</div>
-		<% } %>
-		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
