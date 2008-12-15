@@ -9,6 +9,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="../styles/buttons.css" />
 		<link rel="icon" href="../images/favicon.png" type="image/png" />
 		<link rel="shortcut icon" href="../favicon.ico" />
 		<title>Logged In - jTunes</title>
@@ -21,7 +22,6 @@
 		String password2 = request.getParameter("password2");
 
 		Controller c = Controller.getController();
-		
 		
 		if(password2 != null){	//New user request
 			if(password.equals(password2)){
@@ -44,6 +44,7 @@
 			co.setMaxAge(60 * 30);
 			response.addCookie(co);
 		}
+		response.sendRedirect("mainMenu.jsp");
 		%>
 		<% if (loggedin) { %>
 		<div>

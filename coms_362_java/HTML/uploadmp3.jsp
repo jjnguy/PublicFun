@@ -6,6 +6,7 @@
 	<head>
 		<title>Upload a file to the server</title>
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="../styles/buttons.css" />
 		<link rel="icon" href="../images/favicon.png" type="image/png" />
 		<link rel="shortcut icon" href="../favicon.ico" />
 	</head>

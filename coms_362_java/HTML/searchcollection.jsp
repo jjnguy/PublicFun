@@ -7,6 +7,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>jTunes - Search Song Collection</title>
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="../styles/buttons.css" />
 		<link rel="icon" href="../images/favicon.png" type="image/png" />
 		<link rel="shortcut icon" href="../favicon.ico" />
 	</head>

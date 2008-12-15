@@ -8,6 +8,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="../styles/buttons.css" />
 		<link rel="icon" href="../images/favicon.png" type="image/png" />
 		<link rel="shortcut icon" href="../favicon.ico" />
 		<title>Online jTunes - Main Menu</title>
@@ -51,9 +52,7 @@
 				<input type="password" name="password" /><br />
 				<input type="submit" class="smallButton" value="Log On" />
 			</form>
-			<li>
 			<a class="button" href="createnewuser.jsp" >Create New User</a><br />
-			</li>
 		</div>
 		<% } %>
 		<div class="group center">
@@ -67,7 +66,7 @@
 					<td>
 						<h1>Welcome to Online jTunes</h1>
 					</td>
-					<td width="27%" ><%= username %></td>
+					<td class="username plainText" width="40%" ><%= username==null?"":"Logged in as " + username %></td>
 				</tr>
 			</table>
 
@@ -79,7 +78,8 @@
 				stream the songs straight from the server, and download the songs to the machine they are using currently.
 				<br class="nopad" /><br class="nopad" />
 				<h3>Getting Started</h3>
-				To begin, simply upload some songs to the library.  Then feel free to view, sort, and stream the songs from anywhere.
+				To begin, create an account.  It is very simple. <br />
+				Then, simply upload some songs to the library.  Feel free to view, sort, and stream the songs from anywhere.
 			</div>
 		</div>
 		<div style="margin-top: 80px"></div>
