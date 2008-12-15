@@ -21,24 +21,21 @@
 		<div class="menu">
 			<ul>
 				<li>
-					<a class="button" href="uploadmp3.jsp" >Upload Music to the Collection</a>
+					<a class="listButton" href="uploadmp3.jsp" >Upload Music to the Collection</a>
 				</li>
 				<li>
-					<a class="button" href="searchcollection.jsp">Search Music Collection</a>
+					<a class="listButton" href="searchcollection.jsp">Search Music Collection</a>
 				</li>
 				<li>
-					<a class="button" href="searchresult.jsp?broadSearchTerm=" >View Music Collection</a>
+					<a class="listButton" href="searchresult.jsp?broadSearchTerm=" >View Music Collection</a>
 				</li>
-				<%if(username.equals("admin")){
-						%>
-						<li>
-						<a class="button" href="manageusers.jsp" >Manage Users</a>
-						</li>
-						<%
-					}
-				%>
+				<%if(username.equals("admin")) { %>
+					<li>
+						<a class="listButton" href="manageusers.jsp" >Manage Users</a>
+					</li>
+				<% } %>
 				<li>
-					<a class="button" href="logout.jsp" >Logout</a>
+					<a class="listButton" href="logout.jsp" >Logout</a>
 				</li>
 			</ul>
 		</div>
@@ -50,7 +47,7 @@
 				<input type="text" name="username" /><br />
 				Password: <br />
 				<input type="password" name="password" /><br />
-				<input type="submit" class="smallButton" value="Log On" />
+				<input type="submit" class="smallLoginButton"  style="margin-bottom: 10px" value="Log On" />
 			</form>
 			<a class="button" href="createnewuser.jsp" >Create New User</a><br />
 		</div>

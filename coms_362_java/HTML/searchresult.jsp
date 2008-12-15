@@ -82,18 +82,18 @@
 				</div>
 				<form style="margin-left: 40px" action="streammp3.jsp" method="get" enctype="multipart/form-data">
 					<input type="hidden"  name="fileURL" value="<%= Controller.MP3_URL + song.getFileName() %>" />
-					<input type="submit" class="smallButton" name="submit" value="Stream Song" />
+					<input type="submit" class="smallResultButton" name="submit" value="Stream Song" />
 				</form>
 				<form style="margin-left: 40px" method="get" action="downloadmp3.jsp" enctype="multipart/form-data">
 					<input type="hidden"  name="title" value="<%= song.getTitle() %>" />
 					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
-					<input type="submit" class="smallButton" name="fileName" value="Download Song" />
+					<input type="submit" class="smallResultButton" name="fileName" value="Download Song" />
 				</form>
 				<form style="margin-left: 40px" method="get" action="searchresult.jsp" enctype="multipart/form-data">
 					<input type="hidden"  name="delete" value="gtfo" />
 					<input type="hidden"  name="fileName" value="<%= song.getFileName() %>" />
 					<input type="hidden" name="broadSearchTerm" value="" >
-					<input type="submit" class="smallButton" name="fileName" value="Delete Song" />
+					<input type="submit" class="smallResultButton" name="fileName" value="Delete Song" />
 				</form>
 			</div>
 		<%} else { %>

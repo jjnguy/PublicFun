@@ -1,51 +1,39 @@
 @CHARSET "ISO-8859-1";
 
-input.formButton {
+input.button , a.button , input.formButton , input.smallButton , 
+	a.listButton , input.smallResultButton , input.smallLoginButton {
 	background-color: orange;
-	padding: 4px;
-	color: black;
-	font-family: sans-serif;
-	text-decoration: none;
-	font-weight: bold;
-	border: solid #000000;
-	font-family: sans-serif;
-	font-size: 12pt;
-}
-
-input.button {
-	background-color: orange;
-	margin: 4px;
-	margin-bottom: 15px;
-	padding: 4px;
 	color: black;
 	font-family: sans-serif;
 	text-decoration: none;
 	font-weight: bold;
 	border: solid #000000;
 	cursor: pointer;
-	font-family: sans-serif;
 	font-size: 12pt;
+	margin: 7px;
+	padding: 7px;
 }
 
-input.button:hover , a.button:hover {
-	background-color: darkGoldenRod;
+input.smallResultButton {
+	margin: -1;
+	padding: 2;
 }
 
-input.smallButton {
-	background-color: orange;
+a.listButton {
+	margin: 7px;
+	padding: 7px;
+}
+
+input.smallButton , input.smallLoginButton , input.smallResultButton {
 	margin: 2px;
 	padding: 2px;
-	color: black;
-	font-family: sans-serif;
-	text-decoration: none;
-	font-weight: bold;
-	border: solid #000000;
-	border-width: 2px;
-	cursor: pointer;
-	font-family: sans-serif;
 	font-size: 10pt;
 }
 
-input.smallButton:hover {
+input.smallLoginButton {
+	margin-bottom: 10;
+}
+
+input.button:hover , a.button:hover , input.smallButton:hover {
 	background-color: darkGoldenRod;
 }
