@@ -32,7 +32,7 @@ html,body {
 	background-color: black;
 	padding: .4cm;
 	color: white;
-	width: 100%;
+	width: auto;
 }
 
 li {
@@ -90,6 +90,7 @@ img.picLink {
 }
 
 .searchResult {
+	float: left;
 	background-color: yellow;
 	border: solid #000000;
 	margin-left: 5px;
@@ -99,6 +100,7 @@ img.picLink {
 	margin-bottom: 10px;
 	font-size: large;
 	font-weight: bold;
+	clear: both;
 }
 
 .searchAgain {
@@ -125,7 +127,7 @@ img.picLink {
 .menu {
 	float: left;
 	padding-top: 100px;
-	padding-bottom: 150px;
+	padding-bottom: 100px;
 }
 
 td.username {
