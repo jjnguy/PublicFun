@@ -67,9 +67,9 @@
 		for (SongData song: data) {%>
 			<div class="searchResult" >
 				<div class="songInfo">
-					<%= "Title: " + song.getTitle() %><br />
-					<%= "Artist: " + song.getPerformer(0) %><br />
-					<%= "Album: " + song.getAlbum() %><br />
+					<span class="songLabel" >Title: </span><%= song.getTitle() %><br />
+					<span class="songLabel" >Artist: </span><%= song.getPerformer(0) %><br />
+					<span class="songLabel" >Album: </span><%= song.getAlbum() %><br />
 				</div>
 				<div class="songOptions" >
 					<form style="margin-left: 40px" action="streammp3.jsp" method="get" enctype="multipart/form-data">
@@ -106,7 +106,7 @@
 					<input class="button" type="submit" value="Search" title="hi" />
 				</form>
 			</div>
-		<%= HTMLFooter.getFooter() %>
 		</div>
+		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>

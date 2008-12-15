@@ -48,21 +48,20 @@
 		List<String> users = Controller.getController().getAllUsers();
 		%>
 		<div class="allResults">
-		<div style="float:left;">
-		<% 
-		for (String user: users) { %>
-			<div class="searchResult" >
-				<div>
-					<%= user %>
+			<div style="float:left;">
+				<% for (String user: users) { %>
+				<div class="searchResult" >
+					<div>
+						<%= user %>
+					</div>
+					<form style="margin-left: 40px" method="get" action="manageusers.jsp" enctype="multipart/form-data">
+						<input type="hidden" name="nametodelete" value="<%=user%>" />
+						<input type="submit" class="smallButton" name="nameToDelete" value="Delete User" />
+					</form>
 				</div>
-				<form style="margin-left: 40px" method="get" action="manageusers.jsp" enctype="multipart/form-data">
-					<input type="hidden" name="nametodelete" value="<%=user%>" />
-					<input type="submit" class="smallButton" name="nameToDelete" value="Delete User" />
-				</form>
+				<% } %>
 			</div>
-		<% } %>
-		<%= HTMLFooter.getFooter() %>
 		</div>
-		
+		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>

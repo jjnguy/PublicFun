@@ -86,7 +86,7 @@ img.picLink {
 .allResults {
 	float: left;
 	width: 650px;
-	height: 100%;
+	clear: both;
 }
 
 .searchResult {
@@ -143,3 +143,6 @@ td.username {
 	margin-left: 310px;
 }
 
+span.songLabel {
+	font-size: 15pt;
+}
