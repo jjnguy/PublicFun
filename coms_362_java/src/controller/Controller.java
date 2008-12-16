@@ -11,7 +11,9 @@ import actual.DatabaseSearch;
 import actual.DownloadSong;
 import actual.RemoveSong;
 import actual.UploadSong;
+import actual.Login;
 import databaseAccess.Database;
+
 
 public class Controller implements DatabaseSearch {
 	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";
@@ -92,8 +94,11 @@ public class Controller implements DatabaseSearch {
 		return "User was successfully deleted!";
 	}
 
-	public byte[] getHashedPassword(String user) {
-		return db.getHashedPassword(user);
+	
+	
+	public boolean login(String username, String password)
+	{
+		return (new Login()).login(username, password, db);
 	}
 
 	@Override
