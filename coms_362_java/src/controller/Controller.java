@@ -1,10 +1,8 @@
 package controller;
 
-//import id3TagStuff.ID3v2_XTag;
 import infoExpert.SongData;
 import java.io.File;
-import java.io.FileInputStream; //import java.io.FileNotFoundException;
-//import java.io.IOException;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,10 +10,8 @@ import java.util.List;
 import actual.DatabaseSearch;
 import actual.DownloadSong;
 import actual.RemoveSong;
-import actual.UploadSong; //import util.SongDataFactory;
+import actual.UploadSong;
 import databaseAccess.Database;
-
-//import file.SaveSong;
 
 public class Controller implements DatabaseSearch {
 	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";
