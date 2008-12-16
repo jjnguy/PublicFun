@@ -70,7 +70,6 @@
 					<td class="username plainText" width="40%" ><%= username==null?"":"Logged in as " + username %></td>
 				</tr>
 			</table>
-
 			<div class="mainMenuContent">
 				<h3>What is Online jTunes?</h3>
 				Online jTunes is exactly what it sounds like.<br class="noPad" />
@@ -80,7 +79,8 @@
 				<br class="nopad" /><br class="nopad" />
 				<h3>Getting Started</h3>
 				To begin, create an account.  It is very simple. <br />
-				Then, simply upload some songs to the library.  Feel free to view, sort, and stream the songs from anywhere.
+				Then, simply upload some songs to the library.  Feel free to view, sort, and stream the songs from anywhere.<br/>
+				To see some documentation about the development of this website click <a href="documentation/finalPaper.jsp">here</a>.
 			</div>
 		</div>
 		<div style="margin-top: 80px"></div>
