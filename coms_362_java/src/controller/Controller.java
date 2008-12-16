@@ -73,12 +73,14 @@ public class Controller implements DatabaseSearch {
 	public String removeSong(String fileName, String owner) {
 		return (new RemoveSong()).removeSong(fileName, db, owner);
 	}
-
-	public String createUser(String user, byte[] pass) {
-		if (!db.addUser(user, pass)) {
-			return "User could not be created.";
-		}
-		return "User was successfully created!";
+	
+	public String createUser(String username, String password1, String password2)
+	{
+		if ((new Login()).createUser(username, password1, password2, db))
+			return "User was successfully created!";
+		
+		else
+			return "User was successfully created!";
 	}
 
 	public String deleteUser(String userToDelete, String currentUser) {
