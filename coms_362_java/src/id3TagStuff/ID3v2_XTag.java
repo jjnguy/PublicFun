@@ -15,7 +15,6 @@ import java.util.List;
 import util.Util;
 
 
-
 /**
  * An ID3v2_XTag represents an entire ID3 tag. It can be artifically created from a fake mp3
  * file.

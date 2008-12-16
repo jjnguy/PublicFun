@@ -27,7 +27,6 @@ import controller.Controller;
  *
  */
 public class SaveSong {
-	// TODO: Reuse numbers after a file gets removed in the future?
 	
 	//file that holds one number that will be the next filename
 	private static final String FILE_NAME = "file_number.txt";
