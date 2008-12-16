@@ -80,7 +80,7 @@ public class Controller implements DatabaseSearch {
 			return "User was successfully created!";
 		
 		else
-			return "User was successfully created!";
+			return "Error: User was not created!";
 	}
 
 	public String deleteUser(String userToDelete, String currentUser) {
