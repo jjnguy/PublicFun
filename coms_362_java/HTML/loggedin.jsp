@@ -33,7 +33,7 @@
 			co.setMaxAge(60 * 30);
 			response.addCookie(co);
 		}
-		response.sendRedirect("mainMenu.jsp");
+		response.sendRedirect("mainMenu.jsp?message=" + message);
 		%>
 	</body>
 </html>

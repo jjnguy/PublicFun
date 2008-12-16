@@ -5,7 +5,7 @@
 <%@page import="java.util.List"%>
 <%@page import="controller.Controller"%>
 <%@page import="webInterface.HTMLFooter"%>
-<%@page import="databaseAccess.Database"%>
+<%@page import="databaseAccess.QueryDB"%>
 <%@page import="java.util.Collection"%>
 <%@page import="util.Util"%>
 

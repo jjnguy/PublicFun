@@ -12,7 +12,7 @@ import actual.DownloadSong;
 import actual.RemoveSong;
 import actual.UploadSong;
 import actual.Login;
-import databaseAccess.Database;
+import databaseAccess.QueryDB;
 
 
 public class Controller implements DatabaseSearch {
@@ -26,7 +26,7 @@ public class Controller implements DatabaseSearch {
 	public static final int SORT_BY_TITLE = 0;
 	public static final int SORT_BY_ARTIST = 1;
 	public static final int SORT_BY_ALBUM = 2;
-	private Database db;
+	private QueryDB db;
 
 	static {
 		File existTest = new File(MP3_PATH);
@@ -49,11 +49,11 @@ public class Controller implements DatabaseSearch {
 	}
 
 	private Controller() {
-		db = new Database();
+		db = new QueryDB();
 		try {
 			db.startDatabase(DB_URL, DB_USR, DB_PW);
 		} catch (SQLException e) {
-			Database.handleSQLException(e);
+			QueryDB.handleSQLException(e);
 		}
 	}
 	

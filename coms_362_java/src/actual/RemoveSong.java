@@ -1,6 +1,6 @@
 package actual;
 
-import databaseAccess.Database;
+import databaseAccess.QueryDB;
 import file.DeleteSong;
 
 public class RemoveSong 
@@ -10,7 +10,7 @@ public class RemoveSong
 	 * @param fileName
 	 * @return A String containing a message indicating whether or not the removal was successful
 	 */
-	public String removeSong(String fileName, Database db, String owner)
+	public String removeSong(String fileName, QueryDB db, String owner)
 	{
 		DeleteSong ds = new DeleteSong(fileName);
 		

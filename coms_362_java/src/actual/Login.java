@@ -2,12 +2,12 @@ package actual;
 import java.util.Arrays;
 import util.Util;
 
-import databaseAccess.Database;
+import databaseAccess.QueryDB;
 public class Login 
 
 
 {
-	public boolean login (String username, String password, Database db)
+	public boolean login (String username, String password, QueryDB db)
 	{
 		if ((username == null) || (password == null))
 			return false;
@@ -21,7 +21,7 @@ public class Login
 	
 	
 	
-	public boolean createUser(String username, String password1, String password2, Database db)
+	public boolean createUser(String username, String password1, String password2, QueryDB db)
 	{
 		if ((password1 == null)||(password2 == null)||(!password1.equals(password2)))
 				return false;

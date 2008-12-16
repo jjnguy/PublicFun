@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import databaseAccess.Database;
+import databaseAccess.QueryDB;
 
 import util.SongDataFactory;
 
@@ -20,7 +20,7 @@ public class UploadSong
 	 * @param fileStream
 	 * @return A String containing a message describing whether or not the upload was successful
 	 */
-	public String uploadSong(InputStream fileStream, String owner, Database db)
+	public String uploadSong(InputStream fileStream, String owner, QueryDB db)
 	{
 		String fileLocation;
 		
@@ -45,7 +45,7 @@ public class UploadSong
 			return "Error: Song not saved";
 		}
 	}
-	private boolean insertSongIntoDatabase(SongData song, String owner, Database db) 
+	private boolean insertSongIntoDatabase(SongData song, String owner, QueryDB db) 
 	{
 		boolean ret = db.insertSongIntoDatabase(song, owner);
 		db.closeDatabase();

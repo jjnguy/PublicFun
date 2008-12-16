@@ -12,8 +12,12 @@
 		<link rel="icon" href="../images/favicon.png" type="image/png" />
 		<link rel="shortcut icon" href="../favicon.ico" />
 		<title>Online jTunes - Main Menu</title>
+		<% 
+		String message = (String)request.getParameter("message");
+		if (message == null)message = "";
+		%>
 	</head>
-	<body>
+	<body onload="<%= message %>">
 		<%
 		String username = Util.findUsername(request.getCookies());
 		%>

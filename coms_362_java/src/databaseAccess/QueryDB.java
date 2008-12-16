@@ -21,7 +21,7 @@ import controller.Controller;
  * @author Justin Nelson, Shaun
  * 
  */
-public class Database {
+public class QueryDB {
 	private static final String MP3_TABLE = "mp3table";
 	private static final String USER_TABLE = "users";
 	private Connection conn = null;
