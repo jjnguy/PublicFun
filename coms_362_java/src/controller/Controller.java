@@ -96,8 +96,7 @@ public class Controller implements DatabaseSearch {
 		return "User was successfully deleted!";
 	}
 
-	
-	
+
 	public boolean login(String username, String password)
 	{
 		return (new Login()).login(username, password, db);

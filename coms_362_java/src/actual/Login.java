@@ -26,7 +26,7 @@ public class Login
 		if ((password1 == null)||(password2 == null)||(!password1.equals(password2)))
 				return false;
 		
-		if (db.addUser(username, password1.getBytes()))
+		if (db.addUser(username, Util.getHashedBytes(password1.getBytes())))  
 			return true;
 		
 		else 
