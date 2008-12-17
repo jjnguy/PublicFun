@@ -30,7 +30,7 @@
 		getting all of the necessary things set up on our local computers to develop web applications 
 		using JSP and MySQL.
 		<h3>MySQL Commands</h3><br/>
-		Shaun, our DB Guru used some info from <a href="http://www.pantz.org/software/mysql/mysqlcomands.html">Pantz.org</a>
+		Shaun, our DB Guru used some info from <a href="http://www.pantz.org/software/mysql/mysqlcommands.html">Pantz.org</a>
 		to figure out some of the necessary commands.
 		<%= HTMLFooter.getFooter() %>
 	</body>

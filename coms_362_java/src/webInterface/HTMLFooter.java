@@ -12,7 +12,7 @@ public class HTMLFooter {
 	 * The height of the footer in pixles
 	 */
 	public static final int FOOTER_HEIGHT = 25;
-	private static String URL = "mainMenu.jsp";
+	private static String URL = "/mainMenu.jsp";
 	private static String BUTTON_TEXT = "Main Menu";
 
 	private static final String[] authorNames = new String[] { "Justin Nelson",
