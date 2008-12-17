@@ -27,8 +27,8 @@
 		<h2>Report Contents</h2>
 		<ol>
 			<li><a href="research.jsp">A. Research</a></li>
-			<li><a href="">B. Audience</a></li>
-			<li><a href="">C. Description of Design</a></li>
+			<li><a href="audience.jsp">B. Audience</a></li>
+			<li><a href="design.jsp">C. Description of Design</a></li>
 			<li><a href="">D. System Implementation</a></li>
 			<li><a href="">E. Interval Breakdown</a></li>
 			<li><a href="">F. References</a></li>

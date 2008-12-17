@@ -32,12 +32,18 @@
 		<h3>actual.UploadSong</h3>
 		Handles the transfer of data when a user chooses to upload a song to jTunes
 		<h3>file.DeleteSong</h3>
-		
+		Does the physical deletion of a song from the filesystem
 		<h3>file.SaveSong</h3>
+		Handles saving a song to the filesystem and maintaining the current song count.
 		<h3>ID3v2_XTag</h3>
+		Lots of stuff regarding the ID3 tags.
 		<h3>infoExpert.SongData</h3>
+		Contains all of the info about a song that we save
 		<h3>util.SongDataFactory</h3>
+		Creates songdata from ID3 tags
 		<h3>util.Util</h3>
+		Util class for byte stuff and hashing stuff
 		<h3>webInterface.HTMLFooter</h3>
+		A simple class for easily reproducing the footer at the bottom of the page
 	</body>
 </html>
