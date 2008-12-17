@@ -4,6 +4,22 @@
 <%@page import="webInterface.HTMLFooter"%>
 <html>
 	<head>
+		<script type="text/javascript">
+			function checkFile(thisForm) {
+				with (thisForm){ 
+					with (fileLoc) {
+						if (value == null || value == "") {
+							alert('You must select a file first!');
+							return false;
+						} else if (value.substring(value.lastIndexOf(".")) != ".mp3") {
+							alert('You must only select mp3 files!');
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+		</script>
 		<title>Upload a file to the server</title>
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
 		<link rel="stylesheet" type="text/css" href="../styles/buttons.css" />
@@ -29,7 +45,7 @@
 				</table>
 			</div>
 			<div class="input-form center" title="MP3 File location">
-				<form method="post" action="uploadresult.jsp" method="get" enctype="multipart/form-data">
+				<form method="post" action="uploadresult.jsp" method="get" enctype="multipart/form-data" onsubmit="return checkFile(this)">
 					<input class="formButton" type="file" name="fileLoc" size="40" style="margin-top: .2cm" />
 					<br>
 					<input class="button" type="submit" value="Submit" title="Submit File for Upload" style="margin-top: .2cm; margin-bottom: .1cm" >
