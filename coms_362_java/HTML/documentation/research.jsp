@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<%@page import="webInterface.HTMLFooter"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../../styles/mainstylesheet.css" />
@@ -31,5 +32,6 @@
 		<h3>MySQL Commands</h3><br/>
 		Shaun, our DB Guru used some info from <a href="http://www.pantz.org/software/mysql/mysqlcomands.html">Pantz.org</a>
 		to figure out some of the necessary commands.
+		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>

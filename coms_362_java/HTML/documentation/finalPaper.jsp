@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<%@page import="webInterface.HTMLFooter"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../../styles/mainstylesheet.css" />
@@ -35,5 +36,6 @@
 			<li><a href="">Appendix 1: User Guide</a></li>
 			<li><a href="">Appendix 2: Individual Efforts</a></li>
 		</ol>
+		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>

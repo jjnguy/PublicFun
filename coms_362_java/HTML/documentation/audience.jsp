@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<%@page import="webInterface.HTMLFooter"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../../styles/mainstylesheet.css" />
@@ -18,5 +19,6 @@
 		<p>It's that simple</p>
 		<p>It is perfect for people that don't want to worry about taking their music with them.</p>
 		<p><strike>And dirty pirates</strike></p>
+		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
