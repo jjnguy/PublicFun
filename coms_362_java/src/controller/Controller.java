@@ -3,17 +3,16 @@ package controller;
 import infoExpert.SongData;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 
 import actual.DatabaseSearch;
-import actual.DownloadSong;
 import actual.RemoveSong;
 import actual.UploadSong;
 import actual.Login;
 import databaseAccess.QueryDB;
-
 
 public class Controller implements DatabaseSearch {
 	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";
@@ -56,29 +55,27 @@ public class Controller implements DatabaseSearch {
 			QueryDB.handleSQLException(e);
 		}
 	}
-	
+
 	@Override
-	public List<SongData> search(String broadTerm, String title, String artist,
-			String album, int sortBy, String usename) {
-		List<SongData> ret = db.search(broadTerm, title, artist, album, sortBy,
-				usename);
+	public List<SongData> search(String broadTerm, String title, String artist, String album,
+			int sortBy, String usename) {
+		List<SongData> ret = db.search(broadTerm, title, artist, album, sortBy, usename);
 		db.closeDatabase();
 		return ret;
 	}
 
-	public FileInputStream downloadSong(String fileName) {
-		return (new DownloadSong()).downloadSong(fileName, MP3_PATH);
+	public FileInputStream downloadSong(String fileName) throws FileNotFoundException {
+		return new FileInputStream(MP3_PATH + fileName);
 	}
 
 	public String removeSong(String fileName, String owner) {
 		return (new RemoveSong()).removeSong(fileName, db, owner);
 	}
-	
-	public String createUser(String username, String password1, String password2)
-	{
+
+	public String createUser(String username, String password1, String password2) {
 		if ((new Login()).createUser(username, password1, password2, db))
 			return "User was successfully created!";
-		
+
 		else
 			return "Error: User was not created!";
 	}
@@ -96,9 +93,7 @@ public class Controller implements DatabaseSearch {
 		return "User was successfully deleted!";
 	}
 
-
-	public boolean login(String username, String password)
-	{
+	public boolean login(String username, String password) {
 		return (new Login()).login(username, password, db);
 	}
 

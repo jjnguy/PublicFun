@@ -17,6 +17,27 @@
 		<p>The controller does all of the delegating.  Given any request, it finds the approrieate class
 		and executes the proper method.</p>
 		<p>The controller then takes the return value from the model and passes it to the JSP's to to the rendering</p>
+		<p>What was outlined above is basically the MVC design pattern.</p>
+		<h2>Specific Class Duties</h2>
+		<h3>controller.Controller</h3>
+		Delegates tasks to correct actor
+		<h3>databaseAccess.QueryDB</h3>
+		Handles all DB stuff, formatting queries as well as executing them
+		<h3>actual.DatabaseSearch</h3>
+		Interface for defining search behavior of Controller
+		<h3>actual.Login</h3>
+		Handles all loging in and creating new users
+		<h3>actual.RemoveSong</h3>
+		Relays messages back to the controller based on various error types
+		<h3>actual.UploadSong</h3>
+		Handles the transfer of data when a user chooses to upload a song to jTunes
+		<h3>file.DeleteSong</h3>
 		
+		<h3>file.SaveSong</h3>
+		<h3>ID3v2_XTag</h3>
+		<h3>infoExpert.SongData</h3>
+		<h3>util.SongDataFactory</h3>
+		<h3>util.Util</h3>
+		<h3>webInterface.HTMLFooter</h3>
 	</body>
 </html>
