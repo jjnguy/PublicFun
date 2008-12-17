@@ -5,6 +5,23 @@
 
 <html>
 	<head>
+		<script type="text/javascript">
+			function validate(thisForm) {
+				with (thisForm){ 
+					if (username.value == null || username.value == "") {
+						alert('Please don\'t leave any fields blank');
+						return false;
+					} else if (password.value == null || password.value == "") {
+						alert('Please don\'t leave any fields blank');
+						return false;
+					} else if (password2.value == null || password2.value == "") {
+						alert('Please don\'t leave any fields blank');
+						return false;
+					}
+				}
+				return true;
+			}
+		</script>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../styles/mainstylesheet.css" />
 		<link rel="stylesheet" type="text/css" href="../styles/buttons.css" />
@@ -30,7 +47,7 @@
 				<td width="35%" ></td>
 			</tr>
 		</table>
-		<form class="center createuser plainText" method="get" action="loggedin.jsp" enctype="multipart/form-data" >
+		<form class="center createuser plainText" method="get" action="loggedin.jsp" enctype="multipart/form-data" onsubmit="return validate(this)">
 			*Username<input type="text" name="username" /><br /><br />
 			*Password<input type="password" name="password" /><br /><br />
 			*Confirm Password<input type="password" name="password2" /><br /><br />
