@@ -6,9 +6,7 @@
 <%@page import="infoExpert.SongData"%>
 <%@page import="controller.Controller"%>
 <%@page import="webInterface.HTMLFooter"%>
-<%@page import="databaseAccess.QueryDB"%>
 <%@page import="java.util.Collection"%>
-
 
 <%@page import="util.Util"%><html>
 	<head>

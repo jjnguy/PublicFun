@@ -25,13 +25,16 @@
 		}
 		%>
 	</head>
-	<body onload="<%= message %>">
+	<body>
 		<%		
 		boolean loggedin = Controller.getController().login(username, password);
 		if (loggedin){
 			Cookie co = new Cookie(Controller.USERNAME_COOKIENAME, username);
 			co.setMaxAge(60 * 30);
 			response.addCookie(co);
+		}else {
+			if (message.equals(""))
+				message = "alert('" + "Login Unsuccessful!!" + "')";
 		}
 		response.sendRedirect("mainMenu.jsp?message=" + message);
 		%>

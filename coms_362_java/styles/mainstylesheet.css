@@ -12,6 +12,11 @@ html,body {
 	font-family: sans-serif;
 }
 
+a {
+	color: orange;
+	font-weight: bold;
+}
+
 .center {
 	text-align: center;
 }
