@@ -15,10 +15,10 @@ import java.util.List;
 import controller.Controller;
 
 /**
- * Main database interface for all database tasks including connecting to the
- * database, inserting song data, and retrieving songs based on search strings
+ * Main database interface for all database tasks.  Tasks include connecting to the database, adding new songs,
+ * searching for existing songs, adding new users, and deleting users and songs.
  * 
- * @author Justin Nelson, Shaun
+ * @author Shaun Brockhoff
  * 
  */
 public class QueryDB {
@@ -26,9 +26,14 @@ public class QueryDB {
 	private static final String USER_TABLE = "users";
 	private Connection conn = null;
 
-	/*
-	 * Create a new database connection and return true if successful, false
-	 * otherwise.
+
+	/**
+	 * Creates a new connection to the database and initializes the driver.
+	 * @param url - database URL
+	 * @param user - database username
+	 * @param pass - database password
+	 * @return true if the database connected successfully
+	 * @throws SQLException if the connection fails. 
 	 */
 	public boolean startDatabase(String url, String user, String pass)
 			throws SQLException {
@@ -46,6 +51,9 @@ public class QueryDB {
 		return true;
 	}
 
+	/**
+	 * Closes the connection to the database for this instance.
+	 */
 	public void closeDatabase() {
 		try {
 			conn.close();
@@ -54,9 +62,12 @@ public class QueryDB {
 		}
 	}
 
-	/*
-	 * Attempts to insert a new song into the database and returns true if
-	 * successful, false otherwise.
+	/**
+	 * Attempts to insert a new song into the database.  This method will return false if there
+	 * is a SQLException of any kind, including if the user attempts to insert a duplicate song.
+	 * @param song - Object that contains all the information pertaining to the song
+	 * @param owner - Owner of the song. Used to determine permissions for viewing, deleting, etc.
+	 * @return true on successful insertion, false otherwise
 	 */
 	public boolean insertSongIntoDatabase(SongData song, String owner) {
 		/* Prepare statement with wildcards */
@@ -99,10 +110,16 @@ public class QueryDB {
 		return true;
 	}
 
-	/*
-	 * Take in a search string and query all database fields for the string.
-	 * Used also to simply return everything as in "View Music Collection" link
-	 * for instance
+	/**
+	 * Takes in a broad search term and queries all the pertinent fields that the user
+	 * is allowed to search for including performers0,1,2, title, and artist. It is also
+	 * used to simply return all songs (visible to the user) such as from the "View Music
+	 * Collection" link.
+	 * @param searchString - Broad search term
+	 * @param sortType - What field to sort by (defined in Controller)
+	 * @param owner - Currently logged in user. Compared with owner field in database to
+	 * 				  determine which songs this user can view.
+	 * @return a List of type SongData of the search results
 	 */
 	public List<SongData> simpleSearch(String searchString, int sortType,
 			String owner) {
@@ -110,7 +127,6 @@ public class QueryDB {
 		ResultSet rs = null;
 		String sort;
 		String query;
-		int index = 1;
 
 		if (sortType == Controller.SORT_BY_ALBUM) {
 			sort = "album";
@@ -161,13 +177,8 @@ public class QueryDB {
 		return processResults(rs);
 	}
 
-	/*
-	 * advancedSearch takes in a search string like simple search but then only
-	 * searches specific fields, which are passed in as true if the user wants
-	 * to check them. Boolean and specifies if the searches are combined using
-	 * AND or OR
-	 */
-	public List<SongData> advancedSearch(String artist, String title,
+
+	private List<SongData> advancedSearch(String artist, String title,
 			String album, boolean AND, int sortType, String owner) {
 		String sort;
 		PreparedStatement q = null;
@@ -302,12 +313,13 @@ public class QueryDB {
 		return songList;
 	}
 
-	/*
-	 * Delete a song from the database by comparing it with file names in the
-	 * database. No two songs can have the same file name. Returns true if no
-	 * errors were thrown. Does not verify if the file exists before running the
-	 * delete query and returns nothing to indicate if it already existed or
-	 * not.
+	/**
+	 * Delete a song from the database by comparing the fileName parameter with all file
+	 * names in the database. No two songs can have the same file name.
+	 * @param fileName - the file name to search for in the database
+	 * @param owner - the currently logged in user. Used to make sure user has permissions
+	 * 				  delete the file
+	 * @return true if the song was successfully deleted, false on any SQLException
 	 */
 	public boolean deleteSong(String fileName, String owner) {
 		PreparedStatement q1; // query statement
@@ -355,9 +367,12 @@ public class QueryDB {
 		return true;
 	}
 
-	/*
-	 * Delete a user from the database. Verifies that user is admin. Returns
-	 * true if successful, false otherwise.
+	/**
+	 * Delete a user from the database. Method verifies that the user is an admin before allowing
+	 * the deletion.
+	 * @param nameToDelete - user to delete from the database
+	 * @param currentUser - currently logged in user.
+	 * @return true if successfully deleted, false if not admin or on any SQLException
 	 */
 	public boolean deleteUser(String nameToDelete, String currentUser) {
 		PreparedStatement q; // query statement
@@ -379,11 +394,14 @@ public class QueryDB {
 		}
 	}
 
-	/*
+	/**
 	 * Create a new user in the database. Provide a username and a hashed
-	 * password. Returns true if the user was created successfully, false
-	 * otherwise. Query will fail if the user attempts to create a user that
+	 * password. Query will fail if the user attempts to create a user that
 	 * already exists.
+	 * @param user - new user to add
+	 * @param password - hashed password to associate with user
+	 * @return true if user was successfully added, false on SQLException (will
+	 * 		   be thrown if user already exists).
 	 */
 	public boolean addUser(String user, byte password[]) {
 		PreparedStatement q;
@@ -426,8 +444,8 @@ public class QueryDB {
 		}
 	}
 
-	/*
-	 * Returns a list of all the users for administration purposes. Returns null
+	/**
+	 * @return a list of all the users for administration purposes. Returns null
 	 * if any error.
 	 */
 	public List<String> getAllUsers() {
@@ -453,10 +471,24 @@ public class QueryDB {
 		}
 	}
 
+	/**
+	 * 	/**
+	 * Takes in a broad search term, multiple search terms (artist, title, album), 
+	 * the join type (AND/OR), the field to sort by (enum defined in Controller), 
+	 * and the currently logged in user.
+	 * @param broadTerm - broad search term
+	 * @param title - title to search for
+	 * @param artist - artist to search for
+	 * @param album - album to search for
+	 * @param sortBy - what field to sort by (defined in Controller)
+	 * @param username - currently logged in user - used to determine what results
+	 * 					 are returned
+	 * @return a List of type SongData containing all the songs in the search result
+	 */
 	public List<SongData> search(String broadTerm, String title, String artist,
-			String album, int sortBy, String usename) {
+			String album, int sortBy, String username) {
 		if (broadTerm != null) {
-			return simpleSearch(broadTerm, sortBy, usename);
+			return simpleSearch(broadTerm, sortBy, username);
 		}
 		if (artist.trim().equals(""))
 			artist = null;
@@ -464,10 +496,10 @@ public class QueryDB {
 			title = null;
 		if (album.trim().equals(""))
 			album = null;
-		return advancedSearch(artist, title, album, false, sortBy, usename);
+		return advancedSearch(artist, title, album, false, sortBy, username);
 	}
 
-	/**
+	/*
 	 * Simple method to handle {@link SQLException}s. Loops through generated
 	 * SQLExceptions and prints them the the specified {@link PrintStream}.
 	 * 
