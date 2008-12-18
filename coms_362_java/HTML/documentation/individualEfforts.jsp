@@ -16,8 +16,12 @@
 		<h1>Team Members</h1>
 		<h2>Ben Petersen</h2>
 		Put shit here
-		<h2>Shaun Brockhof</h2>
-		Put shit here
+		<h2>Shaun Brockhoff</h2>
+		My main responsibility in the project was setting up the database. This included creating the
+		database and designing the tables for song data and users and implementing all the methods for 
+		creating search queries, song/user additions and deletions, password retrieval, etc.  Apart from
+		that I also contributed to the user interface by creating the create user and manage users pages 
+		(based off Justin's design).  I had a small part in other tasks like researching methods for file upload and streaming capabilities.  
 		<h2>Justin Nelson</h2>
 		I was responsible for most of the User-Interface.  The JSPs controlling uploading 
 		songs, logging in, searching, displaying search results, streaming, and deleting songs.

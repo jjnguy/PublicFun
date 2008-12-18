@@ -30,8 +30,8 @@
 			<li><a href="research.jsp">A. Research</a></li>
 			<li><a href="audience.jsp">B. Audience</a></li>
 			<li><a href="design.jsp">C. Description of Design</a></li>
-			<li><a href="">D. System Implementation</a></li>
-			<li><a href="">E. Interval Breakdown</a></li>
+			<li><a href="systemImplementation.jsp">D. System Implementation</a></li>
+			<li><a href="intervals.jsp">E. Interval Breakdown</a></li>
 			<li><a href="references.jsp">F. References</a></li>
 			<li><a href="">Appendix 1: User Guide</a></li>
 			<li><a href="individualEfforts.jsp">Appendix 2: Individual Efforts</a></li>
