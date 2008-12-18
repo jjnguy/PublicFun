@@ -7,7 +7,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="/mp3/styles/mainstylesheet.css" />
 		<link rel="stylesheet" type="text/css" href="/mp3/styles/buttons.css" />
-		<link rel="stylesheet" type="text/css" href="/mp3/styles/reset.css" />
 		<link rel="icon" href="../../images/favicon.png" type="image/png" />
 		<link rel="shortcut icon" href="../../favicon.ico" />
 		<title>jTunes - References</title>
@@ -46,7 +45,7 @@
 		Being rookies to this web stuff, we needed a lot of help.  Below are a few of the 
 		sites that especially helped us on our website development journey.
 		<h2>W3 Schools</h2>
-		This is prety much the definitive web builders reference.  Nuff said.
+		This is pretty much the definitive web builders reference.  Nuff said.
 		<h2>MY SQL Reference Manual</h2>
 		http://dev.mysql.com/doc/refman/5.0/en/tutorial.html
 		Shaun had done a bit of database work in his 363 class.  However, we were doing more

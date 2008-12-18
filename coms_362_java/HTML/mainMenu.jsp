@@ -9,7 +9,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="/mp3/styles/mainstylesheet.css" />
 		<link rel="stylesheet" type="text/css" href="/mp3/styles/buttons.css" />
-		<link rel="stylesheet" type="text/css" href="/mp3/styles/reset.css" />
 		<link rel="icon" href="../images/favicon.png" type="image/png" />
 		<link rel="shortcut icon" href="../favicon.ico" />
 		<title>Online jTunes - Main Menu</title>
@@ -81,7 +80,7 @@
 				<h3>Getting Started</h3>
 				To begin, create an account.  It is very simple. <br />
 				Then, simply upload some songs to the library.  Feel free to view, sort, and stream the songs from anywhere.<br/>
-				To see some documentation about the development of this website click <a href="documentation/finalPaper.jsp">here</a>.
+				* To see some documentation about the development of this website click <a href="documentation/finalPaper.jsp">here</a>.
 			</div>
 		</div>
 		<div style="margin-top: 80px"></div>
