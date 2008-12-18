@@ -20,7 +20,7 @@
 			<div class="overview">
 				One of my responsibilities was taking care of file storage.  This included setting up and hosting the 
 				actual server that all the music and the jTunes system resides on. I also wrote the
-				classes/methods that dealt with storing, retrieving (downloading) or removing mp3 files.  
+				classes/methods that dealt with storing, retrieving (downloading) and removing mp3 files.  
 				Beyond that I wrote some of the methods in the Controller that would pass information between
 				the JSP's and the Database.
 			</div>
