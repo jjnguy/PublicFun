@@ -12,19 +12,33 @@ import databaseAccess.QueryDB;
 
 import util.SongDataFactory;
 
+/**
+ * For uploading a mp3 to the filesystem and adding it to the database
+ * 
+ * @author Benjamin Petersen
+ *
+ */
 public class UploadSong 
 {
 	
 	/**
-	 * Passes an InputStream containing the file to be uploaded to the Server
+	 * Uploads the file to the system and saves its information to the database
+	 * 
 	 * @param fileStream
-	 * @return A String containing a message describing whether or not the upload was successful
+	 * 			InputStream of the uploaded mp3
+	 * @param owner
+	 * 			username of the owner of the song
+	 * @param db
+	 * 			QueryDB class that is being used
+	 * @return
+	 * 			A String indicating the success or failure of the upload
 	 */
 	public String uploadSong(InputStream fileStream, String owner, QueryDB db)
 	{
 		String fileLocation;
 		
 		try {
+			//will save the song to the filesystem
 			SaveSong SS = new SaveSong(fileStream);
 			fileLocation = SS.getPathToMP3();
 			
@@ -45,6 +59,10 @@ public class UploadSong
 			return "Error: Song not saved";
 		}
 	}
+	
+	/*
+	 * Will add the songs information to the database
+	 */
 	private boolean insertSongIntoDatabase(SongData song, String owner, QueryDB db) 
 	{
 		boolean ret = db.insertSongIntoDatabase(song, owner);
