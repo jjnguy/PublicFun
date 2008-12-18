@@ -14,15 +14,16 @@
 	<body>
 		<h1>Dependencies</h1>
 		<p>Our code has a few dependencies on some third party libraries.</p>
-		<h2>Java Runtime Environment 1.6.x</h2>
+		<h2>Java Runtime Environment</h2>
+		<h3><a href="http://www.java.com/en/download/manual.jsp" >jre-1.6.x</a></h3>
 		<h2>Apache Tomcat Libraries</h2>
-		<h3>jsp-api.jar</h3>
-		<h3>servlet-api.jar</h3>
+		<h3><a href="http://tomcat.apache.org/download-55.cgi" >jsp-api.jar</a></h3>
+		<h3><a href="http://tomcat.apache.org/download-55.cgi" >servlet-api.jar</a></h3>
 		<h2>Apache Commons Libraries</h2>
-		<h3>commons-fileupload-1.2.jar</h3>
-		<h3>commons-io.*.jar</h3>
+		<h3><a href="http://commons.apache.org/fileupload/using.html" >commons-fileupload-1.2.jar</a></h3>
+		<h3><a href="http://commons.apache.org/io/description.html" >commons-io.*.jar</a></h3>
 		<h2>MySQL to Java Connector</h2>
-		<h3>mysql-connector-java.jar</h3>
+		<h3><a href="http://dev.mysql.com/downloads/connector/j/5.1.html" >mysql-connector-java.jar</a></h3>
 		<h1></h1>
 		<%= HTMLFooter.getFooter() %>
 	</body>
