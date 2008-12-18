@@ -1,0 +1,21 @@
+@CHARSET "ISO-8859-1";
+
+.finalPaperFull {
+	margin-left: 100px;
+	width: 70%;
+}
+
+.overview {
+	border: solid #000000;
+	margin: 10px;
+	padding: 5px;
+	background-color: lightblue;
+}
+
+a {
+	color: darkorange;
+}
+
+a:hover {
+	color: black;
+}

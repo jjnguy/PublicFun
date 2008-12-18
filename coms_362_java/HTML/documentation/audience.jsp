@@ -7,18 +7,24 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="../../styles/mainstylesheet.css" />
 		<link rel="stylesheet" type="text/css" href="../../styles/buttons.css" />
+		<link rel="stylesheet" type="text/css" href="../../styles/documentationStyles.css" />
 		<link rel="icon" href="../../images/favicon.png" type="image/png" />
 		<link rel="shortcut icon" href="../../favicon.ico" />
 		<title>jTunes - Audience</title>
 	</head>
 	<body>
-		<p>jTunes was created for people who are on the go.  We don't single out any
-		demographic.  Our interfaces are very easy to use and clutter free so even the 
-		most computer illiterate person can use our site.</p>
-		<p>The only criteria for being in our target audience is that you have music, and you go places.</p>
-		<p>It's that simple</p>
-		<p>It is perfect for people that don't want to worry about taking their music with them.</p>
-		<p><strike>And dirty pirates</strike></p>
+		<div class="finalPaperFull">
+			<h1>Audience</h1>
+			<div class="plainText overview">
+				<p>jTunes was created for people who are on the go.  We don't single out any
+				demographic.  Our interfaces are very easy to use and clutter free so even the 
+				most computer illiterate person can use our site.</p>
+				<p>The only criteria for being in our target audience is that you have music, and you go places.</p>
+				<p>It's that simple</p>
+				<p>It is perfect for people that don't want to worry about taking their music with them.</p>
+				<p><strike>And dirty pirates</strike></p>
+			</div>
+		</div>
 		<%= HTMLFooter.getFooter() %>
 	</body>
 </html>
