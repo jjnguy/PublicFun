@@ -18,7 +18,7 @@
 		<h3>View</h3>
 		<p>The front end of jTunes is controlled by JSP, HTML, and CSS code running on an Apache
 		Tomcat web server that is running on a Windows XP computer.  We are also utilizing a small
-		snippet of Javascript code to allow users to stream songs from the jTunes server.</p><br />
+		snippet of Javascript code to allow users to stream songs from the jTunes server, as well as validate user forms.</p><br />
 		<h3>Model</h3>
 		<p>The back end of jTunes is written almost entirely in Java code, with some SQL queries as 
 		well.  Song data is stored in a MySQL database, which is located on the same Windows XP 
