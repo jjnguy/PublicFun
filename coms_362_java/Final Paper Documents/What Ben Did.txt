@@ -1,0 +1,20 @@
+What Ben Petersen did:
+
+Coding:
+	actual.Login
+	actual.RemoveSong
+	actual.UploadSong
+	file.DeleteSong
+	file.SaveSong
+	util.SongDataFactory (portions of)
+	controller.controller (portions of)
+
+Documentation:
+
+	UseCases and Diagrams for:
+		Login to jTunes
+		Logout
+		Add a Song
+		Search
+
+	Userguide
