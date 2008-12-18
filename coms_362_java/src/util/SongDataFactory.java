@@ -5,9 +5,22 @@ import id3TagStuff.ID3v2_XTag;
 import id3TagStuff.frames.ID3v2_XFrame;
 import infoExpert.SongData;
 
+/**
+ * For extracting song information from an ID3v2_XTag
+ * 
+ * @author Benjamin Petersen, Justin Nelson
+ *
+ */
 public class SongDataFactory
 {
-	
+	/**
+	 * Extracts the needed information from the ID3v2_XTag
+	 * 
+	 * @param tag
+	 * 			ID3v2_XTag from the mp3 file
+	 * @return
+	 * 		SongData object containing the songs information
+	 */
 	public static SongData tagToSongData (ID3v2_XTag tag)
 	{
 		SongData SD = new SongData();

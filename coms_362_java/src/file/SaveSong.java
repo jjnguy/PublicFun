@@ -23,7 +23,7 @@ import controller.Controller;
  * Files are named numerically (ex: 1.mp3) and a text file is kept in the same directory that
  * holds the next available number
  * 
- * @author Benjamin, Justin
+ * @author Benjamin Petesen, Justin Nelson
  * 
  */
 public class SaveSong {
@@ -35,6 +35,7 @@ public class SaveSong {
 	private String pathToMP3 = null;
 
 	/**
+	 * Saves a mp3 file to the file system
 	 * 
 	 * @param fileStream
 	 *            the mp3 file that we are saving

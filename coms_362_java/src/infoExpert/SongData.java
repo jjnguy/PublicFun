@@ -1,5 +1,11 @@
 package infoExpert;
 
+/**
+ * Holds information about a song
+ * 
+ * @author Justin Nelson
+ *
+ */
 public class SongData {
 	private String title;
 	private String album;
@@ -16,6 +22,30 @@ public class SongData {
 	public SongData() {
 	};
 
+	/**
+	 * Constructor
+	 * 
+	 * @param t
+	 * 		Song Title
+	 * @param a
+	 * 		Song's album
+	 * @param p
+	 * 		Song's performer(s)
+	 * @param c
+	 * 		Song's comments
+	 * @param tr
+	 * 		Song's track number
+	 * @param y
+	 * 		Song's year
+	 * @param e
+	 * 		Song's encoder
+	 * @param co
+	 * 		Song's composer
+	 * @param fp
+	 * 		Song's file name
+	 * @param pp
+	 * 		Song's picture name
+	 */
 	public SongData(String t, String a, String p[], String c[], String tr, String y, String e,
 			String co, String fp, String pp) {
 		title = t;
