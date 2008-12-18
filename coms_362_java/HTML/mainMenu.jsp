@@ -81,6 +81,8 @@
 				To begin, create an account.  It is very simple. <br />
 				Then, simply upload some songs to the library.  Feel free to view, sort, and stream the songs from anywhere.<br/>
 				* To see some documentation about the development of this website click <a href="documentation/finalPaper.jsp">here</a>.
+				<br class="noPad" />
+				* The Javadocs for all of our model and controller code is located <a href="/mp3/doc/">here.</a>.
 			</div>
 		</div>
 		<div style="margin-top: 80px"></div>
