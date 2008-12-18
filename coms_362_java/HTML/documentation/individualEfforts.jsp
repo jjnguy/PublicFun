@@ -16,7 +16,11 @@
 	<body>
 		<h1>Team Members</h1>
 		<h2>Ben Petersen</h2>
-		Put shit here
+		One of my responsibilities was taking care of file storage.  This included setting up and hosting the 
+		actual server that all the music and the jTunes system resides on. I also wrote the
+		classes/methods that dealt with storing, retrieving (downloading) or removing mp3 files.  
+		Beyond that I wrote some of the methods in the Controller that would pass information between
+		the JSP's and the Database.
 		<h2>Shaun Brockhoff</h2>
 		My main responsibility in the project was setting up the database. This included creating the
 		database and designing the tables for song data and users and implementing all the methods for 
