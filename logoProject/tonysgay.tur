@@ -71,7 +71,26 @@ start;
 	end;
 
 	def y;
-		
+		rotatecounterclockwise 60;
+		move 40;
+		rotatecounterclockwise 30;
+		move 25;
+		rotateclockwise 90;
+		move 10;
+		rotateclockwise 90;
+		move 25;
+		rotatecounterclockwise 30;
+		move 40;
+		rotateclockwise 120;
+		move 10;
+		rotateclockwise 60;
+		move 30;
+		rotatecounterclockwise 120;
+		move 30;
+		rotateclockwise 60;
+		move 10;
+		rotateclockwise 180;
+		move 52;
 	end;
 
 	draw t;
@@ -82,4 +101,5 @@ start;
 	draw n;
 	move 5;
 	draw y;
+	move 5;
 end;
