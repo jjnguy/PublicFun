@@ -29,7 +29,6 @@ public class SudokuFrame extends JFrame {
 		for (int r = 0; r < numbers.length; r++) {
 			for (int c = 0; c < numbers[r].length; c++) {
 				numbers[r][c] = new SudokuNumberArea();
-				;
 			}
 		}
 		JPanel numberPane = new JPanel(new GridLayout(9, 9));
@@ -120,18 +119,7 @@ public class SudokuFrame extends JFrame {
 
 	private ActionListener generateAction = new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			String message = "You chose to save an invalid board, continue?";
-			String title = "Oops!";
-			SudoukuBoard b = new SudoukuBoard(getData());
-			if (!b.isValidBoard()) {
-				int choice = JOptionPane.showConfirmDialog(SudokuFrame.this, message, title,
-						JOptionPane.CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
-				if (choice == JOptionPane.CANCEL_OPTION || choice == JOptionPane.CLOSED_OPTION
-						|| choice == JOptionPane.NO_OPTION) {
-					return;
-				}
-			}
+		public void actionPerformed(ActionEvent e) {			
 			JFileChooser choose = new JFileChooser();
 			int choice = choose.showSaveDialog(SudokuFrame.this);
 			if (choice == JFileChooser.CANCEL_OPTION)

@@ -47,6 +47,10 @@ public class SudoukuBoard {
 		return true;
 	}
 
+	public void lockPoint(int row, int col){
+		locks.add(new Point(row,col));
+	}
+	
 	/**
 	 * The default place locks a piece. This is for creating puzzles.
 	 * 
@@ -70,7 +74,7 @@ public class SudoukuBoard {
 		boolean isValidBox = numInBoxCount(boxNum, num) == 0;
 		return isValidBox && isValidCol && isValidRow;
 	}
-
+// TODO un-break this shit, solving with already placed slots is broken
 	private int getBoxNum(int row, int col) {
 		int boxNum = -1;
 		if (row == 0 || row == 1 || row == 2) {
@@ -272,7 +276,8 @@ public class SudoukuBoard {
 		SudoukuBoard b = new SudoukuBoard(loadFile(new File("sdfg.txt")));
 		System.out.println(b);
 		System.out.println("\n\n\n");
-		System.out.println(b.solve());
+		boolean bool = b.solve();
+		System.out.println(bool);
 		System.out.println(b);
 	}
 
