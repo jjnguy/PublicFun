@@ -1,0 +1,2 @@
+This SDK has two modes in which it can run. Running the no Args "Java SDK" will start the SDK proper.
+Providing an arg "Java SDK HAIWORLD.lrn" will cause the SDK to run pre-parsed code. This method is not currently supported.
