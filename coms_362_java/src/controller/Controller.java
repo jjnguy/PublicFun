@@ -21,13 +21,13 @@ import databaseAccess.QueryDB;
  *
  */
 public class Controller implements DatabaseSearch {
-	public static final String MP3_PATH = "C:/Program Files/apache-tomcat-5.5.17/webapps/sharedmp3s/";
+	public static final String MP3_PATH = "C:/Program Files/Apache Software Foundation/Tomcat 5.5/webapps/sharedmp3s/";
 	public static final String PIC_PATH = "C:/uploads/pic/";
 	public static final String USERNAME_COOKIENAME = "username";
-	public static final String DB_URL = "jdbc:mysql://65.110.247.189";
+	public static final String DB_URL = "jdbc:mysql://localhost";
 	public static final String DB_USR = "root";
-	public static final String DB_PW = "hotdog";
-	public static final String MP3_URL = "http://65.110.247.189/sharedmp3s/";
+	public static final String DB_PW = "CH0C0LATEM1LK";
+	public static final String MP3_URL = "http://localhost/sharedmp3s/";
 	public static final int SORT_BY_TITLE = 0;
 	public static final int SORT_BY_ARTIST = 1;
 	public static final int SORT_BY_ALBUM = 2;

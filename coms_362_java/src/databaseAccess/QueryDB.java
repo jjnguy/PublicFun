@@ -15,39 +15,44 @@ import java.util.List;
 import controller.Controller;
 
 /**
- * Main database interface for all database tasks.  Tasks include connecting to the database, adding new songs,
- * searching for existing songs, adding new users, and deleting users and songs.
+ * Main database interface for all database tasks. Tasks include connecting to the database,
+ * adding new songs, searching for existing songs, adding new users, and deleting users and
+ * songs.
  * 
  * @author Shaun Brockhoff
  * 
  */
 public class QueryDB {
+	private static final String DB_NAME = "mp3db";
 	private static final String MP3_TABLE = "mp3table";
 	private static final String USER_TABLE = "users";
 	private Connection conn = null;
 
-
 	/**
 	 * Creates a new connection to the database and initializes the driver.
-	 * @param url - database URL
-	 * @param user - database username
-	 * @param pass - database password
+	 * 
+	 * @param url
+	 *            - database URL
+	 * @param user
+	 *            - database username
+	 * @param pass
+	 *            - database password
 	 * @return true if the database connected successfully
-	 * @throws SQLException if the connection fails. 
+	 * @throws SQLException
+	 *             if the connection fails.
 	 */
-	public boolean startDatabase(String url, String user, String pass)
-			throws SQLException {
+	public boolean startDatabase(String url, String user, String pass) throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			
+
 			e.printStackTrace();
 			return false;
 		}
 		conn = DriverManager.getConnection(url, user, pass);
 
 		Statement use = conn.createStatement();
-		use.execute("USE mp3db;");
+		use.execute("USE " + DB_NAME + ";");
 		return true;
 	}
 
@@ -63,17 +68,23 @@ public class QueryDB {
 	}
 
 	/**
-	 * Attempts to insert a new song into the database.  This method will return false if there
-	 * is a SQLException of any kind, including if the user attempts to insert a duplicate song.
-	 * @param song - Object that contains all the information pertaining to the song
-	 * @param owner - Owner of the song. Used to determine permissions for viewing, deleting, etc.
+	 * Attempts to insert a new song into the database. This method will return false if there
+	 * is a SQLException of any kind, including if the user attempts to insert a duplicate
+	 * song.
+	 * 
+	 * @param song
+	 *            - Object that contains all the information pertaining to the song
+	 * @param owner
+	 *            - Owner of the song. Used to determine permissions for viewing, deleting,
+	 *            etc.
 	 * @return true on successful insertion, false otherwise
 	 */
 	public boolean insertSongIntoDatabase(SongData song, String owner) {
+		if (owner == null) return false;
 		/* Prepare statement with wildcards */
 		PreparedStatement insert;
 		try {
-			insert = conn
+			insert = conn // TODO create table
 					.prepareStatement("INSERT INTO "
 							+ MP3_TABLE
 							+ " (title, album, performers0, performers1, performers2, comments0, comments1, comments2,"
@@ -111,18 +122,22 @@ public class QueryDB {
 	}
 
 	/**
-	 * Takes in a broad search term and queries all the pertinent fields that the user
-	 * is allowed to search for including performers0,1,2, title, and artist. It is also
-	 * used to simply return all songs (visible to the user) such as from the "View Music
-	 * Collection" link.
-	 * @param searchString - Broad search term
-	 * @param sortType - What field to sort by (defined in Controller)
-	 * @param owner - Currently logged in user. Compared with owner field in database to
-	 * 				  determine which songs this user can view.
+	 * Takes in a broad search term and queries all the pertinent fields that the user is
+	 * allowed to search for including performers0,1,2, title, and artist. It is also used to
+	 * simply return all songs (visible to the user) such as from the "View Music Collection"
+	 * link.
+	 * 
+	 * @param searchString
+	 *            - Broad search term
+	 * @param sortType
+	 *            - What field to sort by (defined in Controller)
+	 * @param owner
+	 *            - Currently logged in user. Compared with owner field in database to
+	 *            determine which songs this user can view.
 	 * @return a List of type SongData of the search results
 	 */
-	public List<SongData> simpleSearch(String searchString, int sortType,
-			String owner) {
+	public List<SongData> simpleSearch(String searchString, int sortType, String owner) {
+		if (owner == null) return new ArrayList<SongData>();
 		PreparedStatement q = null;
 		ResultSet rs = null;
 		String sort;
@@ -138,10 +153,9 @@ public class QueryDB {
 
 		/* Prepare query statement with wildcards */
 
-		query = "SELECT * FROM " + MP3_TABLE + " s "
-				+ "WHERE (s.title LIKE ? OR " + "s.album LIKE ? OR "
-				+ "s.performers0 LIKE ? OR " + "s.performers1 LIKE ? OR "
-				+ "s.performers2 LIKE ?) ";
+		query = "SELECT * FROM " + MP3_TABLE + " s " + "WHERE (s.title LIKE ? OR "
+				+ "s.album LIKE ? OR " + "s.performers0 LIKE ? OR "
+				+ "s.performers1 LIKE ? OR " + "s.performers2 LIKE ?) ";
 
 		if (!owner.equals("admin")) {
 			query += "AND s.owner = ?";
@@ -177,9 +191,9 @@ public class QueryDB {
 		return processResults(rs);
 	}
 
-
-	private List<SongData> advancedSearch(String artist, String title,
-			String album, boolean AND, int sortType, String owner) {
+	private List<SongData> advancedSearch(String artist, String title, String album,
+			boolean AND, int sortType, String owner) {
+		if (owner == null) return new ArrayList<SongData>();
 		String sort;
 		PreparedStatement q = null;
 		ResultSet rs = null;
@@ -281,8 +295,8 @@ public class QueryDB {
 	}
 
 	/*
-	 * processResults takes in a ResultSet from a query and extracts each field
-	 * into a new SongData object which are added to a List and then returned.
+	 * processResults takes in a ResultSet from a query and extracts each field into a new
+	 * SongData object which are added to a List and then returned.
 	 */
 	private List<SongData> processResults(ResultSet rs) {
 		List<SongData> songList = new ArrayList<SongData>();
@@ -314,11 +328,14 @@ public class QueryDB {
 	}
 
 	/**
-	 * Delete a song from the database by comparing the fileName parameter with all file
-	 * names in the database. No two songs can have the same file name.
-	 * @param fileName - the file name to search for in the database
-	 * @param owner - the currently logged in user. Used to make sure user has permissions
-	 * 				  delete the file
+	 * Delete a song from the database by comparing the fileName parameter with all file names
+	 * in the database. No two songs can have the same file name.
+	 * 
+	 * @param fileName
+	 *            - the file name to search for in the database
+	 * @param owner
+	 *            - the currently logged in user. Used to make sure user has permissions delete
+	 *            the file
 	 * @return true if the song was successfully deleted, false on any SQLException
 	 */
 	public boolean deleteSong(String fileName, String owner) {
@@ -327,8 +344,7 @@ public class QueryDB {
 		PreparedStatement q2; // delete statement
 
 		/*
-		 * First check to see if user has rights to delete the file. Skip check
-		 * if admin
+		 * First check to see if user has rights to delete the file. Skip check if admin
 		 */
 		if (!owner.equals("admin")) {
 			try {
@@ -350,12 +366,10 @@ public class QueryDB {
 		}
 
 		/*
-		 * If ownership matches or if logged in user is admin, execute the
-		 * delete statement
+		 * If ownership matches or if logged in user is admin, execute the delete statement
 		 */
 		try {
-			q2 = conn.prepareStatement("DELETE FROM " + MP3_TABLE
-					+ " WHERE fileName = ?;");
+			q2 = conn.prepareStatement("DELETE FROM " + MP3_TABLE + " WHERE fileName = ?;");
 			q2.setString(1, fileName);
 
 			q2.execute();
@@ -368,10 +382,13 @@ public class QueryDB {
 	}
 
 	/**
-	 * Delete a user from the database. Method verifies that the user is an admin before allowing
-	 * the deletion.
-	 * @param nameToDelete - user to delete from the database
-	 * @param currentUser - currently logged in user.
+	 * Delete a user from the database. Method verifies that the user is an admin before
+	 * allowing the deletion.
+	 * 
+	 * @param nameToDelete
+	 *            - user to delete from the database
+	 * @param currentUser
+	 *            - currently logged in user.
 	 * @return true if successfully deleted, false if not admin or on any SQLException
 	 */
 	public boolean deleteUser(String nameToDelete, String currentUser) {
@@ -379,8 +396,8 @@ public class QueryDB {
 
 		if (currentUser.equals("admin")) {
 			try {
-				q = conn.prepareStatement("DELETE FROM " + USER_TABLE
-						+ " WHERE username = ?;");
+				q = conn
+						.prepareStatement("DELETE FROM " + USER_TABLE + " WHERE username = ?;");
 				q.setString(1, nameToDelete);
 
 				q.execute();
@@ -395,20 +412,22 @@ public class QueryDB {
 	}
 
 	/**
-	 * Create a new user in the database. Provide a username and a hashed
-	 * password. Query will fail if the user attempts to create a user that
-	 * already exists.
-	 * @param user - new user to add
-	 * @param password - hashed password to associate with user
-	 * @return true if user was successfully added, false on SQLException (will
-	 * 		   be thrown if user already exists).
+	 * Create a new user in the database. Provide a username and a hashed password. Query will
+	 * fail if the user attempts to create a user that already exists.
+	 * 
+	 * @param user
+	 *            - new user to add
+	 * @param password
+	 *            - hashed password to associate with user
+	 * @return true if user was successfully added, false on SQLException (will be thrown if
+	 *         user already exists).
 	 */
 	public boolean addUser(String user, byte password[]) {
 		PreparedStatement q;
 
 		try {
-			q = conn.prepareStatement("INSERT INTO " + USER_TABLE
-					+ " (username, pass)" + " VALUES (?, ?);");
+			q = conn.prepareStatement("INSERT INTO " + USER_TABLE + " (username, password)"
+					+ " VALUES (?, ?);");
 
 			q.setString(1, user);
 			q.setBytes(2, password);
@@ -422,22 +441,20 @@ public class QueryDB {
 	}
 
 	/*
-	 * Return the hashed password from a user in the database. Can be used to
-	 * verify login credentials of a user that already exists. If the user does
-	 * not exist, returns a null to indicate that the username attempted to
-	 * login with was invalid.
+	 * Return the hashed password from a user in the database. Can be used to verify login
+	 * credentials of a user that already exists. If the user does not exist, returns a null to
+	 * indicate that the username attempted to login with was invalid.
 	 */
 	public byte[] getHashedPassword(String user) {
 		PreparedStatement q;
 		ResultSet rs;
 
 		try {
-			q = conn.prepareStatement("SELECT * FROM " + USER_TABLE
-					+ " WHERE username = ?;");
+			q = conn.prepareStatement("SELECT * FROM " + USER_TABLE + " WHERE username = ?;");
 			q.setString(1, user);
 			rs = q.executeQuery();
 			rs.next();
-			return rs.getBytes("pass");
+			return rs.getBytes("password");
 		} catch (SQLException e) {
 			handleSQLException(e);
 			return null;
@@ -445,8 +462,7 @@ public class QueryDB {
 	}
 
 	/**
-	 * @return a list of all the users for administration purposes. Returns null
-	 * if any error.
+	 * @return a list of all the users for administration purposes. Returns null if any error.
 	 */
 	public List<String> getAllUsers() {
 		Statement s;
@@ -472,21 +488,26 @@ public class QueryDB {
 	}
 
 	/**
-	 * 	/**
-	 * Takes in a broad search term, multiple search terms (artist, title, album), 
-	 * the join type (AND/OR), the field to sort by (enum defined in Controller), 
-	 * and the currently logged in user.
-	 * @param broadTerm - broad search term
-	 * @param title - title to search for
-	 * @param artist - artist to search for
-	 * @param album - album to search for
-	 * @param sortBy - what field to sort by (defined in Controller)
-	 * @param username - currently logged in user - used to determine what results
-	 * 					 are returned
+	 * /** Takes in a broad search term, multiple search terms (artist, title, album), the join
+	 * type (AND/OR), the field to sort by (enum defined in Controller), and the currently
+	 * logged in user.
+	 * 
+	 * @param broadTerm
+	 *            - broad search term
+	 * @param title
+	 *            - title to search for
+	 * @param artist
+	 *            - artist to search for
+	 * @param album
+	 *            - album to search for
+	 * @param sortBy
+	 *            - what field to sort by (defined in Controller)
+	 * @param username
+	 *            - currently logged in user - used to determine what results are returned
 	 * @return a List of type SongData containing all the songs in the search result
 	 */
-	public List<SongData> search(String broadTerm, String title, String artist,
-			String album, int sortBy, String username) {
+	public List<SongData> search(String broadTerm, String title, String artist, String album,
+			int sortBy, String username) {
 		if (broadTerm != null) {
 			return simpleSearch(broadTerm, sortBy, username);
 		}
@@ -500,20 +521,19 @@ public class QueryDB {
 	}
 
 	/*
-	 * Simple method to handle {@link SQLException}s. Loops through generated
-	 * SQLExceptions and prints them the the specified {@link PrintStream}.
+	 * Simple method to handle {@link SQLException}s. Loops through generated SQLExceptions and
+	 * prints them the the specified {@link PrintStream}.
 	 * 
-	 * @param sqle
-	 *            The exception to handle.
-	 * @param out
-	 *            The PrintStream to print the error messages to.
+	 * @param sqle The exception to handle.
+	 * 
+	 * @param out The PrintStream to print the error messages to.
 	 */
 	private static void handleSQLException(SQLException sqle, PrintStream out) {
 		sqle.printStackTrace(out);
 		while (sqle != null) {
 			String logMessage = "\n SQL Error: " + sqle.getMessage() + "\n\t\t"
-					+ "Error code: " + sqle.getErrorCode() + "\n\t\t"
-					+ "SQLState: " + sqle.getSQLState() + "\n";
+					+ "Error code: " + sqle.getErrorCode() + "\n\t\t" + "SQLState: "
+					+ sqle.getSQLState() + "\n";
 			out.println(logMessage);
 			sqle = sqle.getNextException();
 		}

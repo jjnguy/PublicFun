@@ -28,21 +28,12 @@ public class Util {
 	public static final boolean DEBUG = true;
 
 	public static String findUsername(Cookie[] cookies) {
-		if (cookies == null)
+		if (cookies == null || cookies.length == 0)
 			return null;
-		String username = null;
-		if (cookies == null || cookies.length == 0) {
-			return null;
-		}
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals(Controller.USERNAME_COOKIENAME)) {
-					username = cookie.getValue();
-					break;
-				}
-			}
-		}
-		return username;
+		for (Cookie cookie : cookies) 
+			if (cookie.getName().equals(Controller.USERNAME_COOKIENAME)) 
+				return cookie.getValue();
+		return null;
 	}
 
 	/**
