@@ -1,4 +1,5 @@
 package gui;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,6 +37,9 @@ import javax.swing.SwingUtilities;
 
 import MessageSending.ChatInterface;
 import MessageSending.InputListenerThread;
+
+// TODO THis should be two classes
+// TODO gui half and message sender and reciever class
 
 @SuppressWarnings("serial")
 public class FullChatPanel extends JFrame implements ChatInterface {
@@ -87,6 +94,8 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		gc.anchor = GridBagConstraints.BASELINE_TRAILING;
 		mainPane.add(send, gc);
 		add(mainPane);
+
+		this.addWindowListener(closeListener);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(buildMenu());
@@ -177,7 +186,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		public void keyPressed(KeyEvent e) {
 			// TODO doesn't work
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				if (e.getModifiers() == KeyEvent.CTRL_DOWN_MASK)
+				if ((e.getModifiers() & KeyEvent.CTRL_DOWN_MASK) == KeyEvent.CTRL_DOWN_MASK)
 					send.doClick();
 			}
 		}
@@ -185,7 +194,6 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-
 			// @Override
 			public void run() {
 				new FullChatPanel();
@@ -297,6 +305,21 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		// @Override
 		public void actionPerformed(ActionEvent e) {
 			saveConversation();
+		}
+	};
+
+	private WindowListener closeListener = new WindowAdapter() {
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			outgoingMessageBuffer.add("Your chat buddy just bailed.  Sorry.");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			sendMessage();
 		}
 	};
 }
