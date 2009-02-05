@@ -1,3 +1,4 @@
+package gui;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -26,7 +27,7 @@ public class ConnectToFrame extends JDialog {
 
 	public ConnectToFrame() {
 		hostLable = new JLabel("Host:");
-		hostField = new JTextField();
+		hostField = new JTextField("localhost");
 		portLable = new JLabel("Port:");
 		portField = new JTextField("5001");
 		connectButton = new JButton("Connect");
