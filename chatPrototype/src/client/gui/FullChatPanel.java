@@ -184,7 +184,7 @@ public class FullChatPanel extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			client.saveConversation();
+			//client.saveConversation();
 		}
 	};
 
@@ -198,7 +198,7 @@ public class FullChatPanel extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			client.sendMessage();
+			//client.sendMessage();
 		}
 	};
 

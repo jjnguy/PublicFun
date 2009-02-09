@@ -36,46 +36,10 @@ public class ClientBackend implements LiveEditInterface {
 	}
 	
 	@Override
-	public boolean hasMesageToSend() {
-		return !outgoingMessageBuffer.isEmpty();
-	}
-
-	@Override
-	public void saveConversation() {
-		JFileChooser choose = new JFileChooser();
-		int choice = choose.showSaveDialog(gui);
-		if (choice == JFileChooser.CANCEL_OPTION)
-			return;
-
-		File f = choose.getSelectedFile();
-
-		PrintStream out = null;
-		try {
-			out = new PrintStream(f);
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(gui, "Failed to save conversation.", "Save Fail",
-					JOptionPane.ERROR_MESSAGE);
-		}
-		out.close();
-	}
-
-	@Override
 	public boolean connectToCoLabServer(String host, int port) {
 		if (connected())
 			return true;
-		try {
-			connection = new Socket(host, port);
-			sockIn = connection.getInputStream();
-			socOut = connection.getOutputStream();
-		} catch (UnknownHostException e) {
-			JOptionPane.showMessageDialog(gui, "Could not resolve host.", "Not Connected!",
-					JOptionPane.ERROR_MESSAGE);
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(gui, "Failed to send message.",
-					"Message Send Fail", JOptionPane.ERROR_MESSAGE);
-		}
-		ClientChangeThread th = new ClientChangeThread(this);
-		th.start();
+		connection.connect();
 		connected = true;
 		return this.connected();
 	}
@@ -89,26 +53,51 @@ public class ClientBackend implements LiveEditInterface {
 		connection = f.showConnectionDialog();
 		if (connection == null)
 			return;
-		sockIn = connection.getInputStream();
-		socOut = connection.getOutputStream();
+		//sockIn = connection.getInputStream();
+		//socOut = connection.getOutputStream();
 		ClientChangeThread th = new ClientChangeThread(this);
 		th.start();
 		connected = true;
 	}
 	
-
-	@Override
-	public InputStream getIStream() {
-		return sockIn;
-	}
-
 	@Override
 	public boolean connected() {
 		return this.connected;
 	}
 
 	@Override
-	public void newText(String text, String username) {
+	public boolean newText(String text, String username) {
+		return false;
+	}
+
+	@Override
+	public IServerConnection getServerConnection() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean highlightedText(int startPos, int endPos) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean movedMouse(int newX, int newY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean newText(int position, String text) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean textDeleted(int startPos, int endPos) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

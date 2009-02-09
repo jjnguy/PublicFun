@@ -9,6 +9,9 @@ import java.net.Socket;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
+import connectionmanager.IServerConnection;
+import connectionmanager.ServerConnection;
+
 @SuppressWarnings("serial")
 public class WaitingForConnectionFrame extends JDialog {
 
@@ -27,12 +30,12 @@ public class WaitingForConnectionFrame extends JDialog {
 		pack();
 	}
 
-	public Socket showConnectionDialog() {
+	public IServerConnection showConnectionDialog() {
 		th.start();
 
 		setVisible(true);
 
-		return th.getSock();
+		return new ServerConnection();
 	}
 
 	WindowListener closeListener = new WindowAdapter() {
