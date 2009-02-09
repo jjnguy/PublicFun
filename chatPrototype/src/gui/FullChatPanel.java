@@ -36,28 +36,22 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import MessageSending.ChatInterface;
+import MessageSending.ClientBackend;
 import MessageSending.InputListenerThread;
 
 // TODO THis should be two classes
 // TODO gui half and message sender and reciever class
 
 @SuppressWarnings("serial")
-public class FullChatPanel extends JFrame implements ChatInterface {
+public class FullChatPanel extends JFrame {
 
-	private static final int DEFAULT_PORT = 5001;
-	private JTextArea conversation, outgoingMesages;
-	private JScrollPane recievedScroller, outgoingScroller;
-	private JSplitPane incomingAndOutgoingSplit;
-
-	private List<String> outgoingMessageBuffer;
+	private ChatInterface client;
+	
+	private JTextArea outgoingMesages;
+	private JScrollPane outgoingScroller;
 
 	private JButton send;
 
-	private boolean connected;
-
-	private Socket connection;
-	private InputStream sockIn;
-	private OutputStream socOut;
 	private JMenuItem connectItem;
 	private JMenuItem hostItem;
 	private JMenuItem saveItem;
@@ -65,29 +59,17 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 	public FullChatPanel() {
 		super("Chat");
 		JPanel mainPane = new JPanel(new GridBagLayout());
-		outgoingMessageBuffer = new ArrayList<String>();
-		incomingAndOutgoingSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		conversation = new JTextArea();
-		conversation.setEditable(false);
+		
 		outgoingMesages = new JTextArea();
 		outgoingMesages.setEditable(true);
-		outgoingMesages.addKeyListener(enterPress);
-		recievedScroller = new JScrollPane(conversation);
 		outgoingScroller = new JScrollPane(outgoingMesages);
-		outgoingScroller.addKeyListener(enterPress);
 		outgoingScroller.setPreferredSize(new Dimension(300, 150));
-		recievedScroller.setPreferredSize(new Dimension(300, 150));
-		incomingAndOutgoingSplit.add(recievedScroller);
-		incomingAndOutgoingSplit.add(outgoingScroller);
-		incomingAndOutgoingSplit.setResizeWeight(.5);
-		incomingAndOutgoingSplit.addKeyListener(enterPress);
 		send = new JButton("Send");
-		send.addActionListener(sendAction);
 		send.setEnabled(false);
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.weightx = gc.weighty = 1;
 		gc.fill = GridBagConstraints.BOTH;
-		mainPane.add(incomingAndOutgoingSplit, gc);
+		mainPane.add(outgoingScroller);
 		gc.weightx = gc.weighty = 0;
 		gc.fill = GridBagConstraints.NONE;
 		gc.gridy = 1;
@@ -97,6 +79,8 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 
 		this.addWindowListener(closeListener);
 
+		client = new ClientBackend(this);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(buildMenu());
 		pack();
@@ -119,67 +103,6 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		return ret;
 	}
 
-	public void newMessage(String text, String userName) {
-		conversation.append("\n");
-		conversation.append(userName + ": "
-				+ FullChatPanel.timestamp(System.currentTimeMillis()));
-		conversation.append(text);
-	}
-
-	/**
-	 * 
-	 * @return the mesage to be sent
-	 */
-	public synchronized void sendMessage() {
-		while (!outgoingMessageBuffer.isEmpty()) {
-			String outgoingMessage = outgoingMessageBuffer.remove(0);
-			try {
-				socOut.write(outgoingMessage.getBytes());
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this, "Failed to send message.",
-						"Message Send Fail", JOptionPane.ERROR_MESSAGE);
-			}
-		}
-	}
-
-	// @Override
-	public boolean hasMesageToSend() {
-		return !outgoingMessageBuffer.isEmpty();
-	}
-
-	// @Override
-	public void saveConversation() {
-		JFileChooser choose = new JFileChooser();
-		int choice = choose.showSaveDialog(this);
-		if (choice == JFileChooser.CANCEL_OPTION)
-			return;
-
-		File f = choose.getSelectedFile();
-
-		PrintStream out = null;
-		try {
-			out = new PrintStream(f);
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(this, "Failed to save conversation.", "Save Fail",
-					JOptionPane.ERROR_MESSAGE);
-		}
-		out.print(conversation.getText());
-		out.close();
-	}
-
-	private ActionListener sendAction = new ActionListener() {
-
-		// @Override
-		public void actionPerformed(ActionEvent e) {
-			if (outgoingMesages.getText().trim().equals(""))
-				return;
-			newMessage(outgoingMesages.getText(), "You");
-			outgoingMessageBuffer.add(outgoingMesages.getText());
-			outgoingMesages.setText("");
-			sendMessage();
-		}
-	};
-
 	private KeyListener enterPress = new KeyAdapter() {
 
 		// @Override
@@ -194,61 +117,22 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-			// @Override
+			@Override
 			public void run() {
 				new FullChatPanel();
 			}
 		});
 	}
 
-	// @Override
-	public void connectToChatServer(String host, int port) {
-		if (connected())
-			return;
-		try {
-			connection = new Socket(host, port);
-			sockIn = connection.getInputStream();
-			socOut = connection.getOutputStream();
-		} catch (UnknownHostException e) {
-			JOptionPane.showMessageDialog(this, "Could not resolve host.", "Not Connected!",
-					JOptionPane.ERROR_MESSAGE);
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "Failed to send message.",
-					"Message Send Fail", JOptionPane.ERROR_MESSAGE);
-		}
-		InputListenerThread th = new InputListenerThread(this);
-		th.start();
-		send.setEnabled(true);
-		connected = true;
-		connectItem.setEnabled(false);
-		hostItem.setEnabled(false);
+	public void insertText(int location, String text){
+		this.outgoingMesages.insert(text, location);
 	}
 
-	// @Override
-	public void hostConversation() throws IOException {
-		if (connected())
-			return;
-
-		WaitingForConnectionFrame f = new WaitingForConnectionFrame(FullChatPanel.DEFAULT_PORT);
-		connection = f.showConnectionDialog();
-		if (connection == null)
-			return;
-		sockIn = connection.getInputStream();
-		socOut = connection.getOutputStream();
-		InputListenerThread th = new InputListenerThread(this);
-		th.start();
-		send.setEnabled(true);
-		connected = true;
-		connectItem.setEnabled(false);
-		hostItem.setEnabled(false);
-	}
-
-	// @Override
 	public boolean connected() {
-		return connected;
+		return client.connected();
 	}
 
-	public static String timestamp(long currentTimeMillis) {
+	private static String timestamp(long currentTimeMillis) {
 		return getTimeStringFromMiliseconds(currentTimeMillis) + " : ";
 	}
 
@@ -259,7 +143,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 	 *            Miliseconds since Jan 1 1970, or something like that
 	 * @return a string representing the current date
 	 */
-	public static String getTimeStringFromMiliseconds(long secondsP) {
+	private static String getTimeStringFromMiliseconds(long secondsP) {
 		int seconds = (int) (secondsP / 1000);
 		double year = seconds / 60.0 / 60 / 24.0 / 365;
 		double day = (year - Math.floor(year)) * 365;
@@ -268,11 +152,6 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		double sec = (min - Math.floor(min)) * 60;
 		return (hour < 10 ? "0" : "") + (int) hour + ":" + (min < 10 ? "0" : "") + (int) min
 				+ ":" + (Math.round(sec) < 10 ? "0" : "") + Math.round(sec);
-	}
-
-	// @Override
-	public InputStream getIStream() {
-		return sockIn;
 	}
 
 	private ActionListener connectAction = new ActionListener() {
@@ -284,7 +163,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 			if (choice != ConnectToFrame.CONNECT_OPTION)
 				return;
 
-			connectToChatServer(connect.getHost(), connect.getPort());
+			client.connectToChatServer(connect.getHost(), connect.getPort());
 		}
 	};
 	private ActionListener hostAction = new ActionListener() {
@@ -292,7 +171,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 		// @Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				hostConversation();
+				client.hostConversation();
 			} catch (IOException e1) {
 				JOptionPane
 						.showMessageDialog(FullChatPanel.this, "Failed to host conversation.",
@@ -302,9 +181,9 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 	};
 	private ActionListener saveAction = new ActionListener() {
 
-		// @Override
+		@Override
 		public void actionPerformed(ActionEvent e) {
-			saveConversation();
+			client.saveConversation();
 		}
 	};
 
@@ -312,29 +191,28 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 
 		@Override
 		public void windowClosing(WindowEvent e) {
-			outgoingMessageBuffer.add("Your chat buddy just bailed.  Sorry.");
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			sendMessage();
+			client.sendMessage();
 		}
 	};
-	
-	private KeyListener userTypesListener = new KeyListener(){
+
+	private KeyListener userTypesListener = new KeyListener() {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -342,8 +220,8 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 			// TODO Auto-generated method stub
 			int caratPosition = FullChatPanel.this.outgoingMesages.getCaretPosition();
 			char c = e.getKeyChar();
-			
+
 		}
-		
+
 	};
 }

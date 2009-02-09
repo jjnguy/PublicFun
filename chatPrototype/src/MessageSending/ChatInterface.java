@@ -10,7 +10,7 @@ import java.io.InputStream;
  */
 public interface ChatInterface {
 
-	public void sendMessage();
+	public boolean sendMessage();
 
 	public boolean hasMesageToSend();
 
@@ -22,7 +22,7 @@ public interface ChatInterface {
 	
 	public void hostConversation() throws IOException;
 	
-	public void connectToChatServer(String host, int port);
+	public boolean connectToChatServer(String host, int port);
 	
 	public boolean connected();
 }
