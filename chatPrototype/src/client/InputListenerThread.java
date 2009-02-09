@@ -1,4 +1,4 @@
-package MessageSending;
+package client;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -6,10 +6,10 @@ import javax.swing.JOptionPane;
 
 public class InputListenerThread extends Thread {
 
-	private ChatInterface interFace;
+	private LiveEditInterface interFace;
 	private InputStream stream;
 
-	public InputListenerThread(ChatInterface inter) {
+	public InputListenerThread(LiveEditInterface inter) {
 		interFace = inter;
 		stream = inter.getIStream();
 	}

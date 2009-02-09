@@ -1,4 +1,4 @@
-package MessageSending;
+package client;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -8,7 +8,7 @@ import java.io.InputStream;
  * @author Justin Nelson
  * 
  */
-public interface ChatInterface {
+public interface LiveEditInterface {
 
 	public boolean sendMessage();
 

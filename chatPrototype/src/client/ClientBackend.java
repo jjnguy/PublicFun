@@ -1,7 +1,5 @@
-package MessageSending;
+package client;
 
-import gui.FullChatPanel;
-import gui.WaitingForConnectionFrame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +15,10 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-public class ClientBackend implements ChatInterface {
+import client.gui.FullChatPanel;
+import client.gui.WaitingForConnectionFrame;
+
+public class ClientBackend implements LiveEditInterface {
 	
 	private static final int DEFAULT_PORT = 5001;
 	private List<String> outgoingMessageBuffer;

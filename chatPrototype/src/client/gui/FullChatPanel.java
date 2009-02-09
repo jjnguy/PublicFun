@@ -1,4 +1,4 @@
-package gui;
+package client.gui;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -35,9 +35,10 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import MessageSending.ChatInterface;
-import MessageSending.ClientBackend;
-import MessageSending.InputListenerThread;
+import client.ClientBackend;
+import client.InputListenerThread;
+import client.LiveEditInterface;
+
 
 // TODO THis should be two classes
 // TODO gui half and message sender and reciever class
@@ -45,7 +46,7 @@ import MessageSending.InputListenerThread;
 @SuppressWarnings("serial")
 public class FullChatPanel extends JFrame {
 
-	private ChatInterface client;
+	private LiveEditInterface client;
 	
 	private JTextArea outgoingMesages;
 	private JScrollPane outgoingScroller;
