@@ -15,6 +15,8 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import connectionmanager.IServerConnection;
+
 import client.gui.FullChatPanel;
 import client.gui.WaitingForConnectionFrame;
 
@@ -24,28 +26,13 @@ public class ClientBackend implements LiveEditInterface {
 	private List<String> outgoingMessageBuffer;
 	private boolean connected;
 
-	private Socket connection;
-	private InputStream sockIn;
-	private OutputStream socOut;
+	private IServerConnection connection;
 	
 	private FullChatPanel gui;
 	
 	public ClientBackend(FullChatPanel gui){
 		this.gui = gui;
 		outgoingMessageBuffer = new ArrayList<String>();
-	}
-	
-	@Override
-	public boolean sendMessage() {
-		while (!outgoingMessageBuffer.isEmpty()) {
-			String outgoingMessage = outgoingMessageBuffer.remove(0);
-			try {
-				socOut.write(outgoingMessage.getBytes());
-			} catch (IOException e) {
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	@Override
@@ -73,7 +60,7 @@ public class ClientBackend implements LiveEditInterface {
 	}
 
 	@Override
-	public boolean connectToChatServer(String host, int port) {
+	public boolean connectToCoLabServer(String host, int port) {
 		if (connected())
 			return true;
 		try {
@@ -87,14 +74,14 @@ public class ClientBackend implements LiveEditInterface {
 			JOptionPane.showMessageDialog(gui, "Failed to send message.",
 					"Message Send Fail", JOptionPane.ERROR_MESSAGE);
 		}
-		InputListenerThread th = new InputListenerThread(this);
+		ClientChangeThread th = new ClientChangeThread(this);
 		th.start();
 		connected = true;
 		return this.connected();
 	}
 	
 	@Override
-	public void hostConversation() throws IOException {
+	public void hostCoLabRoom() throws IOException {
 		if (connected())
 			return;
 
@@ -104,7 +91,7 @@ public class ClientBackend implements LiveEditInterface {
 			return;
 		sockIn = connection.getInputStream();
 		socOut = connection.getOutputStream();
-		InputListenerThread th = new InputListenerThread(this);
+		ClientChangeThread th = new ClientChangeThread(this);
 		th.start();
 		connected = true;
 	}
@@ -121,7 +108,7 @@ public class ClientBackend implements LiveEditInterface {
 	}
 
 	@Override
-	public void newMessage(String text, String username) {
+	public void newText(String text, String username) {
 	}
 
 }

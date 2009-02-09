@@ -36,7 +36,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import client.ClientBackend;
-import client.InputListenerThread;
+import client.ClientChangeThread;
 import client.LiveEditInterface;
 
 
@@ -164,7 +164,7 @@ public class FullChatPanel extends JFrame {
 			if (choice != ConnectToFrame.CONNECT_OPTION)
 				return;
 
-			client.connectToChatServer(connect.getHost(), connect.getPort());
+			client.connectToCoLabServer(connect.getHost(), connect.getPort());
 		}
 	};
 	private ActionListener hostAction = new ActionListener() {
@@ -172,7 +172,7 @@ public class FullChatPanel extends JFrame {
 		// @Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				client.hostConversation();
+				client.hostCoLabRoom();
 			} catch (IOException e1) {
 				JOptionPane
 						.showMessageDialog(FullChatPanel.this, "Failed to host conversation.",
