@@ -130,7 +130,7 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 	 * 
 	 * @return the mesage to be sent
 	 */
-	public void sendMessage() {
+	public synchronized void sendMessage() {
 		while (!outgoingMessageBuffer.isEmpty()) {
 			String outgoingMessage = outgoingMessageBuffer.remove(0);
 			try {
@@ -321,5 +321,29 @@ public class FullChatPanel extends JFrame implements ChatInterface {
 			}
 			sendMessage();
 		}
+	};
+	
+	private KeyListener userTypesListener = new KeyListener(){
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			int caratPosition = FullChatPanel.this.outgoingMesages.getCaretPosition();
+			char c = e.getKeyChar();
+			
+		}
+		
 	};
 }
