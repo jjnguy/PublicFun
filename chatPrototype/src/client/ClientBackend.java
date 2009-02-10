@@ -1,24 +1,13 @@
 package client;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
-import connectionmanager.IServerConnection;
-
 import client.gui.FullChatPanel;
 import client.gui.WaitingForConnectionFrame;
+import connectionmanager.IServerConnection;
 
 public class ClientBackend implements LiveEditInterface {
 	
@@ -39,7 +28,7 @@ public class ClientBackend implements LiveEditInterface {
 	public boolean connectToCoLabServer(String host, int port) {
 		if (connected())
 			return true;
-		connection.connect();
+		connection.connect(host, port);
 		connected = true;
 		return this.connected();
 	}

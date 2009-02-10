@@ -7,6 +7,6 @@ public interface IServerConnection {
 	public boolean textDeleted(int startPos, int endPos);
 	public boolean movedMouse(int newX, int newY);
 	
-	public boolean connect();
+	public boolean connect(String host, int port );
 	public boolean disconnect();
 }

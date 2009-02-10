@@ -1,11 +1,16 @@
 package server;
 
-import client.LiveEditInterface;
+import java.util.List;
+
+import infoExperts.CoLabRoom;
+import infoExperts.CoLabRoomMember;
 
 public interface IServer {
 
-	public boolean connect(LiveEditInterface client);
-	public boolean disconnect();
+	public boolean createCoLabRoom(CoLabRoomMember admin, String name, byte[] password);
+	public boolean createCoLabRoom(CoLabRoomMember admin, String name, byte[] password, int capacity);
 	
+	public boolean connectToColabRoom(CoLabRoomMember newMem, String name, byte[] password);
 	
+	public List<CoLabRoom> getAllRooms();
 }

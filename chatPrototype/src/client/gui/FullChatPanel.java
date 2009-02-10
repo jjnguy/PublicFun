@@ -51,8 +51,6 @@ public class FullChatPanel extends JFrame {
 	private JTextArea outgoingMesages;
 	private JScrollPane outgoingScroller;
 
-	private JButton send;
-
 	private JMenuItem connectItem;
 	private JMenuItem hostItem;
 	private JMenuItem saveItem;
@@ -65,8 +63,6 @@ public class FullChatPanel extends JFrame {
 		outgoingMesages.setEditable(true);
 		outgoingScroller = new JScrollPane(outgoingMesages);
 		outgoingScroller.setPreferredSize(new Dimension(300, 150));
-		send = new JButton("Send");
-		send.setEnabled(false);
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.weightx = gc.weighty = 1;
 		gc.fill = GridBagConstraints.BOTH;
@@ -75,7 +71,6 @@ public class FullChatPanel extends JFrame {
 		gc.fill = GridBagConstraints.NONE;
 		gc.gridy = 1;
 		gc.anchor = GridBagConstraints.BASELINE_TRAILING;
-		mainPane.add(send, gc);
 		add(mainPane);
 
 		this.addWindowListener(closeListener);
@@ -103,18 +98,6 @@ public class FullChatPanel extends JFrame {
 		ret.add(file);
 		return ret;
 	}
-
-	private KeyListener enterPress = new KeyAdapter() {
-
-		// @Override
-		public void keyPressed(KeyEvent e) {
-			// TODO doesn't work
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				if ((e.getModifiers() & KeyEvent.CTRL_DOWN_MASK) == KeyEvent.CTRL_DOWN_MASK)
-					send.doClick();
-			}
-		}
-	};
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {

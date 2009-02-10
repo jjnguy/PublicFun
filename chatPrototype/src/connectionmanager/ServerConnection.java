@@ -1,8 +1,10 @@
 package connectionmanager;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class ServerConnection implements IServerConnection {
 
@@ -11,8 +13,17 @@ public class ServerConnection implements IServerConnection {
 	private OutputStream socOut;
 	
 	@Override
-	public boolean connect() {
-		// TODO Auto-generated method stub
+	public boolean connect(String host, int port) {
+		try {
+			connection = new Socket(host, port);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// connection.
 		return false;
 	}
 

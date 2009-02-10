@@ -1,9 +1,4 @@
 package client;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.swing.JOptionPane;
-
 import connectionmanager.IServerConnection;
 
 public class ClientChangeThread extends Thread {
