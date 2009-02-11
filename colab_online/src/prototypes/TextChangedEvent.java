@@ -1,7 +1,10 @@
 package prototypes;
 
+import java.awt.Component;
+
 public class TextChangedEvent {
 
+	private Component sender;
 	private int cursorLocation;
 	private String textAdded;
 	private int deleteEndIndex;

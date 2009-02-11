@@ -4,6 +4,6 @@ import java.awt.Component;
 
 public interface TextChangedListener {
 	
-	public void changePerformed(TextChangedEvent e, Component sender);
+	public void changePerformed(TextChangedEvent e);
 
 }
