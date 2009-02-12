@@ -22,6 +22,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 
 public class BasicTestPrototype extends JFrame {
 
@@ -42,6 +45,7 @@ public class BasicTestPrototype extends JFrame {
 
 		theText = new JTextArea();
 		theText.addKeyListener(typeListener);
+		theText.getDocument();
 		JPanel mainPane = new JPanel(new BorderLayout());
 		mainPane.setPreferredSize(new Dimension(300, 300));
 		mainPane.add(theText, BorderLayout.CENTER);
@@ -51,6 +55,27 @@ public class BasicTestPrototype extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
+
+	private DocumentListener l = new DocumentListener() {
+
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 	private JMenuBar buildMenu() {
 		JMenuItem host = new JMenuItem("Host");
@@ -119,7 +144,19 @@ public class BasicTestPrototype extends JFrame {
 			if (typableChars.contains(e.getKeyChar() + "")) {
 				return;
 			}
-			
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				System.out.println("In enter press event");
+				String newMessage = textAddedMessage + ";";
+				newMessage += "\n;";
+				newMessage += theText.getCaretPosition() + ";";
+				outGoingMessageBuffer.add(newMessage);
+				try {
+					sendMessage();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 		}
 
 		@Override
@@ -152,7 +189,7 @@ public class BasicTestPrototype extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				connection = new Socket(defaultHost, defaultPort);
+				connection = new Socket("localhost", defaultPort);
 				ListenForClientChangeThread th = new ListenForClientChangeThread(connection
 						.getInputStream());
 				th.start();
