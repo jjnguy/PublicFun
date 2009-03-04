@@ -1,4 +1,4 @@
-package clientfrontend;
+package client;
 
 import server.CoLabPrivledgeLevel;
 
