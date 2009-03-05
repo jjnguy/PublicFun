@@ -174,7 +174,6 @@ public class DemoModel implements ListModel
   @Override
   public void removeListDataListener(ListDataListener arg0)
   {
-    // TODO Auto-generated method stub
     listeners.remove(arg0);
   }
 

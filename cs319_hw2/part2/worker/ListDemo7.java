@@ -41,7 +41,7 @@ import javax.swing.event.ListSelectionListener;
  */
 @SuppressWarnings("serial")
 public class ListDemo7 extends JFrame {
-	
+
 	// The widgets!!!
 	private JButton deleteButton;
 	private JButton addButton;
@@ -55,9 +55,10 @@ public class ListDemo7 extends JFrame {
 	private JProgressBar progressBar;
 	private JButton cancelButton;
 	// End the widgets!!
-	
+
 	// A worker for performing the lookup in the background
-	private SwingWorker<Integer, StackOverflowError> worker; // Remember, we ignore the second generic parameter
+	private SwingWorker<Integer, StackOverflowError> worker;
+	// Remember, we ignore the second generic parameter
 
 	// The actual data is stored in this custom
 	// instance of ListModel
@@ -176,13 +177,9 @@ public class ListDemo7 extends JFrame {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (InstantiationException e) {
-			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -211,11 +208,9 @@ public class ListDemo7 extends JFrame {
 	/**
 	 * Some fake data for testing.
 	 */
-	private static String[] testData = { "Bud Tugly", "Makeup artist", "Mike Easter",
-			"Seat cushion tester", "Pikop Andropov", "Russian limosine driver", "Ajustos Miros",
-			"Quality control technician", "Erasmus B. Draggin", "Working mother support group",
-			"Warren Peace", "Leo Tolstoy biographer",
-	};
+	private static String[] testData = { "Bud Tugly", "Makeup artist", "Mike Easter", "Seat cushion tester", "Pikop Andropov",
+			"Russian limosine driver", "Ajustos Miros", "Quality control technician", "Erasmus B. Draggin",
+			"Working mother support group", "Warren Peace", "Leo Tolstoy biographer", };
 
 	/**
 	 * Creates an initial list of the fake data for testing.
@@ -233,15 +228,16 @@ public class ListDemo7 extends JFrame {
 	}
 
 	/**
-	 * Instance of an action listener to deal with a user clicking the add button
+	 * Instance of an action listener to deal with a user clicking the add
+	 * button
 	 */
 	private ActionListener addActionL = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			String name = addField.getText().trim();
 			if (name.length() == 0) {
-				JOptionPane.showMessageDialog(ListDemo7.this, "You cannot look up a blank name.",
-						"Invalid Name Lookup", JOptionPane.WARNING_MESSAGE, null);
+				JOptionPane.showMessageDialog(ListDemo7.this, "You cannot look up a blank name.", "Invalid Name Lookup",
+						JOptionPane.WARNING_MESSAGE, null);
 				return;
 			}
 			addField.setText("");
@@ -253,7 +249,8 @@ public class ListDemo7 extends JFrame {
 		}
 	};
 	/**
-	 * Instance of an action listener to deal with a user clicking the delete button
+	 * Instance of an action listener to deal with a user clicking the delete
+	 * button
 	 */
 	private ActionListener deleteActionL = new ActionListener() {
 		@Override
@@ -273,15 +270,15 @@ public class ListDemo7 extends JFrame {
 		}
 	};
 	/**
-	 * Instance of an action listener to deal with a user clicking the cancel button
+	 * Instance of an action listener to deal with a user clicking the cancel
+	 * button
 	 */
 	private ActionListener cancelActionL = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			// Cancel button
 			System.out.println("cancelling");
-			if (worker != null && !worker.isCancelled() && !worker.isDone())
-				worker.cancel(true);
+			if (worker != null && !worker.isCancelled() && !worker.isDone()) worker.cancel(true);
 		}
 	};
 	/**
@@ -295,7 +292,6 @@ public class ListDemo7 extends JFrame {
 			} else {
 				model.sortDown();
 			}
-
 			list.setSelectedIndex(0);
 			list.ensureIndexIsVisible(0);
 			textArea.setText(model.getElement(0).toString());
@@ -325,9 +321,10 @@ public class ListDemo7 extends JFrame {
 		private Timer timeoutTimer, animateTimer;
 
 		/**
-		 * Constructs a LookupWorker
-		 * Initializes all members
-		 * @param employeeName the name of the employee, duh!
+		 * Constructs a LookupWorker Initializes all members
+		 * 
+		 * @param employeeName
+		 *            the name of the employee, duh!
 		 */
 		public LookupWorker(String employeeName) {
 			this.employeeName = employeeName;
@@ -384,7 +381,7 @@ public class ListDemo7 extends JFrame {
 			progressBar.setValue(0);
 			ListDemo7.this.pack();
 		}
-		
+
 		/**
 		 * Instance of an action listener to deal with timing out a lookup
 		 */
@@ -393,9 +390,8 @@ public class ListDemo7 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Lookup Timed Out");
 				LookupWorker.this.cancel(true);
-				JOptionPane.showMessageDialog(ListDemo7.this,
-						"The action has timed out.  Sorry to waste your time.", "Timeout Error",
-						JOptionPane.WARNING_MESSAGE, null);
+				JOptionPane.showMessageDialog(ListDemo7.this, "The action has timed out.  Sorry to waste your time.",
+						"Timeout Error", JOptionPane.WARNING_MESSAGE, null);
 			}
 		};
 		/**
