@@ -44,19 +44,6 @@ public class GravityPane extends JPanel {
 			log.println(String.format("Y Pos: %8f  Y Vel: %8f", obj
 					.getPosition_Y(), obj.getVelocity_Y()));
 		}
-		for (Wall w : walls) {
-			for (GravityObject obj : objects) {
-				if (obj instanceof Collidable) {
-					for (Point p : w.getPoints(5, getHeight())) {
-						if (((Dragable) obj).containsPoint(p)) {
-							w.collide((Collidable) obj);
-							System.out.println("Collision detected");
-							break;
-						}
-					}
-				}
-			}
-		}
 		repaint();
 	}
 
@@ -73,9 +60,6 @@ public class GravityPane extends JPanel {
 				ob2 = objects.get(i + 1);
 			}
 			ob1.draw((Graphics2D) g, getHeight());
-			g.drawLine((int) ob1.getPosition_X(), this.getHeight()
-					- (int) ob1.getPosition_Y(), (int) ob2.getPosition_X(),
-					this.getHeight() - (int) ob2.getPosition_Y());
 		}
 		for (Wall w : walls) {
 			w.draw((Graphics2D) g, getHeight(), getWidth());
@@ -88,6 +72,8 @@ public class GravityPane extends JPanel {
 		objects.add(obj);
 	}
 
+	private Dragable heldOnto;
+	
 	private MouseListener clickListener = new MouseAdapter() {
 
 		@Override
@@ -104,6 +90,7 @@ public class GravityPane extends JPanel {
 						&& ((Dragable) obj).containsPoint(xFormedPoint)) {
 					Dragable objD = (Dragable) obj;
 					objD.grabedOnto(e);
+					heldOnto = objD;
 					break;
 				}
 			}
@@ -111,6 +98,7 @@ public class GravityPane extends JPanel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			heldOnto = null;
 			for (GravityObject obj : objects) {
 				if (obj instanceof Dragable) {
 					((Dragable) obj).letGo();
@@ -134,6 +122,8 @@ public class GravityPane extends JPanel {
 					objD.grabedOnto(e);
 				}
 			}
+			if (heldOnto != null)
+				heldOnto.grabedOnto(e);
 		}
 
 		@Override

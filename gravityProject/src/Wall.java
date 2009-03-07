@@ -41,7 +41,7 @@ public class Wall implements Collidable {
 		g.setStroke(originalStroke);
 	}
 
-	private static double degreeToRadians(double deg) {
+	public static double degreeToRadians(double deg) {
 		return deg * Math.PI / 180.0;
 	}
 
@@ -58,23 +58,14 @@ public class Wall implements Collidable {
 	}
 
 	@Override
-	public void updateVelocity_X(double newVel_x) {
-		// Left blank, walls cannot change
-	}
-
-	@Override
-	public void updateVelocity_Y(double newVel_y) {
-		// Left blank, walls cannot change
-	}
-
-	@Override
 	public void collide(Collidable other) {
 		double oldVel_x = other.getVelocity_X();
 		double oldVel_y = other.getVelocity_Y();
-		other.updateVelocity_X((1 - 2 * Math.PI - degreeToRadians(angle) / Math.PI / 2)
-				* oldVel_x);
-		other.updateVelocity_Y((2 * Math.PI - degreeToRadians(angle) / Math.PI / 2 - 1)
-				* oldVel_y);
+		/*
+		 * other.updateVelocity_X((1 - 2 Math.PI - degreeToRadians(angle) /
+		 * Math.PI / 2) oldVel_x); other.updateVelocity_Y((2 Math.PI -
+		 * degreeToRadians(angle) / Math.PI / 2 - 1) oldVel_y);
+		 */
 	}
 
 	public List<Point> getPoints(int dist, int gravPaneHeight) {

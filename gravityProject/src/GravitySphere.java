@@ -5,7 +5,7 @@ import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
-public class GravitySphere implements Dragable {
+public class GravitySphere implements Dragable, Collidable {
 
 	private int DIAMETER = 30;
 	private double BOUNCE_FACTOR = .6;
@@ -50,8 +50,8 @@ public class GravitySphere implements Dragable {
 		if (held)
 			return;
 		double seconds = miliseconds / 1000.0;
-		pos_y = pos_y + vel_y * seconds + .5 * (GravityObject.GRAVITATIONAL_CONSTANT)
-				* seconds * seconds;
+		pos_y = pos_y + vel_y * seconds + .5
+				* (GravityObject.GRAVITATIONAL_CONSTANT) * seconds * seconds;
 
 		pos_x = pos_x + vel_x * seconds;
 
@@ -63,6 +63,15 @@ public class GravitySphere implements Dragable {
 		if (pos_y < DIAMETER / 2 && vel_y < 0) {
 			pos_y = DIAMETER / 2;
 			vel_y = -vel_y * BOUNCE_FACTOR;
+		}
+		if (pos_x < DIAMETER / 2) {
+			pos_x = DIAMETER / 2;
+			vel_x = -vel_x * BOUNCE_FACTOR;
+		}
+		// rough hack because I know the pane it is in is 500 wide
+		if (pos_x > 500 - DIAMETER / 2) {
+			pos_x = 500 - DIAMETER / 2;
+			vel_x = -vel_x * BOUNCE_FACTOR;
 		}
 	}
 
@@ -107,28 +116,45 @@ public class GravitySphere implements Dragable {
 		g.setColor(originalColor);
 	}
 
-	
-	
+	// Dragable stuff
+
+	private double last_xPos;
+	private double last_yPos;
+	private long lastGrabbed_time;
+
 	@Override
 	public void grabedOnto(MouseEvent e) {
+		lastGrabbed_time = System.nanoTime();
 		held = true;
-		
+		last_xPos = pos_x;
 		pos_x = e.getX();
+		last_yPos = pos_y;
 		pos_y = e.getComponent().getHeight() - e.getY();
 		vel_x = vel_y = 0;
 	}
 
 	@Override
 	public void letGo() {
-		held = false;
+		int FACTOR = 100000;
+		if (held) {
+			held = false;
+			long timeDif = System.nanoTime() - lastGrabbed_time;
+			System.out.println("Time dif: " + timeDif);
+			if (timeDif <= 0)
+				return;
+			vel_x = FACTOR * (pos_x - last_xPos) / (double) (timeDif);
+			vel_y = FACTOR * (pos_y - last_yPos) / (double) (timeDif);
+			System.out.println("Vel x: " + vel_x);
+			System.out.println("Vel y: " + vel_y);
+		}
 	}
 
 	@Override
 	public boolean containsPoint(Point p) {
 		// basically, if the point is farther than the
 		// radius away, it is not contained
-		double distance = Math.sqrt((p.x - pos_x) * (p.x - pos_x) + (p.y - pos_y)
-				* (p.y - pos_y));
+		double distance = Math.sqrt((p.x - pos_x) * (p.x - pos_x)
+				+ (p.y - pos_y) * (p.y - pos_y));
 		return distance <= DIAMETER / 2;
 	}
 
@@ -136,4 +162,17 @@ public class GravitySphere implements Dragable {
 	public boolean isHeld() {
 		return held;
 	}
+
+	// End Dragable stuff
+
+	@Override
+	public void collide(Collidable other) {
+		double oldVel_x = other.getVelocity_X();
+		double oldVel_y = other.getVelocity_Y();
+		vel_x = (1 - 2 * Math.PI - Wall.degreeToRadians(90) / Math.PI / 2)
+				* oldVel_x;
+		vel_y = (2 * Math.PI - Wall.degreeToRadians(90) / Math.PI / 2 - 1)
+				* oldVel_y;
+	}
+
 }
