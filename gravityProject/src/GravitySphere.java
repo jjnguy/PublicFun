@@ -5,7 +5,7 @@ import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
-public class GravitySphere implements Dragable, Collidable {
+public class GravitySphere implements Dragable {
 
 	private int DIAMETER = 30;
 	private double BOUNCE_FACTOR = .6;
@@ -107,9 +107,12 @@ public class GravitySphere implements Dragable, Collidable {
 		g.setColor(originalColor);
 	}
 
+	
+	
 	@Override
 	public void grabedOnto(MouseEvent e) {
 		held = true;
+		
 		pos_x = e.getX();
 		pos_y = e.getComponent().getHeight() - e.getY();
 		vel_x = vel_y = 0;
@@ -133,20 +136,4 @@ public class GravitySphere implements Dragable, Collidable {
 	public boolean isHeld() {
 		return held;
 	}
-
-	@Override
-	public void collide(Collidable other) {
-		// TODO
-	}
-
-	@Override
-	public void updateVelocity_X(double newVel_x) {
-		vel_x = newVel_x;
-	}
-
-	@Override
-	public void updateVelocity_Y(double newVel_y) {
-		vel_y = newVel_y;
-	}
-
 }

@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class GravityFrame extends JFrame {
 
 	private GravityPane gravPane;

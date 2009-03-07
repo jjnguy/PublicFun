@@ -41,8 +41,8 @@ public class GravityPane extends JPanel {
 	public void advanceFrame() {
 		for (GravityObject obj : objects) {
 			obj.fall(INTERVAL);
-			log.println(String.format("Y Pos: %8f  Y Vel: %8f", obj.getPosition_Y(), obj
-					.getVelocity_Y()));
+			log.println(String.format("Y Pos: %8f  Y Vel: %8f", obj
+					.getPosition_Y(), obj.getVelocity_Y()));
 		}
 		for (Wall w : walls) {
 			for (GravityObject obj : objects) {
@@ -63,8 +63,19 @@ public class GravityPane extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		for (GravityObject obj : objects) {
-			obj.draw((Graphics2D) g, getHeight());
+		GravityObject ob1;
+		GravityObject ob2;
+		for (int i = 0; i < objects.size(); i++) {
+			ob1 = objects.get(i);
+			if (i == objects.size() - 1) {
+				ob2 = ob1;
+			} else {
+				ob2 = objects.get(i + 1);
+			}
+			ob1.draw((Graphics2D) g, getHeight());
+			g.drawLine((int) ob1.getPosition_X(), this.getHeight()
+					- (int) ob1.getPosition_Y(), (int) ob2.getPosition_X(),
+					this.getHeight() - (int) ob2.getPosition_Y());
 		}
 		for (Wall w : walls) {
 			w.draw((Graphics2D) g, getHeight(), getWidth());
@@ -81,12 +92,16 @@ public class GravityPane extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			Point xFormedPoint = new Point(e.getX(), e.getComponent().getHeight() - e.getY());
-			// going backwards here so that the objects on top will be the ones that are
+			Point xFormedPoint = new Point(e.getX(), e.getComponent()
+					.getHeight()
+					- e.getY());
+			// going backwards here so that the objects on top will be the ones
+			// that are
 			// grabbed
 			for (int i = objects.size() - 1; i >= 0; i--) {
 				GravityObject obj = objects.get(i);
-				if (obj instanceof Dragable && ((Dragable) obj).containsPoint(xFormedPoint)) {
+				if (obj instanceof Dragable
+						&& ((Dragable) obj).containsPoint(xFormedPoint)) {
 					Dragable objD = (Dragable) obj;
 					objD.grabedOnto(e);
 					break;
@@ -108,9 +123,12 @@ public class GravityPane extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			Point xFormedPoint = new Point(e.getX(), e.getComponent().getHeight() - e.getY());
+			Point xFormedPoint = new Point(e.getX(), e.getComponent()
+					.getHeight()
+					- e.getY());
 			for (GravityObject obj : objects) {
-				if (obj instanceof Dragable && ((Dragable) obj).containsPoint(xFormedPoint)
+				if (obj instanceof Dragable
+						&& ((Dragable) obj).containsPoint(xFormedPoint)
 						&& ((Dragable) obj).isHeld()) {
 					Dragable objD = (Dragable) obj;
 					objD.grabedOnto(e);
