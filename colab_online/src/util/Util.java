@@ -3,6 +3,12 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for static helper methods
+ * 
+ * @author The Squirrels
+ *
+ */
 public class Util {
 	private static List<String> privledgedUsers;
 	static {

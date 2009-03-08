@@ -3,9 +3,11 @@ package dataobjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.CoLabPrivledgeLevel;
+
 /**
  * Class defining a room for people to meet.
- * @author Justin
+ * @author The Squirrels
  *
  */
 public class CoLabRoom {
@@ -17,8 +19,9 @@ public class CoLabRoom {
 	 * Constructs a new CoLabRoom with the supplied name.
 	 * @param roomname
 	 */
-	public CoLabRoom(String roomname) {
+	public CoLabRoom(String roomname, CoLabRoomMember theAdmin) {
 		this.roomname = roomname;
+		theAdmin.setPrivLevel(CoLabPrivledgeLevel.ADMIN);
 		members = new ArrayList<CoLabRoomMember>();
 	}
 }
