@@ -7,7 +7,7 @@ import java.util.List;
  * Class for static helper methods
  * 
  * @author The Squirrels
- *
+ * 
  */
 public class Util {
 	private static List<String> privledgedUsers;
@@ -19,9 +19,14 @@ public class Util {
 		privledgedUsers.add("wrowcliffe");
 	}
 
+	/**
+	 * Determines if a given username is a Super Admin
+	 * 
+	 * @param username
+	 *            the name to check for user status
+	 * @return whether or not a user is a Super Admin
+	 */
 	public static boolean isSuperAdmin(String username) {
 		return privledgedUsers.contains(username);
 	}
-	
-	
 }
