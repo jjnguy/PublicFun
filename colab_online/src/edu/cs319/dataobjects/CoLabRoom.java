@@ -1,9 +1,10 @@
-package dataobjects;
+package edu.cs319.dataobjects;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import server.CoLabPrivledgeLevel;
+import edu.cs319.server.CoLabPrivledgeLevel;
+
 
 /**
  * Class defining a room for people to meet.

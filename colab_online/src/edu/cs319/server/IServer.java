@@ -1,4 +1,4 @@
-package server;
+package edu.cs319.server;
 
 import java.util.List;
 

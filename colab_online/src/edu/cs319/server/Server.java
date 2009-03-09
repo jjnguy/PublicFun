@@ -1,13 +1,32 @@
-package server;
+package edu.cs319.server;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-import dataobjects.CoLabRoom;
+
+import edu.cs319.client.IClient;
+import edu.cs319.dataobjects.CoLabRoom;
 
 public class Server implements IServer {
 	
 	private List<CoLabRoom> colabrooms;
+	private List<IClient> clients;
 	
+	/**
+	 * Creates a new server
+	 */
+	public Server() {
+		clients = new ArrayList<IClient>();
+	}
+
+	public void startup() throws IOException {
+		
+	}
+
 	@Override
 	public boolean addNewCoLabRoom(String username, String roomName, byte[] password) {
 		// TODO Auto-generated method stub

@@ -1,7 +1,7 @@
-package dataobjects;
+package edu.cs319.dataobjects;
 
-import server.CoLabPrivledgeLevel;
-import util.Util;
+import edu.cs319.server.CoLabPrivledgeLevel;
+import edu.cs319.util.Util;
 
 /**
  * Class for storing data about a member/perspective member of a CoLab room.

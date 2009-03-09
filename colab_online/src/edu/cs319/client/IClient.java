@@ -1,6 +1,6 @@
-package client;
+package edu.cs319.client;
 
-import server.CoLabPrivledgeLevel;
+import edu.cs319.server.CoLabPrivledgeLevel;
 
 public interface IClient {
 

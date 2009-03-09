@@ -1,4 +1,4 @@
-package server;
+package edu.cs319.server;
 
 /**
  * Simple enum describing the privilege levels in a CoLab room.
