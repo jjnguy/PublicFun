@@ -1,7 +1,10 @@
 package edu.cs319.dataobjects;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.cs319.server.CoLabPrivledgeLevel;
 
@@ -14,7 +17,7 @@ import edu.cs319.server.CoLabPrivledgeLevel;
 public class CoLabRoom {
 
 	private String roomname;
-	private List<CoLabRoomMember> members;
+	private Map<String, CoLabRoomMember> members;
 	private byte[] password;
 
 	/**
@@ -25,7 +28,7 @@ public class CoLabRoom {
 	public CoLabRoom(String roomname, CoLabRoomMember theAdmin) {
 		this(roomname, theAdmin, null);
 	}
-	
+
 	/**
 	 * Constructs a new CoLabRoom with the supplied name and password.
 	 * 
@@ -34,7 +37,7 @@ public class CoLabRoom {
 	public CoLabRoom(String roomname, CoLabRoomMember theAdmin, byte[] password) {
 		this.roomname = roomname;
 		theAdmin.setPrivLevel(CoLabPrivledgeLevel.ADMIN);
-		members = new ArrayList<CoLabRoomMember>();
+		members = Collections.synchronizedMap(new HashMap<String, CoLabRoomMember>());
 		this.password = password;
 	}
 
@@ -46,7 +49,7 @@ public class CoLabRoom {
 	 * @return whether or not the member already exists in a room.
 	 */
 	public boolean addMember(String member) {
-		if (!containsMemberByName(member)) members.add(new CoLabRoomMember(member));
+		members.put(member, new CoLabRoomMember(member));
 		return true;
 	}
 
@@ -58,20 +61,21 @@ public class CoLabRoom {
 	 * @return whether or not the member is in a room
 	 */
 	public boolean containsMemberByName(String name) {
-		for (CoLabRoomMember member : members) {
-			if (member.name().equals(name)) return true;
-		}
-		return false;
+		return members.keySet().contains(name);
 	}
 
-	public byte[] password(){
+	public CoLabRoomMember getMemberByName(String name) {
+		return members.get(name);
+	}
+
+	public byte[] password() {
 		return password;
 	}
-	
-	public String roomName(){
+
+	public String roomName() {
 		return roomname;
 	}
-	
+
 	@Override
 	public String toString() {
 		return roomName();

@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import edu.cs319.client.IClient;
@@ -41,19 +42,32 @@ public class Server implements IServer {
 		if (Util.DEBUG) {
 			System.out.println("Server: Adding new CoLab Room");
 		}
+
+		Set<String> roomNames = colabrooms.keySet();
+		synchronized (colabrooms) {
+			if (roomNames.contains(roomName)) return false;
+		}
+
 		CoLabRoom roomToAdd = new CoLabRoom(roomName, new CoLabRoomMember(username), password);
 		colabrooms.put(roomName, roomToAdd);
 
 		if (Util.DEBUG) {
 			System.out.println("Server: CoLab Room added successfully");
 		}
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivledgeLevel newPriv) {
-		// TODO Auto-generated method stub
-		return false;
+		CoLabRoom room = colabrooms.get(roomname);
+		CoLabRoomMember member = room.getMemberByName(roomname);
+		boolean privSetSuccess = member.setPrivLevel(newPriv);
+		if (privSetSuccess) {
+			for (IClient client : regularClients) {
+				client.changeUserPrivledge(username, newPriv);
+			}
+		}
+		return privSetSuccess;
 	}
 
 	@Override
