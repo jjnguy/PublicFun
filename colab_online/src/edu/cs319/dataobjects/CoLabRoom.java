@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.cs319.server.CoLabPrivledgeLevel;
 
-
 /**
  * Class defining a room for people to meet.
  * 
@@ -16,6 +15,7 @@ public class CoLabRoom {
 
 	private String roomname;
 	private List<CoLabRoomMember> members;
+	private byte[] password;
 
 	/**
 	 * Constructs a new CoLabRoom with the supplied name.
@@ -23,9 +23,19 @@ public class CoLabRoom {
 	 * @param roomname
 	 */
 	public CoLabRoom(String roomname, CoLabRoomMember theAdmin) {
+		this(roomname, theAdmin, null);
+	}
+	
+	/**
+	 * Constructs a new CoLabRoom with the supplied name and password.
+	 * 
+	 * @param roomname
+	 */
+	public CoLabRoom(String roomname, CoLabRoomMember theAdmin, byte[] password) {
 		this.roomname = roomname;
 		theAdmin.setPrivLevel(CoLabPrivledgeLevel.ADMIN);
 		members = new ArrayList<CoLabRoomMember>();
+		this.password = password;
 	}
 
 	/**
@@ -52,5 +62,18 @@ public class CoLabRoom {
 			if (member.name().equals(name)) return true;
 		}
 		return false;
+	}
+
+	public byte[] password(){
+		return password;
+	}
+	
+	public String roomName(){
+		return roomname;
+	}
+	
+	@Override
+	public String toString() {
+		return roomName();
 	}
 }

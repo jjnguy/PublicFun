@@ -1,6 +1,6 @@
 package edu.cs319.server;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface IServer {
 
@@ -8,7 +8,14 @@ public interface IServer {
 
 	public boolean joinCoLabRoom(String username, String roomName, byte[] password);
 
-	public List<String> getAllCoLabRoomNames(String username);
+	/**
+	 * 
+	 * @param username
+	 * @return all of the names of the currently available rooms note - when
+	 *         iterating through this Collection you must do it within a
+	 *         synchronized block
+	 */
+	public Collection<String> getAllCoLabRoomNames(String username);
 
 	public boolean leaveCoLabRoom(String username, String rommname);
 
@@ -16,8 +23,7 @@ public interface IServer {
 
 	public boolean textRemoved(String username, String roomname, int posStart, int posEnd);
 
-	public boolean textChanged(String username, String roomname, int posStart, int posEnd,
-			String text);
+	public boolean textChanged(String username, String roomname, int posStart, int posEnd, String text);
 
 	public boolean textHighlighted(String username, String roomname, int posStart, int posEnd);
 
@@ -25,10 +31,8 @@ public interface IServer {
 
 	public boolean newChatMessage(String username, String roomname, String message);
 
-	public boolean newChatMessage(String username, String roomname, String message,
-			String recipiant);
+	public boolean newChatMessage(String username, String roomname, String message, String recipiant);
 
-	public boolean changeUserPrivledge(String username, String roomname,
-			CoLabPrivledgeLevel newPriv);
+	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivledgeLevel newPriv);
 
 }

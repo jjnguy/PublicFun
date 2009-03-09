@@ -8,7 +8,6 @@ import java.util.logging.SimpleFormatter;
 
 import edu.cs319.util.Util;
 
-
 /**
  * 
  * @author The Squirrels

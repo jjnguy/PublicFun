@@ -4,32 +4,49 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
-
 
 import edu.cs319.client.IClient;
 import edu.cs319.dataobjects.CoLabRoom;
+import edu.cs319.dataobjects.CoLabRoomMember;
+import edu.cs319.util.Util;
 
 public class Server implements IServer {
-	
-	private List<CoLabRoom> colabrooms;
-	private List<IClient> clients;
-	
+
+	private Map<String, CoLabRoom> colabrooms;
+	private List<IClient> regularClients;
+	private IClient dbConnector;
+
 	/**
 	 * Creates a new server
 	 */
 	public Server() {
-		clients = new ArrayList<IClient>();
+		// Lets be thread safe about this
+		// Its best to always use protection
+		colabrooms = Collections.synchronizedMap(new HashMap<String, CoLabRoom>());
+		regularClients = new ArrayList<IClient>();
 	}
 
 	public void startup() throws IOException {
-		
+
 	}
 
 	@Override
 	public boolean addNewCoLabRoom(String username, String roomName, byte[] password) {
-		// TODO Auto-generated method stub
+		if (Util.DEBUG) {
+			System.out.println("Server: Adding new CoLab Room");
+		}
+		CoLabRoom roomToAdd = new CoLabRoom(roomName, new CoLabRoomMember(username), password);
+		colabrooms.put(roomName, roomToAdd);
+
+		if (Util.DEBUG) {
+			System.out.println("Server: CoLab Room added successfully");
+		}
 		return false;
 	}
 
@@ -40,9 +57,8 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public List<String> getAllCoLabRoomNames(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<String> getAllCoLabRoomNames(String username) {
+		return colabrooms.keySet();
 	}
 
 	@Override
