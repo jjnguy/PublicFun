@@ -19,7 +19,7 @@ public interface IServer {
 	 */
 	public Collection<String> getAllCoLabRoomNames(String username);
 
-	public boolean addNewClient(IClient newClient);
+	public boolean addNewClient(IClient newClient, String username);
 
 	public boolean leaveCoLabRoom(String username, String rommname);
 

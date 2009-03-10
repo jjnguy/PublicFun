@@ -20,7 +20,7 @@ import edu.cs319.util.Util;
 public class Server implements IServer {
 
 	private Map<String, CoLabRoom> colabrooms;
-	private List<IClient> regularClients;
+	private Map<String, IClient> regularClients;
 	private IClient dbConnector;
 
 	/**
@@ -30,7 +30,7 @@ public class Server implements IServer {
 		// Lets be thread safe about this
 		// Its best to always use protection
 		colabrooms = Collections.synchronizedMap(new HashMap<String, CoLabRoom>());
-		regularClients = new ArrayList<IClient>();
+		regularClients = Collections.synchronizedMap(new HashMap<String, IClient>());
 	}
 
 	public void startup() throws IOException {
@@ -63,7 +63,8 @@ public class Server implements IServer {
 		CoLabRoomMember member = room.getMemberByName(roomname);
 		boolean privSetSuccess = member.setPrivLevel(newPriv);
 		if (privSetSuccess) {
-			for (IClient client : regularClients) {
+			Collection<IClient> clients = regularClients.values();
+			for (IClient client : clients) {
 				client.changeUserPrivledge(username, newPriv);
 			}
 		}
@@ -73,6 +74,12 @@ public class Server implements IServer {
 	@Override
 	public Collection<String> getAllCoLabRoomNames(String username) {
 		return colabrooms.keySet();
+	}
+
+	@Override
+	public boolean addNewClient(IClient newClient, String username) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -125,12 +132,6 @@ public class Server implements IServer {
 
 	@Override
 	public boolean textUnHighlighted(String username, String roomname, int posStart, int posEnd) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addNewClient(IClient newClient) {
 		// TODO Auto-generated method stub
 		return false;
 	}
