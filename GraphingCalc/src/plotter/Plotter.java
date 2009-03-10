@@ -80,7 +80,7 @@ public class Plotter extends JPanel {
 		connectedMode = connectedModeP;
 	}
 
-	public void plotPoint(Point2D.Double p) {
+	private void plotPoint(Point2D.Double p) {
 		points.add(p);
 		repaint();
 	}
