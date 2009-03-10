@@ -27,6 +27,7 @@ public class Server implements IServer {
 	private Map<String, IClient> regularClients;
 	private Map<CoLabRoom, List<String>> usersInTheRooms;
 	private IClient dbConnector;
+	private CoLabEventQueue events;
 
 	/**
 	 * Creates a new server
@@ -36,10 +37,14 @@ public class Server implements IServer {
 		// Its best to always use protection
 		colabrooms = Collections.synchronizedMap(new HashMap<String, CoLabRoom>());
 		regularClients = Collections.synchronizedMap(new HashMap<String, IClient>());
+		events = new CoLabEventQueue();
 	}
 
 	public void startup() throws IOException {
-
+		events.start();
+		if (Util.DEBUG){
+			System.out.println("Server Starting up...");
+		}
 	}
 
 	@Override
@@ -146,21 +151,32 @@ public class Server implements IServer {
 
 	private class CoLabEventQueue extends Thread {
 
+		private long SLEEP_TIME = 100;
+
 		private Queue<CoLabEvent> events;
 
 		public CoLabEventQueue() {
 			events = new LinkedList<CoLabEvent>();
 		}
 
-		public void addEvent(CoLabEvent evnt) {
+		public synchronized void addEvent(CoLabEvent evnt) {
 			events.add(evnt);
 		}
 
 		@Override
 		public void run() {
-			while(true){
+			while (true) {
+				CoLabEvent evt = events.poll();
+				if (evt == null) {
+					try {
+						Thread.sleep(SLEEP_TIME);
+					} catch (InterruptedException e) {
+						if (Util.DEBUG) e.printStackTrace();
+					}
+				} else {
+					evt.processEvent();
+				}
 			}
 		}
-
 	}
 }
