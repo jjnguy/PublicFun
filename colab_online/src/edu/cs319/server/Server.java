@@ -7,20 +7,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.logging.Logger;
 
 import edu.cs319.client.IClient;
 import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.CoLabRoomMember;
+import edu.cs319.server.events.CoLabEvent;
+import edu.cs319.util.JustinsQueue;
 import edu.cs319.util.Util;
 
 public class Server implements IServer {
 
 	private Map<String, CoLabRoom> colabrooms;
 	private Map<String, IClient> regularClients;
+	private Map<CoLabRoom, List<String>> usersInTheRooms;
 	private IClient dbConnector;
 
 	/**
@@ -76,10 +81,13 @@ public class Server implements IServer {
 		return colabrooms.keySet();
 	}
 
+	/**
+	 * A client is tied to the user that controls it
+	 */
 	@Override
 	public boolean addNewClient(IClient newClient, String username) {
-		// TODO Auto-generated method stub
-		return false;
+		regularClients.put(username, newClient);
+		return true;
 	}
 
 	@Override
@@ -134,5 +142,25 @@ public class Server implements IServer {
 	public boolean textUnHighlighted(String username, String roomname, int posStart, int posEnd) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	private class CoLabEventQueue extends Thread {
+
+		private Queue<CoLabEvent> events;
+
+		public CoLabEventQueue() {
+			events = new LinkedList<CoLabEvent>();
+		}
+
+		public void addEvent(CoLabEvent evnt) {
+			events.add(evnt);
+		}
+
+		@Override
+		public void run() {
+			while(true){
+			}
+		}
+
 	}
 }
