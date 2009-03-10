@@ -1,0 +1,354 @@
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+/**
+ * Another simple http server.  This version improves on
+ * <code>SimpleHttpServer</code> in the following ways:
+ * <ul>
+ *   <li> Sends response headers consistent with HTTP 1.0
+ *   <li> Sends Content-Type and Content-Length headers
+ *   <li> Generates a directory listing if the URL provided
+ *        by the client is a directory
+ *   <li> Attempts to identify the MIME type for the file
+ *        in the response header
+ *   <li> Only allows clients access to files and directories
+ *        below a specified content directory
+ * </ul>
+ */
+public class SimpleHttpServer2
+{
+  /**
+   * Base directory for all files made available from this server.
+   */
+  private static final String CONTENT_BASE_DIR_NAME = "content/";
+  
+  /**
+   * Starts an instance of the server.
+   * @param args
+   *   port number on which the server will listen
+   *   (optional, defaults to 2222)
+   */
+  public static void main(String args[])
+  {   
+    int port = 2222;
+    if (args.length > 0)
+    {
+      port = Integer.parseInt(args[0]);
+    }
+    new SimpleHttpServer2().runServer(port);
+  }
+
+  /**
+   * Basic server loop. Note this version has the following
+   * potential deficiencies:
+   * <ul> 
+   *   <li> if an I/O error occurs, the server
+   * will exit rather than attempting to re-create the 
+   * server socket.
+   *   <li> the server is single-threaded, that is, while
+   * handling a connection, new connections cannot be 
+   * accepted.
+   * </ul>
+   * @param port
+   *   the port number on which to listen
+   */
+  public void runServer(int port)
+  {
+    ServerSocket ss = null;
+    try
+    {
+      ss = new ServerSocket(port);
+      while (true)
+      {
+        System.out.println("Server listening on " + port);
+        
+        // blocks here until a client attempts to connect
+        Socket s = ss.accept();
+        handleConnection(s);
+      }      
+    }
+    catch (IOException e)
+    {
+      System.out.println("I/O error: " + e);
+    }
+    finally
+    {
+      if (ss != null)
+      {
+        try
+        {
+          ss.close();
+        }
+        catch (IOException ignore) {}
+      }
+    }
+  }
+  
+  /**
+   * Helper method for handling a client connection.  This server
+   * only handles GET requests and will attempt to return the 
+   * file named in the request.  If the file is a directory, a
+   * directory listing is generated as a text file. 
+   * Closes the socket (and therefore 
+   * the associated streams) when the method returns.
+   * @param s
+   *   Socket representing the client connection
+   * @throws IOException
+   */
+  private void handleConnection(Socket s)
+  {
+    try
+    {
+      BufferedReader reader = new BufferedReader(
+          new InputStreamReader(s.getInputStream()));
+      OutputStream out = s.getOutputStream();
+      
+      // first line is request
+      String request = reader.readLine();   
+      System.out.println(request);
+      
+      // read and display remaining headers
+      String line = null;    
+      while ((line = reader.readLine()) != null)
+      {
+        if (line.length() == 0)
+        {
+          break; // blank line is end of headers
+        }
+        System.out.println(line);
+      }
+      System.out.println("(end of headers)");
+      
+      // parse request
+      int i = request.indexOf("GET");
+      int j = request.indexOf('/', i);
+      if (i == 0 && j > i + 3)
+      {
+        // strip off everything up until the first slash
+        request = request.substring(j + 1);
+        
+        // strip off anything after the filename (if there 
+        // is anything after the filename it is separated
+        // by a space)
+        j = request.indexOf(' ');
+        if (j >= 0)
+        {
+          request = request.substring(0, j);
+        }
+
+        // if the request was just "/" we'll give them
+        // a listing of the base directory
+        if (request.equals(""))
+        {
+          request = ".";
+        }
+        
+        handleFileRequest(request, out);
+      }
+      else
+      {
+        // This wasn't a well-formed GET request
+        PrintWriter writer = new PrintWriter(
+            new OutputStreamWriter(out), true);
+        writer.println("HTTP/1.0 400 Bad Request\r\n\r\n");
+        writer.flush();
+      }
+    }
+    catch (IOException e)
+    {
+      System.out.println(e);
+    }
+    finally
+    {
+      if (s != null)
+      {
+        try
+        {
+          s.close();
+        }
+        catch (IOException ignore){}
+      }
+    }
+  }
+  
+  /**
+   * Processes one request for a file or directory.
+   * @param request
+   *   the pathname for the requested file
+   * @param out
+   *   output stream for the client connection
+   * @throws IOException
+   */
+  private void handleFileRequest(String request, OutputStream out)
+    throws IOException
+  {
+    System.out.println("File requested: " + request);       
+    
+    PrintWriter writer = new PrintWriter(
+        new OutputStreamWriter(out), true);
+
+    try
+    {        
+      File f = new File(CONTENT_BASE_DIR_NAME + request);
+      
+      // make sure the file is really in the content directory
+      if (!checkIsBelow(new File(CONTENT_BASE_DIR_NAME), f))
+      {
+        System.out.println("Disallowed request");
+        writer.println("HTTP/1.0 403 Forbidden\r\n\r\n");
+        writer.flush();
+        return;
+      }
+        
+      if (f.isDirectory())
+      {
+        // create a dir listing as a text file
+        byte[] listing = generateDirListing(f);
+        writer.print("HTTP/1.0 200 OK\r\n");
+        writer.print("Content-Type: text/plain\r\n");
+        writer.print("Content-Length: " + listing.length + "\r\n\r\n");
+        writer.flush();
+        out.write(listing);
+        out.flush();
+        return;
+      }
+      else
+      {
+        // catch FileNotFoundException if file doesn't exist
+        FileInputStream fis = new FileInputStream(f);
+        
+        writer.print("HTTP/1.0 200 OK\r\n");
+        writer.print("Content-Type: " + guessMimeType(f) + "\r\n");
+        writer.print("Content-Length: " + f.length() + "\r\n\r\n");
+        writer.flush();
+        
+        // copy contents of file to output stream
+        // loop uses array versions of read/write methods to
+        // copy multiple bytes with each call
+        byte[] data = new byte[64 * 1024];
+        int bytesRead;
+        while ((bytesRead = fis.read(data)) != -1)
+        {
+          out.write(data, 0, bytesRead);
+        }
+        out.flush();
+        return;
+      }
+    }
+    catch (FileNotFoundException e)
+    {
+      System.out.println("File not found: " + request);
+      writer.println("HTTP/1.0 404 Not Found\r\n\r\n");
+      writer.flush();
+    }
+  }
+  
+  /**
+   * Try to determine the MIME type for a file based on
+   * the file extension. This is a simple example that
+   * returns 'application/octet-stream' for unknown file 
+   * types, which in this case, is almost all file types.
+   * <p>
+   * For a more realistic example try:
+   * <code>
+   *   javax.activation.MimetypesFileTypeMap mmp = 
+   *      new javax.activation.MimetypesFileTypeMap();
+   *   return mmp.getContentType(filename);
+   * </code>
+   * <p>
+   * Also see http://en.wikipedia.org/wiki/Internet_media_type
+   * @param f
+   *   the file to evaluate
+   * @return the MIME type as a string
+   */
+  private String guessMimeType(File f)
+  {
+    String filename = f.getName();
+    
+    if (filename.endsWith(".jpg") || filename.endsWith(".jpeg"))
+    {
+      return "image/jpeg";
+    }
+    if (filename.endsWith("htm") || filename.endsWith("html"))
+    {
+      return "text/html";
+    }
+    if (filename.endsWith("txt"))
+    {
+      return "text/plain";
+    }
+    return "application/octet-stream";
+  }
+  
+  
+ /**
+  * Create a list of directory contents as a text file.
+  * @param dir
+  *   the directory to be listed
+  * @return
+  *   byte array capturing the output stream into which the
+  *   text file was written
+  * @throws IOException
+  */
+  private byte[] generateDirListing(File dir) throws IOException
+  {
+    System.out.println("generating dir listing for base " + dir);
+    
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintWriter writer = new PrintWriter(baos);
+    File[] files = dir.listFiles();
+    for (int i = 0; i < files.length; ++i)
+    {
+      System.out.println(files[i].getName());
+      writer.println(files[i].getName());
+    }
+    writer.flush();
+    return baos.toByteArray();
+  }
+  
+  /**
+   * Determines whether a file or directory is beneath
+   * a given base directory.  This involves finding
+   * the actual files in the file system to get 
+   * their 'canonical' representations as File objects,
+   * in which the pathnames are absolute and contain 
+   * no '.' or '..' elements.   
+   * @param f
+   *   file or directory to be checked
+   * @param base
+   *   directory against which to check
+   * @return
+   *   true if f is below base in the filesystem
+   * @throws IOException
+   *   if there is an error in getting the canonical
+   *   files
+   */
+  private boolean checkIsBelow(File base, File f) throws IOException
+  {
+    // convert to "canonical" files to normalize the pathnames
+    base = base.getCanonicalFile();    
+    File current = f.getCanonicalFile();
+    
+    // make sure that some parent file of the given one
+    // is the base directory
+    while (current != null)
+    {
+      if (current.equals(base))
+      {
+        return true;
+      }
+      current = current.getParentFile();
+    }
+    return false;
+  }
+}
