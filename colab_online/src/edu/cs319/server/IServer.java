@@ -2,6 +2,8 @@ package edu.cs319.server;
 
 import java.util.Collection;
 
+import edu.cs319.client.IClient;
+
 public interface IServer {
 
 	public boolean addNewCoLabRoom(String username, String roomName, byte[] password);
@@ -16,6 +18,8 @@ public interface IServer {
 	 *         synchronized block
 	 */
 	public Collection<String> getAllCoLabRoomNames(String username);
+
+	public boolean addNewClient(IClient newClient);
 
 	public boolean leaveCoLabRoom(String username, String rommname);
 

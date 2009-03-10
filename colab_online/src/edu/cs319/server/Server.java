@@ -128,4 +128,10 @@ public class Server implements IServer {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean addNewClient(IClient newClient) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
