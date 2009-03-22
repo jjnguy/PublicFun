@@ -12,17 +12,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Another simple http server. This version improves on <code>SimpleHttpServer</code> in the
- * following ways:
+ * Another simple http server. This version improves on
+ * <code>SimpleHttpServer</code> in the following ways:
  * <ul>
  * <li>Sends response headers consistent with HTTP 1.0
  * <li>Sends Content-Type and Content-Length headers
- * <li>Generates a directory listing if the URL provided by the client is a directory
+ * <li>Generates a directory listing if the URL provided by the client is a
+ * directory
  * <li>Attempts to identify the MIME type for the file in the response header
- * <li>Only allows clients access to files and directories below a specified content directory
+ * <li>Only allows clients access to files and directories below a specified
+ * content directory
  * </ul>
  */
 public class SimpleHttpServer2 {
+
 	/**
 	 * Base directory for all files made available from this server.
 	 */
@@ -32,23 +35,23 @@ public class SimpleHttpServer2 {
 	 * Starts an instance of the server.
 	 * 
 	 * @param args
-	 *            port number on which the server will listen (optional, defaults to 2222)
+	 *            port number on which the server will listen (optional,
+	 *            defaults to 2222)
 	 */
 	public static void main(String args[]) {
-		int port = 2222;
-		if (args.length > 0) {
-			port = Integer.parseInt(args[0]);
-		}
-		new SimpleHttpServer2().runServer(port);
+		// final int port = args.length > 0 ? Integer.parseInt(args[0]) : 2222;
+		// new SimpleHttpServer2().runServer(port);
+		new SimpleHttpServer2().runServer(args.length > 0 ? Integer.parseInt(args[0]) : 2222);
 	}
 
 	/**
-	 * Basic server loop. Note this version has the following potential deficiencies:
+	 * Basic server loop. Note this version has the following potential
+	 * deficiencies:
 	 * <ul>
-	 * <li>if an I/O error occurs, the server will exit rather than attempting to re-create the
-	 * server socket.
-	 * <li>the server is single-threaded, that is, while handling a connection, new connections
-	 * cannot be accepted.
+	 * <li>if an I/O error occurs, the server will exit rather than attempting
+	 * to re-create the server socket.
+	 * <li>the server is single-threaded, that is, while handling a connection,
+	 * new connections cannot be accepted.
 	 * </ul>
 	 * 
 	 * @param port
@@ -67,6 +70,7 @@ public class SimpleHttpServer2 {
 			}
 		} catch (IOException e) {
 			System.out.println("I/O error: " + e);
+			System.out.println("Server will now exit.");
 		} finally {
 			if (ss != null) {
 				try {
@@ -78,10 +82,9 @@ public class SimpleHttpServer2 {
 	}
 
 	/**
-	 * Helper method for handling a client connection. This server only handles GET requests
-	 * and will attempt to return the file named in the request. If the file is a directory, a
-	 * directory listing is generated as a text file. Closes the socket (and therefore the
-	 * associated streams) when the method returns.
+	 * Helper method for handling a client connection. If the file is a
+	 * directory, a directory listing is generated as a text file. Closes the
+	 * socket (and therefore the associated streams) when the method returns.
 	 * 
 	 * @param s
 	 *            Socket representing the client connection
@@ -89,8 +92,7 @@ public class SimpleHttpServer2 {
 	 */
 	private void handleConnection(Socket s) {
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(s
-					.getInputStream()));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
 			OutputStream out = s.getOutputStream();
 
 			// first line is request
@@ -105,14 +107,15 @@ public class SimpleHttpServer2 {
 				}
 				System.out.println(line);
 			}
-			System.out.println("(end of headers)");
+			System.out.println("~end of headers~");
 
 			// parse request
-			if (request.startsWith("GET")) {
+			if (request.toUpperCase().startsWith("GET")) {
 				handleGET(request, out);
-			} else if (request.startsWith("POST")) {
+			} else if (request.toUpperCase().startsWith("POST")) {
 				handlePOST(request, out);
 			} else {
+				System.out.println("Could not successfully parse request: " + request);
 				// This wasn't a well-formed request
 				PrintWriter writer = new PrintWriter(new OutputStreamWriter(out), true);
 				writer.println("HTTP/1.0 400 Bad Request\r\n\r\n");
@@ -207,7 +210,7 @@ public class SimpleHttpServer2 {
 
 			if (f.isDirectory()) {
 				// create a dir listing as a text file
-				byte[] listing = generateDirListing(f);
+				byte[] listing = SimpleHttpServer2.generateDirListing(f);
 				writer.print("HTTP/1.0 200 OK\r\n");
 				writer.print("Content-Type: text/plain\r\n");
 				writer.print("Content-Length: " + listing.length + "\r\n\r\n");
@@ -220,7 +223,7 @@ public class SimpleHttpServer2 {
 				FileInputStream fis = new FileInputStream(f);
 
 				writer.print("HTTP/1.0 200 OK\r\n");
-				writer.print("Content-Type: " + guessMimeType(f) + "\r\n");
+				writer.print("Content-Type: " + SimpleHttpServer2.guessMimeType(f) + "\r\n");
 				writer.print("Content-Length: " + f.length() + "\r\n\r\n");
 				writer.flush();
 
@@ -243,15 +246,15 @@ public class SimpleHttpServer2 {
 	}
 
 	/**
-	 * Try to determine the MIME type for a file based on the file extension. This is a simple
-	 * example that returns 'application/octet-stream' for unknown file types, which in this
-	 * case, is almost all file types.
+	 * Try to determine the MIME type for a file based on the file extension.
+	 * This is a simple example that returns 'application/octet-stream' for
+	 * unknown file types, which in this case, is almost all file types.
 	 * <p>
 	 * For a more realistic example try: <code>
 	 *   javax.activation.MimetypesFileTypeMap mmp = 
 	 *      new javax.activation.MimetypesFileTypeMap();
 	 *   return mmp.getContentType(filename);
-   * </code>
+	 * </code>
 	 * <p>
 	 * Also see http://en.wikipedia.org/wiki/Internet_media_type
 	 * 
@@ -259,18 +262,12 @@ public class SimpleHttpServer2 {
 	 *            the file to evaluate
 	 * @return the MIME type as a string
 	 */
-	private String guessMimeType(File f) {
-		String filename = f.getName();
+	private static String guessMimeType(File f) {
+		String filename = f.getName().toLowerCase();
 
-		if (filename.endsWith(".jpg") || filename.endsWith(".jpeg")) {
-			return "image/jpeg";
-		}
-		if (filename.endsWith("htm") || filename.endsWith("html")) {
-			return "text/html";
-		}
-		if (filename.endsWith("txt")) {
-			return "text/plain";
-		}
+		if (filename.endsWith(".jpg") || filename.endsWith(".jpeg")) { return "image/jpeg"; }
+		if (filename.endsWith("htm") || filename.endsWith("html")) { return "text/html"; }
+		if (filename.endsWith("txt")) { return "text/plain"; }
 		return "application/octet-stream";
 	}
 
@@ -279,10 +276,11 @@ public class SimpleHttpServer2 {
 	 * 
 	 * @param dir
 	 *            the directory to be listed
-	 * @return byte array capturing the output stream into which the text file was written
+	 * @return byte array capturing the output stream into which the text file
+	 *         was written
 	 * @throws IOException
 	 */
-	private byte[] generateDirListing(File dir) throws IOException {
+	private static byte[] generateDirListing(File dir) throws IOException {
 		System.out.println("generating dir listing for base " + dir);
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -297,9 +295,10 @@ public class SimpleHttpServer2 {
 	}
 
 	/**
-	 * Determines whether a file or directory is beneath a given base directory. This involves
-	 * finding the actual files in the file system to get their 'canonical' representations as
-	 * File objects, in which the pathnames are absolute and contain no '.' or '..' elements.
+	 * Determines whether a file or directory is beneath a given base directory.
+	 * This involves finding the actual files in the file system to get their
+	 * 'canonical' representations as File objects, in which the pathnames are
+	 * absolute and contain no '.' or '..' elements.
 	 * 
 	 * @param f
 	 *            file or directory to be checked
@@ -317,11 +316,20 @@ public class SimpleHttpServer2 {
 		// make sure that some parent file of the given one
 		// is the base directory
 		while (current != null) {
-			if (current.equals(base)) {
-				return true;
-			}
+			if (current.equals(base)) { return true; }
 			current = current.getParentFile();
 		}
 		return false;
+	}
+
+	/**
+	 * 
+	 * @author Justin
+	 * 
+	 */
+	class ConnectionThread extends Thread {
+		@Override
+		public void run() {
+		}
 	}
 }
