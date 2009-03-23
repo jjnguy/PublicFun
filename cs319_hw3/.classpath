@@ -4,5 +4,7 @@
 	<classpathentry kind="src" path="part2"/>
 	<classpathentry kind="src" path="part3"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/jnelson/Desktop/apache-tomcat-6.0.18/apache-tomcat-6.0.18/lib/servlet-api.jar" sourcepath="C:/Documents and Settings/jnelson/Desktop/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/docs"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/jnelson/Desktop/apache-tomcat-6.0.18/apache-tomcat-6.0.18/lib/jsp-api.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
