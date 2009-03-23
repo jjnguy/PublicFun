@@ -22,6 +22,11 @@ public class SimpleClient {
 			PrintWriter pw = new PrintWriter(out);
 			pw.println("POST /hi.txt HTTP/1.1");
 			pw.println(); // empty line
+			pw.println("asfdsafdafd");
+			pw.println("asfdsafdafd");
+			pw.println("asfdsafdafd");
+			pw.println();
+			pw.println();
 			pw.flush(); // don't forget to flush...
 
 			// read response, which we expect to be line-oriented

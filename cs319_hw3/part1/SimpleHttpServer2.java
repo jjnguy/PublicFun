@@ -1,17 +1,13 @@
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Another simple http server. This version improves on <code>SimpleHttpServer</code> in the following ways:
@@ -86,24 +82,25 @@ public class SimpleHttpServer2 {
 	 */
 	private void handleConnection(Socket s) {
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			OutputStream out = s.getOutputStream();
+			Scanner in = new Scanner(s.getInputStream());
+			PrintStream out = new PrintStream(s.getOutputStream());
 
 			// first line is request
-			String request = reader.readLine();
-			System.out.println(request);
+			String request = in.nextLine();
+			System.out.println("Initial Request: " + request);
 
 			// read and display remaining headers
-			String line = null;
-			while ((line = reader.readLine()) != null) {
+			String line;
+			do {
+				line = in.nextLine();
 				if (line.length() == 0) {
 					break; // blank line is end of headers
 				}
-				System.out.println(line);
-			}
+				System.out.println("Line read from request: " + line);
+			} while (in.hasNextLine());
 			System.out.println("~end of headers~");
 
-			parseRequest(request, s, out);
+			parseRequest(request, in, out);
 
 		} catch (IOException e) {
 			System.out.println(e);
@@ -117,12 +114,12 @@ public class SimpleHttpServer2 {
 		}
 	}
 
-	private void parseRequest(String request, Socket s, OutputStream out) throws IOException {
+	private void parseRequest(String request, Scanner in, PrintStream out) throws IOException {
 		// parse request
 		if (request.toUpperCase().startsWith("GET")) {
-			parseGET(request, out, s.getInputStream());
+			parseGET(request, out, in);
 		} else if (request.toUpperCase().startsWith("POST")) {
-			parsePOST(request, out, s.getInputStream());
+			parsePOST(request, out, in);
 		} else {
 			System.out.println("Could not successfully parse request: " + request);
 			// This wasn't a well-formed request
@@ -132,7 +129,7 @@ public class SimpleHttpServer2 {
 		}
 	}
 
-	private void parseGET(String request, OutputStream out, InputStream in) throws IOException {
+	private void parseGET(String request, PrintStream out, Scanner in) throws IOException {
 		int i = request.indexOf("GET");
 		int j = request.indexOf('/', i);
 		if (j > i + 3) {
@@ -157,7 +154,7 @@ public class SimpleHttpServer2 {
 		}
 	}
 
-	private void parsePOST(String request, OutputStream out, InputStream in) throws IOException {
+	private void parsePOST(String request, PrintStream out, Scanner in) throws IOException {
 		int indexOfPost = request.indexOf("POST");
 		int indexOfSlash = request.indexOf('/', indexOfPost);
 		final int lengthOfPost = 4;
@@ -194,26 +191,24 @@ public class SimpleHttpServer2 {
 	 *            output stream for the client connection
 	 * @throws IOException
 	 */
-	private void handleFileRequestGET(String request, OutputStream out, InputStream in) throws IOException {
+	private void handleFileRequestGET(String request, PrintStream out, Scanner in) throws IOException {
 		System.out.println("File requested: " + request);
-
-		PrintWriter writer = new PrintWriter(new OutputStreamWriter(out), true);
 
 		try {
 			File f = new File(CONTENT_BASE_DIR_NAME + request);
 
-			checkBelowAndHandle(writer, f);
+			checkBelowAndHandle(out, f);
 
 			if (f.isDirectory()) {
-				handleDirectoryRequest(writer, f);
+				handleDirectoryRequest(out, f);
 			} else {
 				// catch FileNotFoundException if file doesn't exist
 				FileInputStream fis = new FileInputStream(f);
 
-				writer.print("HTTP/1.0 200 OK\r\n");
-				writer.print("Content-Type: " + SimpleHttpServer2.guessMimeType(f) + "\r\n");
-				writer.print("Content-Length: " + f.length() + "\r\n\r\n");
-				writer.flush();
+				out.print("HTTP/1.0 200 OK\r\n");
+				out.print("Content-Type: " + SimpleHttpServer2.guessMimeType(f) + "\r\n");
+				out.print("Content-Length: " + f.length() + "\r\n\r\n");
+				out.flush();
 
 				// copy contents of file to output stream
 				// loop uses array versions of read/write methods to
@@ -228,8 +223,8 @@ public class SimpleHttpServer2 {
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + request);
-			writer.println("HTTP/1.0 404 Not Found\r\n\r\n");
-			writer.flush();
+			out.println("HTTP/1.0 404 Not Found\r\n\r\n");
+			out.flush();
 		}
 	}
 
@@ -242,66 +237,62 @@ public class SimpleHttpServer2 {
 	 *            output stream for the client connection
 	 * @throws IOException
 	 */
-	private void handleFileRequestPOST(String request, OutputStream out, InputStream in) throws IOException {
+	private void handleFileRequestPOST(String request, PrintStream out, Scanner in) throws IOException {
 		System.out.println("File given: " + request);
-
-		PrintWriter writer = new PrintWriter(out);
 
 		try {
 			File f = new File(CONTENT_BASE_DIR_NAME + request);
 
-			checkBelowAndHandle(writer, f);
+			checkBelowAndHandle(out, f);
 
 			if (f.isDirectory()) {
-				handleDirectoryRequest(writer, f);
+				handleDirectoryRequest(out, f);
 			} else {
 				// catch FileNotFoundException if file doesn't exist
-				FileInputStream fis = new FileInputStream(f);
+				PrintStream fos = new PrintStream(f);
 
-				writer.print("HTTP/1.0 200 OK\r\n");
-				writer.print("Content-Type: " + SimpleHttpServer2.guessMimeType(f) + "\r\n");
-				writer.print("Content-Length: " + f.length() + "\r\n\r\n");
-				writer.flush();
+				out.print("HTTP/1.0 200 OK\r\n");
+				out.print("Content-Type: " + SimpleHttpServer2.guessMimeType(f) + "\r\n");
+				out.print("Content-Length: " + f.length() + "\r\n\r\n");
+				out.flush();
 
-				// copy contents of file to output stream
-				// loop uses array versions of read/write methods to
-				// copy multiple bytes with each call
-				byte[] data = new byte[64 * 1024];
-				int bytesRead;
-				while ((bytesRead = fis.read(data)) != -1) {
-					out.write(data, 0, bytesRead);
+				// Need to write post contents to file
+				while (in.hasNext()) {
+					fos.print(in.next());
 				}
+				fos.flush();
+				fos.close();
 				out.flush();
 				return;
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + request);
-			writer.println("HTTP/1.0 404 Not Found\r\n\r\n");
-			writer.flush();
+			out.println("HTTP/1.0 404 Not Found\r\n\r\n");
+			out.flush();
 		}
 	}
 
-	private void handleDirectoryRequest(PrintWriter writer, File f) throws IOException {
+	private void handleDirectoryRequest(PrintStream out, File f) throws IOException {
 		// create a dir listing as a text file
 		String[] listing = SimpleHttpServer2.generateDirListing(f);
-		writer.print("HTTP/1.0 200 OK\r\n");
-		writer.print("Content-Type: text/plain\r\n");
+		out.print("HTTP/1.0 200 OK\r\n");
+		out.print("Content-Type: text/plain\r\n");
 		long contentLength = SimpleHttpServer2.getContentLengthFromStringArray(listing);
-		writer.print("Content-Length: " + contentLength + "\r\n\r\n");
-		writer.flush();
+		out.print("Content-Length: " + contentLength + "\r\n\r\n");
+		out.flush();
 		for (String s : listing) {
-			writer.println(s);
+			out.println(s);
 		}
-		writer.flush();
+		out.flush();
 		return;
 	}
 
-	private void checkBelowAndHandle(PrintWriter writer, File f) throws IOException {
+	private void checkBelowAndHandle(PrintStream out, File f) throws IOException {
 		// make sure the file is really in the content directory
 		if (!SimpleHttpServer2.checkIsBelow(new File(CONTENT_BASE_DIR_NAME), f)) {
 			System.out.println("Disallowed request");
-			writer.println("HTTP/1.0 403 Forbidden\r\n\r\n");
-			writer.flush();
+			out.println("HTTP/1.0 403 Forbidden\r\n\r\n");
+			out.flush();
 			return;
 		}
 	}
