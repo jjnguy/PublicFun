@@ -1,7 +1,7 @@
-import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -20,22 +20,17 @@ public class SimpleClient {
 
 			// for line-oriented output we use a PrintWriter
 			PrintWriter pw = new PrintWriter(out);
-			pw.println("POST /hi.txt HTTP/1.1");
-			pw.println(); // empty line
-			pw.println("asfdsafdafd");
-			pw.println("asfdsafdafd");
-			pw.println("asfdsafdafd");
-			pw.println();
-			pw.println();
-			pw.flush(); // don't forget to flush...
+			pw.println("POST /aPic24.png HTTP/1.1");
+			pw.print("\r\n"); // empty line
 
-			// read response, which we expect to be line-oriented
-			InputStream in = s.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
-			}
+			pw.flush();
+
+			InputStream fout = new FileInputStream(new File("C:/Documents and Settings/jnelson/My Documents/My Pictures/classScheduleWithWorkTime.bmp"));
+			copyStream(fout, out);
+			
+			fout.close();
+			out.close();
+			pw.close();
 		} catch (IOException e) {
 			System.out.println(e);
 		} finally {
@@ -44,6 +39,14 @@ public class SimpleClient {
 					s.close();
 			} catch (IOException ignore) {
 			}
+		}
+	}
+	
+	public static void copyStream(InputStream input, OutputStream output) throws IOException {
+		byte[] buffer = new byte[32 * 1024];
+		int bytesRead;
+		while ((bytesRead = input.read(buffer, 0, buffer.length)) > 0) {
+			output.write(buffer, 0, bytesRead);
 		}
 	}
 }

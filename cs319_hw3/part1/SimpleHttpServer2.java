@@ -1,12 +1,19 @@
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -72,6 +79,18 @@ public class SimpleHttpServer2 {
 		}
 	}
 
+	private static String readLine(InputStream in) throws IOException {
+		String ret = "";
+		while (true) {
+			int next = in.read();
+			if (next == -1)
+				return ret.trim();
+			if ((char) next == '\n')
+				return ret.trim();
+			ret += (char) next;
+		}
+	}
+
 	/**
 	 * Helper method for handling a client connection. If the file is a directory, a directory listing is generated as a
 	 * text file. Closes the socket (and therefore the associated streams) when the method returns.
@@ -82,25 +101,29 @@ public class SimpleHttpServer2 {
 	 */
 	private void handleConnection(Socket s) {
 		try {
-			Scanner in = new Scanner(s.getInputStream());
+			InputStream in = s.getInputStream();
 			PrintStream out = new PrintStream(s.getOutputStream());
 
+			List<String> headers = new ArrayList<String>();
+
 			// first line is request
-			String request = in.nextLine();
+			String request = readLine(in);
 			System.out.println("Initial Request: " + request);
+			headers.add(request);
 
 			// read and display remaining headers
 			String line;
-			do {
-				line = in.nextLine();
+			while (true) {
+				line = readLine(in);
 				if (line.length() == 0) {
 					break; // blank line is end of headers
 				}
-				System.out.println("Line read from request: " + line);
-			} while (in.hasNextLine());
+				headers.add(line);
+				System.out.println("Header line read from request: " + line);
+			}
 			System.out.println("~end of headers~");
 
-			parseRequest(request, in, out);
+			parseRequest(headers, in, out);
 
 		} catch (IOException e) {
 			System.out.println(e);
@@ -114,14 +137,14 @@ public class SimpleHttpServer2 {
 		}
 	}
 
-	private void parseRequest(String request, Scanner in, PrintStream out) throws IOException {
+	private void parseRequest(List<String> headers, InputStream in, PrintStream out) throws IOException {
 		// parse request
-		if (request.toUpperCase().startsWith("GET")) {
-			parseGET(request, out, in);
-		} else if (request.toUpperCase().startsWith("POST")) {
-			parsePOST(request, out, in);
+		if (headers.get(0).toUpperCase().startsWith("GET")) {
+			parseGET(headers, out, in);
+		} else if (headers.get(0).toUpperCase().startsWith("POST")) {
+			parsePOST(headers, out, in);
 		} else {
-			System.out.println("Could not successfully parse request: " + request);
+			System.out.println("Could not successfully parse request: " + headers);
 			// This wasn't a well-formed request
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(out), true);
 			writer.println("HTTP/1.0 400 Bad Request\r\n\r\n");
@@ -129,41 +152,42 @@ public class SimpleHttpServer2 {
 		}
 	}
 
-	private void parseGET(String request, PrintStream out, Scanner in) throws IOException {
-		int i = request.indexOf("GET");
-		int j = request.indexOf('/', i);
+	private void parseGET(List<String> headers, PrintStream out, InputStream in) throws IOException {
+		int i = headers.get(0).indexOf("GET");
+		int j = headers.get(0).indexOf('/', i);
+		String fileRequested;
 		if (j > i + 3) {
 			// strip off everything up until the first slash
-			request = request.substring(j + 1);
+			fileRequested = headers.get(0).substring(j + 1);
 
 			// strip off anything after the filename (if there
 			// is anything after the filename it is separated
 			// by a space)
-			j = request.indexOf(' ');
+			j = fileRequested.indexOf(' ');
 			if (j >= 0) {
-				request = request.substring(0, j);
+				fileRequested = fileRequested.substring(0, j);
 			}
 
 			// if the request was just "/" we'll give them
 			// a listing of the base directory
-			if (request.equals("")) {
-				request = ".";
+			if (fileRequested.equals("")) {
+				fileRequested = ".";
 			}
 
-			handleFileRequestGET(request, out, in);
+			handleFileRequestGET(fileRequested, headers, out, in);
 		}
 	}
 
-	private void parsePOST(String request, PrintStream out, Scanner in) throws IOException {
-		int indexOfPost = request.indexOf("POST");
-		int indexOfSlash = request.indexOf('/', indexOfPost);
+	private void parsePOST(List<String> headers, PrintStream out, InputStream in) throws IOException {
+		int indexOfPost = headers.get(0).indexOf("POST");
+		int indexOfSlash = headers.get(0).indexOf('/', indexOfPost);
 		final int lengthOfPost = 4;
 		if (indexOfSlash <= indexOfPost + lengthOfPost) {
 			System.out.println("There was no slash in the correct place.");
 			return;
 		}
 		// strip off everything up until the first slash
-		String strippedRequest = request.substring(indexOfSlash + 1);
+		String strippedRequest = headers.get(0).substring(indexOfSlash + 1);
 
 		// strip off anything after the filename (if there
 		// is anything after the filename it is separated
@@ -179,7 +203,7 @@ public class SimpleHttpServer2 {
 			strippedRequest = ".";
 		}
 
-		handleFileRequestPOST(strippedRequest, out, in);
+		handleFileRequestPOST(strippedRequest, headers, out, in);
 	}
 
 	/**
@@ -187,11 +211,12 @@ public class SimpleHttpServer2 {
 	 * 
 	 * @param request
 	 *            the pathname for the requested file
+	 * @param headers
 	 * @param out
 	 *            output stream for the client connection
 	 * @throws IOException
 	 */
-	private void handleFileRequestGET(String request, PrintStream out, Scanner in) throws IOException {
+	private void handleFileRequestGET(String request, List<String> headers, PrintStream out, InputStream in) {
 		System.out.println("File requested: " + request);
 
 		try {
@@ -219,12 +244,17 @@ public class SimpleHttpServer2 {
 					out.write(data, 0, bytesRead);
 				}
 				out.flush();
+				out.close();
+				in.close();
 				return;
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + request);
 			out.println("HTTP/1.0 404 Not Found\r\n\r\n");
 			out.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -233,11 +263,12 @@ public class SimpleHttpServer2 {
 	 * 
 	 * @param request
 	 *            the pathname for the requested file
+	 * @param headers
 	 * @param out
 	 *            output stream for the client connection
 	 * @throws IOException
 	 */
-	private void handleFileRequestPOST(String request, PrintStream out, Scanner in) throws IOException {
+	private void handleFileRequestPOST(String request, List<String> headers, PrintStream out, InputStream in) {
 		System.out.println("File given: " + request);
 
 		try {
@@ -249,26 +280,32 @@ public class SimpleHttpServer2 {
 				handleDirectoryRequest(out, f);
 			} else {
 				// catch FileNotFoundException if file doesn't exist
-				PrintStream fos = new PrintStream(f);
-
-				out.print("HTTP/1.0 200 OK\r\n");
-				out.print("Content-Type: " + SimpleHttpServer2.guessMimeType(f) + "\r\n");
-				out.print("Content-Length: " + f.length() + "\r\n\r\n");
-				out.flush();
+				FileOutputStream fos = new FileOutputStream(f);
 
 				// Need to write post contents to file
-				while (in.hasNext()) {
-					fos.print(in.next());
+				while (true) {
+					if (in.available() != 0) {
+						int next = in.read();
+						if (next == -1)
+							break;
+						fos.write(next);
+					}
 				}
 				fos.flush();
 				fos.close();
 				out.flush();
+				out.close();
+				in.close();
 				return;
 			}
+
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + request);
 			out.println("HTTP/1.0 404 Not Found\r\n\r\n");
 			out.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
