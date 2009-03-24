@@ -1,3 +1,5 @@
+package filebrowser;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SimpleServletPart3 extends HttpServlet {
+public class FileBrowserServlet extends HttpServlet {
 	private static final String CONTENT_BASE_DIR_NAME = "C:/webcontent";
 
 	@Override

@@ -1,3 +1,4 @@
+package filebrowser;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -5,6 +6,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import filebrowser.SimpleHttpServer2;
 
 /**
  * Class to be used as tree node for representing a file tree in a Swing application.

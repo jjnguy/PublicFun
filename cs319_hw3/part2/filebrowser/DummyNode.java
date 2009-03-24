@@ -1,3 +1,4 @@
+package filebrowser;
 /**
  * File node type to be used as a placeholder for children of unexpanded directory nodes. These nodes are normally not
  * displayed unless an error prevents the actual children from being found.

@@ -1,3 +1,4 @@
+package filebrowser;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+
+import filebrowser.SimpleHttpServer2;
 
 /**
  * Swing viewer for a file tree on a remote server.
@@ -136,7 +139,7 @@ public class FileTreeViewer extends JPanel {
 	 */
 	public static void main(String[] args) {
 		start("localhost", 2222);
-		//start("wrowclif.student.iastate.edu", 8180);
+		// start("wrowclif.student.iastate.edu", 8180);
 		// start(args[0], Integer.parseInt(args[1]));
 	}
 
@@ -263,7 +266,7 @@ public class FileTreeViewer extends JPanel {
 			s = new Socket(host, port);
 			// for line-oriented output we use a PrintWriter
 			PrintWriter pw = new PrintWriter(s.getOutputStream());
-			pw.println("POST " + path + " HTTP/1.1");
+			pw.println("POST " + SimpleHttpServer2.APP_DIR + path + " HTTP/1.1");
 			pw.print("\r\n"); // empty line
 			pw.flush();
 
@@ -290,7 +293,7 @@ public class FileTreeViewer extends JPanel {
 			s = new Socket(host, port);
 			// for line-oriented output we use a PrintWriter
 			PrintWriter pw = new PrintWriter(s.getOutputStream());
-			pw.println("GET " + remotepath + " HTTP/1.1");
+			pw.println("GET " + SimpleHttpServer2.APP_DIR + remotepath + " HTTP/1.1");
 			pw.print("\r\n"); // empty line
 			pw.flush();
 
