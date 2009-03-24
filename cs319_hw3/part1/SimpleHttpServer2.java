@@ -1,12 +1,9 @@
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -14,7 +11,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Another simple http server. This version improves on <code>SimpleHttpServer</code> in the following ways:
@@ -32,6 +28,7 @@ public class SimpleHttpServer2 {
 	 * Base directory for all files made available from this server.
 	 */
 	private static final String CONTENT_BASE_DIR_NAME = "C:/webcontent";
+	public static final String APP_DIR = "/filebrowser/listfiles";
 
 	/**
 	 * Starts an instance of the server.
@@ -168,6 +165,13 @@ public class SimpleHttpServer2 {
 				fileRequested = fileRequested.substring(0, j);
 			}
 
+			// strip off the base app dir
+			if (!fileRequested.contains(APP_DIR.substring(1))) {
+				System.out.println("GET did not contain propper dir beginning");
+				return;
+			}
+			fileRequested = fileRequested.substring(APP_DIR.length()-1);
+
 			// if the request was just "/" we'll give them
 			// a listing of the base directory
 			if (fileRequested.equals("")) {
@@ -196,6 +200,13 @@ public class SimpleHttpServer2 {
 		if (indexOfSlash >= 0) {
 			strippedRequest = strippedRequest.substring(0, indexOfSlash);
 		}
+
+		// strip off the base app dir
+		if (!strippedRequest.contains(APP_DIR.substring(1))) {
+			System.out.println("POST did not contain propper dir beginning");
+			return;
+		}
+		strippedRequest = strippedRequest.substring(APP_DIR.length()-1);
 
 		// if the request was just "/" we'll give them
 		// a listing of the base directory
@@ -358,7 +369,7 @@ public class SimpleHttpServer2 {
 	 *            the file to evaluate
 	 * @return the MIME type as a string
 	 */
-	private static String guessMimeType(File f) {
+	public static String guessMimeType(File f) {
 		String filename = f.getName().toLowerCase();
 
 		if (filename.endsWith(".jpg") || filename.endsWith(".jpeg")) {

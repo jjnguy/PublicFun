@@ -142,13 +142,13 @@ public class FileNode {
 	public static List<FileNode> retrieveListOfChildren(String host, int port, String path) {
 		Socket s = null;
 		try {
-			// open a connection to the server on port 2222
 			s = new Socket(host, port);
 			OutputStream out = s.getOutputStream();
 
 			// for line-oriented output we use a PrintWriter
 			PrintWriter pw = new PrintWriter(out);
-			pw.println("GET " + path + " HTTP/1.1");
+			System.out.println("Request : " + "GET " + SimpleHttpServer2.APP_DIR  + path + " HTTP/1.1");
+			pw.println("GET " + SimpleHttpServer2.APP_DIR + path + " HTTP/1.1");
 			pw.print("\r\n"); // empty line
 			pw.flush();
 
