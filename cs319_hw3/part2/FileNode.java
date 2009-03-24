@@ -1,11 +1,19 @@
-import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Class to be used as tree node for representing a file tree in a Swing application.
  */
 public class FileNode {
+
+	private String host;
+	private int port;
+
 	/**
 	 * Children of this node.
 	 */
@@ -32,8 +40,8 @@ public class FileNode {
 	 * @param name
 	 *            exact file or directory name
 	 */
-	public FileNode(String path) {
-		this(path, false);
+	public FileNode(String host, int port, String path) {
+		this(host, port, path, false);
 	}
 
 	/**
@@ -44,9 +52,11 @@ public class FileNode {
 	 * @param isDir
 	 *            true if this node should represent a directory
 	 */
-	public FileNode(String path, boolean isDir) {
+	public FileNode(String host, int port, String path, boolean isDir) {
 		this.path = path;
 		this.isDir = isDir;
+		this.host = host;
+		this.port = port;
 	}
 
 	/**
@@ -117,27 +127,62 @@ public class FileNode {
 		}
 		if (forceRefresh || !hasBeenExpanded) {
 			children.clear();
-
 			// fill in child nodes using the File object
-			File f = new File(path);
-			if (f.exists()) {
-				File[] files = f.listFiles();
-				if (f.isDirectory() && files != null) {
-					System.out.println(f);
-					for (File file : files) {
-						FileNode node = new FileNode(file.getAbsolutePath(), file.isDirectory());
-						children.add(node);
-					}
-				} else {
-					// oops - it really wasn't a directory
-					isDir = false;
-					children = null;
-				}
+			List<FileNode> children = retrieveListOfChildren(host, port, path);
+			if (children != null) {
+				this.children = children;
 			} else {
 				// indicate an error in creating the children
-				children.add(new DummyNode());
+				this.children.add(new DummyNode());
 			}
 		}
 		hasBeenExpanded = true;
+	}
+
+	public static List<FileNode> retrieveListOfChildren(String host, int port, String path) {
+		Socket s = null;
+		try {
+			// open a connection to the server on port 2222
+			s = new Socket(host, port);
+			OutputStream out = s.getOutputStream();
+
+			// for line-oriented output we use a PrintWriter
+			PrintWriter pw = new PrintWriter(out);
+			pw.println("GET " + path + " HTTP/1.1");
+			pw.print("\r\n"); // empty line
+			pw.flush();
+
+			List<FileNode> ret = new ArrayList<FileNode>();
+			Scanner in = new Scanner(s.getInputStream());
+
+			// need to get rid of headers
+			while (in.hasNextLine()) {
+				String line = in.nextLine();
+				if (line.trim().length() == 0)
+					break;
+			}
+
+			while (in.hasNextLine()) {
+				String line = in.nextLine();
+				if (line.startsWith("DIR:")) {
+					ret.add(new FileNode(host, port, path + "/" + line.substring(4), true));
+				} else {
+					ret.add(new FileNode(host, port, path + "/" + line, false));
+				}
+			}
+			out.close();
+			pw.close();
+
+			return ret;
+		} catch (IOException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				if (s != null)
+					s.close();
+			} catch (IOException ignore) {
+			}
+		}
+		return null;
 	}
 }

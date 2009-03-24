@@ -7,6 +7,6 @@ public class DummyNode extends FileNode {
 	 * Creates a DummyNode object.
 	 */
 	public DummyNode() {
-		super("(error)", false);
+		super(null, 0,"(error)", false);
 	}
 }

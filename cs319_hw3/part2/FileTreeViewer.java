@@ -1,6 +1,18 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -24,10 +36,12 @@ public class FileTreeViewer extends JPanel {
 	 */
 	private static final String DECODER_CHARSET = "UTF-8";
 
+	// wrowclif.student.iastate.edu:8180/filebrowser/listfiles/
 	/**
 	 * Default hostname for the server.
 	 */
-	private static final String DEFAULT_HOST = "localhost";
+	private String host;
+	private int port;
 
 	// Swing components
 	private JTree tree;
@@ -44,14 +58,16 @@ public class FileTreeViewer extends JPanel {
 	 *            the hostname for the server to which this viewer connects
 	 * 
 	 */
-	public FileTreeViewer() {
+	public FileTreeViewer(String hostname, int port) {
 		super(new BorderLayout());
+		host = hostname;
+		this.port = port;
 
 		// shared file chooser, it it remembers previous directory
 		fc = new JFileChooser();
 		fc.setMultiSelectionEnabled(false);
 
-		FileNode root = new FileNode("C:\\", true);
+		FileNode root = new FileNode(hostname, port, "/", true);
 
 		// Construct the tree and add it to this panel.
 		model = new FileTreeModel(root);
@@ -95,13 +111,13 @@ public class FileTreeViewer extends JPanel {
 	 * @param root
 	 *            node to be used as the root of the tree's model
 	 */
-	private static void createAndShow() {
+	private static void createAndShow(String host, int port) {
 		// Create and set up the window.
 		JFrame frame = new JFrame("File Viewer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Create and set up the content pane.
-		FileTreeViewer newContentPane = new FileTreeViewer();
+		FileTreeViewer newContentPane = new FileTreeViewer(host, port);
 		newContentPane.setOpaque(true);
 		frame.setContentPane(newContentPane);
 
@@ -117,7 +133,8 @@ public class FileTreeViewer extends JPanel {
 	 *            not used
 	 */
 	public static void main(String[] args) {
-		start();
+		start("localhost", 2222);
+		// start(args[0], Integer.parseInt(args[1]));
 	}
 
 	/**
@@ -126,12 +143,12 @@ public class FileTreeViewer extends JPanel {
 	 * @param root
 	 *            node to be used as the root of the tree's model
 	 */
-	public static void start() {
+	public static void start(final String host, final int port) {
 		// Create and start the application on the Swing
 		// event-dispatching thread
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				createAndShow();
+				createAndShow(host, port);
 			}
 		});
 	}
@@ -188,8 +205,20 @@ public class FileTreeViewer extends JPanel {
 
 			if (event.getSource() == download) {
 				// TODO
+				try {
+					download();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else if (event.getSource() == upload) {
 				// TODO
+				try {
+					upload();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
 				// directory refresh request
 				model.updateChildren(path, true);
@@ -198,4 +227,101 @@ public class FileTreeViewer extends JPanel {
 		}
 	}
 
+	private void download() throws FileNotFoundException {
+		JFileChooser chooser = new JFileChooser();
+		int choice = chooser.showSaveDialog(this);
+		if (choice != JFileChooser.APPROVE_OPTION)
+			return;
+		String path = tree.getSelectionPath().toString();
+		System.out.println("Selected path to string: " + path);
+		getRemoteFileFromPath(treePathToFilePath(tree.getSelectionPath()), new FileOutputStream(chooser
+				.getSelectedFile()));
+	}
+
+	private void upload() throws FileNotFoundException {
+		JFileChooser chooser = new JFileChooser();
+		int choice = chooser.showOpenDialog(this);
+		if (choice != JFileChooser.APPROVE_OPTION)
+			return;
+		String path = tree.getSelectionPath().toString();
+		System.out.println("Selected path to string: " + path);
+		sendFileToRemotePath(FileTreeViewer.treePathToFilePath(tree.getSelectionPath()) + "/"
+				+ chooser.getSelectedFile().getName(), new FileInputStream(chooser.getSelectedFile()));
+	}
+
+	private static String treePathToFilePath(TreePath tree) {
+		String lastElement = tree.getLastPathComponent().toString().substring(1);
+		return lastElement;
+	}
+
+	private boolean sendFileToRemotePath(String path, FileInputStream fin) {
+		Socket s = null;
+		try {
+			s = new Socket(host, port);
+			// for line-oriented output we use a PrintWriter
+			PrintWriter pw = new PrintWriter(s.getOutputStream());
+			pw.println("POST " + path + " HTTP/1.1");
+			pw.print("\r\n"); // empty line
+			pw.flush();
+
+			copyStream(fin, s.getOutputStream());
+
+			pw.close();
+
+			return true;
+		} catch (IOException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				if (s != null)
+					s.close();
+			} catch (IOException ignore) {
+			}
+		}
+		return false;
+	}
+
+	private boolean getRemoteFileFromPath(String remotepath, FileOutputStream fout) {
+		Socket s = null;
+		try {
+			s = new Socket(host, port);
+			// for line-oriented output we use a PrintWriter
+			PrintWriter pw = new PrintWriter(s.getOutputStream());
+			pw.println("GET " + remotepath + " HTTP/1.1");
+			pw.print("\r\n"); // empty line
+			pw.flush();
+
+			InputStream in = s.getInputStream();
+
+			// get rid of headders
+			while (true) {
+				String line = SimpleHttpServer2.readLine(in);
+				if (line.trim().length() == 0)
+					break;
+			}
+
+			copyStream(in, fout);
+
+			pw.close();
+
+			return true;
+		} catch (IOException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				if (s != null)
+					s.close();
+			} catch (IOException ignore) {
+			}
+		}
+		return false;
+	}
+
+	private static void copyStream(InputStream input, OutputStream output) throws IOException {
+		byte[] buffer = new byte[32 * 1024];
+		int bytesRead;
+		while ((bytesRead = input.read(buffer, 0, buffer.length)) > 0) {
+			output.write(buffer, 0, bytesRead);
+		}
+	}
 }

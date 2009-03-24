@@ -79,7 +79,7 @@ public class SimpleHttpServer2 {
 		}
 	}
 
-	private static String readLine(InputStream in) throws IOException {
+	public static String readLine(InputStream in) throws IOException {
 		String ret = "";
 		while (true) {
 			int next = in.read();
@@ -388,7 +388,7 @@ public class SimpleHttpServer2 {
 		String[] fileNames = new String[files.length];
 		for (int i = 0; i < files.length; ++i) {
 			System.out.println(files[i].getName());
-			fileNames[i] = (files[i].isDirectory() ? "DIR: " : "") + files[i].getName();
+			fileNames[i] = (files[i].isDirectory() ? "DIR:" : "") + files[i].getName();
 		}
 		return fileNames;
 	}

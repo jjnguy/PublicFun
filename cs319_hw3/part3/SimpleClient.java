@@ -42,7 +42,7 @@ public class SimpleClient {
 		}
 	}
 	
-	public static void copyStream(InputStream input, OutputStream output) throws IOException {
+	private static void copyStream(InputStream input, OutputStream output) throws IOException {
 		byte[] buffer = new byte[32 * 1024];
 		int bytesRead;
 		while ((bytesRead = input.read(buffer, 0, buffer.length)) > 0) {
