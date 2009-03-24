@@ -31,7 +31,7 @@ public class SimpleHttpServer2 {
 	/**
 	 * Base directory for all files made available from this server.
 	 */
-	private static final String CONTENT_BASE_DIR_NAME = "filebrowser/listfiles/";
+	private static final String CONTENT_BASE_DIR_NAME = "C:/webcontent";
 
 	/**
 	 * Starts an instance of the server.

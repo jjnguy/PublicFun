@@ -51,6 +51,8 @@ public class FileTreeViewer extends JPanel {
 	private JButton refresh;
 	private JFileChooser fc;
 
+	private final String contentBaseDir = "/filebrowser/listfiles/";
+	
 	/**
 	 * Creates the viewer. This constructor is appropriate for use in both applets and applications.
 	 * 
@@ -133,7 +135,7 @@ public class FileTreeViewer extends JPanel {
 	 *            not used
 	 */
 	public static void main(String[] args) {
-		start("localhost", 2222);
+		start("wrowclif.student.iastate.edu", 8180);
 		// start(args[0], Integer.parseInt(args[1]));
 	}
 
