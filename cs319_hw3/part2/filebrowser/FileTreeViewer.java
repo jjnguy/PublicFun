@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -298,8 +299,9 @@ public class FileTreeViewer extends JPanel {
 			pw.flush();
 
 			InputStream in = s.getInputStream();
-
-			// get rid of headders
+			String response = SimpleHttpServer2.readLine(in);
+			
+			// get rid of headers
 			while (true) {
 				String line = SimpleHttpServer2.readLine(in);
 				if (line.trim().length() == 0)
