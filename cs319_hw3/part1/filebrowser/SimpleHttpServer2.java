@@ -1,4 +1,5 @@
 package filebrowser;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -98,9 +99,11 @@ public class SimpleHttpServer2 {
 	 * @throws IOException
 	 */
 	private void handleConnection(Socket s) {
+		InputStream in = null;
+		PrintStream out = null;
 		try {
-			InputStream in = s.getInputStream();
-			PrintStream out = new PrintStream(s.getOutputStream());
+			in = s.getInputStream();
+			out = new PrintStream(s.getOutputStream());
 
 			List<String> headers = new ArrayList<String>();
 
@@ -146,6 +149,8 @@ public class SimpleHttpServer2 {
 			// This wasn't a well-formed request
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(out), true);
 			writer.println("HTTP/1.0 400 Bad Request\r\n\r\n");
+			writer
+					.println("<html><body>It seems like you made a bad request.<br />Please try again...and this time don't screw up.</html></body>");
 			writer.flush();
 		}
 	}
@@ -169,9 +174,14 @@ public class SimpleHttpServer2 {
 			// strip off the base app dir
 			if (!fileRequested.contains(APP_DIR.substring(1))) {
 				System.out.println("GET did not contain propper dir beginning");
+				System.out.println("Disallowed request");
+				out.println("HTTP/1.0 403 Forbidden\r\n\r\n");
+				out.println("<html><body>You do not have permission to access that file.  "
+						+ "Are you trying to snoop arround?</html></body>");
+				out.flush();
 				return;
 			}
-			fileRequested = fileRequested.substring(APP_DIR.length()-1);
+			fileRequested = fileRequested.substring(APP_DIR.length() - 1);
 
 			// if the request was just "/" we'll give them
 			// a listing of the base directory
@@ -189,6 +199,11 @@ public class SimpleHttpServer2 {
 		final int lengthOfPost = 4;
 		if (indexOfSlash <= indexOfPost + lengthOfPost) {
 			System.out.println("There was no slash in the correct place.");
+			PrintWriter writer = new PrintWriter(new OutputStreamWriter(out), true);
+			writer.println("HTTP/1.0 400 Bad Request\r\n\r\n");
+			writer
+					.println("<html><body>It seems like you made a bad request.<br />Please try again...and this time don't screw up.</html></body>");
+			writer.flush();
 			return;
 		}
 		// strip off everything up until the first slash
@@ -205,9 +220,14 @@ public class SimpleHttpServer2 {
 		// strip off the base app dir
 		if (!strippedRequest.contains(APP_DIR.substring(1))) {
 			System.out.println("POST did not contain propper dir beginning");
+			System.out.println("Disallowed request");
+			out.println("HTTP/1.0 403 Forbidden\r\n\r\n");
+			out.println("<html><body>You do not have permission to access that file.  "
+					+ "Are you trying to snoop arround?</html></body>");
+			out.flush();
 			return;
 		}
-		strippedRequest = strippedRequest.substring(APP_DIR.length()-1);
+		strippedRequest = strippedRequest.substring(APP_DIR.length() - 1);
 
 		// if the request was just "/" we'll give them
 		// a listing of the base directory
@@ -234,7 +254,8 @@ public class SimpleHttpServer2 {
 		try {
 			File f = new File(CONTENT_BASE_DIR_NAME + request);
 
-			checkBelowAndHandle(out, f);
+			if (!checkBelowAndHandle(out, f))
+				return;
 
 			if (f.isDirectory()) {
 				handleDirectoryRequest(out, f);
@@ -263,6 +284,7 @@ public class SimpleHttpServer2 {
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + request);
 			out.println("HTTP/1.0 404 Not Found\r\n\r\n");
+			out.println("<html><body>404 File Not Found, not my problem.  Sorry.</body></html>");
 			out.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -285,8 +307,15 @@ public class SimpleHttpServer2 {
 
 		try {
 			File f = new File(CONTENT_BASE_DIR_NAME + request);
-
-			checkBelowAndHandle(out, f);
+			if (!checkBelowAndHandle(out, f))
+				return;
+			if (f.exists()) {
+				out.println("HTTP/1.0 409 Conflict\r\n\r\n");
+				out.print("<html><body>It seems your file already exists...<br />"
+						+ "you wouldn't be trying ot overwrite someones stuff, would ya?</html></body>");
+				out.flush();
+				return;
+			}
 
 			if (f.isDirectory()) {
 				handleDirectoryRequest(out, f);
@@ -294,6 +323,7 @@ public class SimpleHttpServer2 {
 				// catch FileNotFoundException if file doesn't exist
 				FileOutputStream fos = new FileOutputStream(f);
 
+				out.println("HTTP/1.0 201 Created\r\n\r\n");
 				// Need to write post contents to file
 				while (true) {
 					if (in.available() != 0) {
@@ -336,14 +366,17 @@ public class SimpleHttpServer2 {
 		return;
 	}
 
-	private void checkBelowAndHandle(PrintStream out, File f) throws IOException {
+	private boolean checkBelowAndHandle(PrintStream out, File f) throws IOException {
 		// make sure the file is really in the content directory
 		if (!SimpleHttpServer2.checkIsBelow(new File(CONTENT_BASE_DIR_NAME), f)) {
 			System.out.println("Disallowed request");
 			out.println("HTTP/1.0 403 Forbidden\r\n\r\n");
+			out.println("<html><body>You do not have permission to access that file.  "
+					+ "Are you trying to snoop arround?</html></body>");
 			out.flush();
-			return;
+			return false;
 		}
+		return true;
 	}
 
 	private static long getContentLengthFromStringArray(String[] str) {
@@ -432,16 +465,5 @@ public class SimpleHttpServer2 {
 			current = current.getParentFile();
 		}
 		return false;
-	}
-
-	/**
-	 * 
-	 * @author Justin
-	 * 
-	 */
-	class ConnectionThread extends Thread {
-		@Override
-		public void run() {
-		}
 	}
 }
