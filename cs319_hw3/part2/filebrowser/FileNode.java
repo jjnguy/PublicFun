@@ -1,4 +1,5 @@
 package filebrowser;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -142,6 +143,17 @@ public class FileNode {
 		hasBeenExpanded = true;
 	}
 
+	/**
+	 * Uses a server to find the children of a node given some remote path.
+	 * 
+	 * @param host
+	 *            the host to connect to
+	 * @param port
+	 *            the port to look in
+	 * @param path
+	 *            the path to the remote file
+	 * @return list of children nodes
+	 */
 	public static List<FileNode> retrieveListOfChildren(String host, int port, String path) {
 		Socket s = null;
 		try {
@@ -150,7 +162,7 @@ public class FileNode {
 
 			// for line-oriented output we use a PrintWriter
 			PrintWriter pw = new PrintWriter(out);
-			System.out.println("Request : " + "GET " + SimpleHttpServer2.APP_DIR  + path + " HTTP/1.1");
+			System.out.println("Request : " + "GET " + SimpleHttpServer2.APP_DIR + path + " HTTP/1.1");
 			pw.println("GET " + SimpleHttpServer2.APP_DIR + path + " HTTP/1.1");
 			pw.print("\r\n"); // empty line
 			pw.flush();

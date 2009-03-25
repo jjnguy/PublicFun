@@ -1,4 +1,5 @@
 package filebrowser;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -211,19 +212,15 @@ public class FileTreeViewer extends JPanel {
 			TreePath path = tree.getLeadSelectionPath();
 
 			if (event.getSource() == download) {
-				// TODO
 				try {
 					download();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else if (event.getSource() == upload) {
-				// TODO
 				try {
 					upload();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
@@ -234,6 +231,11 @@ public class FileTreeViewer extends JPanel {
 		}
 	}
 
+	/**
+	 * Downloads the currently selected file node
+	 * 
+	 * @throws FileNotFoundException
+	 */
 	private void download() throws FileNotFoundException {
 		JFileChooser chooser = new JFileChooser();
 		int choice = chooser.showSaveDialog(this);
@@ -245,6 +247,11 @@ public class FileTreeViewer extends JPanel {
 				.getSelectedFile()));
 	}
 
+	/**
+	 * Uploads a file to the currently selected directory node
+	 * 
+	 * @throws FileNotFoundException
+	 */
 	private void upload() throws FileNotFoundException {
 		JFileChooser chooser = new JFileChooser();
 		int choice = chooser.showOpenDialog(this);
@@ -256,11 +263,23 @@ public class FileTreeViewer extends JPanel {
 				+ chooser.getSelectedFile().getName(), new FileInputStream(chooser.getSelectedFile()));
 	}
 
+	/**
+	 * Converts the toString of a TreePath to a directory path
+	 * 
+	 * @param tree
+	 * @return a file path
+	 */
 	private static String treePathToFilePath(TreePath tree) {
 		String lastElement = tree.getLastPathComponent().toString().substring(1);
 		return lastElement;
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param fin
+	 * @return
+	 */
 	private boolean sendFileToRemotePath(String path, FileInputStream fin) {
 		Socket s = null;
 		try {
@@ -300,7 +319,7 @@ public class FileTreeViewer extends JPanel {
 
 			InputStream in = s.getInputStream();
 			String response = SimpleHttpServer2.readLine(in);
-			
+
 			// get rid of headers
 			while (true) {
 				String line = SimpleHttpServer2.readLine(in);

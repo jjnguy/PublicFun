@@ -78,6 +78,13 @@ public class SimpleHttpServer2 {
 		}
 	}
 
+	/**
+	 * Read line method for an InputStream. No buffering and doesn't waste data. Similar to StreamReader.readLine()
+	 * 
+	 * @param in
+	 * @return
+	 * @throws IOException
+	 */
 	public static String readLine(InputStream in) throws IOException {
 		String ret = "";
 		while (true) {
@@ -138,6 +145,14 @@ public class SimpleHttpServer2 {
 		}
 	}
 
+	/**
+	 * Figures out the type of request and sends the data to the correct method to handle it.
+	 * 
+	 * @param headers
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	private void parseRequest(List<String> headers, InputStream in, PrintStream out) throws IOException {
 		// parse request
 		if (headers.get(0).toUpperCase().startsWith("GET")) {
@@ -155,6 +170,14 @@ public class SimpleHttpServer2 {
 		}
 	}
 
+	/**
+	 * Parses a GET request. Just breaks up the original request to find the correct file parts
+	 * 
+	 * @param headers
+	 * @param out
+	 * @param in
+	 * @throws IOException
+	 */
 	private void parseGET(List<String> headers, PrintStream out, InputStream in) throws IOException {
 		int i = headers.get(0).indexOf("GET");
 		int j = headers.get(0).indexOf('/', i);
@@ -193,6 +216,14 @@ public class SimpleHttpServer2 {
 		}
 	}
 
+	/**
+	 * Parses a POST request. Just breaks up the original request to find the correct file parts
+	 * 
+	 * @param headers
+	 * @param out
+	 * @param in
+	 * @throws IOException
+	 */
 	private void parsePOST(List<String> headers, PrintStream out, InputStream in) throws IOException {
 		int indexOfPost = headers.get(0).indexOf("POST");
 		int indexOfSlash = headers.get(0).indexOf('/', indexOfPost);
@@ -351,6 +382,15 @@ public class SimpleHttpServer2 {
 		}
 	}
 
+	/**
+	 * Deals with all directory requests the same. Printing a list of files to the output.
+	 * 
+	 * @param out
+	 *            the stream to prin to
+	 * @param f
+	 *            the file to look in
+	 * @throws IOException
+	 */
 	private void handleDirectoryRequest(PrintStream out, File f) throws IOException {
 		// create a dir listing as a text file
 		String[] listing = SimpleHttpServer2.generateDirListing(f);
@@ -366,19 +406,38 @@ public class SimpleHttpServer2 {
 		return;
 	}
 
-	private boolean checkBelowAndHandle(PrintStream out, File f) throws IOException {
+	/**
+	 * Checks to see if a directory requested is fair game.
+	 * 
+	 * @param out
+	 *            stream to print errors to
+	 * @param f
+	 *            the file to check
+	 * @return true if all was good, false otherwise.
+	 */
+	private boolean checkBelowAndHandle(PrintStream out, File f) {
 		// make sure the file is really in the content directory
-		if (!SimpleHttpServer2.checkIsBelow(new File(CONTENT_BASE_DIR_NAME), f)) {
-			System.out.println("Disallowed request");
-			out.println("HTTP/1.0 403 Forbidden\r\n\r\n");
-			out.println("<html><body>You do not have permission to access that file.  "
-					+ "Are you trying to snoop arround?</html></body>");
-			out.flush();
+		try {
+			if (!SimpleHttpServer2.checkIsBelow(new File(CONTENT_BASE_DIR_NAME), f)) {
+				System.out.println("Disallowed request");
+				out.println("HTTP/1.0 403 Forbidden\r\n\r\n");
+				out.println("<html><body>You do not have permission to access that file.  "
+						+ "Are you trying to snoop arround?</html></body>");
+				out.flush();
+				return false;
+			}
+		} catch (IOException e) {
 			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * Finds the total length of strings in a string array
+	 * 
+	 * @param str
+	 * @return the length of the content
+	 */
 	private static long getContentLengthFromStringArray(String[] str) {
 		long ret = 0;
 		for (String s : str) {
