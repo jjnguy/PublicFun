@@ -87,7 +87,7 @@ public class Plotter extends JPanel {
 
 	public void addPoint(final double x, final double y) {
 		Runnable r = new Runnable() {
-			// @Override
+			@Override
 			public void run() {
 				plotPoint(new Point2D.Double(x, y));
 			}
@@ -101,7 +101,7 @@ public class Plotter extends JPanel {
 
 	public void clear() {
 		Runnable r = new Runnable() {
-			// @Override
+			@Override
 			public void run() {
 				points.clear();
 				repaint();
@@ -136,7 +136,7 @@ public class Plotter extends JPanel {
 
 	public void startPlotter() {
 		Runnable r = new Runnable() {
-			// @Override
+			@Override
 			public void run() {
 				createAndRun();
 			}
@@ -158,7 +158,7 @@ public class Plotter extends JPanel {
 
 	public void stopPlotter() {
 		Runnable r = new Runnable() {
-			// @Override
+			@Override
 			public void run() {
 				points.clear();
 				plotHolder.dispose();
@@ -235,12 +235,15 @@ public class Plotter extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-		paintGrid(g2);
-		paintDrawnPoints(g2);
-		paintPoints(g2);
+		this.paintComponent((Graphics2D) g);
+	}
+
+	private void paintComponent(Graphics2D g) {
+		paintGrid(g);
+		paintDrawnPoints(g);
+		paintPoints(g);
 		if (mouseLoc != null)
-			paintMouseLocation(g2);
+			paintMouseLocation(g);
 	}
 
 	private void paintDrawnPoints(Graphics2D g2) {
@@ -262,12 +265,7 @@ public class Plotter extends JPanel {
 		Point oldJavaPoint = null;
 		Point2D.Double oldRegPoint = null;
 		for (Point2D.Double point : points) {
-			if (point.x > X_MAX || point.x < X_MIN) {
-				oldJavaPoint = null;
-				oldRegPoint = null;
-				continue;
-			}
-			if (point.y > Y_MAX || point.y < Y_MIN) {
+			if (point.x > X_MAX || point.x < X_MIN || point.y > Y_MAX || point.y < Y_MIN) {
 				oldJavaPoint = null;
 				oldRegPoint = null;
 				continue;
@@ -380,14 +378,14 @@ public class Plotter extends JPanel {
 	}
 
 	private MouseMotionListener mouseMove = new MouseMotionListener() {
-		// @Override
+		@Override
 		public void mouseDragged(MouseEvent e) {
 			drawPoint(e.getPoint());
 			mouseLoc = e.getPoint();
 			repaint(true);
 		}
 
-		// @Override
+		@Override
 		public void mouseMoved(MouseEvent e) {
 			mouseLoc = e.getPoint();
 			repaint(true);
@@ -459,20 +457,20 @@ public class Plotter extends JPanel {
 		}
 
 		private ActionListener zoomInAction = new ActionListener() {
-			// @Override
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				zoomIn(2);
 			}
 		};
 		private ActionListener zoomOutAction = new ActionListener() {
-			// @Override
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				zoomOut(2);
 			}
 		};
 
 		private ChangeListener sliderChange = new ChangeListener() {
-			// @Override
+			@Override
 			public void stateChanged(ChangeEvent e) {
 				setRules(xRuleSlider.getValue(), yRuleSlider.getValue());
 			}
@@ -481,7 +479,6 @@ public class Plotter extends JPanel {
 		private ActionListener saveAction = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				JFileChooser choose = new JFileChooser();
 				int action = choose.showSaveDialog(Plotter.this);
 				if (action == JFileChooser.CANCEL_OPTION)

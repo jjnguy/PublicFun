@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import plotter.Plotter;
+
 public class GraphingCalculatorUI {
 	private GraphingCalculatorController controller;
 	private static final boolean EXTRA_FEATURES = true;
@@ -13,6 +15,12 @@ public class GraphingCalculatorUI {
 		controller = cont;
 		stdin = new Scanner(System.in);
 		controller.startPlotter();
+	}
+
+	public static void main2(String[] args) {
+		GraphingCalculatorUI gUI = new GraphingCalculatorUI(new GraphingCalculatorController(
+				new Plotter()));
+		gUI.handleInput();
 	}
 
 	public void handleInput() {
