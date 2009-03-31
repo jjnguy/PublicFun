@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.logging.Level;
 
 import edu.cs319.client.IClient;
 import edu.cs319.dataobjects.CoLabRoom;
@@ -20,11 +21,11 @@ public class Server implements IServer {
 	/**
 	 * Maps open colab rooms to their u-id
 	 */
-	private Map<String, CoLabRoom> colabrooms;
+	private final Map<String, CoLabRoom> colabrooms;
 	/**
 	 * Maps all active clients to their u-id
 	 */
-	private Map<String, IClient> regularClients;
+	private final Map<String, IClient> regularClients;
 	/**
 	 * Maps all colab u-ids to the u-ids of users in the room
 	 */
@@ -36,7 +37,7 @@ public class Server implements IServer {
 	/**
 	 * Queue that processes events in the order they were received
 	 */
-	private CoLabEventQueue events;
+	private final CoLabEventQueue events;
 
 	/**
 	 * Creates a new server
@@ -50,6 +51,7 @@ public class Server implements IServer {
 	}
 
 	public void startup() throws IOException {
+		ServerLog.log.log(Level.INFO, "Server starting up");
 		events.start();
 		if (Util.DEBUG) {
 			System.out.println("Server Starting up...");
@@ -164,9 +166,9 @@ public class Server implements IServer {
 
 	private class CoLabEventQueue extends Thread {
 
-		private long SLEEP_TIME = 10;
+		private final long SLEEP_TIME = 10;
 
-		private Queue<CoLabEvent> events;
+		private final Queue<CoLabEvent> events;
 
 		public CoLabEventQueue() {
 			events = new LinkedList<CoLabEvent>();
@@ -190,6 +192,8 @@ public class Server implements IServer {
 				} else {
 					// TODO something with the return type, like alert a user of a failed
 					// action
+					if (Util.DEBUG)
+						System.out.println("Processing new event: " + evt.toString());
 					evt.processEvent();
 				}
 			}

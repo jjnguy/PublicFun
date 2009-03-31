@@ -1,15 +1,13 @@
 package edu.cs319.server.events;
 
-import java.util.Collection;
-
 import edu.cs319.server.IServer;
 
 public class NewCoLabRoomEvent implements CoLabEvent {
 
-	private IServer theServer;
-	private String newName;
-	private String foundingMemberName;
-	private byte[] password;
+	private final IServer theServer;
+	private final String newName;
+	private final String foundingMemberName;
+	private final byte[] password;
 
 	public NewCoLabRoomEvent(IServer server, String colabRoomName, String foundingMember,
 			byte[] password) {
@@ -20,14 +18,14 @@ public class NewCoLabRoomEvent implements CoLabEvent {
 	}
 
 	@Override
-	public Collection<String> clientsToBeUpdated() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean processEvent() {
 		boolean result = theServer.addNewCoLabRoom(foundingMemberName, newName, password);
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "NewCoLabRoomEvent: RoomName: " + this.foundingMemberName + ", MemberName: "
+		+ this.foundingMemberName;
 	}
 }
