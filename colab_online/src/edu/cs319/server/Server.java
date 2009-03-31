@@ -1,9 +1,6 @@
 package edu.cs319.server;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,13 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import edu.cs319.client.IClient;
 import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.CoLabRoomMember;
 import edu.cs319.server.events.CoLabEvent;
-import edu.cs319.util.JustinsQueue;
 import edu.cs319.util.Util;
 
 public class Server implements IServer {
