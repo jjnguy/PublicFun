@@ -7,5 +7,5 @@ import edu.cs319.client.IClient;
 public interface CoLabEvent {
 
 	public boolean processEvent();
-	public Collection<IClient> clientsToBeUpdated();
+	public Collection<String> clientsToBeUpdated();
 }

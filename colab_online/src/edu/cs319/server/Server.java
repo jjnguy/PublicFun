@@ -17,11 +17,25 @@ import edu.cs319.server.events.CoLabEvent;
 import edu.cs319.util.Util;
 
 public class Server implements IServer {
-
+	/**
+	 * Maps open colab rooms to their u-id
+	 */
 	private Map<String, CoLabRoom> colabrooms;
+	/**
+	 * Maps all active clients to their u-id
+	 */
 	private Map<String, IClient> regularClients;
-	private Map<CoLabRoom, List<String>> usersInTheRooms;
+	/**
+	 * Maps all colab u-ids to the u-ids of users in the room
+	 */
+	private Map<String, List<String>> usersInTheRooms;
+	/**
+	 * The client that is the db
+	 */
 	private IClient dbConnector;
+	/**
+	 * Queue that processes events in the order they were received
+	 */
 	private CoLabEventQueue events;
 
 	/**
@@ -37,7 +51,7 @@ public class Server implements IServer {
 
 	public void startup() throws IOException {
 		events.start();
-		if (Util.DEBUG){
+		if (Util.DEBUG) {
 			System.out.println("Server Starting up...");
 		}
 	}
@@ -50,7 +64,8 @@ public class Server implements IServer {
 
 		Set<String> roomNames = colabrooms.keySet();
 		synchronized (colabrooms) {
-			if (roomNames.contains(roomName)) return false;
+			if (roomNames.contains(roomName))
+				return false;
 		}
 
 		CoLabRoom roomToAdd = new CoLabRoom(roomName, new CoLabRoomMember(username), password);
@@ -63,7 +78,8 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivledgeLevel newPriv) {
+	public boolean changeUserPrivledge(String username, String roomname,
+			CoLabPrivledgeLevel newPriv) {
 		CoLabRoom room = colabrooms.get(roomname);
 		CoLabRoomMember member = room.getMemberByName(roomname);
 		boolean privSetSuccess = member.setPrivLevel(newPriv);
@@ -109,13 +125,15 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean newChatMessage(String username, String roomname, String message, String recipiant) {
+	public boolean newChatMessage(String username, String roomname, String message,
+			String recipiant) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean textChanged(String username, String roomname, int posStart, int posEnd, String text) {
+	public boolean textChanged(String username, String roomname, int posStart, int posEnd,
+			String text) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -146,7 +164,7 @@ public class Server implements IServer {
 
 	private class CoLabEventQueue extends Thread {
 
-		private long SLEEP_TIME = 100;
+		private long SLEEP_TIME = 10;
 
 		private Queue<CoLabEvent> events;
 
@@ -166,9 +184,12 @@ public class Server implements IServer {
 					try {
 						Thread.sleep(SLEEP_TIME);
 					} catch (InterruptedException e) {
-						if (Util.DEBUG) e.printStackTrace();
+						if (Util.DEBUG)
+							e.printStackTrace();
 					}
 				} else {
+					// TODO something with the return type, like alert a user of a failed
+					// action
 					evt.processEvent();
 				}
 			}
