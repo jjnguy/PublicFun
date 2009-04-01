@@ -1,6 +1,8 @@
 package edu.cs319.client;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,7 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -19,6 +23,7 @@ public class WindowJoinCoLab extends JFrame {
 	
 	private JList roomList;
 	private DefaultListModel listModel;
+	private JTextField createField = new JTextField();
 	private JButton joinButton = new JButton("Join");
 	private JButton createButton = new JButton("Create");
 	
@@ -27,9 +32,11 @@ public class WindowJoinCoLab extends JFrame {
 		this.setSize(500, 400);
 		setUpAppearance();
 		setUpListeners();
+		this.repaint();
 	}
 	
 	private void setUpAppearance() {
+		Insets borderInsets = new Insets(20, 20, 20, 20);
 		listModel = new DefaultListModel();
 		roomList = new JList(listModel);
 		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -37,13 +44,29 @@ public class WindowJoinCoLab extends JFrame {
 		roomList.setVisibleRowCount(8);
 		JScrollPane listScrollPane = new JScrollPane(roomList);
 		
+		JLabel listLabel = new JLabel("Existing CoLab Rooms:");
+		JLabel createLabel = new JLabel("Create a New CoLab:");
+		createField.setPreferredSize(new Dimension(200, 25));
+		
+		JPanel westPanel = new JPanel(new BorderLayout());
+		westPanel.add(listLabel, BorderLayout.NORTH);
+		westPanel.add(createLabel, BorderLayout.SOUTH);
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		centerPanel.add(listScrollPane, BorderLayout.NORTH);
+		centerPanel.add(createField, BorderLayout.SOUTH);
+		JPanel eastPanel = new JPanel(new BorderLayout());
+		eastPanel.add(joinButton, BorderLayout.NORTH);
+		eastPanel.add(createButton, BorderLayout.SOUTH);
 		
 		JLabel topLabel = new JLabel("Please choose an " +
 				"existing CoLab to join or create a new CoLab.");
-		
+		topLabel.setBorder(new EmptyBorder(borderInsets));
 		JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.add(listScrollPane, BorderLayout.CENTER);
-		
+		mainPanel.add(topLabel, BorderLayout.NORTH);
+		mainPanel.add(westPanel, BorderLayout.WEST);
+		mainPanel.add(centerPanel, BorderLayout.CENTER);
+		mainPanel.add(eastPanel, BorderLayout.EAST);
+		this.add(mainPanel);
 	}
 	
 	private void setUpListeners() {

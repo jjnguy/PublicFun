@@ -19,6 +19,11 @@ public class MainClient {
 		WindowLogIn logIn = new WindowLogIn();
 		logIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		logIn.setVisible(true);
+		
+		WindowJoinCoLab joinWindow = new WindowJoinCoLab();
+		joinWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		joinWindow.setVisible(true);
+
 	}
 
 }
