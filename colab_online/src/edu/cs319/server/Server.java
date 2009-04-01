@@ -17,7 +17,7 @@ import edu.cs319.util.Util;
 public class Server implements IServer {
 	private static Server instance = null;
 	
-	public static IServer getInstance() {
+	public static Server getInstance() {
 		if (instance == null) {
 			instance = new Server();
 		}

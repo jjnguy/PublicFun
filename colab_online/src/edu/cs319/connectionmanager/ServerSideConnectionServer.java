@@ -12,7 +12,7 @@ import edu.cs319.util.Util;
 
 public class ServerSideConnectionServer implements Runnable {
 	private Server actualServer;
-	public static final int DEFAULT_PORT = 112886;
+	public static final int DEFAULT_PORT = 4444;
 
 	public ServerSideConnectionServer(Server actualServer) {
 		this.actualServer = actualServer;
