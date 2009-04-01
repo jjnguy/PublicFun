@@ -1,11 +1,11 @@
 package edu.cs319.connectionmanager;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 import edu.cs319.client.IClient;
+import edu.cs319.connectionmanager.messaging.MessageOutputStream;
 import edu.cs319.server.CoLabPrivilegeLevel;
 
 public class ServerSideConnectionClient implements IClient {
@@ -13,6 +13,14 @@ public class ServerSideConnectionClient implements IClient {
 	private int port;
 	private Socket connection;
 
+	/**
+	 * @param username
+	 * @param ip
+	 *            the ip of the actual client on the other side
+	 * @param port
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	public ServerSideConnectionClient(String username, String ip, int port)
 			throws UnknownHostException, IOException {
 		this.ip = ip;
@@ -26,9 +34,9 @@ public class ServerSideConnectionClient implements IClient {
 	}
 
 	// TODO do we want to keep the connections open, or do we want to re connect every time
-	private PrintStream getMessageStream() {
+	private MessageOutputStream getMessageOutputStream() {
 		try {
-			PrintStream out = new PrintStream(connection.getOutputStream());
+			MessageOutputStream out = new MessageOutputStream(connection.getOutputStream());
 			return out;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -41,62 +49,51 @@ public class ServerSideConnectionClient implements IClient {
 
 	@Override
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv) {
-		PrintStream out = getMessageStream();
-		out.close();
 		return false;
 	}
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
-		PrintStream out = getMessageStream();
 		return false;
 	}
 
 	@Override
 	public boolean coLabRoomMemberLeft(String username) {
-		PrintStream out = getMessageStream();
 		return false;
 	}
 
 	@Override
 	public boolean newChatMessage(String usernameSender, String message) {
-		PrintStream out = getMessageStream();
 		return false;
 	}
 
 	@Override
 	public boolean newChatMessage(String usernameSender, String message, String recipiant) {
-		PrintStream out = getMessageStream();
 		return false;
 	}
 
 	@Override
 	public boolean textChanged(int posStart, int posEnd, String text) {
-		PrintStream out = getMessageStream();
 		return false;
 	}
 
 	@Override
 	public boolean textHighlighted(int posStart, int posEnd) {
-		PrintStream out = getMessageStream();
 		return false;
 	}
 
 	@Override
 	public boolean textInserted(int pos, String text) {
-		PrintStream out = getMessageStream();
 		return false;
 	}
 
 	@Override
 	public boolean textRemoved(int posStart, int posEnd) {
-		PrintStream out = getMessageStream();
 		return false;
 	}
 
 	@Override
 	public boolean textUnHighlighted(int posStart, int posEnd) {
-		PrintStream out = getMessageStream();
 		return false;
 	}
 
