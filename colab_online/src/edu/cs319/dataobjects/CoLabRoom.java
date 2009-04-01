@@ -78,6 +78,13 @@ public class CoLabRoom {
 		return ret;
 	}
 
+	public boolean removeMember(String name) {
+		if (!members.containsKey(name))
+			return false;
+		members.remove(name);
+		return true;
+	}
+
 	public byte[] password() {
 		return password;
 	}

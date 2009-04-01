@@ -33,9 +33,9 @@ public interface IServer {
 
 	public boolean textUnHighlighted(String username, String roomname, int posStart, int posEnd);
 
-	public boolean newChatMessage(String username, String roomname, String message);
+	public boolean newChatMessage(String senderName, String roomname, String message);
 
-	public boolean newChatMessage(String username, String roomname, String message, String recipiant);
+	public boolean newChatMessage(String senderName, String roomname, String message, String recipiant);
 
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv);
 

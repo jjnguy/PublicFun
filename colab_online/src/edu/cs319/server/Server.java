@@ -16,6 +16,7 @@ import edu.cs319.dataobjects.CoLabRoomMember;
 import edu.cs319.server.events.CoLabEvent;
 import edu.cs319.util.Util;
 
+// TODO listen to boolean return types of client code
 public class Server implements IServer {
 	/**
 	 * Maps open colab rooms to their u-id
@@ -131,25 +132,70 @@ public class Server implements IServer {
 
 	@Override
 	public boolean joinCoLabRoom(String username, String roomName, byte[] password) {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO password protection support
+		CoLabRoom room = colabrooms.get(roomName);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to join colabroom, room id doesn't exist");
+			}
+			return false;
+		}
+		IClient client = regularClients.get(username);
+		if (client == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to join colabroom, client id doesn't exist");
+			}
+			return false;
+		}
+		boolean addtoroomsuccess = room.addMember(username, new CoLabRoomMember(username, client));
+		if (addtoroomsuccess) {
+			for (IClient client2 : room.getAllClients()) {
+				client2.coLabRoomMemberArrived(username);
+			}
+		}
+		return addtoroomsuccess;
 	}
 
 	@Override
 	public boolean leaveCoLabRoom(String username, String rommname) {
-		// TODO Auto-generated method stub
-		return false;
+		CoLabRoom room = colabrooms.get(rommname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to leave colabroom, room id doesn't exist");
+			}
+			return false;
+		}
+		boolean removesuccess = room.removeMember(username);
+		if (removesuccess) {
+			for (IClient client : room.getAllClients()) {
+				client.coLabRoomMemberLeft(username);
+			}
+		}
+		return removesuccess;
 	}
 
 	@Override
 	public boolean newChatMessage(String username, String roomname, String message) {
-		// TODO Auto-generated method stub
+		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed send chat message, room id doesn't exist");
+			}
+			return false;
+		}
+		
 		return false;
 	}
 
 	@Override
 	public boolean newChatMessage(String username, String roomname, String message, String recipiant) {
-		// TODO Auto-generated method stub
+		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed send chat message, room id doesn't exist");
+			}
+			return false;
+		}
 		return false;
 	}
 
