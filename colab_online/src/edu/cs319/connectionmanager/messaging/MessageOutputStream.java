@@ -1,14 +1,16 @@
 package edu.cs319.connectionmanager.messaging;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 public class MessageOutputStream {
-	
-	public MessageOutputStream(OutputStream s) {
+	OutputStream out;
 
+	public MessageOutputStream(OutputStream s) {
+		out = s;
 	}
-	
-	public void printMessage(Message message){
-		
+
+	public void printMessage(Message message) throws IOException {
+		out.write(message.encode());
 	}
 }
