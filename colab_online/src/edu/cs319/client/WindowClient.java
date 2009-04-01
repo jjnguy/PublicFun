@@ -7,7 +7,7 @@ import javax.swing.JFrame;
  * @author Amelia
  *
  */
-public class ClientWindow extends JFrame {
+public class WindowClient extends JFrame {
 	
 	
 	
