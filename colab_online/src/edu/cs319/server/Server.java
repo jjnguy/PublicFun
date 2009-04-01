@@ -1,22 +1,19 @@
 package edu.cs319.server;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.logging.Level;
 
 import edu.cs319.client.IClient;
 import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.CoLabRoomMember;
-import edu.cs319.server.events.CoLabEvent;
 import edu.cs319.util.Util;
 
 // TODO listen to boolean return types of client code
+// TODO the text change like methods don't hold a user accountable for the changes
 public class Server implements IServer {
 	/**
 	 * Maps open colab rooms to their u-id
@@ -30,10 +27,6 @@ public class Server implements IServer {
 	 * The client that is the db
 	 */
 	private IClient dbConnector;
-	/**
-	 * Queue that processes events in the order they were received
-	 */
-	private final CoLabEventQueue events;
 
 	/**
 	 * Creates a new server
@@ -43,15 +36,6 @@ public class Server implements IServer {
 		// Its best to always use protection
 		colabrooms = Collections.synchronizedMap(new HashMap<String, CoLabRoom>());
 		regularClients = Collections.synchronizedMap(new HashMap<String, IClient>());
-		events = new CoLabEventQueue();
-	}
-
-	public void startup() throws IOException {
-		ServerLog.log.log(Level.INFO, "Server starting up");
-		events.start();
-		if (Util.DEBUG) {
-			System.out.println("Server Starting up...");
-		}
 	}
 
 	@Override
@@ -66,14 +50,14 @@ public class Server implements IServer {
 					System.out.println("Tried to add a colabroom whos name already exists");
 				}
 				ServerLog.log
-				.log(Level.WARNING, "Faild adding colabroom because of insitinct name");
+						.log(Level.WARNING, "Faild adding colabroom because of insitinct name");
 				return false;
 			}
 		}
 		IClient roomOwner = regularClients.get(username);
 		if (roomOwner == null) {
 			ServerLog.log.log(Level.WARNING,
-			"Username that didn't exist tried to add new CoLabRoom");
+					"Username that didn't exist tried to add new CoLabRoom");
 			if (Util.DEBUG)
 				System.out.println("Failed to add colab room");
 			return false;
@@ -175,7 +159,7 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean newChatMessage(String username, String roomname, String message) {
+	public boolean newChatMessage(String usernameSender, String roomname, String message) {
 		CoLabRoom room = colabrooms.get(roomname);
 		if (room == null) {
 			if (Util.DEBUG) {
@@ -183,12 +167,15 @@ public class Server implements IServer {
 			}
 			return false;
 		}
-		
-		return false;
+		for (IClient client : room.getAllClients()) {
+			client.newChatMessage(usernameSender, message);
+		}
+		return true;
 	}
 
 	@Override
-	public boolean newChatMessage(String username, String roomname, String message, String recipiant) {
+	public boolean newChatMessage(String usernameSender, String roomname, String message,
+			String recipiant) {
 		CoLabRoom room = colabrooms.get(roomname);
 		if (room == null) {
 			if (Util.DEBUG) {
@@ -196,73 +183,85 @@ public class Server implements IServer {
 			}
 			return false;
 		}
-		return false;
+		for (IClient client : room.getAllClients()) {
+			client.newChatMessage(usernameSender, message, recipiant);
+		}
+		return true;
 	}
 
 	@Override
 	public boolean textChanged(String username, String roomname, int posStart, int posEnd,
 			String text) {
-		// TODO Auto-generated method stub
-		return false;
+		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to send text changed method, room id doesn't exist");
+			}
+			return false;
+		}
+		for (IClient client : room.getAllClients()) {
+			client.textChanged(posStart, posEnd, text);
+		}
+		return true;
 	}
 
 	@Override
 	public boolean textHighlighted(String username, String roomname, int posStart, int posEnd) {
-		// TODO Auto-generated method stub
-		return false;
+		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to send text highlighted method, room id doesn't exist");
+			}
+			return false;
+		}
+		for (IClient client : room.getAllClients()) {
+			client.textHighlighted(posStart, posEnd);
+		}
+		return true;
 	}
 
 	@Override
 	public boolean textInserted(String username, String roomname, int pos, String text) {
-		// TODO Auto-generated method stub
-		return false;
+		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to send text inserted method, room id doesn't exist");
+			}
+			return false;
+		}
+		for (IClient client : room.getAllClients()) {
+			client.textInserted(pos, text);
+		}
+		return true;
 	}
 
 	@Override
 	public boolean textRemoved(String username, String roomname, int posStart, int posEnd) {
-		// TODO Auto-generated method stub
-		return false;
+		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to send text removed method, room id doesn't exist");
+			}
+			return false;
+		}
+		for (IClient client : room.getAllClients()) {
+			client.textRemoved(posStart, posEnd);
+		}
+		return true;
 	}
 
 	@Override
 	public boolean textUnHighlighted(String username, String roomname, int posStart, int posEnd) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private class CoLabEventQueue extends Thread {
-
-		private final long SLEEP_TIME = 10;
-
-		private final Queue<CoLabEvent> events;
-
-		public CoLabEventQueue() {
-			events = new LinkedList<CoLabEvent>();
-		}
-
-		public synchronized void addEvent(CoLabEvent evnt) {
-			events.add(evnt);
-		}
-
-		@Override
-		public void run() {
-			while (true) {
-				CoLabEvent evt = events.poll();
-				if (evt == null) {
-					try {
-						Thread.sleep(SLEEP_TIME);
-					} catch (InterruptedException e) {
-						if (Util.DEBUG)
-							e.printStackTrace();
-					}
-				} else {
-					// TODO something with the return type, like alert a user of a failed
-					// action
-					if (Util.DEBUG)
-						System.out.println("Processing new event: " + evt.toString());
-					evt.processEvent();
-				}
+		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to send text unhighlighted method, room id doesn't exist");
 			}
+			return false;
 		}
+		for (IClient client : room.getAllClients()) {
+			client.textUnHighlighted(posStart, posEnd);
+		}
+		return true;
 	}
 }

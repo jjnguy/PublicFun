@@ -18,9 +18,9 @@ public interface IClient {
 
 	public boolean textUnHighlighted(int posStart, int posEnd);
 
-	public boolean newChatMessage(String username, String message);
+	public boolean newChatMessage(String usernameSender, String message);
 
-	public boolean newChatMessage(String username, String message, String recipiant);
+	public boolean newChatMessage(String usernameSender, String message, String recipiant);
 
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv);
 
