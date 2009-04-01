@@ -6,7 +6,7 @@ package edu.cs319.server;
  * @author The Squirrels
  * 
  */
-public enum CoLabPrivledgeLevel {
+public enum CoLabPrivilegeLevel {
 	/**
 	 * Regular Administrator in a CoLabRoom
 	 */
@@ -26,7 +26,7 @@ public enum CoLabPrivledgeLevel {
 	 */
 	PARTICIPANT("Participant");
 
-	private CoLabPrivledgeLevel(String word) {
+	private CoLabPrivilegeLevel(String word) {
 		name = word;
 	}
 

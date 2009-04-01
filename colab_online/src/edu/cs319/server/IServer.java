@@ -37,6 +37,6 @@ public interface IServer {
 
 	public boolean newChatMessage(String username, String roomname, String message, String recipiant);
 
-	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivledgeLevel newPriv);
+	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv);
 
 }

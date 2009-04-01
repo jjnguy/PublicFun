@@ -81,14 +81,14 @@ public class Server implements IServer {
 
 	@Override
 	public boolean changeUserPrivledge(String username, String roomname,
-			CoLabPrivledgeLevel newPriv) {
+			CoLabPrivilegeLevel newPriv) {
 		CoLabRoom room = colabrooms.get(roomname);
 		CoLabRoomMember member = room.getMemberByName(roomname);
 		boolean privSetSuccess = member.setPrivLevel(newPriv);
 		if (privSetSuccess) {
 			Collection<IClient> clients = regularClients.values();
 			for (IClient client : clients) {
-				client.changeUserPrivledge(username, newPriv);
+				client.changeUserPrivilege(username, newPriv);
 			}
 		}
 		return privSetSuccess;

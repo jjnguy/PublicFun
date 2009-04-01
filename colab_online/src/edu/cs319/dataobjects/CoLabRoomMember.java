@@ -1,6 +1,6 @@
 package edu.cs319.dataobjects;
 
-import edu.cs319.server.CoLabPrivledgeLevel;
+import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
 /**
@@ -11,7 +11,7 @@ import edu.cs319.util.Util;
  */
 public class CoLabRoomMember {
 	private String username;
-	private CoLabPrivledgeLevel priv;
+	private CoLabPrivilegeLevel priv;
 
 	/**
 	 * Creates a new {@link CoLabRoomMember} with the supplied name and a
@@ -23,9 +23,9 @@ public class CoLabRoomMember {
 	public CoLabRoomMember(String name) {
 		username = name;
 		if (Util.isSuperAdmin(username)) {
-			priv = CoLabPrivledgeLevel.SUPER_ADMIN;
+			priv = CoLabPrivilegeLevel.SUPER_ADMIN;
 		} else {
-			priv = CoLabPrivledgeLevel.OBSERVER;
+			priv = CoLabPrivilegeLevel.OBSERVER;
 		}
 	}
 
@@ -43,7 +43,7 @@ public class CoLabRoomMember {
 	 * 
 	 * @return the privilege level of the user
 	 */
-	public CoLabPrivledgeLevel privledges() {
+	public CoLabPrivilegeLevel privledges() {
 		return priv;
 	}
 
@@ -54,8 +54,8 @@ public class CoLabRoomMember {
 	 *            the new privilege level
 	 * @return whether or not the privilege was set
 	 */
-	public boolean setPrivLevel(CoLabPrivledgeLevel lvl) {
-		if (lvl == CoLabPrivledgeLevel.SUPER_ADMIN) {
+	public boolean setPrivLevel(CoLabPrivilegeLevel lvl) {
+		if (lvl == CoLabPrivilegeLevel.SUPER_ADMIN) {
 			if (!Util.isSuperAdmin(username)) return false;
 		}
 		priv = lvl;

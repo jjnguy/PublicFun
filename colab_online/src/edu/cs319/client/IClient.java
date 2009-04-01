@@ -1,10 +1,10 @@
 package edu.cs319.client;
 
-import edu.cs319.server.CoLabPrivledgeLevel;
+import edu.cs319.server.CoLabPrivilegeLevel;
 
 public interface IClient {
 
-	public boolean newCoLabRoomMember(String username);
+	public boolean coLabRoomMemberArrived(String username);
 
 	public boolean coLabRoomMemberLeft(String username);
 
@@ -22,6 +22,6 @@ public interface IClient {
 
 	public boolean newChatMessage(String username, String message, String recipiant);
 
-	public boolean changeUserPrivledge(String username, CoLabPrivledgeLevel newPriv);
+	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv);
 
 }

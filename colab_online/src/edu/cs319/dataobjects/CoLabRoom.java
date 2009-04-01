@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.cs319.server.CoLabPrivledgeLevel;
+import edu.cs319.server.CoLabPrivilegeLevel;
 
 /**
  * Class defining a room for people to meet.
@@ -36,7 +36,7 @@ public class CoLabRoom {
 	 */
 	public CoLabRoom(String roomname, CoLabRoomMember theAdmin, byte[] password) {
 		this.roomname = roomname;
-		theAdmin.setPrivLevel(CoLabPrivledgeLevel.ADMIN);
+		theAdmin.setPrivLevel(CoLabPrivilegeLevel.ADMIN);
 		members = Collections.synchronizedMap(new HashMap<String, CoLabRoomMember>());
 		this.password = password;
 	}
