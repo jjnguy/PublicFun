@@ -6,7 +6,7 @@ public enum MessageType {
 			(byte) 0x04, "Text UnHighlighted"), NEW_MESSAGE((byte) 0x05, "New Message"), NEW_PRIVATE_MESSAGE(
 			(byte) 0x06, "New Private Message"), NEW_CLIENT((byte) 0x07, "New Client"), MEMBER_JOIN_ROOM(
 			(byte) 0x08, "Member Joined Room"), MEMBER_LEAVE_ROOM((byte) 0x09, "Member Left Room"), CHANGE_USER_PRIV(
-			(byte) 0x0a, "Changed User Priv"), GET_ROOM_LIST((byte) 0x0b, "Get Room List");
+			(byte) 0x0a, "Changed User Priv"), GET_ROOM_LIST((byte) 0x0b, "Get Room List"), NEW_COLAB_ROOM((byte)0x0c, "New CoLab Room");
 
 	private byte code;
 	private String name;

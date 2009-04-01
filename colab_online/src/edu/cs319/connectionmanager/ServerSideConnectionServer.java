@@ -20,10 +20,17 @@ public class ServerSideConnectionServer implements Runnable {
 
 	@Override
 	public void run() {
+		ServerSocket serverSOck = null;
+		try {
+			serverSOck = new ServerSocket(DEFAULT_PORT);
+		} catch (IOException e) {
+			if (Util.DEBUG)
+				e.printStackTrace();
+			return;
+		}
 		while (true) {
-			ServerSocket serverSOck = null;
+
 			try {
-				serverSOck = new ServerSocket(DEFAULT_PORT);
 				Socket s = serverSOck.accept();
 				// TODO implement a queue of these things, need to decode them in order
 				(new DecodeMessage(s)).start();
@@ -52,12 +59,17 @@ public class ServerSideConnectionServer implements Runnable {
 						.getInetAddress().getHostName(), s.getPort());
 				actualServer.addNewClient(toAdd, message.getSentByClientName());
 				break;
+			case NEW_COLAB_ROOM:
+				actualServer.addNewCoLabRoom(message.getSentByClientName(), message
+						.getArgumentList().get(0), message.getArgumentList().get(1).getBytes());
 			case MEMBER_JOIN_ROOM:
 				actualServer.joinCoLabRoom(message.getSentByClientName(), message.getArgumentList()
 						.get(0), message.getArgumentList().get(1).getBytes());
+				break;
 			case NEW_MESSAGE:
 				actualServer.newChatMessage(message.getSentByClientName(), message
 						.getArgumentList().get(0), message.getArgumentList().get(1));
+				break;
 			default:
 				throw new NotYetImplementedException();
 			}
