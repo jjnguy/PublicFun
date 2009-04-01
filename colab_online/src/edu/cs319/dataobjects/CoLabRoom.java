@@ -1,9 +1,13 @@
 package edu.cs319.dataobjects;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import edu.cs319.client.IClient;
 import edu.cs319.server.CoLabPrivilegeLevel;
 
 /**
@@ -64,6 +68,14 @@ public class CoLabRoom {
 
 	public CoLabRoomMember getMemberByName(String name) {
 		return members.get(name);
+	}
+
+	public Collection<IClient> getAllClients() {
+		List<IClient> ret = new ArrayList<IClient>();
+		for (CoLabRoomMember member : members.values()) {
+			ret.add(member.getClient());
+		}
+		return ret;
 	}
 
 	public byte[] password() {

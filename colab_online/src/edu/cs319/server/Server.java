@@ -58,11 +58,16 @@ public class Server implements IServer {
 		if (Util.DEBUG) {
 			System.out.println("Server: Adding new CoLab Room");
 		}
-
 		Set<String> roomNames = colabrooms.keySet();
 		synchronized (colabrooms) {
-			if (roomNames.contains(roomName))
+			if (roomNames.contains(roomName)) {
+				if (Util.DEBUG) {
+					System.out.println("Tried to add a colabroom whos name already exists");
+				}
+				ServerLog.log
+				.log(Level.WARNING, "Faild adding colabroom because of insitinct name");
 				return false;
+			}
 		}
 		IClient roomOwner = regularClients.get(username);
 		if (roomOwner == null) {
@@ -72,8 +77,8 @@ public class Server implements IServer {
 				System.out.println("Failed to add colab room");
 			return false;
 		}
-		CoLabRoom roomToAdd = new CoLabRoom(roomName,
-				new CoLabRoomMember(username, roomOwner), password);
+		CoLabRoom roomToAdd = new CoLabRoom(roomName, new CoLabRoomMember(username, roomOwner),
+				password);
 		colabrooms.put(roomName, roomToAdd);
 
 		if (Util.DEBUG) {
@@ -83,14 +88,24 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean changeUserPrivledge(String username, String roomname,
-			CoLabPrivilegeLevel newPriv) {
+	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv) {
 		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to change user privledge, room didn't exist");
+			}
+			return false;
+		}
 		CoLabRoomMember member = room.getMemberByName(roomname);
+		if (member == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to change user privledge, user didn't exist in room");
+			}
+			return false;
+		}
 		boolean privSetSuccess = member.setPrivLevel(newPriv);
 		if (privSetSuccess) {
-			Collection<IClient> clients = regularClients.values();
-			for (IClient client : clients) {
+			for (IClient client : room.getAllClients()) {
 				client.changeUserPrivilege(username, newPriv);
 			}
 		}
@@ -102,11 +117,14 @@ public class Server implements IServer {
 		return colabrooms.keySet();
 	}
 
-	/**
-	 * A client is tied to the user that controls it
-	 */
 	@Override
 	public boolean addNewClient(IClient newClient, String username) {
+		if (regularClients.containsKey(username)) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to add new client due to non unigque username");
+			}
+			return false;
+		}
 		regularClients.put(username, newClient);
 		return true;
 	}
@@ -130,8 +148,7 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean newChatMessage(String username, String roomname, String message,
-			String recipiant) {
+	public boolean newChatMessage(String username, String roomname, String message, String recipiant) {
 		// TODO Auto-generated method stub
 		return false;
 	}
