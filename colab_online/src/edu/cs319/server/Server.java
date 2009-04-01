@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -26,10 +25,6 @@ public class Server implements IServer {
 	 * Maps all active clients to their u-id
 	 */
 	private final Map<String, IClient> regularClients;
-	/**
-	 * Maps all colab u-ids to the u-ids of users in the room
-	 */
-	private Map<String, List<String>> usersInTheRooms;
 	/**
 	 * The client that is the db
 	 */
@@ -69,8 +64,16 @@ public class Server implements IServer {
 			if (roomNames.contains(roomName))
 				return false;
 		}
-
-		CoLabRoom roomToAdd = new CoLabRoom(roomName, new CoLabRoomMember(username), password);
+		IClient roomOwner = regularClients.get(username);
+		if (roomOwner == null) {
+			ServerLog.log.log(Level.WARNING,
+			"Username that didn't exist tried to add new CoLabRoom");
+			if (Util.DEBUG)
+				System.out.println("Failed to add colab room");
+			return false;
+		}
+		CoLabRoom roomToAdd = new CoLabRoom(roomName,
+				new CoLabRoomMember(username, roomOwner), password);
 		colabrooms.put(roomName, roomToAdd);
 
 		if (Util.DEBUG) {

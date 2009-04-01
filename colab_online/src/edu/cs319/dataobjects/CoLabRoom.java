@@ -1,9 +1,7 @@
 package edu.cs319.dataobjects;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import edu.cs319.server.CoLabPrivilegeLevel;
@@ -48,8 +46,8 @@ public class CoLabRoom {
 	 *            the member-to-be-added's name
 	 * @return whether or not the member already exists in a room.
 	 */
-	public boolean addMember(String member) {
-		members.put(member, new CoLabRoomMember(member));
+	public boolean addMember(String username, CoLabRoomMember member) {
+		members.put(username, member);
 		return true;
 	}
 

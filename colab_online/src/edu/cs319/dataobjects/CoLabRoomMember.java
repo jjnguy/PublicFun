@@ -1,5 +1,6 @@
 package edu.cs319.dataobjects;
 
+import edu.cs319.client.IClient;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
@@ -11,17 +12,19 @@ import edu.cs319.util.Util;
  */
 public class CoLabRoomMember {
 	private String username;
+	private IClient client;
 	private CoLabPrivilegeLevel priv;
 
 	/**
 	 * Creates a new {@link CoLabRoomMember} with the supplied name and a
-	 * privledge level of Observer.
+	 * Privilege level of Observer.
 	 * 
 	 * @param name
 	 *            the name of the new CoLabRoomMember
 	 */
-	public CoLabRoomMember(String name) {
+	public CoLabRoomMember(String name, IClient client) {
 		username = name;
+		this.client = client;
 		if (Util.isSuperAdmin(username)) {
 			priv = CoLabPrivilegeLevel.SUPER_ADMIN;
 		} else {
@@ -60,5 +63,9 @@ public class CoLabRoomMember {
 		}
 		priv = lvl;
 		return true;
+	}
+
+	public IClient getClient(){
+		return client;
 	}
 }
