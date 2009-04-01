@@ -15,6 +15,15 @@ import edu.cs319.util.Util;
 // TODO listen to boolean return types of client code
 // TODO the text change like methods don't hold a user accountable for the changes
 public class Server implements IServer {
+	private static Server instance = null;
+	
+	public static IServer getInstance() {
+		if (instance == null) {
+			instance = new Server();
+		}
+		return instance;
+	}
+
 	/**
 	 * Maps open colab rooms to their u-id
 	 */
@@ -31,7 +40,7 @@ public class Server implements IServer {
 	/**
 	 * Creates a new server
 	 */
-	public Server() {
+	private Server() {
 		// Lets be thread safe about this
 		// Its best to always use protection
 		colabrooms = Collections.synchronizedMap(new HashMap<String, CoLabRoom>());
@@ -255,7 +264,8 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		if (room == null) {
 			if (Util.DEBUG) {
-				System.out.println("Failed to send text unhighlighted method, room id doesn't exist");
+				System.out
+						.println("Failed to send text unhighlighted method, room id doesn't exist");
 			}
 			return false;
 		}
