@@ -5,7 +5,7 @@ import java.util.List;
 public interface Message {
 	public String getSentByClientName();
 
-	public String getMessageType();
+	public MessageType getMessageType();
 
 	public List<String> getArgumentList();
 }
