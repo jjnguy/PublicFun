@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import edu.cs319.client.IClient;
+import edu.cs319.connectionmanager.messaging.Message;
+import edu.cs319.connectionmanager.messaging.MessageInputStream;
 import edu.cs319.server.Server;
 import edu.cs319.util.Util;
 
@@ -39,13 +42,36 @@ public class ServerSideConnectionServer implements Runnable {
 			this.s = s;
 		}
 
-		public void decodeMessage() {
-			// needs to interpret message format and decide what method to call on the server
+		// TODO deal with return values
+		public void decodeMessage() throws IOException {
+			MessageInputStream mIn = new MessageInputStream(s.getInputStream());
+			Message message = mIn.readMessage();
+			switch (message.getMessageType()) {
+			case NEW_CLIENT:
+				IClient toAdd = new ServerSideConnectionClient(message.getSentByClientName(), s
+						.getInetAddress().getHostName(), s.getPort());
+				actualServer.addNewClient(toAdd, message.getSentByClientName());
+				break;
+			case MEMBER_JOIN_ROOM:
+				actualServer.joinCoLabRoom(message.getSentByClientName(), message.getArgumentList()
+						.get(0), message.getArgumentList().get(1).getBytes());
+			case NEW_MESSAGE:
+				actualServer.newChatMessage(message.getSentByClientName(), message
+						.getArgumentList().get(0), message.getArgumentList().get(1));
+			default:
+				throw new NotYetImplementedException();
+			}
 		}
 
 		@Override
 		public void run() {
-			decodeMessage();
+			try {
+				decodeMessage();
+			} catch (IOException e) {
+				if (Util.DEBUG) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }
