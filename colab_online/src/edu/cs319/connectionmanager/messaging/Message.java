@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.cs319.util.Util;
+
 public class Message {
 	private MessageType messageType;
 	private String clientName;
@@ -31,8 +33,8 @@ public class Message {
 		byte messageCode = messageType.getCode();
 		byte[] clietNameBytes = clientName.getBytes();
 		byte[] args = this.argsToByteArr();
-		// message type byte + clinet name bytes + delimmiter + args bytes
-		int lenghtNeeded = 1 + clietNameBytes.length + 1 + args.length;
+		// message type byte + clinet name bytes + delimmiter + args bytes + end byte
+		final int lenghtNeeded = 1 + clietNameBytes.length + 1 + args.length + 1;
 		byte[] ret = new byte[lenghtNeeded];
 		int insertPos = 0;
 		ret[insertPos] = messageCode;
@@ -42,13 +44,18 @@ public class Message {
 		ret[insertPos] = Byte.MIN_VALUE;
 		insertPos++;
 		System.arraycopy(args, 0, ret, insertPos, args.length);
+		ret[ret.length - 1] = Byte.MAX_VALUE;
 		return ret;
 	}
 
 	public static Message decode(byte[] info) {
 		MessageType mtype = MessageType.getMessageTypeByCode(info[0]);
-		if (mtype == null)
+		if (mtype == null) {
+			if (Util.DEBUG) {
+				System.out.println("Message type did not exist.  Byte: " + info[0]);
+			}
 			throw new IllegalArgumentException();
+		}
 		int indexOfFirstDelim = 0;
 		for (int i = 1; i < info.length; i++) {
 			if (info[i] == Byte.MIN_VALUE) {
@@ -79,7 +86,9 @@ public class Message {
 		int offset = 0;
 		int numDone = 0;
 		while (numDone < brokenRet.length) {
-			System.out.println(offset);
+			if (Util.DEBUG) {
+				System.out.println("Encoding message, offest ammnt: " + offset);
+			}
 			System.arraycopy(brokenRet[numDone], 0, ret, offset, brokenRet[numDone].length);
 			offset += brokenRet[numDone].length;
 			ret[offset] = Byte.MIN_VALUE;

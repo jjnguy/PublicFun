@@ -21,7 +21,7 @@ public class MessageInputStream {
 		byte[] buffer = new byte[1024];
 		int read;
 		int bytesRead = 0;
-		while ((read = in.read()) != -1) {
+		while ((read = in.read()) != Byte.MAX_VALUE) {
 			buffer[bytesRead] = (byte) read;
 			bytesRead++;
 		}

@@ -33,12 +33,44 @@ public class ServerSideConnectionServer implements Runnable {
 			try {
 				Socket s = serverSOck.accept();
 				// TODO implement a queue of these things, need to decode them in order
-				(new DecodeMessage(s)).start();
+				decodeMessage(s);
+				//(new DecodeMessage(s)).start();
 			} catch (IOException e1) {
 				if (Util.DEBUG) {
 					e1.printStackTrace();
 				}
 			}
+		}
+
+	}
+
+	public void decodeMessage(Socket s) throws IOException {
+		MessageInputStream mIn = new MessageInputStream(s.getInputStream());
+		Message message = mIn.readMessage();
+		switch (message.getMessageType()) {
+		case NEW_CLIENT:
+			if (Util.DEBUG) {
+				System.out.println("Socket port: " + s.getPort());
+			}
+			String hostname = s.getInetAddress().getHostName();
+			int port = s.getPort();
+			System.out.println("Creating Client with hostname: " + hostname+", and port: "+port);
+			IClient toAdd = new ServerSideConnectionClient(message.getSentByClientName(), hostname, port);
+			actualServer.addNewClient(toAdd, message.getSentByClientName());
+			break;
+		case NEW_COLAB_ROOM:
+			actualServer.addNewCoLabRoom(message.getSentByClientName(), message.getArgumentList()
+					.get(0), message.getArgumentList().get(1).getBytes());
+		case MEMBER_JOIN_ROOM:
+			actualServer.joinCoLabRoom(message.getSentByClientName(), message.getArgumentList()
+					.get(0), message.getArgumentList().get(1).getBytes());
+			break;
+		case NEW_MESSAGE:
+			actualServer.newChatMessage(message.getSentByClientName(), message.getArgumentList()
+					.get(0), message.getArgumentList().get(1));
+			break;
+		default:
+			throw new NotYetImplementedException();
 		}
 	}
 
@@ -55,6 +87,9 @@ public class ServerSideConnectionServer implements Runnable {
 			Message message = mIn.readMessage();
 			switch (message.getMessageType()) {
 			case NEW_CLIENT:
+				if (Util.DEBUG) {
+					System.out.println("Socket port: " + s.getPort());
+				}
 				IClient toAdd = new ServerSideConnectionClient(message.getSentByClientName(), s
 						.getInetAddress().getHostName(), s.getPort());
 				actualServer.addNewClient(toAdd, message.getSentByClientName());

@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import edu.cs319.client.IClient;
 import edu.cs319.connectionmanager.messaging.MessageOutputStream;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.util.Util;
 
 public class ServerSideConnectionClient implements IClient {
 	private String username, ip;
@@ -26,6 +27,9 @@ public class ServerSideConnectionClient implements IClient {
 		this.ip = ip;
 		this.username = username;
 		this.port = port;
+		if (Util.DEBUG){
+			System.out.println("");
+		}
 		connection = new Socket(ip, port);
 	}
 

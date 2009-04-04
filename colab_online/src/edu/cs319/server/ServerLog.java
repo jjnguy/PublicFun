@@ -13,7 +13,7 @@ import edu.cs319.util.Util;
  * @author The Squirrels
  */
 public class ServerLog {
-	public static final String LOG_FILE = "log.txt";
+	public static final String LOG_FILE = "logfile.txt";
 
 	private static final Level DEBUG_LEVEL = Level.ALL;
 
