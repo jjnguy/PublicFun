@@ -125,4 +125,9 @@ public class ServerSideConnectionClient implements IClient {
 		return username;
 	}
 
+	@Override
+	public String getName() {
+		return username;
+	}
+
 }

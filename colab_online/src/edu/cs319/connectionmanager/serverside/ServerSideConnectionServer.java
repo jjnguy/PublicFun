@@ -8,14 +8,14 @@ import edu.cs319.client.IClient;
 import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageInputStream;
-import edu.cs319.server.Server;
+import edu.cs319.server.IServer;
 import edu.cs319.util.Util;
 
 public class ServerSideConnectionServer implements Runnable {
-	private Server actualServer;
+	private IServer actualServer;
 	public static final int DEFAULT_PORT = 4444;
 
-	public ServerSideConnectionServer(Server actualServer) {
+	public ServerSideConnectionServer(IServer actualServer) {
 		this.actualServer = actualServer;
 	}
 
@@ -33,7 +33,7 @@ public class ServerSideConnectionServer implements Runnable {
 
 			try {
 				Socket s = serverSOck.accept();
-				// TODO implement a queue of these things, need to decode them in order
+				// TODO implement a queue of these things, need to decode them in order, maybe not
 				decodeMessage(s);
 				//(new DecodeMessage(s)).start();
 			} catch (IOException e1) {

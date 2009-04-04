@@ -24,4 +24,5 @@ public interface IClient {
 
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv);
 
+	public String getName();
 }
