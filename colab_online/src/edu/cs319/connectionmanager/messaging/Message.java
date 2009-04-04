@@ -79,10 +79,12 @@ public class Message {
 		int offset = 0;
 		int numDone = 0;
 		while (numDone < brokenRet.length) {
+			System.out.println(offset);
 			System.arraycopy(brokenRet[numDone], 0, ret, offset, brokenRet[numDone].length);
 			offset += brokenRet[numDone].length;
 			ret[offset] = Byte.MIN_VALUE;
 			offset++;
+			numDone++;
 		}
 		return ret;
 	}

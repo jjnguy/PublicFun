@@ -27,30 +27,32 @@ public enum MessageType {
 
 	public static MessageType getMessageTypeByCode(byte code) {
 		switch (code) {
-		case 0:
+		case 0x0:
 			return TEXT_ADDED;
-		case 1:
+		case 0x1:
 			return TEXT_CHANGED;
-		case 2:
+		case 0x2:
 			return TEXT_DELETED;
-		case 3:
+		case 0x3:
 			return TEXT_HIGHLIGHTED;
-		case 4:
+		case 0x4:
 			return TEXT_UNHIGHLIGHTED;
-		case 5:
+		case 0x5:
 			return NEW_MESSAGE;
-		case 6:
+		case 0x6:
 			return NEW_PRIVATE_MESSAGE;
-		case 7:
+		case 0x7:
 			return NEW_CLIENT;
-		case 8:
+		case 0x8:
 			return MEMBER_JOIN_ROOM;
-		case 9:
+		case 0x9:
 			return MEMBER_LEAVE_ROOM;
-		case 10:
+		case 0xa:
 			return CHANGE_USER_PRIV;
-		case 11:
+		case 0xb:
 			return GET_ROOM_LIST;
+		case 0xc:
+			return NEW_COLAB_ROOM;
 		default:
 			return null;
 		}

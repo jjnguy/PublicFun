@@ -23,9 +23,9 @@ public class ServerLog {
 	static {
 		try {
 			File f = new File(LOG_FILE);
-			if (!f.getParentFile().exists()) {
-				f.getParentFile().mkdirs();
-			}
+			//if (!f.getParentFile().exists()) {
+				//f.getParentFile().mkdirs();
+			//}
 
 			FileHandler fileHandler = new FileHandler(LOG_FILE, true);
 			fileHandler.setFormatter(new SimpleFormatter());

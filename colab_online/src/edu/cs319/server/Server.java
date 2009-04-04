@@ -113,8 +113,10 @@ public class Server implements IServer {
 
 	@Override
 	public boolean addNewClient(IClient newClient, String username) {
+		ServerLog.log.log(Level.FINE, "Adding client: " + username);
 		if (regularClients.containsKey(username)) {
 			if (Util.DEBUG) {
+				ServerLog.log.log(Level.WARNING, "Client add failed du t ononunique username");
 				System.out.println("Failed to add new client due to non unigque username");
 			}
 			return false;
