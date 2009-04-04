@@ -19,6 +19,8 @@ import edu.cs319.util.Util;
 public class ClientSideConnectionServer implements IServer {
 	private String host;
 
+	// TODO make constructor take Socket instead of host, this way we can keep it more symetrical
+	// TODO with the server side
 	public ClientSideConnectionServer(String host) {
 		this.host = host;
 	}
@@ -60,11 +62,13 @@ public class ClientSideConnectionServer implements IServer {
 		} catch (UnknownHostException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();
-			}return false;
+			}
+			return false;
 		} catch (IOException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();
-			}return false;
+			}
+			return false;
 		}
 		return true;
 	}
@@ -88,11 +92,13 @@ public class ClientSideConnectionServer implements IServer {
 		} catch (UnknownHostException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();
-			}return false;
+			}
+			return false;
 		} catch (IOException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();
-			}return false;
+			}
+			return false;
 		}
 		return true;
 	}
@@ -112,11 +118,13 @@ public class ClientSideConnectionServer implements IServer {
 		} catch (UnknownHostException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();
-			}return false;
+			}
+			return false;
 		} catch (IOException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();
-			}return false;
+			}
+			return false;
 		}
 		return true;
 	}
