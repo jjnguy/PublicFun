@@ -1,6 +1,6 @@
 package edu.cs319.runnables;
 
-import edu.cs319.connectionmanager.ServerSideConnectionServer;
+import edu.cs319.connectionmanager.serverside.ServerSideConnectionServer;
 import edu.cs319.server.Server;
 
 public class ServerRunner {

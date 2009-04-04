@@ -98,6 +98,11 @@ public class Message {
 		return ret;
 	}
 
+	@Override
+	public String toString() {
+		return "MessageType: " + messageType + ", Client Name: " + clientName;
+	}
+
 	private static List<String> getArgsFromBytes(byte[] argBytes) {
 		List<String> ret = new ArrayList<String>();
 		int start = 0, end = Message.getNextDelimiterPos(argBytes, 0);

@@ -1,10 +1,11 @@
-package edu.cs319.connectionmanager;
+package edu.cs319.connectionmanager.serverside;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import edu.cs319.client.IClient;
+import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageInputStream;
 import edu.cs319.server.Server;
@@ -65,6 +66,10 @@ public class ServerSideConnectionServer implements Runnable {
 		case NEW_MESSAGE:
 			actualServer.newChatMessage(message.getSentByClientName(), message.getArgumentList()
 					.get(0), message.getArgumentList().get(1));
+			break;
+		case NEW_PRIVATE_MESSAGE:
+			actualServer.newChatMessage(message.getSentByClientName(), message.getArgumentList()
+					.get(0), message.getArgumentList().get(1), message.getArgumentList().get(2));
 			break;
 		default:
 			throw new NotYetImplementedException();

@@ -16,7 +16,7 @@ import edu.cs319.util.Util;
 // TODO the text change like methods don't hold a user accountable for the changes
 public class Server implements IServer {
 	private static Server instance = null;
-	
+
 	public static Server getInstance() {
 		if (instance == null) {
 			instance = new Server();
@@ -179,6 +179,9 @@ public class Server implements IServer {
 			return false;
 		}
 		for (IClient client : room.getAllClients()) {
+			if (Util.DEBUG) {
+				System.out.println("Sending chat message to: " + client.toString());
+			}
 			client.newChatMessage(usernameSender, message);
 		}
 		return true;

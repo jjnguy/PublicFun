@@ -1,11 +1,15 @@
-package edu.cs319.connectionmanager;
+package edu.cs319.connectionmanager.serverside;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.cs319.client.IClient;
+import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageOutputStream;
+import edu.cs319.connectionmanager.messaging.MessageType;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
@@ -15,37 +19,22 @@ public class ServerSideConnectionClient implements IClient {
 
 	/**
 	 * @param username
-	 * @param ip
-	 *            the ip of the actual client on the other side
-	 * @param port
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
 	public ServerSideConnectionClient(String username, Socket connection)
 			throws UnknownHostException, IOException {
-		if (Util.DEBUG){
+		if (Util.DEBUG) {
 			System.out.println("Creating server side client connection");
 		}
 		this.username = username;
 		this.connection = connection;
 	}
 
+	// TODO encode a message and send it down the pipe
+
 	public String getUername() {
 		return username;
-	}
-
-	// TODO do we want to keep the connections open, or do we want to re connect every time
-	private MessageOutputStream getMessageOutputStream() {
-		try {
-			MessageOutputStream out = new MessageOutputStream(connection.getOutputStream());
-			return out;
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	@Override
@@ -65,12 +54,45 @@ public class ServerSideConnectionClient implements IClient {
 
 	@Override
 	public boolean newChatMessage(String usernameSender, String message) {
-		return false;
+		if (Util.DEBUG) {
+			System.out.println("Sending new chat message down the pipes.  Reciever: " + username);
+		}
+		List<String> args = new ArrayList<String>();
+		args.add(message);
+		Message m = new Message(MessageType.NEW_MESSAGE, usernameSender, args);
+		MessageOutputStream out;
+		try {
+			out = new MessageOutputStream(connection.getOutputStream());
+			out.printMessage(m);
+		} catch (IOException e) {
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean newChatMessage(String usernameSender, String message, String recipiant) {
-		return false;
+		if (Util.DEBUG) {
+			System.out.println("Sending new chat message down the pipes.  Reciever: " + username);
+		}
+		List<String> args = new ArrayList<String>();
+		args.add(message);
+		args.add(recipiant);
+		Message m = new Message(MessageType.NEW_PRIVATE_MESSAGE, usernameSender, args);
+		MessageOutputStream out;
+		try {
+			out = new MessageOutputStream(connection.getOutputStream());
+			out.printMessage(m);
+		} catch (IOException e) {
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -96,6 +118,11 @@ public class ServerSideConnectionClient implements IClient {
 	@Override
 	public boolean textUnHighlighted(int posStart, int posEnd) {
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return username;
 	}
 
 }
