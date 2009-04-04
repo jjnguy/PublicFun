@@ -10,8 +10,7 @@ import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
 public class ServerSideConnectionClient implements IClient {
-	private String username, ip;
-	private int port;
+	private String username;
 	private Socket connection;
 
 	/**
@@ -22,15 +21,13 @@ public class ServerSideConnectionClient implements IClient {
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
-	public ServerSideConnectionClient(String username, String ip, int port)
+	public ServerSideConnectionClient(String username, Socket connection)
 			throws UnknownHostException, IOException {
-		this.ip = ip;
-		this.username = username;
-		this.port = port;
 		if (Util.DEBUG){
-			System.out.println("");
+			System.out.println("Creating server side client connection");
 		}
-		connection = new Socket(ip, port);
+		this.username = username;
+		this.connection = connection;
 	}
 
 	public String getUername() {

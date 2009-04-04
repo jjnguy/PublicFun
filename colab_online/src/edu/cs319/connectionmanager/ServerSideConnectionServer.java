@@ -52,10 +52,7 @@ public class ServerSideConnectionServer implements Runnable {
 			if (Util.DEBUG) {
 				System.out.println("Socket port: " + s.getPort());
 			}
-			String hostname = s.getInetAddress().getHostName();
-			int port = s.getPort();
-			System.out.println("Creating Client with hostname: " + hostname+", and port: "+port);
-			IClient toAdd = new ServerSideConnectionClient(message.getSentByClientName(), hostname, port);
+			IClient toAdd = new ServerSideConnectionClient(message.getSentByClientName(), s);
 			actualServer.addNewClient(toAdd, message.getSentByClientName());
 			break;
 		case NEW_COLAB_ROOM:
@@ -90,8 +87,7 @@ public class ServerSideConnectionServer implements Runnable {
 				if (Util.DEBUG) {
 					System.out.println("Socket port: " + s.getPort());
 				}
-				IClient toAdd = new ServerSideConnectionClient(message.getSentByClientName(), s
-						.getInetAddress().getHostName(), s.getPort());
+				IClient toAdd = new ServerSideConnectionClient(message.getSentByClientName(), s);
 				actualServer.addNewClient(toAdd, message.getSentByClientName());
 				break;
 			case NEW_COLAB_ROOM:
