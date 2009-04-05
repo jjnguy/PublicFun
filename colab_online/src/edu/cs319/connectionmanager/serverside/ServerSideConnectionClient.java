@@ -13,6 +13,13 @@ import edu.cs319.connectionmanager.messaging.MessageType;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
+/**
+ * This class turns methods called on it by the Server into serialized byte strings and then sends
+ * them down the network to the client.
+ * 
+ * @author Justin Nelson
+ * 
+ */
 public class ServerSideConnectionClient implements IClient {
 	private String username;
 	private Socket connection;

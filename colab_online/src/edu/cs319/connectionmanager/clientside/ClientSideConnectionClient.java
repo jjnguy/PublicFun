@@ -10,6 +10,16 @@ import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageInputStream;
 import edu.cs319.util.Util;
 
+/**
+ * This class needs to be instantiated with some implementation of IClient. It listens on port 3333
+ * for messages from the server.
+ * 
+ * It calls the proper methods on the Client passed into the constructor which will properly
+ * display the changes in some way to the user.
+ * 
+ * @author Justin Nelson
+ * 
+ */
 public class ClientSideConnectionClient implements Runnable {
 	public static final int DEFAULT_PORT = 3333;
 

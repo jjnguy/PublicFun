@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import edu.cs319.client.IClient;
+import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageOutputStream;
 import edu.cs319.connectionmanager.messaging.MessageType;
@@ -16,6 +17,14 @@ import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.server.IServer;
 import edu.cs319.util.Util;
 
+/**
+ * When a client calls methods on this class it then transforms those messages to serialized byte
+ * strings, and then passes them down to the Server over the network.
+ * 
+ * 
+ * @author Justin Nelson
+ * 
+ */
 public class ClientSideConnectionServer implements IServer {
 	private String host;
 
@@ -39,14 +48,12 @@ public class ClientSideConnectionServer implements IServer {
 
 	@Override
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public Collection<String> getAllCoLabRoomNames(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
@@ -75,8 +82,7 @@ public class ClientSideConnectionServer implements IServer {
 
 	@Override
 	public boolean leaveCoLabRoom(String username, String rommname) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
@@ -132,32 +138,27 @@ public class ClientSideConnectionServer implements IServer {
 	@Override
 	public boolean textChanged(String username, String roomname, int posStart, int posEnd,
 			String text) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean textHighlighted(String username, String roomname, int posStart, int posEnd) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean textInserted(String username, String roomname, int pos, String text) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean textRemoved(String username, String roomname, int posStart, int posEnd) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean textUnHighlighted(String username, String roomname, int posStart, int posEnd) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 }
