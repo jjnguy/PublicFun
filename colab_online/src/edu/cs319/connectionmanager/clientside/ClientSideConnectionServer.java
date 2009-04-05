@@ -36,14 +36,12 @@ public class ClientSideConnectionServer implements IServer {
 
 	@Override
 	public boolean addNewClient(IClient newClient, String username) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean addNewCoLabRoom(String username, String roomName, byte[] password) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override

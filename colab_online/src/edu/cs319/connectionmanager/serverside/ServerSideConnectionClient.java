@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.cs319.client.IClient;
+import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageOutputStream;
 import edu.cs319.connectionmanager.messaging.MessageType;
@@ -46,17 +47,17 @@ public class ServerSideConnectionClient implements IClient {
 
 	@Override
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv) {
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean coLabRoomMemberLeft(String username) {
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
@@ -104,27 +105,27 @@ public class ServerSideConnectionClient implements IClient {
 
 	@Override
 	public boolean textChanged(int posStart, int posEnd, String text) {
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean textHighlighted(int posStart, int posEnd) {
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean textInserted(int pos, String text) {
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean textRemoved(int posStart, int posEnd) {
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean textUnHighlighted(int posStart, int posEnd) {
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
