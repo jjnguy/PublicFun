@@ -30,8 +30,8 @@ public class ClientEncoder implements IClient {
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
-	public ClientEncoder(String username, Socket connection)
-			throws UnknownHostException, IOException {
+	public ClientEncoder(String username, Socket connection) throws UnknownHostException,
+			IOException {
 		if (Util.DEBUG) {
 			System.out.println("Creating server side client connection");
 		}
@@ -52,7 +52,20 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
-		throw new NotYetImplementedException();
+		// TODO throw new NotYetImplementedException();
+		Message tosend = new Message(MessageType.MEMBER_JOIN_ROOM, username,
+				new ArrayList<String>());
+		MessageOutputStream out;
+		try {
+			out = new MessageOutputStream(connection.getOutputStream());
+			out.printMessage(tosend);
+		} catch (IOException e) {
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		return true;
 	}
 
 	@Override

@@ -4,11 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.Collection;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -28,8 +28,8 @@ import edu.cs319.client.customcomponents.JRoomMemberList;
 import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
-import edu.cs319.connectionmanager.serverside.ServerDecoder;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.server.IServer;
 import edu.cs319.util.Util;
 
 public class MessagingClient extends JFrame implements IClient {
@@ -39,6 +39,7 @@ public class MessagingClient extends JFrame implements IClient {
 	private JRoomMemberList membersInRoom;
 
 	private String clientID;
+	private String roomName;
 
 	private Proxy proxy;
 
@@ -52,6 +53,7 @@ public class MessagingClient extends JFrame implements IClient {
 		topText.setPreferredSize(pref);
 		JScrollPane topScroll = new JScrollPane(topText);
 		bottomText = new JTextField();
+		bottomText.addKeyListener(enterpressedL);
 		JPanel splitter = new JPanel(new BorderLayout());
 		splitter.add(topScroll, BorderLayout.CENTER);
 		splitter.add(bottomText, BorderLayout.SOUTH);
@@ -68,37 +70,30 @@ public class MessagingClient extends JFrame implements IClient {
 		JMenu file = new JMenu("File");
 		JMenuItem logInToServer = new JMenuItem("Connect to Server");
 		logInToServer.addActionListener(connectTOServerAction);
-		JMenuItem logInAsClient = new JMenuItem("Log in as Client");
-		logInAsClient.addActionListener(logOnAsClient);
 		JMenuItem showCoLabRooms = new JMenuItem("Show CoLabRooms");
+		showCoLabRooms.addActionListener(roomsAction);
 		file.add(logInToServer);
-		file.add(logInAsClient);
 		file.add(showCoLabRooms);
 		ret.add(file);
 		return ret;
 	}
 
-	// TODO fix
-	public boolean connectToServer(String host) {
+	public boolean connectToServer(String host, String clientName) {
 		try {
-			proxy = ConnectionFactory.connect(host, ServerDecoder.DEFAULT_PORT, this);
+			proxy = ConnectionFactory.connect(host, 4444, this, clientName);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			if (Util.DEBUG)
+			if (Util.DEBUG) {
 				e.printStackTrace();
+			}
+			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return true;
-	}
-
-	public boolean logInAsClient(String clientID) {
-		if (connection == null) {
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
 			return false;
 		}
-		this.clientID = clientID;
-		return connection.addNewClient(null, clientID);
+		clientID = clientName;
+		return true;
 	}
 
 	@Override
@@ -113,8 +108,7 @@ public class MessagingClient extends JFrame implements IClient {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return clientID;
 	}
 
 	@Override
@@ -124,14 +118,13 @@ public class MessagingClient extends JFrame implements IClient {
 		return true;
 	}
 
-	private ActionListener logOnAsClient = new ActionListener() {
+	private ActionListener roomsAction = new ActionListener() {
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String username = JOptionPane.showInputDialog(MessagingClient.this,
-					"please enter the host to connect to.");
-			if (username == null)
-				return;
-			System.out.println(MessagingClient.this.logInAsClient(username));
+			// TODO Auto-generated method stub
+			new CoLabRoomsPane(MessagingClient.this, proxy.getServer(),
+					MessagingClient.this.clientID);
 		}
 	};
 
@@ -141,32 +134,21 @@ public class MessagingClient extends JFrame implements IClient {
 		public void actionPerformed(ActionEvent e) {
 			String host = JOptionPane.showInputDialog(MessagingClient.this,
 					"please enter the host to connect to.");
-			if (host == null)
+			String clientName = JOptionPane.showInputDialog(MessagingClient.this,
+					"Please enter the name you would like to use:");
+			if (host == null || clientName == null)
 				return;
-			System.out.println(MessagingClient.this.connectToServer(host));
+			System.out.println(MessagingClient.this.connectToServer(host, clientName));
 		}
-
 	};
 
-	private KeyListener enterpressedL = new KeyListener() {
-
+	private KeyListener enterpressedL = new KeyAdapter() {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				// TODO send a message
+				proxy.getServer().newChatMessage(clientID, roomName, bottomText.getText());
+				bottomText.setText("");
 			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 	};
 
@@ -208,26 +190,51 @@ public class MessagingClient extends JFrame implements IClient {
 	public static void main(String[] args) {
 		new MessagingClient();
 	}
+
+	public void setRoomName(String text) {
+		roomName = text;
+	}
 }
 
 class CoLabRoomsPane extends JDialog {
 
-	private ClientSideConnectionServer con;
 	private JList listOfRooms;
 	private JButton joinSelectedRoom;
 	private JTextField newRoomName;
 	private JButton createNewRoom;
+	private IServer server;
+	private String username;
+	private MessagingClient parent;
 
-	public CoLabRoomsPane(JFrame parent, ClientSideConnectionServer connection, String username) {
+	public CoLabRoomsPane(MessagingClient parent, IServer server, String username) {
 		super(parent, "Available CoLab Rooms");
-		con = connection;
-		Collection<String> allRooms = connection.getAllCoLabRoomNames(username);
-		listOfRooms = new JList(allRooms.toArray());
-		listOfRooms.setPreferredSize(new Dimension(200, 200));
+		this.server = server;
+		this.username = username;
+		this.parent = parent;
+		// Collection<String> allRooms = server.getAllCoLabRoomNames(username);
+		// listOfRooms = new JList(allRooms.toArray());
+		// listOfRooms.setPreferredSize(new Dimension(200, 200));
 		joinSelectedRoom = new JButton("Join Selected Room");
 		newRoomName = new JTextField(15);
 		createNewRoom = new JButton("Create Room");
-		this.add(listOfRooms, BorderLayout.CENTER);
+		createNewRoom.addActionListener(createNewRoomA);
+		JPanel mainPane = new JPanel();
+		mainPane.add(newRoomName);
+		mainPane.add(createNewRoom);
+		add(mainPane);
+		setModal(true);
+		pack();
+		setVisible(true);
 	}
 
+	private ActionListener createNewRoomA = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			server.addNewCoLabRoom(username, newRoomName.getText(), null);
+			server.joinCoLabRoom(username, newRoomName.getText(), null);
+			parent.setRoomName(newRoomName.getText());
+			CoLabRoomsPane.this.dispose();
+		}
+	};
 }

@@ -34,7 +34,7 @@ public class Message {
 		byte[] clietNameBytes = clientName.getBytes();
 		byte[] args = this.argsToByteArr();
 		// message type byte + clinet name bytes + delimmiter + args bytes + end byte
-		final int lenghtNeeded = 1 + clietNameBytes.length + 1 + args.length + 1;
+		int lenghtNeeded = 1 + clietNameBytes.length + 1 + args.length + 1;
 		byte[] ret = new byte[lenghtNeeded];
 		int insertPos = 0;
 		ret[insertPos] = messageCode;

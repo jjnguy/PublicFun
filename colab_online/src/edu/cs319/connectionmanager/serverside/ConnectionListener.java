@@ -1,14 +1,20 @@
 package edu.cs319.connectionmanager.serverside;
 
 import java.io.Closeable;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-public class ConnectionListener extends Closeable, Runnable {
+import edu.cs319.server.IServer;
+import edu.cs319.util.Util;
+
+public class ConnectionListener implements Closeable, Runnable {
 
 	private ServerSocket ss;
 	private IServer server;
 	private boolean running;
 
-	public ConnectionListener(IServer server, int port) {
+	public ConnectionListener(IServer server, int port) throws IOException {
 		this.server = server;
 		this.running = true;
 		ss = new ServerSocket(port);
@@ -16,6 +22,7 @@ public class ConnectionListener extends Closeable, Runnable {
 
 	public void close() throws IOException {
 		ss.close();
+		running = false;
 	}
 
 	private synchronized boolean isRunning() {
@@ -23,11 +30,11 @@ public class ConnectionListener extends Closeable, Runnable {
 	}
 
 	public void run() {
-		while(isRunning()) {
+		while (isRunning()) {
 			try {
 				new Thread(new ConnectionHandler(ss.accept())).start();
-			catch(IOException e) {
-				if(Util.DEBUG) {
+			} catch (IOException e) {
+				if (Util.DEBUG) {
 					e.printStackTrace();
 				}
 			}
@@ -35,7 +42,7 @@ public class ConnectionListener extends Closeable, Runnable {
 	}
 
 	private class ConnectionHandler implements Runnable {
-		
+
 		private Socket socket;
 
 		private ConnectionHandler(Socket socket) {
@@ -43,7 +50,7 @@ public class ConnectionListener extends Closeable, Runnable {
 		}
 
 		public void run() {
-			new Thread(new ServerDecoder(server,socket)).start();
+			new Thread(new ServerDecoder(server, socket)).start();
 		}
 	}
 }

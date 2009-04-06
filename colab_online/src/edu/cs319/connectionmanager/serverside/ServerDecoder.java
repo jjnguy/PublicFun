@@ -1,7 +1,7 @@
 package edu.cs319.connectionmanager.serverside;
 
 import java.io.IOException;
-import java.net.ServerSocket;
+import java.io.OutputStream;
 import java.net.Socket;
 
 import edu.cs319.client.IClient;
@@ -47,6 +47,7 @@ public class ServerDecoder implements Runnable {
 				if (Util.DEBUG) {
 					e.printStackTrace();
 				}
+				return;
 			}
 		}
 	}
@@ -54,10 +55,7 @@ public class ServerDecoder implements Runnable {
 	public void decodeMessage(Message message) throws IOException {
 		switch (message.getMessageType()) {
 			case NEW_CLIENT:
-				if (Util.DEBUG) {
-					System.out.println("Socket port: " + s.getPort());
-				}
-				IClient toAdd = new ClientEncoder(message.getSentByClientName(), s);
+				IClient toAdd = new ClientEncoder(message.getSentByClientName(), socket);
 				actualServer.addNewClient(toAdd, message.getSentByClientName());
 				break;
 			case NEW_COLAB_ROOM:

@@ -2,7 +2,6 @@ package edu.cs319.connectionmanager.clientside;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,12 +35,35 @@ public class ServerEncoder implements IServer {
 
 	@Override
 	public boolean addNewClient(IClient newClient, String username) {
-		throw new NotYetImplementedException();
+		Message toSend = new Message(MessageType.NEW_CLIENT, username, new ArrayList<String>());
+		MessageOutputStream mOut = new MessageOutputStream(host);
+		try {
+			mOut.printMessage(toSend);
+		} catch (IOException e) {
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean addNewCoLabRoom(String username, String roomName, byte[] password) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(roomName);
+		args.add(new String(new byte[] {}));
+		Message toSen = new Message(MessageType.NEW_COLAB_ROOM, username, args);
+		MessageOutputStream mOut = new MessageOutputStream(host);
+		try {
+			mOut.printMessage(toSen);
+		} catch (IOException e) {
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -49,9 +71,21 @@ public class ServerEncoder implements IServer {
 		throw new NotYetImplementedException();
 	}
 
+	// TODO deal with later, need to change the interface
 	@Override
 	public Collection<String> getAllCoLabRoomNames(String username) {
-		throw new NotYetImplementedException();
+		Message toSend = new Message(MessageType.GET_ROOM_LIST, username, new ArrayList<String>());
+		MessageOutputStream mout = new MessageOutputStream(host);
+		try {
+			mout.printMessage(toSend);
+		} catch (IOException e) {
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
+			// return false;
+		}
+		// return true;
+		return null;
 	}
 
 	@Override
@@ -61,8 +95,7 @@ public class ServerEncoder implements IServer {
 		args.add(new String(new byte[] {}));
 		Message m = new Message(MessageType.MEMBER_JOIN_ROOM, username, args);
 		try {
-			Socket c = new Socket(host, ServerSideConnectionServer.DEFAULT_PORT);
-			MessageOutputStream out = new MessageOutputStream(c.getOutputStream());
+			MessageOutputStream out = new MessageOutputStream(host);
 			out.printMessage(m);
 		} catch (UnknownHostException e) {
 			if (Util.DEBUG) {
@@ -88,10 +121,9 @@ public class ServerEncoder implements IServer {
 		// TODO Auto-generated method stub
 		List<String> args = new ArrayList<String>();
 		args.add(message);
-		Message m = new Message(MessageType.MEMBER_JOIN_ROOM, senderName, args);
+		Message m = new Message(MessageType.NEW_MESSAGE, senderName, args);
 		try {
-			Socket c = new Socket(host, ServerSideConnectionServer.DEFAULT_PORT);
-			MessageOutputStream out = new MessageOutputStream(c.getOutputStream());
+			MessageOutputStream out = new MessageOutputStream(host);
 			out.printMessage(m);
 		} catch (UnknownHostException e) {
 			if (Util.DEBUG) {
@@ -114,10 +146,9 @@ public class ServerEncoder implements IServer {
 		List<String> args = new ArrayList<String>();
 		args.add(message);
 		args.add(recipiant);
-		Message m = new Message(MessageType.MEMBER_JOIN_ROOM, senderName, args);
+		Message m = new Message(MessageType.NEW_PRIVATE_MESSAGE, senderName, args);
 		try {
-			Socket c = new Socket(host, ServerSideConnectionServer.DEFAULT_PORT);
-			MessageOutputStream out = new MessageOutputStream(c.getOutputStream());
+			MessageOutputStream out = new MessageOutputStream(host);
 			out.printMessage(m);
 		} catch (UnknownHostException e) {
 			if (Util.DEBUG) {

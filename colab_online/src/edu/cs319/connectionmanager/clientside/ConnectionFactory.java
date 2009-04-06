@@ -9,9 +9,9 @@ import edu.cs319.server.IServer;
 
 public class ConnectionFactory {
 
-	public static Proxy connect(String host, int port, IClient actualClient)
+	public static Proxy connect(String host, int port, IClient actualClient, String clientName)
 			throws UnknownHostException, IOException {
-		return new ProxyImpl(new Socket(host, port), actualClient);
+		return new ProxyImpl(new Socket(host, port), actualClient, clientName);
 	}
 
 	static private class ProxyImpl implements Proxy {
@@ -20,10 +20,13 @@ public class ConnectionFactory {
 		private ClientDecoder client;
 		private Socket socket;
 
-		public ProxyImpl(Socket socket, IClient actualClient) throws IOException {
+		public ProxyImpl(Socket socket, IClient actualClient, String clientName) throws IOException {
 			this.socket = socket;
 			this.server = new ServerEncoder(socket.getOutputStream());
+			this.server.addNewClient(null, clientName);
 			this.client = new ClientDecoder(actualClient, socket.getInputStream());
+			// TODO make sure we don't need reference
+			new Thread(client).start();
 		}
 
 		public IServer getServer() {
