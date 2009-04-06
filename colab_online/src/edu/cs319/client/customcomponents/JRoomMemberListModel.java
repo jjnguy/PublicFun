@@ -17,6 +17,7 @@ public class JRoomMemberListModel extends AbstractListModel {
 		if (userIDs.contains(userID))
 			return false;
 		userIDs.add(userID);
+		fireIntervalAdded(userID, 0, getSize());
 		return true;
 	}
 
@@ -25,6 +26,7 @@ public class JRoomMemberListModel extends AbstractListModel {
 		if (index == -1)
 			return false;
 		userIDs.remove(0);
+		fireIntervalRemoved(userID, 0, getSize());
 		return true;
 	}
 
