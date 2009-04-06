@@ -24,5 +24,8 @@ public interface IClient {
 
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv);
 
+	// public boolean allUsersInRoom(List<String> usernames);
+	// public boolean allCoLabRooms(List<String> roomNames);
+
 	public String getName();
 }

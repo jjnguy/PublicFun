@@ -13,11 +13,13 @@ public interface IServer {
 	/**
 	 * 
 	 * @param username
-	 * @return all of the names of the currently available rooms note - when
-	 *         iterating through this Collection you must do it within a
-	 *         synchronized block
+	 * @return all of the names of the currently available rooms note - when iterating through this
+	 *         Collection you must do it within a synchronized block
 	 */
 	public Collection<String> getAllCoLabRoomNames(String username);
+
+	// public boolean getAllCoLabRoomNames(String usename);
+	// public boolean getClientsCurrentlyInRoom(String username);
 
 	public boolean addNewClient(IClient newClient, String username);
 
@@ -27,7 +29,8 @@ public interface IServer {
 
 	public boolean textRemoved(String username, String roomname, int posStart, int posEnd);
 
-	public boolean textChanged(String username, String roomname, int posStart, int posEnd, String text);
+	public boolean textChanged(String username, String roomname, int posStart, int posEnd,
+			String text);
 
 	public boolean textHighlighted(String username, String roomname, int posStart, int posEnd);
 
@@ -35,7 +38,8 @@ public interface IServer {
 
 	public boolean newChatMessage(String senderName, String roomname, String message);
 
-	public boolean newChatMessage(String senderName, String roomname, String message, String recipiant);
+	public boolean newChatMessage(String senderName, String roomname, String message,
+			String recipiant);
 
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv);
 
