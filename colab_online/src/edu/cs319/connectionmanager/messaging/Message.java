@@ -67,7 +67,8 @@ public class Message {
 			throw new IllegalMessageFormatException();
 		byte[] clientBytes = Arrays.copyOfRange(info, 1, indexOfFirstDelim);
 		String clientName = new String(clientBytes);
-		byte[] argBytes = Arrays.copyOfRange(info, clientBytes.length + 1, info.length);
+		//skip delimiters
+		byte[] argBytes = Arrays.copyOfRange(info, clientBytes.length + 2, info.length);
 		List<String> args = Message.getArgsFromBytes(argBytes);
 		return new Message(mtype, clientName, args);
 	}
@@ -100,7 +101,8 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "MessageType: " + messageType + ", Client Name: " + clientName;
+		return "MessageType: " + messageType + ", Client Name: " + clientName + ", Arguments: "
+				+ arguments.toString();
 	}
 
 	private static List<String> getArgsFromBytes(byte[] argBytes) {
@@ -121,5 +123,16 @@ public class Message {
 				return i;
 		}
 		return ret;
+	}
+
+	public static void main(String[] args) {
+		List<String> args2 = new ArrayList<String>() {
+			{
+				add("sadfghjkl");
+			}
+		};
+		Message m = new Message(MessageType.NEW_MESSAGE, "jjnguy", args2);
+		System.out.println(m);
+		System.out.println(Message.decode(m.encode()));
 	}
 }

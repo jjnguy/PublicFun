@@ -120,6 +120,7 @@ public class ServerEncoder implements IServer {
 	public boolean newChatMessage(String senderName, String roomname, String message) {
 		// TODO Auto-generated method stub
 		List<String> args = new ArrayList<String>();
+		args.add(roomname);
 		args.add(message);
 		Message m = new Message(MessageType.NEW_MESSAGE, senderName, args);
 		try {
@@ -144,6 +145,7 @@ public class ServerEncoder implements IServer {
 			String recipiant) {
 		// TODO Auto-generated method stub
 		List<String> args = new ArrayList<String>();
+		args.add(roomname);
 		args.add(message);
 		args.add(recipiant);
 		Message m = new Message(MessageType.NEW_PRIVATE_MESSAGE, senderName, args);

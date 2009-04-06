@@ -42,6 +42,14 @@ public class MessagingClient extends JFrame implements IClient {
 	private String roomName;
 
 	private Proxy proxy;
+	private ActionListener joinExistingRoomAction = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String roomName = JOptionPane.showInputDialog(MessagingClient.this,
+					"Enter th eroom to join:");
+			proxy.getServer().joinCoLabRoom(clientID, roomName, null);
+		}
+	};
 
 	public MessagingClient() {
 		super("CoLabMessaging");
@@ -72,8 +80,11 @@ public class MessagingClient extends JFrame implements IClient {
 		logInToServer.addActionListener(connectTOServerAction);
 		JMenuItem showCoLabRooms = new JMenuItem("Show CoLabRooms");
 		showCoLabRooms.addActionListener(roomsAction);
+		JMenuItem joinExistingRoom = new JMenuItem("Join Existing Room");
+		joinExistingRoom.addActionListener(joinExistingRoomAction);
 		file.add(logInToServer);
 		file.add(showCoLabRooms);
+		file.add(joinExistingRoom);
 		ret.add(file);
 		return ret;
 	}
@@ -216,6 +227,7 @@ class CoLabRoomsPane extends JDialog {
 		// listOfRooms.setPreferredSize(new Dimension(200, 200));
 		joinSelectedRoom = new JButton("Join Selected Room");
 		newRoomName = new JTextField(15);
+		newRoomName.addKeyListener(enterPressed);
 		createNewRoom = new JButton("Create Room");
 		createNewRoom.addActionListener(createNewRoomA);
 		JPanel mainPane = new JPanel();
@@ -226,6 +238,17 @@ class CoLabRoomsPane extends JDialog {
 		pack();
 		setVisible(true);
 	}
+
+	private KeyListener enterPressed = new KeyAdapter() {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				createNewRoom.doClick();
+			}
+		}
+	};
 
 	private ActionListener createNewRoomA = new ActionListener() {
 
