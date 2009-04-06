@@ -18,11 +18,11 @@ import edu.cs319.util.Util;
  * @author Justin Nelson
  * 
  */
-public class ServerSideConnectionServer implements Runnable {
+public class ServerDecoder implements Runnable {
 	private IServer actualServer;
 	public static final int DEFAULT_PORT = 4444;
 
-	public ServerSideConnectionServer(IServer actualServer) {
+	public ServerDecoder(IServer actualServer) {
 		this.actualServer = actualServer;
 	}
 
@@ -57,7 +57,7 @@ public class ServerSideConnectionServer implements Runnable {
 			if (Util.DEBUG) {
 				System.out.println("Socket port: " + s.getPort());
 			}
-			IClient toAdd = new ServerSideConnectionClient(message.getSentByClientName(), s);
+			IClient toAdd = new ClientEncoder(message.getSentByClientName(), s);
 			actualServer.addNewClient(toAdd, message.getSentByClientName());
 			break;
 		case NEW_COLAB_ROOM:

@@ -1,8 +1,6 @@
 package edu.cs319.connectionmanager.clientside;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.io.InputStream;
 
 import edu.cs319.client.IClient;

@@ -21,7 +21,7 @@ import edu.cs319.util.Util;
  * @author Justin Nelson
  * 
  */
-public class ServerSideConnectionClient implements IClient {
+public class ClientEncoder implements IClient {
 	private String username;
 	private Socket connection;
 
@@ -30,7 +30,7 @@ public class ServerSideConnectionClient implements IClient {
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
-	public ServerSideConnectionClient(String username, Socket connection)
+	public ClientEncoder(String username, Socket connection)
 			throws UnknownHostException, IOException {
 		if (Util.DEBUG) {
 			System.out.println("Creating server side client connection");

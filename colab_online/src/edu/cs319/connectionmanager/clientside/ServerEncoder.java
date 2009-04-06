@@ -1,6 +1,7 @@
 package edu.cs319.connectionmanager.clientside;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -25,13 +26,13 @@ import edu.cs319.util.Util;
  * @author Justin Nelson
  * 
  */
-public class ClientSideConnectionServer implements IServer {
-	private String host;
+public class ServerEncoder implements IServer {
+	private OutputStream host;
 
 	// TODO make constructor take Socket instead of host, this way we can keep it more symetrical
 	// TODO with the server side
-	public ClientSideConnectionServer(String host) {
-		this.host = host;
+	public ServerEncoder(OutputStream outputStream) {
+		this.host = outputStream;
 	}
 
 	@Override

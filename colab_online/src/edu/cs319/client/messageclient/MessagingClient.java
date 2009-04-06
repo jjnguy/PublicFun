@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.OutputStream;
 import java.util.Collection;
 
 import javax.swing.JButton;
@@ -20,13 +21,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import edu.cs319.client.IClient;
 import edu.cs319.client.customcomponents.JRoomMemberList;
 import edu.cs319.connectionmanager.NotYetImplementedException;
-import edu.cs319.connectionmanager.clientside.ClientSideConnectionClient;
-import edu.cs319.connectionmanager.clientside.ClientSideConnectionServer;
+import edu.cs319.connectionmanager.clientside.ServerEncoder;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.server.IServer;
 
@@ -76,8 +75,9 @@ public class MessagingClient extends JFrame implements IClient {
 		return ret;
 	}
 
-	public boolean connectToServer(String host) {
-		connection = new ClientSideConnectionServer(host);
+	// TODO fix
+	public boolean connectToServer(OutputStream host) {
+		connection = new ServerEncoder(host);
 		return true;
 	}
 
@@ -86,7 +86,6 @@ public class MessagingClient extends JFrame implements IClient {
 			return false;
 		}
 		this.clientID = clientID;
-		SwingUtilities.invokeLater(new ClientSideConnectionClient(this));
 		return connection.addNewClient(null, clientID);
 	}
 
