@@ -25,9 +25,9 @@ import javax.swing.JTextField;
 import edu.cs319.client.IClient;
 import edu.cs319.client.customcomponents.JRoomMemberList;
 import edu.cs319.connectionmanager.NotYetImplementedException;
+import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.connectionmanager.clientside.ServerEncoder;
 import edu.cs319.server.CoLabPrivilegeLevel;
-import edu.cs319.server.IServer;
 
 public class MessagingClient extends JFrame implements IClient {
 
@@ -37,10 +37,11 @@ public class MessagingClient extends JFrame implements IClient {
 
 	private String clientID;
 
-	private IServer connection;
-
+	private Proxy proxy;
+	
 	public MessagingClient() {
 		super("CoLabMessaging");
+		//proxy = ConnectionFactory.
 		membersInRoom = new JRoomMemberList();
 		membersInRoom.setPreferredSize(new Dimension(100, 210));
 		Dimension pref = new Dimension(200, 200);
