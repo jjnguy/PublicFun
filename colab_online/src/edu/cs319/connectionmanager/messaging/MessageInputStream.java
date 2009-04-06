@@ -22,6 +22,7 @@ public class MessageInputStream {
 		int read;
 		int bytesRead = 0;
 		while ((read = in.read()) != Byte.MAX_VALUE) {
+			if(read == -1) {throw new IOException("EOF");}
 			buffer[bytesRead] = (byte) read;
 			bytesRead++;
 		}
