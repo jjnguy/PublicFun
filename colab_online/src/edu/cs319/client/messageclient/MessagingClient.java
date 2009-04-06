@@ -6,7 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.OutputStream;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.Collection;
 
 import javax.swing.JButton;
@@ -25,9 +26,11 @@ import javax.swing.JTextField;
 import edu.cs319.client.IClient;
 import edu.cs319.client.customcomponents.JRoomMemberList;
 import edu.cs319.connectionmanager.NotYetImplementedException;
+import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
-import edu.cs319.connectionmanager.clientside.ServerEncoder;
+import edu.cs319.connectionmanager.serverside.ServerDecoder;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.util.Util;
 
 public class MessagingClient extends JFrame implements IClient {
 
@@ -38,10 +41,9 @@ public class MessagingClient extends JFrame implements IClient {
 	private String clientID;
 
 	private Proxy proxy;
-	
+
 	public MessagingClient() {
 		super("CoLabMessaging");
-		//proxy = ConnectionFactory.
 		membersInRoom = new JRoomMemberList();
 		membersInRoom.setPreferredSize(new Dimension(100, 210));
 		Dimension pref = new Dimension(200, 200);
@@ -77,8 +79,17 @@ public class MessagingClient extends JFrame implements IClient {
 	}
 
 	// TODO fix
-	public boolean connectToServer(OutputStream host) {
-		connection = new ServerEncoder(host);
+	public boolean connectToServer(String host) {
+		try {
+			proxy = ConnectionFactory.connect(host, ServerDecoder.DEFAULT_PORT, this);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			if (Util.DEBUG)
+				e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 
