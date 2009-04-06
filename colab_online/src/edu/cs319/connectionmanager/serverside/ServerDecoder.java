@@ -19,64 +19,64 @@ import edu.cs319.util.Util;
  * 
  */
 public class ServerDecoder implements Runnable {
+	
 	private IServer actualServer;
-	public static final int DEFAULT_PORT = 4444;
+	private Socket socket;
+	private MessageInputStream in;
+	private OutputStream out;
 
-	public ServerDecoder(IServer actualServer) {
+	public ServerDecoder(IServer actualServer, Socket socket) {
 		this.actualServer = actualServer;
+		this.socket = socket;
+		try {
+			this.in = new MessageInputStream(socket.getInputStream());
+			this.out = socket.getOutputStream();
+		} catch(IOException e) {
+			if(Util.DEBUG) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public void run() {
-		ServerSocket serverSOck = null;
-		try {
-			serverSOck = new ServerSocket(DEFAULT_PORT);
-		} catch (IOException e) {
-			if (Util.DEBUG)
-				e.printStackTrace();
-			return;
-		}
 		while (true) {
 			try {
-				Socket s = serverSOck.accept();
-				// TODO implement a queue of these things, need to decode them in order, maybe not
-				decodeMessage(s);
-			} catch (IOException e1) {
+				decodeMessage(in.readMessage());
+			} catch (IOException e) {
 				if (Util.DEBUG) {
-					e1.printStackTrace();
+					e.printStackTrace();
 				}
 			}
 		}
 	}
 
-	public void decodeMessage(Socket s) throws IOException {
-		MessageInputStream mIn = new MessageInputStream(s.getInputStream());
-		Message message = mIn.readMessage();
+	public void decodeMessage(Message message) throws IOException {
 		switch (message.getMessageType()) {
-		case NEW_CLIENT:
-			if (Util.DEBUG) {
-				System.out.println("Socket port: " + s.getPort());
-			}
-			IClient toAdd = new ClientEncoder(message.getSentByClientName(), s);
-			actualServer.addNewClient(toAdd, message.getSentByClientName());
-			break;
-		case NEW_COLAB_ROOM:
-			actualServer.addNewCoLabRoom(message.getSentByClientName(), message.getArgumentList()
-					.get(0), message.getArgumentList().get(1).getBytes());
-		case MEMBER_JOIN_ROOM:
-			actualServer.joinCoLabRoom(message.getSentByClientName(), message.getArgumentList()
-					.get(0), message.getArgumentList().get(1).getBytes());
-			break;
-		case NEW_MESSAGE:
-			actualServer.newChatMessage(message.getSentByClientName(), message.getArgumentList()
-					.get(0), message.getArgumentList().get(1));
-			break;
-		case NEW_PRIVATE_MESSAGE:
-			actualServer.newChatMessage(message.getSentByClientName(), message.getArgumentList()
-					.get(0), message.getArgumentList().get(1), message.getArgumentList().get(2));
-			break;
-		default:
-			throw new NotYetImplementedException();
+			case NEW_CLIENT:
+				if (Util.DEBUG) {
+					System.out.println("Socket port: " + s.getPort());
+				}
+				IClient toAdd = new ClientEncoder(message.getSentByClientName(), s);
+				actualServer.addNewClient(toAdd, message.getSentByClientName());
+				break;
+			case NEW_COLAB_ROOM:
+				actualServer.addNewCoLabRoom(message.getSentByClientName(), message.getArgumentList()
+						.get(0), message.getArgumentList().get(1).getBytes());
+			case MEMBER_JOIN_ROOM:
+				actualServer.joinCoLabRoom(message.getSentByClientName(), message.getArgumentList()
+						.get(0), message.getArgumentList().get(1).getBytes());
+				break;
+			case NEW_MESSAGE:
+				actualServer.newChatMessage(message.getSentByClientName(), message.getArgumentList()
+						.get(0), message.getArgumentList().get(1));
+				break;
+			case NEW_PRIVATE_MESSAGE:
+				actualServer.newChatMessage(message.getSentByClientName(), message.getArgumentList()
+						.get(0), message.getArgumentList().get(1), message.getArgumentList().get(2));
+				break;
+			default:
+				throw new NotYetImplementedException();
 		}
 	}
 }
