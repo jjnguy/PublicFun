@@ -1,4 +1,4 @@
-package edu.cs319.client;
+package edu.cs319.client.messageclient;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -18,9 +18,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import edu.cs319.client.IClient;
 import edu.cs319.connectionmanager.NotYetImplementedException;
+import edu.cs319.connectionmanager.clientside.ClientSideConnectionClient;
 import edu.cs319.connectionmanager.clientside.ClientSideConnectionServer;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.server.IServer;
 
 public class MessagingClient extends JFrame implements IClient {
 
@@ -28,7 +31,8 @@ public class MessagingClient extends JFrame implements IClient {
 	private JTextField bottomText;
 	private JList membersInRoom;
 
-	private ClientSideConnectionServer connection;
+	private IServer connection;
+	private ClientSideConnectionClient changeListener;
 
 	public MessagingClient() {
 		super("CoLabMessaging");
@@ -47,6 +51,7 @@ public class MessagingClient extends JFrame implements IClient {
 		this.add(splitter, BorderLayout.CENTER);
 		setJMenuBar(createMenuBar());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		changeListener = new ClientSideConnectionClient(this);
 		pack();
 		setVisible(true);
 	}
@@ -71,12 +76,12 @@ public class MessagingClient extends JFrame implements IClient {
 		if (connection == null) {
 			return false;
 		}
+		changeListener.run();
 		return connection.addNewClient(null, clientID);
 	}
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
