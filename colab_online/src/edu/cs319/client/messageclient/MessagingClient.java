@@ -2,6 +2,8 @@ package edu.cs319.client.messageclient;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Collection;
@@ -13,12 +15,15 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import edu.cs319.client.IClient;
+import edu.cs319.client.customcomponents.JRoomMemberList;
 import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.clientside.ClientSideConnectionClient;
 import edu.cs319.connectionmanager.clientside.ClientSideConnectionServer;
@@ -29,14 +34,15 @@ public class MessagingClient extends JFrame implements IClient {
 
 	private JTextArea topText;
 	private JTextField bottomText;
-	private JList membersInRoom;
+	private JRoomMemberList membersInRoom;
+
+	private String clientID;
 
 	private IServer connection;
-	private ClientSideConnectionClient changeListener;
 
 	public MessagingClient() {
 		super("CoLabMessaging");
-		membersInRoom = new JList();
+		membersInRoom = new JRoomMemberList();
 		membersInRoom.setPreferredSize(new Dimension(100, 210));
 		Dimension pref = new Dimension(200, 200);
 		topText = new JTextArea();
@@ -51,7 +57,6 @@ public class MessagingClient extends JFrame implements IClient {
 		this.add(splitter, BorderLayout.CENTER);
 		setJMenuBar(createMenuBar());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		changeListener = new ClientSideConnectionClient(this);
 		pack();
 		setVisible(true);
 	}
@@ -59,9 +64,13 @@ public class MessagingClient extends JFrame implements IClient {
 	private JMenuBar createMenuBar() {
 		JMenuBar ret = new JMenuBar();
 		JMenu file = new JMenu("File");
-		JMenuItem logInToServer = new JMenuItem("Log in to Server");
+		JMenuItem logInToServer = new JMenuItem("Connect to Server");
+		logInToServer.addActionListener(connectTOServerAction);
+		JMenuItem logInAsClient = new JMenuItem("Log in as Client");
+		logInAsClient.addActionListener(logOnAsClient);
 		JMenuItem showCoLabRooms = new JMenuItem("Show CoLabRooms");
 		file.add(logInToServer);
+		file.add(logInAsClient);
 		file.add(showCoLabRooms);
 		ret.add(file);
 		return ret;
@@ -76,19 +85,19 @@ public class MessagingClient extends JFrame implements IClient {
 		if (connection == null) {
 			return false;
 		}
-		changeListener.run();
+		this.clientID = clientID;
+		SwingUtilities.invokeLater(new ClientSideConnectionClient(this));
 		return connection.addNewClient(null, clientID);
 	}
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
-		return false;
+		return membersInRoom.getModel().addNewMember(username);
 	}
 
 	@Override
 	public boolean coLabRoomMemberLeft(String username) {
-		// TODO Auto-generated method stub
-		return false;
+		return membersInRoom.getModel().removeMember(username);
 	}
 
 	@Override
@@ -99,9 +108,34 @@ public class MessagingClient extends JFrame implements IClient {
 
 	@Override
 	public boolean newChatMessage(String usernameSender, String message) {
-		// TODO Auto-generated method stub
-		return false;
+		String fullTExt = usernameSender + ": " + message + "\n";
+		topText.append(fullTExt);
+		return true;
 	}
+
+	private ActionListener logOnAsClient = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String username = JOptionPane.showInputDialog(MessagingClient.this,
+					"please enter the host to connect to.");
+			if (username == null)
+				return;
+			System.out.println(MessagingClient.this.logInAsClient(username));
+		}
+	};
+
+	private ActionListener connectTOServerAction = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String host = JOptionPane.showInputDialog(MessagingClient.this,
+					"please enter the host to connect to.");
+			if (host == null)
+				return;
+			System.out.println(MessagingClient.this.connectToServer(host));
+		}
+
+	};
 
 	private KeyListener enterpressedL = new KeyListener() {
 
