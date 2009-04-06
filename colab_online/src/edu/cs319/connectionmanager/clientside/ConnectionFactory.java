@@ -7,14 +7,14 @@ import java.net.UnknownHostException;
 import edu.cs319.client.IClient;
 import edu.cs319.server.IServer;
 
-
 public class ConnectionFactory {
 
-	public static Proxy connect(String host, int port, IClient actualClient) throws UnknownHostException, IOException {
-		return new ProxyImpl(new Socket(host,port), actualClient);
+	public static Proxy connect(String host, int port, IClient actualClient)
+			throws UnknownHostException, IOException {
+		return new ProxyImpl(new Socket(host, port), actualClient);
 	}
-	
-	private class ProxyImpl implements Proxy {
+
+	static private class ProxyImpl implements Proxy {
 
 		private IServer server;
 		private ClientDecoder client;
@@ -31,10 +31,9 @@ public class ConnectionFactory {
 		}
 
 		public void close() throws IOException {
-				socket.close();
+			socket.close();
 		}
 
 	}
 
 }
-
