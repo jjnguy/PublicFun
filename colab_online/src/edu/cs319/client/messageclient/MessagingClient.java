@@ -47,6 +47,7 @@ public class MessagingClient extends JFrame implements IClient {
 		public void actionPerformed(ActionEvent e) {
 			String roomName = JOptionPane.showInputDialog(MessagingClient.this,
 					"Enter th eroom to join:");
+			MessagingClient.this.roomName = roomName;
 			proxy.getServer().joinCoLabRoom(clientID, roomName, null);
 		}
 	};
