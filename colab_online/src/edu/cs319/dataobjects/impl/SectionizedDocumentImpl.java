@@ -65,8 +65,8 @@ public class SectionizedDocumentImpl {
 		int index = getSubSectionIndex(name);
 		DocumentSubSection ds = subSections.get(index);
 		subSections.remove(ds);
-		DocumentSubSection first = new DocumentSubsectionImpl(partA);
-		DocumentSubSection second = new DocumentSubsectionImpl(partB);
+		DocumentSubSection first = new DocumentSubSectionImpl(partA);
+		DocumentSubSection second = new DocumentSubSectionImpl(partB);
 		String text = ds.getText();
 		first.setText(text.substring(0, splitIndex));
 		second.setText(text.substring(splitIndex, text.length()));
@@ -80,7 +80,7 @@ public class SectionizedDocumentImpl {
 		DocumentSubSection second = subSections.get(getSubSectionIndex(partB));
 		subSections.remove(first);
 		subSections.remove(second);
-		DocumentSubSection combined = new DocumentSubsectionImpl(combinedName);
+		DocumentSubSection combined = new DocumentSubSectionImpl(combinedName);
 		combined.setText(first.getText() + "\n" + second.getText());
 		subSections.add(index, combined);
 	}

@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.cs319.dataobjects.DocumentSubSection;
 
-public class DocumentSubsectionImpl extends DocumentSubSection{
+public class DocumentSubSectionImpl implements DocumentSubSection {
 
 	private String name;
 	private String text;
@@ -63,15 +63,4 @@ public class DocumentSubsectionImpl extends DocumentSubSection{
 		return lockedBy;
 	}
 
-	@Override
-	public int getIndex() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<DocumentSubSection> split(int charIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

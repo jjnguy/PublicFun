@@ -4,28 +4,21 @@ import java.util.List;
 
 import edu.cs319.connectionmanager.NotYetImplementedException;
 
-public abstract class DocumentSubSection {
+public interface DocumentSubSection {
 
-	public abstract String getName();
+	public String getName();
 
-	public abstract String getText();
+	public String getText();
 
-	public abstract int getIndex();
+	public boolean setText(String text);
 
-	public abstract boolean isLocked();
+	public boolean isLocked();
 
-	public abstract void setLocked(boolean lock, String username);
+	public void setLocked(boolean lock, String username);
 
-	public abstract String lockedByUser();
+	public String lockedByUser();
 
-	public abstract List<DocumentSubSection> split(int charIndex);
+	public List<DocumentSubSection> split(int charIndex);
 
-	public static DocumentSubSection combine(List<DocumentSubSection> allSections) {
-		throw new NotYetImplementedException();
-	}
-
-	public void setText(String substring) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
