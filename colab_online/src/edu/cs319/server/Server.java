@@ -43,6 +43,7 @@ public class Server implements IServer {
 	 * Creates a new server
 	 */
 	private Server() {
+		ServerLog.log.log(Level.FINE, "Creating server");
 		// Lets be thread safe about this
 		// Its best to always use protection
 		colabrooms = Collections.synchronizedMap(new HashMap<String, CoLabRoom>());
@@ -69,8 +70,9 @@ public class Server implements IServer {
 		if (roomOwner == null) {
 			ServerLog.log.log(Level.WARNING,
 					"Username that didn't exist tried to add new CoLabRoom");
-			if (Util.DEBUG)
+			if (Util.DEBUG) {
 				System.out.println("Failed to add colab room");
+			}
 			return false;
 		}
 		CoLabRoom roomToAdd = new CoLabRoom(roomName, new CoLabRoomMember(username, roomOwner),
@@ -85,6 +87,9 @@ public class Server implements IServer {
 
 	@Override
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv) {
+		if (Util.DEBUG) {
+			System.out.println("Attempting to change user privledge.  Sent by " + username);
+		}
 		CoLabRoom room = colabrooms.get(roomname);
 		if (room == null) {
 			if (Util.DEBUG) {
@@ -100,12 +105,17 @@ public class Server implements IServer {
 			return false;
 		}
 		boolean privSetSuccess = member.setPrivLevel(newPriv);
-		if (privSetSuccess) {
-			for (IClient client : room.getAllClients()) {
-				client.changeUserPrivilege(username, newPriv);
+		if (!privSetSuccess) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to change user (" + username + ") priv in room "
+						+ roomname);
 			}
+			return false;
 		}
-		return privSetSuccess;
+		for (IClient client : room.getAllClients()) {
+			client.changeUserPrivilege(username, newPriv);
+		}
+		return true;
 	}
 
 	@Override
@@ -140,12 +150,16 @@ public class Server implements IServer {
 			return false;
 		}
 		boolean addtoroomsuccess = room.addMember(username, new CoLabRoomMember(username, client));
-		if (addtoroomsuccess) {
-			for (IClient client2 : room.getAllClients()) {
-				client2.coLabRoomMemberArrived(username);
+		if (!addtoroomsuccess) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to add " + username + " to colabroom " + roomName);
 			}
+			return false;
 		}
-		return addtoroomsuccess;
+		for (IClient client2 : room.getAllClients()) {
+			client2.coLabRoomMemberArrived(username);
+		}
+		return true;
 	}
 
 	@Override
