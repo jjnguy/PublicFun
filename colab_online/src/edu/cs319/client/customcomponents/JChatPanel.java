@@ -1,10 +1,15 @@
 package edu.cs319.client.customcomponents;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,6 +31,8 @@ public class JChatPanel extends JPanel {
 	private String clientID;
 	private String roomName;
 
+	private TrayIcon trayI;
+
 	// TODO set the server if connected and in a room
 	private IServer server;
 
@@ -42,13 +49,27 @@ public class JChatPanel extends JPanel {
 		add(bottomText, BorderLayout.SOUTH);
 	}
 
-	public void connect(IServer serverP, String clientID, String roomName) {
+	public void connect(IServer serverP, String clientID, String roomName) throws IOException {
 		server = serverP;
+		this.clientID = clientID;
+		this.roomName = roomName;
+		// TODO get icons
+		this.trayI = new TrayIcon(null);
+		//this.trayI = new TrayIcon(ImageIO.read(new File("communicationBrakdown.bmp")));
+		SystemTray tray = SystemTray.getSystemTray();
+		try {
+			tray.add(trayI);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void newChatMessage(String usernameSender, String message) {
 		String fullTExt = usernameSender + ": " + message + "\n";
 		topText.append(fullTExt);
+		if (!isVisible())
+			displayBottomPopup(usernameSender, message);
 	}
 
 	public void newChatMessage(String usernameSender, String message, String recipiant) {
@@ -56,6 +77,12 @@ public class JChatPanel extends JPanel {
 			return;
 		String fullTExt = usernameSender + " :<private>: " + message + "\n";
 		topText.append(fullTExt);
+		if (!isVisible())
+			displayBottomPopup(usernameSender, message);
+	}
+
+	private void displayBottomPopup(String usernameSender, String message) {
+		trayI.displayMessage("New Message From " + usernameSender, message, MessageType.INFO);
 	}
 
 	private KeyListener enterpressedL = new KeyAdapter() {
