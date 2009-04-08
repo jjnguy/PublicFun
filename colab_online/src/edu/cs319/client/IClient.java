@@ -13,15 +13,16 @@ public interface IClient {
 
 	public boolean updateAllSubsections(List<DocumentSubSection> allSections);
 
-	public boolean updateSubsection(String usernameSender, DocumentSubSection section,
-			String sectionID);
+	public boolean updateSubsection(String usernameSender, String documentname,
+			DocumentSubSection section, String sectionID);
 
-	public boolean subsectionLocked(String usernameSender, String sectionID);
+	public boolean subsectionLocked(String usernameSender, String documentName, String sectionID);
 
-	public boolean subsectionUnLocked(String usernameSender, String sectionID);
+	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionID);
 
-	public boolean newSubSection(String username, String sectionID, DocumentSubSection section);
-	
+	public boolean newSubSection(String username, String sectionID, String documentName,
+			DocumentSubSection section, int idx);
+
 	public boolean newChatMessage(String usernameSender, String message);
 
 	public boolean newChatMessage(String usernameSender, String message, String recipiant);

@@ -18,6 +18,8 @@ import edu.cs319.server.CoLabPrivilegeLevel;
  */
 public class CoLabRoom {
 
+	private List<SectionizedDocument> documents;
+
 	private String roomname;
 	private Map<String, CoLabRoomMember> members;
 	private byte[] password;

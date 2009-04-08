@@ -9,12 +9,6 @@ public interface IServer {
 
 	public boolean joinCoLabRoom(String username, String roomName, byte[] password);
 
-	/**
-	 * 
-	 * @param username
-	 * @return all of the names of the currently available rooms note - when iterating through this
-	 *         Collection you must do it within a synchronized block
-	 */
 	public boolean getAllCoLabRoomNames(String usename);
 
 	public boolean getClientsCurrentlyInRoom(String username);
@@ -23,11 +17,14 @@ public interface IServer {
 
 	public boolean leaveCoLabRoom(String username, String rommname);
 
-	public boolean newSubSection(String username, String roomname, String sectionID);
+	public boolean newSubSection(String username, String roomname, String documentName,
+			String sectionID, int idx);
 
-	public boolean subSectionRemoved(String username, String roomname, String sectionID);
+	public boolean subSectionRemoved(String username, String roomname, String documentName,
+			String sectionID);
 
-	public boolean subSectionUpdated(String username, String roomname, String sectionID, DocumentSubSection update);
+	public boolean subSectionUpdated(String username, String roomname, String sectionID,
+			String documentName, DocumentSubSection update);
 
 	public boolean newChatMessage(String senderName, String roomname, String message);
 

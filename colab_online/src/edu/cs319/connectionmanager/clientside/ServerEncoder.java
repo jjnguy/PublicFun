@@ -27,8 +27,6 @@ import edu.cs319.util.Util;
 public class ServerEncoder implements IServer {
 	private OutputStream host;
 
-	// TODO make constructor take Socket instead of host, this way we can keep it more symetrical
-	// TODO with the server side
 	public ServerEncoder(OutputStream outputStream) {
 		this.host = outputStream;
 	}
