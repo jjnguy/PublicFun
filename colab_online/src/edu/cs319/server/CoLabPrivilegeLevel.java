@@ -32,6 +32,20 @@ public enum CoLabPrivilegeLevel {
 
 	private String name;
 
+	public static CoLabPrivilegeLevel getPrivilegeLevelFromString(String s) {
+		CoLabPrivilegeLevel cpl = null;
+		if(s.equals("Admin")) {
+			cpl = ADMIN;
+		} else if(s.equals("Super Admin")) {
+			cpl = SUPER_ADMIN;
+		} else if(s.equals("Observer")) {
+			cpl = OBSERVER;
+		} else if(s.equals("Participant")) {
+			cpl = PARTICIPANT;
+		}
+		return cpl;
+	}
+	
 	@Override
 	public String toString() {
 		return name;
