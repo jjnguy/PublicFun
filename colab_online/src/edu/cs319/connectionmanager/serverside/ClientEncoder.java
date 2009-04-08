@@ -171,12 +171,20 @@ public class ClientEncoder implements IClient {
 	@Override
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(documentname);
+		args.add(section.toDelimmitedString());
+		args.add(sectionID);
+		Message m = new Message(MessageType.UPDATE_SUBSECTION, usernameSender, args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean subSectionRemoved(String username, String sectionID, String documentName) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(documentName);
+		Message m = new Message(MessageType.REMOVE_SUBSECTION, username, args);
+		return printMessageToStream(m);
 	}
 
 }
