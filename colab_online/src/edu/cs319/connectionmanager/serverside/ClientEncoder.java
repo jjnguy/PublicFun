@@ -11,6 +11,7 @@ import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageOutputStream;
 import edu.cs319.connectionmanager.messaging.MessageType;
+import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
@@ -117,31 +118,6 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public boolean textChanged(int posStart, int posEnd, String text) {
-		throw new NotYetImplementedException();
-	}
-
-	@Override
-	public boolean textHighlighted(int posStart, int posEnd) {
-		throw new NotYetImplementedException();
-	}
-
-	@Override
-	public boolean textInserted(int pos, String text) {
-		throw new NotYetImplementedException();
-	}
-
-	@Override
-	public boolean textRemoved(int posStart, int posEnd) {
-		throw new NotYetImplementedException();
-	}
-
-	@Override
-	public boolean textUnHighlighted(int posStart, int posEnd) {
-		throw new NotYetImplementedException();
-	}
-
-	@Override
 	public String toString() {
 		return username;
 	}
@@ -149,6 +125,42 @@ public class ClientEncoder implements IClient {
 	@Override
 	public String getName() {
 		return username;
+	}
+
+	@Override
+	public boolean allCoLabRooms(List<String> roomNames) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean allUsersInRoom(List<String> usernames) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean newSubSection(String username, String sectionID, DocumentSubSection section) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean subsectionLocked(String usernameSender, String sectionID) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean subsectionUnLocked(String usernameSender, String sectionID) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean updateAllSubsections(List<DocumentSubSection> allSections) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean updateSubsection(String usernameSender, DocumentSubSection section,
+			String sectionID) {
+		throw new NotYetImplementedException();
 	}
 
 }

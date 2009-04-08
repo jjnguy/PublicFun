@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import edu.cs319.client.IClient;
@@ -12,6 +11,7 @@ import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageOutputStream;
 import edu.cs319.connectionmanager.messaging.MessageType;
+import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.server.IServer;
 import edu.cs319.util.Util;
@@ -69,23 +69,6 @@ public class ServerEncoder implements IServer {
 	@Override
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv) {
 		throw new NotYetImplementedException();
-	}
-
-	// TODO deal with later, need to change the interface
-	@Override
-	public Collection<String> getAllCoLabRoomNames(String username) {
-		Message toSend = new Message(MessageType.GET_ROOM_LIST, username, new ArrayList<String>());
-		MessageOutputStream mout = new MessageOutputStream(host);
-		try {
-			mout.printMessage(toSend);
-		} catch (IOException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			// return false;
-		}
-		// return true;
-		return null;
 	}
 
 	@Override
@@ -167,29 +150,28 @@ public class ServerEncoder implements IServer {
 	}
 
 	@Override
-	public boolean textChanged(String username, String roomname, int posStart, int posEnd,
-			String text) {
+	public boolean getAllCoLabRoomNames(String usename) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean textHighlighted(String username, String roomname, int posStart, int posEnd) {
+	public boolean getClientsCurrentlyInRoom(String username) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean textInserted(String username, String roomname, int pos, String text) {
+	public boolean newSubSection(String username, String roomname, String sectionID) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean textRemoved(String username, String roomname, int posStart, int posEnd) {
+	public boolean subSectionRemoved(String username, String roomname, String sectionID) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean textUnHighlighted(String username, String roomname, int posStart, int posEnd) {
+	public boolean subSectionUpdated(String username, String roomname, String sectionID,
+			DocumentSubSection update) {
 		throw new NotYetImplementedException();
 	}
-
 }

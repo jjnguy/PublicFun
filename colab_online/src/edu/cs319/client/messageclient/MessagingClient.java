@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -28,6 +29,7 @@ import edu.cs319.client.customcomponents.JRoomMemberList;
 import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
+import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.server.IServer;
 import edu.cs319.util.Util;
@@ -130,6 +132,15 @@ public class MessagingClient extends JFrame implements IClient {
 		return true;
 	}
 
+	@Override
+	public boolean newChatMessage(String usernameSender, String message, String recipiant) {
+		if (!clientID.equals(recipiant))
+			return true;
+		String fullTExt = usernameSender + " :<private>: " + message + "\n";
+		topText.append(fullTExt);
+		return true;
+	}
+
 	private ActionListener roomsAction = new ActionListener() {
 
 		@Override
@@ -158,16 +169,20 @@ public class MessagingClient extends JFrame implements IClient {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				proxy.getServer().newChatMessage(clientID, roomName, bottomText.getText());
+				if (bottomText.getText().startsWith("@")) {
+					int indexOfSpace = bottomText.getText().indexOf(" ");
+					if (indexOfSpace == -1)
+						return;
+					String recippiant = bottomText.getText().substring(1, indexOfSpace);
+					String message = bottomText.getText().substring(indexOfSpace + 1);
+					proxy.getServer().newChatMessage(clientID, roomName, message, recippiant);
+				} else {
+					proxy.getServer().newChatMessage(clientID, roomName, bottomText.getText());
+				}
 				bottomText.setText("");
 			}
 		}
 	};
-
-	@Override
-	public boolean newChatMessage(String usernameSender, String message, String recipiant) {
-		throw new NotYetImplementedException();
-	}
 
 	@Override
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv) {
@@ -180,6 +195,42 @@ public class MessagingClient extends JFrame implements IClient {
 
 	public void setRoomName(String text) {
 		roomName = text;
+	}
+
+	@Override
+	public boolean allCoLabRooms(List<String> roomNames) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean allUsersInRoom(List<String> usernames) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean newSubSection(String username, String sectionID, DocumentSubSection section) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean subsectionLocked(String usernameSender, String sectionID) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean subsectionUnLocked(String usernameSender, String sectionID) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean updateAllSubsections(List<DocumentSubSection> allSections) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean updateSubsection(String usernameSender, DocumentSubSection section,
+			String sectionID) {
+		throw new NotYetImplementedException();
 	}
 }
 

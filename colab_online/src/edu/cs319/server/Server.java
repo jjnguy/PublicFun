@@ -1,6 +1,5 @@
 package edu.cs319.server;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,8 +7,10 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import edu.cs319.client.IClient;
+import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.CoLabRoomMember;
+import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.util.Util;
 
 // TODO listen to boolean return types of client code
@@ -107,11 +108,6 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public Collection<String> getAllCoLabRoomNames(String username) {
-		return colabrooms.keySet();
-	}
-
-	@Override
 	public boolean addNewClient(IClient newClient, String username) {
 		ServerLog.log.log(Level.FINE, "Adding client: " + username);
 		if (regularClients.containsKey(username)) {
@@ -204,79 +200,28 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean textChanged(String username, String roomname, int posStart, int posEnd,
-			String text) {
-		CoLabRoom room = colabrooms.get(roomname);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to send text changed method, room id doesn't exist");
-			}
-			return false;
-		}
-		for (IClient client : room.getAllClients()) {
-			client.textChanged(posStart, posEnd, text);
-		}
-		return true;
+	public boolean getAllCoLabRoomNames(String usename) {
+		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean textHighlighted(String username, String roomname, int posStart, int posEnd) {
-		CoLabRoom room = colabrooms.get(roomname);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to send text highlighted method, room id doesn't exist");
-			}
-			return false;
-		}
-		for (IClient client : room.getAllClients()) {
-			client.textHighlighted(posStart, posEnd);
-		}
-		return true;
+	public boolean getClientsCurrentlyInRoom(String username) {
+		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean textInserted(String username, String roomname, int pos, String text) {
-		CoLabRoom room = colabrooms.get(roomname);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to send text inserted method, room id doesn't exist");
-			}
-			return false;
-		}
-		for (IClient client : room.getAllClients()) {
-			client.textInserted(pos, text);
-		}
-		return true;
+	public boolean newSubSection(String username, String roomname, String sectionID) {
+		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean textRemoved(String username, String roomname, int posStart, int posEnd) {
-		CoLabRoom room = colabrooms.get(roomname);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to send text removed method, room id doesn't exist");
-			}
-			return false;
-		}
-		for (IClient client : room.getAllClients()) {
-			client.textRemoved(posStart, posEnd);
-		}
-		return true;
+	public boolean subSectionRemoved(String username, String roomname, String sectionID) {
+		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean textUnHighlighted(String username, String roomname, int posStart, int posEnd) {
-		CoLabRoom room = colabrooms.get(roomname);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out
-						.println("Failed to send text unhighlighted method, room id doesn't exist");
-			}
-			return false;
-		}
-		for (IClient client : room.getAllClients()) {
-			client.textUnHighlighted(posStart, posEnd);
-		}
-		return true;
+	public boolean subSectionUpdated(String username, String roomname, String sectionID,
+			DocumentSubSection update) {
+		throw new NotYetImplementedException();
 	}
 }
