@@ -39,6 +39,12 @@ public class JRoomList extends JPanel {
 	}
 	
 	public void updateList(Collection<String> userNames) {
+		for(int i = 0; i < roomList.getModel().getSize(); i++) {
+			String cur = (String) roomList.getModel().getElementAt(i);
+			if(!userNames.contains(cur)) {
+				roomList.getModel().removeMember(cur);
+			}
+		}
 		Iterator<String> iter = userNames.iterator();
 		while(iter.hasNext()) {
 			String cur = iter.next();
