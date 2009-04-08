@@ -48,10 +48,6 @@ public class ClientDecoder implements Runnable {
 		}
 	}
 
-	/*
-	 * COMMUNICATION_FAIL((byte) 0x0e, REMOVE_SUBSECTION((byte) 0x0f,
-	 */
-
 	private void decodeMessage(Message message) throws IOException {
 		String username = message.getSentByClientName();
 		List<String> arg = message.getArgumentList();

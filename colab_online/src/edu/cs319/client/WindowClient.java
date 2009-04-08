@@ -2,10 +2,13 @@ package edu.cs319.client;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,59 +19,73 @@ import javax.swing.JTabbedPane;
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomList;
+import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
 
 /**
  * 
  * @author Amelia
- *
+ * 
  */
 public class WindowClient extends JFrame implements IClient {
-	
+
+	private Proxy proxy;
+
 	private JTabbedPane documentPane;
 	private JRoomList roomMemberList;
 	private JChatPanel chatPanel;
-	
+
 	public WindowClient() {
 		setTitle("CoLab");
 		setSize(new Dimension(900, 500));
 		setJMenuBar(createMenuBar());
-		
+
 		roomMemberList = new JRoomList();
 		documentPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		documentPane.addTab("panel1", new JDocTabPanel());
 		documentPane.addTab("panel2", new JDocTabPanel());
 		chatPanel = new JChatPanel();
-		
+
 		JPanel roomPanel = new JPanel();
 		roomPanel.add(roomMemberList);
-		
+
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
 		panel.add(roomPanel, BorderLayout.WEST);
 		panel.add(documentPane, BorderLayout.CENTER);
 		panel.add(chatPanel, BorderLayout.EAST);
 		add(panel);
 	}
-	
+
 	private JMenuBar createMenuBar() {
 		JMenuBar mainMenu = new JMenuBar();
 		JMenu file = new JMenu("File");
+		JMenu view = new JMenu("View");
 		JMenu help = new JMenu("Help");
 		JMenuItem openDocument = new JMenuItem("Add New Document");
 		JMenuItem disconnect = new JMenuItem("Disconnect");
 		JMenuItem exitCoLab = new JMenuItem("Exit CoLab");
-		
+		final JCheckBox showChat = new JCheckBox("Display Chat Window");
+		showChat.setSelected(true);
+		ActionListener chatChecked = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chatPanel.setVisible(showChat.isSelected());
+			}
+		};
+		showChat.addActionListener(chatChecked);
+		view.add(showChat);
 		file.setMnemonic(KeyEvent.VK_F);
 		help.setMnemonic(KeyEvent.VK_H);
 		openDocument.setMnemonic(KeyEvent.VK_O);
 		disconnect.setMnemonic(KeyEvent.VK_D);
 		exitCoLab.setMnemonic(KeyEvent.VK_X);
-		
+
 		file.add(openDocument);
 		file.add(disconnect);
 		file.add(exitCoLab);
 		mainMenu.add(file);
+		mainMenu.add(view);
 		mainMenu.add(help);
 		return mainMenu;
 	}
@@ -153,6 +170,4 @@ public class WindowClient extends JFrame implements IClient {
 		return false;
 	}
 
-	
-	
 }

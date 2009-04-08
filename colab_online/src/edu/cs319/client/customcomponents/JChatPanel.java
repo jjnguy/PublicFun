@@ -2,52 +2,79 @@ package edu.cs319.client.customcomponents;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import edu.cs319.server.IServer;
 
 /**
  * 
  * @author Amelia
- *
+ * 
  */
 public class JChatPanel extends JPanel {
-	
-	private JEditorPane archive;
-	private JEditorPane currentMsg;
-	private JButton sendButton;
-	
+
+	private JTextArea topText;
+	private JTextField bottomText;
+
+	private String clientID;
+	private String roomName;
+
+	// TODO set the server if connected and in a room
+	private IServer server;
+
 	public JChatPanel() {
-		archive = new JEditorPane();
-		archive.setEditable(false);
-		currentMsg = new JEditorPane();
-		sendButton = new JButton("Send");
-		setUpAppearance();
-		setUpListeners();
-		setPreferredSize(new Dimension(200, 50));
+		super(new BorderLayout(10, 10));
+		Dimension pref = new Dimension(250, 200);
+		topText = new JTextArea();
+		topText.setEditable(false);
+		topText.setPreferredSize(pref);
+		JScrollPane topScroll = new JScrollPane(topText);
+		bottomText = new JTextField();
+		bottomText.addKeyListener(enterpressedL);
+		add(topScroll, BorderLayout.CENTER);
+		add(bottomText, BorderLayout.SOUTH);
 	}
-	
-	private void setUpAppearance() {
-		currentMsg.setPreferredSize(new Dimension(50, 75));
-		setLayout(new BorderLayout(10, 10));
-		add(archive, BorderLayout.CENTER);
-		JPanel newMsgPanel = new JPanel(new BorderLayout(10, 10));
-		newMsgPanel.add(currentMsg, BorderLayout.CENTER);
-		newMsgPanel.add(sendButton, BorderLayout.EAST);
-		add(newMsgPanel, BorderLayout.SOUTH);
+
+	public void connect(IServer serverP, String clientID, String roomName) {
+		server = serverP;
 	}
-	
-	private void setUpListeners() {
-		sendButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+
+	public void newChatMessage(String usernameSender, String message) {
+		String fullTExt = usernameSender + ": " + message + "\n";
+		topText.append(fullTExt);
+	}
+
+	public void newChatMessage(String usernameSender, String message, String recipiant) {
+		if (!clientID.equals(recipiant) && !clientID.equals(usernameSender))
+			return;
+		String fullTExt = usernameSender + " :<private>: " + message + "\n";
+		topText.append(fullTExt);
+	}
+
+	private KeyListener enterpressedL = new KeyAdapter() {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (bottomText.getText().startsWith("@")) {
+					int indexOfSpace = bottomText.getText().indexOf(" ");
+					if (indexOfSpace == -1)
+						return;
+					String recippiant = bottomText.getText().substring(1, indexOfSpace);
+					String message = bottomText.getText().substring(indexOfSpace + 1);
+					server.newChatMessage(clientID, roomName, message, recippiant);
+				} else {
+					server.newChatMessage(clientID, roomName, bottomText.getText());
+				}
+				bottomText.setText("");
 			}
-		});
-	}
-	
+		}
+	};
+
 }
