@@ -1,11 +1,26 @@
 package edu.cs319.dataobjects;
 
-public interface DocumentSubSection {
+import java.util.List;
 
-	public String getName();
-	public String getText();
-	public boolean isLocked();
-	public void setLocked(boolean lock, String username);
-	public String lockedByUser();
-	
+import edu.cs319.connectionmanager.NotYetImplementedException;
+
+public abstract class DocumentSubSection {
+
+	public abstract String getName();
+
+	public abstract String getText();
+
+	public abstract int getIndex();
+
+	public abstract boolean isLocked();
+
+	public abstract void setLocked(boolean lock, String username);
+
+	public abstract String lockedByUser();
+
+	public abstract List<DocumentSubSection> split(int charIndex);
+
+	public static DocumentSubSection combine(List<DocumentSubSection> allSections) {
+		throw new NotYetImplementedException();
+	}
 }
