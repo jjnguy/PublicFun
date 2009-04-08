@@ -210,18 +210,20 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean newSubSection(String username, String roomname, String sectionID) {
+	public boolean newSubSection(String username, String roomname, String documentName,
+			String sectionID, int idx) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean subSectionRemoved(String username, String roomname, String sectionID) {
+	public boolean subSectionRemoved(String username, String roomname, String documentName,
+			String sectionID) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean subSectionUpdated(String username, String roomname, String sectionID,
-			DocumentSubSection update) {
+			String documentName, DocumentSubSection update) {
 		throw new NotYetImplementedException();
 	}
 }

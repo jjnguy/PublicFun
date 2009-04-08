@@ -138,28 +138,29 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public boolean newSubSection(String username, String sectionID, DocumentSubSection section) {
+	public boolean newSubSection(String username, String sectionID, String documentName,
+			DocumentSubSection section, int idx) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean subsectionLocked(String usernameSender, String sectionID) {
+	public boolean subsectionLocked(String usernameSender, String documentName, String sectionID) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean subsectionUnLocked(String usernameSender, String sectionID) {
+	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionID) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean updateAllSubsections(List<DocumentSubSection> allSections) {
+	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean updateSubsection(String usernameSender, DocumentSubSection section,
-			String sectionID) {
+	public boolean updateSubsection(String usernameSender, String documentname,
+			DocumentSubSection section, String sectionID) {
 		throw new NotYetImplementedException();
 	}
 

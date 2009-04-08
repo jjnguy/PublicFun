@@ -11,7 +11,7 @@ public interface IClient {
 
 	public boolean coLabRoomMemberLeft(String username);
 
-	public boolean updateAllSubsections(List<DocumentSubSection> allSections);
+	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections);
 
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID);

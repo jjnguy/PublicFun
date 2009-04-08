@@ -42,6 +42,7 @@ public class CoLabRoom {
 		this.roomname = roomname;
 		theAdmin.setPrivLevel(CoLabPrivilegeLevel.ADMIN);
 		members = Collections.synchronizedMap(new HashMap<String, CoLabRoomMember>());
+		documents = Collections.synchronizedList(new ArrayList<SectionizedDocument>());
 		this.password = password;
 	}
 
