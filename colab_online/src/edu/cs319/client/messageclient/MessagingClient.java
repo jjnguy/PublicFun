@@ -44,15 +44,6 @@ public class MessagingClient extends JFrame implements IClient {
 	private String roomName;
 
 	private Proxy proxy;
-	private ActionListener joinExistingRoomAction = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String roomName = JOptionPane.showInputDialog(MessagingClient.this,
-					"Enter th eroom to join:");
-			MessagingClient.this.roomName = roomName;
-			proxy.getServer().joinCoLabRoom(clientID, roomName, null);
-		}
-	};
 
 	public MessagingClient() {
 		super("CoLabMessaging");
@@ -145,12 +136,21 @@ public class MessagingClient extends JFrame implements IClient {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			new CoLabRoomsPane(MessagingClient.this, proxy.getServer(),
 					MessagingClient.this.clientID);
 		}
 	};
 
+	private ActionListener joinExistingRoomAction = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String roomName = JOptionPane.showInputDialog(MessagingClient.this,
+					"Enter the room to join:");
+			MessagingClient.this.roomName = roomName;
+			proxy.getServer().joinCoLabRoom(clientID, roomName, null);
+		}
+	};
+	
 	private ActionListener connectTOServerAction = new ActionListener() {
 
 		@Override

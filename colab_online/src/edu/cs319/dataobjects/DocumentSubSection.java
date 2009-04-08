@@ -23,4 +23,9 @@ public abstract class DocumentSubSection {
 	public static DocumentSubSection combine(List<DocumentSubSection> allSections) {
 		throw new NotYetImplementedException();
 	}
+
+	public void setText(String substring) {
+		// TODO Auto-generated method stub
+		
+	}
 }
