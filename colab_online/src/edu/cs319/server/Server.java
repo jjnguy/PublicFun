@@ -7,10 +7,11 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import edu.cs319.client.IClient;
-import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.CoLabRoomMember;
 import edu.cs319.dataobjects.DocumentSubSection;
+import edu.cs319.dataobjects.SectionizedDocument;
+import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.util.Util;
 
 // TODO listen to boolean return types of client code
@@ -199,6 +200,8 @@ public class Server implements IServer {
 		return true;
 	}
 
+	// TODO error checking and reporting from here down
+
 	@Override
 	public boolean getAllCoLabRoomNames(String usename) {
 		IClient client = regularClients.get(usename);
@@ -215,18 +218,41 @@ public class Server implements IServer {
 	@Override
 	public boolean newSubSection(String username, String roomname, String documentName,
 			String sectionID, int idx) {
-		throw new NotYetImplementedException();
+		CoLabRoom room = colabrooms.get(roomname);
+		SectionizedDocument doc = room.getDocument(documentName);
+		DocumentSubSection toAdd = new DocumentSubSectionImpl(sectionID);
+		boolean addResult = doc.addSubSection(toAdd, idx);
+		if (!addResult)
+			return false;
+		for (IClient client : room.getAllClients()) {
+			client.newSubSection(username, sectionID, documentName, toAdd, idx);
+		}
+		return true;
 	}
 
 	@Override
 	public boolean subSectionRemoved(String username, String roomname, String documentName,
 			String sectionID) {
-		throw new NotYetImplementedException();
+		CoLabRoom room = colabrooms.get(roomname);
+		SectionizedDocument doc = room.getDocument(documentName);
+		doc.removeSubSection(sectionID);
+		for (IClient client : room.getAllClients()) {
+			client.subSectionRemoved(username, sectionID, documentName);
+		}
+		return true;
 	}
 
 	@Override
 	public boolean subSectionUpdated(String username, String roomname, String sectionID,
 			String documentName, DocumentSubSection update) {
-		throw new NotYetImplementedException();
+		CoLabRoom room = colabrooms.get(roomname);
+		SectionizedDocument doc = room.getDocument(documentName);
+		int docIndex = doc.getSubSectionIndex(sectionID);
+		doc.removeSubSection(sectionID);
+		doc.addSubSection(update, docIndex);
+		for (IClient client : room.getAllClients()) {
+			client.updateSubsection(username, documentName, update, sectionID);
+		}
+		return true;
 	}
 }

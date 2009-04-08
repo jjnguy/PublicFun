@@ -165,4 +165,9 @@ public class ClientEncoder implements IClient {
 		throw new NotYetImplementedException();
 	}
 
+	@Override
+	public boolean subSectionRemoved(String username, String sectionID, String documentName) {
+		throw new NotYetImplementedException();
+	}
+
 }

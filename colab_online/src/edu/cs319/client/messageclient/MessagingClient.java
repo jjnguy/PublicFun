@@ -151,7 +151,7 @@ public class MessagingClient extends JFrame implements IClient {
 			proxy.getServer().joinCoLabRoom(clientID, roomName, null);
 		}
 	};
-	
+
 	private ActionListener connectTOServerAction = new ActionListener() {
 
 		@Override
@@ -232,6 +232,11 @@ public class MessagingClient extends JFrame implements IClient {
 	@Override
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean subSectionRemoved(String username, String sectionID, String documentName) {
 		throw new NotYetImplementedException();
 	}
 }

@@ -24,6 +24,8 @@ public interface IClient {
 	public boolean newSubSection(String username, String sectionID, String documentName,
 			DocumentSubSection section, int idx);
 
+	public boolean subSectionRemoved(String username, String sectionID, String documentName);
+	
 	public boolean newChatMessage(String usernameSender, String message);
 
 	public boolean newChatMessage(String usernameSender, String message, String recipiant);
