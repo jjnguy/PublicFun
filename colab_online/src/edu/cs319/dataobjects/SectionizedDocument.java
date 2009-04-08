@@ -18,7 +18,7 @@ public interface SectionizedDocument {
 	
 	public String getFullText();
 	
-	public void addSubSection(DocumentSubSection ds, int index);
+	public boolean addSubSection(DocumentSubSection ds, int index);
 
 	public void removeSubSection(String name);
 

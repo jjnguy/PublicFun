@@ -54,8 +54,13 @@ public class SectionizedDocumentImpl {
 		return out.toString();
 	}
 
-	public void addSubSection(DocumentSubSection ds, int index) {
-		subSections.add(index, ds);
+	public boolean addSubSection(DocumentSubSection ds, int index) {
+		boolean success = false;
+		if(!subSections.contains(ds)) {
+			subSections.add(index, ds);
+			success = true;
+		}
+		return success;
 	}
 
 	public void removeSubSection(String name) {
