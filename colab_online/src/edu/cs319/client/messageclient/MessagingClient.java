@@ -174,31 +174,6 @@ public class MessagingClient extends JFrame implements IClient {
 		throw new NotYetImplementedException();
 	}
 
-	@Override
-	public boolean textChanged(int posStart, int posEnd, String text) {
-		throw new NotYetImplementedException();
-	}
-
-	@Override
-	public boolean textHighlighted(int posStart, int posEnd) {
-		throw new NotYetImplementedException();
-	}
-
-	@Override
-	public boolean textInserted(int pos, String text) {
-		throw new NotYetImplementedException();
-	}
-
-	@Override
-	public boolean textRemoved(int posStart, int posEnd) {
-		throw new NotYetImplementedException();
-	}
-
-	@Override
-	public boolean textUnHighlighted(int posStart, int posEnd) {
-		throw new NotYetImplementedException();
-	}
-
 	public static void main(String[] args) {
 		new MessagingClient();
 	}
