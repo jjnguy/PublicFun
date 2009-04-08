@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 /**
  * 
@@ -18,6 +19,8 @@ import javax.swing.JPanel;
 public class JDocTabPanel extends JPanel {
 	
 	private JList sectionList;
+	//TODO turn docPane/workPane into JSplitPane
+	private JSplitPane workspace;
 	private JEditorPane documentPane;
 	private JEditorPane workPane;
 	private JButton sectionUpButton;
@@ -27,6 +30,7 @@ public class JDocTabPanel extends JPanel {
 		sectionList = new JList();
 		documentPane = new JEditorPane();
 		workPane = new JEditorPane();
+		workspace = new JSplitPane(JSplitPane.VERTICAL_SPLIT, documentPane, workPane);
 		sectionUpButton = new JButton("Move Up");
 		sectionDownButton = new JButton("Move Down");
 		setUpAppearance();
@@ -37,6 +41,7 @@ public class JDocTabPanel extends JPanel {
 		setLayout(new BorderLayout(10, 10));
 		sectionList.setPreferredSize(new Dimension(150, 100));
 		workPane.setPreferredSize(new Dimension(50, 75));
+		workspace.setDividerLocation(250);
 		
 		JPanel buttonPanel = new JPanel(new BorderLayout(5, 5));
 		buttonPanel.add(sectionUpButton, BorderLayout.NORTH);
@@ -44,11 +49,8 @@ public class JDocTabPanel extends JPanel {
 		JPanel westPanel = new JPanel(new BorderLayout(10, 10));
 		westPanel.add(sectionList, BorderLayout.CENTER);
 		westPanel.add(buttonPanel, BorderLayout.SOUTH);
-		JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
-		centerPanel.add(documentPane, BorderLayout.CENTER);
-		centerPanel.add(workPane, BorderLayout.SOUTH);
 		add(westPanel, BorderLayout.WEST);
-		add(centerPanel, BorderLayout.CENTER);
+		add(workspace, BorderLayout.CENTER);
 	}
 	
 	private void setUpListeners() {
