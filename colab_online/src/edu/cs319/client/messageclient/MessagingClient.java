@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -125,7 +126,7 @@ public class MessagingClient extends JFrame implements IClient {
 
 	@Override
 	public boolean newChatMessage(String usernameSender, String message, String recipiant) {
-		if (!clientID.equals(recipiant))
+		if (!clientID.equals(recipiant) || !clientID.equals(usernameSender))
 			return true;
 		String fullTExt = usernameSender + " :<private>: " + message + "\n";
 		topText.append(fullTExt);
@@ -198,12 +199,12 @@ public class MessagingClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean allCoLabRooms(List<String> roomNames) {
+	public boolean allCoLabRooms(Collection<String> roomNames) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean allUsersInRoom(List<String> usernames) {
+	public boolean allUsersInRoom(Collection<String> usernames) {
 		throw new NotYetImplementedException();
 	}
 

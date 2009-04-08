@@ -153,7 +153,7 @@ public class ServerEncoder implements IServer {
 	}
 
 	@Override
-	public boolean getClientsCurrentlyInRoom(String username) {
+	public boolean getClientsCurrentlyInRoom(String username, String roomName) {
 		throw new NotYetImplementedException();
 	}
 

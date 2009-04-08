@@ -11,7 +11,7 @@ public interface IServer {
 
 	public boolean getAllCoLabRoomNames(String usename);
 
-	public boolean getClientsCurrentlyInRoom(String username);
+	public boolean getClientsCurrentlyInRoom(String username, String roomName);
 
 	public boolean addNewClient(IClient newClient, String username);
 

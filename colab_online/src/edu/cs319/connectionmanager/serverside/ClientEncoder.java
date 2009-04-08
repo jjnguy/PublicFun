@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import edu.cs319.client.IClient;
@@ -128,12 +129,12 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public boolean allCoLabRooms(List<String> roomNames) {
+	public boolean allCoLabRooms(Collection<String> roomNames) {
 		throw new NotYetImplementedException();
 	}
 
 	@Override
-	public boolean allUsersInRoom(List<String> usernames) {
+	public boolean allUsersInRoom(Collection<String> usernames) {
 		throw new NotYetImplementedException();
 	}
 

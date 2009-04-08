@@ -81,6 +81,10 @@ public class CoLabRoom {
 		return ret;
 	}
 
+	public Collection<String> getAllClientNamesInRoom(){
+		return members.keySet();
+	}
+	
 	public boolean removeMember(String name) {
 		if (!members.containsKey(name))
 			return false;

@@ -201,12 +201,15 @@ public class Server implements IServer {
 
 	@Override
 	public boolean getAllCoLabRoomNames(String usename) {
-		throw new NotYetImplementedException();
+		IClient client = regularClients.get(usename);
+		return client.allCoLabRooms(colabrooms.keySet());
 	}
 
 	@Override
-	public boolean getClientsCurrentlyInRoom(String username) {
-		throw new NotYetImplementedException();
+	public boolean getClientsCurrentlyInRoom(String username, String roomname) {
+		CoLabRoom room = colabrooms.get(roomname);
+		IClient toSendTo = regularClients.get(username);
+		return toSendTo.allUsersInRoom(room.getAllClientNamesInRoom());
 	}
 
 	@Override

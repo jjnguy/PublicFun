@@ -1,5 +1,6 @@
 package edu.cs319.client;
 
+import java.util.Collection;
 import java.util.List;
 
 import edu.cs319.dataobjects.DocumentSubSection;
@@ -29,9 +30,9 @@ public interface IClient {
 
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv);
 
-	public boolean allUsersInRoom(List<String> usernames);
+	public boolean allUsersInRoom(Collection<String> usernames);
 
-	public boolean allCoLabRooms(List<String> roomNames);
+	public boolean allCoLabRooms(Collection<String> roomNames);
 
 	public String getName();
 }
