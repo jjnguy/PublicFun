@@ -2,7 +2,7 @@ package edu.cs319.dataobjects.impl;
 
 import edu.cs319.dataobjects.DocumentSubSection;
 
-public class DocumentSubSectionImpl implements DocumentSubSection {
+public class DocumentSubSectionImpl extends DocumentSubSection {
 
 	private String name;
 	private String text;
@@ -25,6 +25,7 @@ public class DocumentSubSectionImpl implements DocumentSubSection {
 		return text;
 	}
 
+	@Override
 	public boolean setText(String text, String username) {
 		boolean success = false;
 		if (locked && username.equals(lockHolder)) {
