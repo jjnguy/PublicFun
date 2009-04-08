@@ -12,7 +12,7 @@ public class DocumentSubSectionImpl implements DocumentSubSection {
 	private boolean locked;
 	private String lockHolder;
 
-	public DocumentSubsectionImpl(String name) {
+	public DocumentSubSectionImpl(String name) {
 		this.name = name;
 		this.locked = false;
 	}
@@ -61,6 +61,18 @@ public class DocumentSubSectionImpl implements DocumentSubSection {
 			lockedBy = lockHolder;
 		}
 		return lockedBy;
+	}
+
+	@Override
+	public boolean setText(String text) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<DocumentSubSection> split(int charIndex) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

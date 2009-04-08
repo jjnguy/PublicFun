@@ -13,7 +13,7 @@ import edu.cs319.server.CoLabPrivilegeLevel;
 /**
  * Class defining a room for people to meet.
  * 
- * @author The Squirrels
+ * @author Justin Nelson
  * 
  */
 public class CoLabRoom {
@@ -85,6 +85,39 @@ public class CoLabRoom {
 		if (!members.containsKey(name))
 			return false;
 		members.remove(name);
+		return true;
+	}
+
+	public List<SectionizedDocument> getAllDocuments(){
+		return documents;
+	}
+	
+	public boolean addDocument(SectionizedDocument doc) {
+		for (SectionizedDocument doc2 : documents) {
+			if (doc2.getName().equals(doc.getName()))
+				return false;
+		}
+		documents.add(doc);
+		return true;
+	}
+
+	public SectionizedDocument getDocument(String name) {
+		for (SectionizedDocument doc2 : documents) {
+			if (doc2.getName().equals(name))
+				return doc2;
+		}
+		return null;
+	}
+
+	public SectionizedDocument getDocument(int idx) {
+		return documents.get(idx);
+	}
+
+	public boolean removeDocument(String docName) {
+		int idx = documents.indexOf(docName);
+		if (idx == -1)
+			return false;
+		documents.remove(idx);
 		return true;
 	}
 
