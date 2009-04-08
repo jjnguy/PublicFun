@@ -3,6 +3,7 @@ package edu.cs319.client;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -35,14 +36,16 @@ public class WindowClient extends JFrame implements IClient {
 		setJMenuBar(createMenuBar());
 		
 		roomMemberList = new JRoomList();
-		
 		documentPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		documentPane.addTab("panel1", new JDocTabPanel());
 		documentPane.addTab("panel2", new JDocTabPanel());
 		chatPanel = new JChatPanel();
 		
+		JPanel roomPanel = new JPanel();
+		roomPanel.add(roomMemberList);
+		
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
-		panel.add(roomMemberList, BorderLayout.WEST);
+		panel.add(roomPanel, BorderLayout.WEST);
 		panel.add(documentPane, BorderLayout.CENTER);
 		panel.add(chatPanel, BorderLayout.EAST);
 		add(panel);
@@ -71,13 +74,13 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean allCoLabRooms(List<String> roomNames) {
+	public boolean allCoLabRooms(Collection<String> roomNames) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean allUsersInRoom(List<String> usernames) {
+	public boolean allUsersInRoom(Collection<String> usernames) {
 		roomMemberList.updateList(usernames);
 		return true;
 	}
@@ -132,6 +135,12 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
+	public boolean subSectionRemoved(String username, String sectionID, String documentName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
 		// TODO Auto-generated method stub
 		return false;
@@ -143,6 +152,7 @@ public class WindowClient extends JFrame implements IClient {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	
 	
 }
