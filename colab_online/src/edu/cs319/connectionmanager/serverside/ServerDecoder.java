@@ -5,10 +5,10 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import edu.cs319.client.IClient;
-import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageInputStream;
 import edu.cs319.server.IServer;
+import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**

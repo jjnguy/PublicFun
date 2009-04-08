@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import edu.cs319.client.IClient;
-import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageInputStream;
+import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**

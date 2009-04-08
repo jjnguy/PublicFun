@@ -27,12 +27,12 @@ import javax.swing.JTextField;
 
 import edu.cs319.client.IClient;
 import edu.cs319.client.customcomponents.JRoomMemberList;
-import edu.cs319.connectionmanager.NotYetImplementedException;
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.server.IServer;
+import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 public class MessagingClient extends JFrame implements IClient {

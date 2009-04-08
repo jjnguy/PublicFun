@@ -2,7 +2,7 @@ package edu.cs319.dataobjects;
 
 import java.util.List;
 
-import edu.cs319.connectionmanager.NotYetImplementedException;
+import edu.cs319.util.NotYetImplementedException;
 
 public interface DocumentSubSection {
 

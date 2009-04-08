@@ -1,4 +1,4 @@
-package edu.cs319.connectionmanager;
+package edu.cs319.util;
 
 public class NotYetImplementedException extends RuntimeException {
 	public NotYetImplementedException() {
