@@ -12,6 +12,11 @@ public class JRoomMemberListModel extends AbstractListModel {
 	public JRoomMemberListModel() {
 		userIDs = new ArrayList<String>();
 	}
+	
+	public List getAllRoomMembers() {
+		//TODO implement
+		return null;
+	}
 
 	public boolean addNewMember(String userID) {
 		if (userIDs.contains(userID))
@@ -40,6 +45,10 @@ public class JRoomMemberListModel extends AbstractListModel {
 	@Override
 	public int getSize() {
 		return userIDs.size();
+	}
+	
+	public boolean contains(String userID) {
+		return userIDs.contains(userID);
 	}
 
 }

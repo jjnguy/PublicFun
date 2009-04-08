@@ -16,13 +16,17 @@ public class MainClient {
 	}
 	
 	private static void createAndShowGUI() {
-		WindowLogIn logIn = new WindowLogIn();
-		logIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		logIn.setVisible(true);
+//		WindowLogIn logIn = new WindowLogIn();
+//		logIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		logIn.setVisible(true);
+//		
+//		WindowJoinCoLab joinWindow = new WindowJoinCoLab();
+//		joinWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		joinWindow.setVisible(true);
 		
-		WindowJoinCoLab joinWindow = new WindowJoinCoLab();
-		joinWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		joinWindow.setVisible(true);
+		WindowClient client = new WindowClient();
+		client.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		client.setVisible(true);
 
 	}
 

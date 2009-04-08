@@ -21,6 +21,8 @@ import javax.swing.JTextField;
  */
 public class WindowLogIn extends JFrame {
 	
+	//TODO check username for spaces or @
+	
 	private JTextField usernameField = new JTextField();
 	private JPasswordField pwField = new JPasswordField();
 	private JButton logInButton = new JButton("Log In");
