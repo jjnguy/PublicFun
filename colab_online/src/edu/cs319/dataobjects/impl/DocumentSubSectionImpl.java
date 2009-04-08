@@ -63,16 +63,19 @@ public class DocumentSubSectionImpl implements DocumentSubSection {
 		return lockedBy;
 	}
 
-	@Override
-	public boolean setText(String text) {
-		// TODO Auto-generated method stub
+	public  boolean equals(Object o) {
+		if(o instanceof String) {
+			String s = (String) o;
+			return s.equals(getName());
+		} else if(o instanceof DocumentSubSection) {
+			DocumentSubSection ds = (DocumentSubSection) o;
+			return ds.getName().equals(this.getName());
+		}
 		return false;
 	}
 
-	@Override
-	public List<DocumentSubSection> split(int charIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	public int hashCode() {
+		return getName().hashCode();
 	}
 
 }

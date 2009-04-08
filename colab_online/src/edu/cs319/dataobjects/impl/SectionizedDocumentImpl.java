@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.cs319.dataobjects.DocumentSubSection;
+import edu.cs319.dataobjects.SectionizedDocument;
 
 public class SectionizedDocumentImpl {
 
@@ -68,8 +69,11 @@ public class SectionizedDocumentImpl {
 		DocumentSubSection first = new DocumentSubSectionImpl(partA);
 		DocumentSubSection second = new DocumentSubSectionImpl(partB);
 		String text = ds.getText();
-		first.setText(text.substring(0, splitIndex));
-		second.setText(text.substring(splitIndex, text.length()));
+		first.setLocked(true,"admin");
+		first.setText(text.substring(0, splitIndex),"admin");
+		second.setText(text.substring(splitIndex, text.length()),"admin");
+		first.setLocked(false,"admin");
+		second.setLocked(false,"admin");
 		subSections.add(index, first);
 		subSections.add(index + 1, second);
 	}
@@ -81,7 +85,24 @@ public class SectionizedDocumentImpl {
 		subSections.remove(first);
 		subSections.remove(second);
 		DocumentSubSection combined = new DocumentSubSectionImpl(combinedName);
-		combined.setText(first.getText() + "\n" + second.getText());
+		combined.setLocked(true,"admin");
+		combined.setText(first.getText() + "\n" + second.getText(),"admin");
+		combined.setLocked(false,"admin");
 		subSections.add(index, combined);
+	}
+
+	public boolean equals(Object o) {
+		if(o instanceof String) {
+			String s = (String) o;
+			return s.equals(getName());
+		} else if(o instanceof SectionizedDocument) {
+			SectionizedDocument sd = (SectionizedDocument) o;
+			return sd.getName().equals(getName());
+		}
+		return false;
+	}
+
+	public int hashCode() {
+		return getName().hashCode();
 	}
 }
