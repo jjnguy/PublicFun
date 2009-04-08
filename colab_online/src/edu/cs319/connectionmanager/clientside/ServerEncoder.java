@@ -34,16 +34,7 @@ public class ServerEncoder implements IServer {
 	@Override
 	public boolean addNewClient(IClient newClient, String username) {
 		Message toSend = new Message(MessageType.NEW_CLIENT, username, new ArrayList<String>());
-		MessageOutputStream mOut = new MessageOutputStream(host);
-		try {
-			mOut.printMessage(toSend);
-		} catch (IOException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-		return true;
+		return printMessageToStream(toSend);
 	}
 
 	@Override
@@ -52,21 +43,16 @@ public class ServerEncoder implements IServer {
 		args.add(roomName);
 		args.add(new String(new byte[] {}));
 		Message toSen = new Message(MessageType.NEW_COLAB_ROOM, username, args);
-		MessageOutputStream mOut = new MessageOutputStream(host);
-		try {
-			mOut.printMessage(toSen);
-		} catch (IOException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-		return true;
+		return printMessageToStream(toSen);
 	}
 
 	@Override
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(newPriv.toString());
+		Message m = new Message(MessageType.CHANGE_USER_PRIV,username,args);
+		return printMessageToStream(m);
 	}
 
 	@Override
@@ -75,61 +61,38 @@ public class ServerEncoder implements IServer {
 		args.add(roomName);
 		args.add(new String(new byte[] {}));
 		Message m = new Message(MessageType.MEMBER_JOIN_ROOM, username, args);
-		try {
-			MessageOutputStream out = new MessageOutputStream(host);
-			out.printMessage(m);
-		} catch (UnknownHostException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			return false;
-		} catch (IOException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-		return true;
+		return printMessageToStream(m);
 	}
 
 	@Override
-	public boolean leaveCoLabRoom(String username, String rommname) {
-		throw new NotYetImplementedException();
+	public boolean leaveCoLabRoom(String username, String roomname) {
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		Message m = new Message(MessageType.MEMBER_LEAVE_ROOM, username, args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean newChatMessage(String senderName, String roomname, String message) {
-		// TODO Auto-generated method stub
 		List<String> args = new ArrayList<String>();
 		args.add(roomname);
 		args.add(message);
 		Message m = new Message(MessageType.NEW_MESSAGE, senderName, args);
-		try {
-			MessageOutputStream out = new MessageOutputStream(host);
-			out.printMessage(m);
-		} catch (UnknownHostException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			return false;
-		} catch (IOException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-		return true;
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean newChatMessage(String senderName, String roomname, String message,
 			String recipiant) {
-		// TODO Auto-generated method stub
 		List<String> args = new ArrayList<String>();
 		args.add(roomname);
 		args.add(message);
 		args.add(recipiant);
 		Message m = new Message(MessageType.NEW_PRIVATE_MESSAGE, senderName, args);
+		return printMessageToStream(m);
+	}
+
+	private boolean printMessageToStream(Message m) {
 		try {
 			MessageOutputStream out = new MessageOutputStream(host);
 			out.printMessage(m);
@@ -148,30 +111,53 @@ public class ServerEncoder implements IServer {
 	}
 
 	@Override
-	public boolean getAllCoLabRoomNames(String usename) {
-		throw new NotYetImplementedException();
+	public boolean getAllCoLabRoomNames(String username) {
+		List<String> args = new ArrayList<String>();
+		Message m = new Message(MessageType.GET_ROOM_LIST,username,args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean getClientsCurrentlyInRoom(String username, String roomName) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(roomName);
+		Message m = new Message(MessageType.MEMBERS_IN_ROOM,username,args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean newSubSection(String username, String roomname, String documentName,
 			String sectionID, int idx) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(documentName);
+		args.add(sectionID);
+		args.add(Integer.toString(idx));
+		Message m = new Message(MessageType.NEW_SUBSECTION,username,args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean subSectionRemoved(String username, String roomname, String documentName,
 			String sectionID) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(documentName);
+		args.add(sectionID);
+		Message m = new Message(MessageType.REMOVE_SUBSECTION,username,args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean subSectionUpdated(String username, String roomname, String sectionID,
 			String documentName, DocumentSubSection update) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(sectionID);
+		args.add(documentName);
+		args.add(update.toDelimmitedString());
+		Message m = new Message(MessageType.UPDATE_SUBSECTION,username,args);
+		return printMessageToStream(m);
 	}
+
 }
