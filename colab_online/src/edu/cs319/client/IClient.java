@@ -20,6 +20,8 @@ public interface IClient {
 
 	public boolean subsectionUnLocked(String usernameSender, String sectionID);
 
+	public boolean newSubSection(String username, String sectionID, DocumentSubSection section);
+	
 	public boolean newChatMessage(String usernameSender, String message);
 
 	public boolean newChatMessage(String usernameSender, String message, String recipiant);
