@@ -6,37 +6,23 @@ import java.net.UnknownHostException;
 
 import edu.cs319.client.IClient;
 import edu.cs319.server.IServer;
+import edu.cs319.server.Server;
 
-public class ConnectionFactory {
+import edu.cs319.connectionmanager.clientside.impl.ConnectionFactoryLocal;
+import edu.cs319.connectionmanager.clientside.impl.ConnectionFactoryNetworked;
 
-	public static Proxy connect(String host, int port, IClient actualClient, String clientName)
-			throws UnknownHostException, IOException {
-		return new ProxyImpl(new Socket(host, port), actualClient, clientName);
+
+public abstract class ConnectionFactory {
+
+	public static ConnectionFactory getLocalInstance() {
+		return new ConnectionFactoryLocal(Server.getInstance());
+	}
+	
+	public static ConnectionFactory getNetworkedInstance() {
+		return new ConnectionFactoryNetworked();
 	}
 
-	static private class ProxyImpl implements Proxy {
+	public abstract Proxy connect(String host, int port, IClient actualClient, String clientName);
 
-		private IServer server;
-		private ClientDecoder client;
-		private Socket socket;
-
-		public ProxyImpl(Socket socket, IClient actualClient, String clientName) throws IOException {
-			this.socket = socket;
-			this.server = new ServerEncoder(socket.getOutputStream());
-			this.server.addNewClient(null, clientName);
-			this.client = new ClientDecoder(actualClient, socket.getInputStream());
-			// TODO make sure we don't need reference
-			new Thread(client).start();
-		}
-
-		public IServer getServer() {
-			return server;
-		}
-
-		public void close() throws IOException {
-			socket.close();
-		}
-
-	}
 
 }
