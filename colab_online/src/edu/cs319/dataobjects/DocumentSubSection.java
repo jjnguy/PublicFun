@@ -1,8 +1,5 @@
 package edu.cs319.dataobjects;
 
-import java.util.List;
-
-import edu.cs319.util.NotYetImplementedException;
 
 public interface DocumentSubSection {
 
@@ -18,5 +15,5 @@ public interface DocumentSubSection {
 
 	public String lockedByUser();
 
-	
+	public String toDelimmitedString();
 }

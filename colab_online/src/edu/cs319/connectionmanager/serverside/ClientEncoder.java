@@ -41,10 +41,22 @@ public class ClientEncoder implements IClient {
 		this.connection = connection;
 	}
 
-	// TODO encode a message and send it down the pipe
-
 	public String getUername() {
 		return username;
+	}
+
+	private boolean printMessageToStream(Message m) {
+		MessageOutputStream out;
+		try {
+			out = new MessageOutputStream(connection.getOutputStream());
+			out.printMessage(m);
+		} catch (IOException e) {
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -54,20 +66,9 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
-		// TODO throw new NotYetImplementedException();
 		Message tosend = new Message(MessageType.MEMBER_JOIN_ROOM, username,
 				new ArrayList<String>());
-		MessageOutputStream out;
-		try {
-			out = new MessageOutputStream(connection.getOutputStream());
-			out.printMessage(tosend);
-		} catch (IOException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-		return true;
+		return printMessageToStream(tosend);
 	}
 
 	@Override
@@ -83,17 +84,7 @@ public class ClientEncoder implements IClient {
 		List<String> args = new ArrayList<String>();
 		args.add(message);
 		Message m = new Message(MessageType.NEW_MESSAGE, usernameSender, args);
-		MessageOutputStream out;
-		try {
-			out = new MessageOutputStream(connection.getOutputStream());
-			out.printMessage(m);
-		} catch (IOException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-		return true;
+		return printMessageToStream(m);
 	}
 
 	@Override
@@ -105,17 +96,7 @@ public class ClientEncoder implements IClient {
 		args.add(message);
 		args.add(recipiant);
 		Message m = new Message(MessageType.NEW_PRIVATE_MESSAGE, usernameSender, args);
-		MessageOutputStream out;
-		try {
-			out = new MessageOutputStream(connection.getOutputStream());
-			out.printMessage(m);
-		} catch (IOException e) {
-			if (Util.DEBUG) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-		return true;
+		return printMessageToStream(m);
 	}
 
 	@Override
@@ -130,33 +111,61 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean allCoLabRooms(Collection<String> roomNames) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		for (String s : roomNames) {
+			args.add(s);
+		}
+		Message m = new Message(MessageType.GET_ROOM_LIST, "Server Initiated", args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean allUsersInRoom(Collection<String> usernames) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		for (String s : usernames) {
+			args.add(s);
+		}
+		Message m = new Message(MessageType.GET_ROOM_LIST, "Server Initiated", args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean newSubSection(String username, String sectionID, String documentName,
 			DocumentSubSection section, int idx) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(sectionID);
+		args.add(documentName);
+		args.add(section.toDelimmitedString());
+		args.add("" + idx);
+		Message m = new Message(MessageType.NEW_SUBSECTION, username, args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionID) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(sectionID);
+		Message m = new Message(MessageType.SUBSECTION_LOCKED, usernameSender, args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionID) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(sectionID);
+		Message m = new Message(MessageType.SUBSECTION_UNLOCKED, usernameSender, args);
+		return printMessageToStream(m);
 	}
 
 	@Override
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>();
+		args.add(documentId);
+		for(DocumentSubSection doc : allSections){
+			args.add(doc.toDelimmitedString());			
+		}
+		Message m = new Message(MessageType.UPDATE_ALL_SUBSECTIONS, "Server Initiated", args);
+		return printMessageToStream(m);
 	}
 
 	@Override

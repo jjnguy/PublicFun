@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,7 +31,6 @@ import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.server.IServer;
 import edu.cs319.util.NotYetImplementedException;
-import edu.cs319.util.Util;
 
 public class MessagingClient extends JFrame implements IClient {
 
@@ -85,9 +82,9 @@ public class MessagingClient extends JFrame implements IClient {
 	}
 
 	public boolean connectToServer(String host, String clientName) {
-		try {
-			proxy = ConnectionFactory.connect(host, 4444, this, clientName);
-		} catch (UnknownHostException e) {
+		//try {
+			proxy = ConnectionFactory.getLocalInstance().connect(host, 4444, this, clientName);
+		/*} catch (UnknownHostException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();
 			}
@@ -97,7 +94,7 @@ public class MessagingClient extends JFrame implements IClient {
 				e.printStackTrace();
 			}
 			return false;
-		}
+		}*/
 		clientID = clientName;
 		return true;
 	}
@@ -191,7 +188,7 @@ public class MessagingClient extends JFrame implements IClient {
 	}
 
 	public static void main(String[] args) {
-		new MessagingClient();
+		new MessagingClient();new MessagingClient();new MessagingClient();
 	}
 
 	public void setRoomName(String text) {

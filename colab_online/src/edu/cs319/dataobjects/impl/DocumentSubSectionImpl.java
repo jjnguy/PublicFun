@@ -1,7 +1,5 @@
 package edu.cs319.dataobjects.impl;
 
-import java.util.List;
-
 import edu.cs319.dataobjects.DocumentSubSection;
 
 public class DocumentSubSectionImpl implements DocumentSubSection {
@@ -63,6 +61,7 @@ public class DocumentSubSectionImpl implements DocumentSubSection {
 		return lockedBy;
 	}
 
+	@Override
 	public  boolean equals(Object o) {
 		if(o instanceof String) {
 			String s = (String) o;
@@ -74,8 +73,14 @@ public class DocumentSubSectionImpl implements DocumentSubSection {
 		return false;
 	}
 
+	@Override
 	public int hashCode() {
 		return getName().hashCode();
+	}
+
+	@Override
+	public String toDelimmitedString() {
+		return name + (char)31 + lockHolder+ (char)31 + text;
 	}
 
 }
