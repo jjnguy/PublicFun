@@ -19,7 +19,6 @@ import javax.swing.JSplitPane;
 public class JDocTabPanel extends JPanel {
 	
 	private JList sectionList;
-	//TODO turn docPane/workPane into JSplitPane
 	private JSplitPane workspace;
 	private JEditorPane documentPane;
 	private JEditorPane workPane;

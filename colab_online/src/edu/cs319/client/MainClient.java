@@ -16,6 +16,9 @@ public class MainClient {
 	}
 	
 	private static void createAndShowGUI() {
+		
+		//TODO work in connection information
+		
 //		WindowLogIn logIn = new WindowLogIn();
 //		logIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		logIn.setVisible(true);
