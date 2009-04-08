@@ -1,5 +1,8 @@
 package edu.cs319.client;
 
+import java.util.List;
+
+import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
 
 public interface IClient {
@@ -8,15 +11,14 @@ public interface IClient {
 
 	public boolean coLabRoomMemberLeft(String username);
 
-	public boolean textInserted(int pos, String text);
+	public boolean updateAllSubsections(List<DocumentSubSection> allSections);
 
-	public boolean textRemoved(int posStart, int posEnd);
+	public boolean updateSubsection(String usernameSender, DocumentSubSection section,
+			String sectionID);
 
-	public boolean textChanged(int posStart, int posEnd, String text);
+	public boolean subsectionLocked(String usernameSender, String sectionID);
 
-	public boolean textHighlighted(int posStart, int posEnd);
-
-	public boolean textUnHighlighted(int posStart, int posEnd);
+	public boolean subsectionUnLocked(String usernameSender, String sectionID);
 
 	public boolean newChatMessage(String usernameSender, String message);
 
@@ -24,8 +26,9 @@ public interface IClient {
 
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv);
 
-	// public boolean allUsersInRoom(List<String> usernames);
-	// public boolean allCoLabRooms(List<String> roomNames);
+	public boolean allUsersInRoom(List<String> usernames);
+
+	public boolean allCoLabRooms(List<String> roomNames);
 
 	public String getName();
 }

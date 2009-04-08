@@ -1,8 +1,7 @@
 package edu.cs319.server;
 
-import java.util.Collection;
-
 import edu.cs319.client.IClient;
+import edu.cs319.dataobjects.DocumentSubSection;
 
 public interface IServer {
 
@@ -16,25 +15,19 @@ public interface IServer {
 	 * @return all of the names of the currently available rooms note - when iterating through this
 	 *         Collection you must do it within a synchronized block
 	 */
-	public Collection<String> getAllCoLabRoomNames(String username);
+	public boolean getAllCoLabRoomNames(String usename);
 
-	// public boolean getAllCoLabRoomNames(String usename);
-	// public boolean getClientsCurrentlyInRoom(String username);
+	public boolean getClientsCurrentlyInRoom(String username);
 
 	public boolean addNewClient(IClient newClient, String username);
 
 	public boolean leaveCoLabRoom(String username, String rommname);
 
-	public boolean textInserted(String username, String roomname, int pos, String text);
+	public boolean newSubSection(String username, String roomname, String sectionID);
 
-	public boolean textRemoved(String username, String roomname, int posStart, int posEnd);
+	public boolean subSectionRemoved(String username, String roomname, String sectionID);
 
-	public boolean textChanged(String username, String roomname, int posStart, int posEnd,
-			String text);
-
-	public boolean textHighlighted(String username, String roomname, int posStart, int posEnd);
-
-	public boolean textUnHighlighted(String username, String roomname, int posStart, int posEnd);
+	public boolean subSectionUpdated(String username, String roomname, String sectionID, DocumentSubSection update);
 
 	public boolean newChatMessage(String senderName, String roomname, String message);
 
