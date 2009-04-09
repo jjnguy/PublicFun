@@ -1,13 +1,11 @@
 package edu.cs319.connectionmanager.clientside.impl;
 
 import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 import edu.cs319.client.IClient;
-import edu.cs319.server.IServer;
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
+import edu.cs319.server.IServer;
 
 public class ConnectionFactoryLocal extends ConnectionFactory {
 
@@ -17,6 +15,7 @@ public class ConnectionFactoryLocal extends ConnectionFactory {
 		this.actualServer = actualServer;
 	}
 
+	@Override
 	public Proxy connect(String host, int port, IClient actualClient, String clientName) {
 		return new ProxyImpl(actualServer, actualClient, clientName);
 	}

@@ -2,18 +2,17 @@ package edu.cs319.connectionmanager.clientside.impl;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import edu.cs319.client.IClient;
-import edu.cs319.server.IServer;
-
+import edu.cs319.connectionmanager.clientside.ClientDecoder;
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
-import edu.cs319.connectionmanager.clientside.ClientDecoder;
 import edu.cs319.connectionmanager.clientside.ServerEncoder;
+import edu.cs319.server.IServer;
 
 public class ConnectionFactoryNetworked extends ConnectionFactory {
 
+	@Override
 	public Proxy connect(String host, int port, IClient actualClient, String clientName) {
 		Proxy p = null;
 		try {
