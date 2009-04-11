@@ -73,6 +73,11 @@ public class GravitySphere implements Dragable, Collidable {
 			pos_x = 500 - DIAMETER / 2;
 			vel_x = -vel_x * BOUNCE_FACTOR;
 		}
+		// rough hack because I know the pane it is in is 500 wide
+		if (pos_y > 500 - DIAMETER / 2){
+			pos_y = 500 - DIAMETER / 2;
+			vel_y = - vel_y * BOUNCE_FACTOR;
+		}
 	}
 
 	@Override
@@ -135,7 +140,7 @@ public class GravitySphere implements Dragable, Collidable {
 
 	@Override
 	public void letGo() {
-		int FACTOR = 100000;
+		int FACTOR = 1000000;
 		if (held) {
 			held = false;
 			long timeDif = System.nanoTime() - lastGrabbed_time;
