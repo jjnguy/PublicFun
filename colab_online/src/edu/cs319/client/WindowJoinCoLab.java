@@ -43,7 +43,7 @@ public class WindowJoinCoLab extends JDialog {
 	}
 	
 	private void setUpAppearance() {
-		Insets borderInsets = new Insets(20, 20, 20, 20);
+		Insets borderInsets = new Insets(0, 0, 20, 0);
 		listModel = new DefaultListModel();
 		roomList = new JList(listModel);
 		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -61,7 +61,7 @@ public class WindowJoinCoLab extends JDialog {
 		westPanel.add(listLabel, BorderLayout.NORTH);
 		westPanel.add(createLabel, BorderLayout.SOUTH);
 		JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
-		centerPanel.add(listScrollPane, BorderLayout.NORTH);
+		centerPanel.add(listScrollPane, BorderLayout.CENTER);
 		centerPanel.add(createField, BorderLayout.SOUTH);
 		JPanel eastPanel = new JPanel(new BorderLayout(10, 10));
 		eastPanel.add(joinButton, BorderLayout.NORTH);
