@@ -22,7 +22,8 @@ import edu.cs319.server.IServer;
 
 /**
  * 
- * @author Amelia
+ * @author Amelia Gee
+ * @author Justin Nelson
  * 
  */
 public class JChatPanel extends JPanel {

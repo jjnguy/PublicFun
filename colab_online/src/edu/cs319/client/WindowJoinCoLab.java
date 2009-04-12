@@ -19,6 +19,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * 
+ * @author Amelia Gee
+ *
+ */
 public class WindowJoinCoLab extends JDialog {
 	
 	private JList roomList;
@@ -26,10 +31,12 @@ public class WindowJoinCoLab extends JDialog {
 	private JTextField createField = new JTextField();
 	private JButton joinButton = new JButton("Join");
 	private JButton createButton = new JButton("Create");
+	private JButton cancelButton = new JButton("Cancel");
 	
 	public WindowJoinCoLab() {
 		this.setTitle("Join a CoLab Room");
 		this.setSize(500, 400);
+		this.setMinimumSize(new Dimension(500, 400));
 		setUpAppearance();
 		setUpListeners();
 		this.repaint();
@@ -46,26 +53,33 @@ public class WindowJoinCoLab extends JDialog {
 		
 		JLabel listLabel = new JLabel("Existing CoLab Rooms:");
 		JLabel createLabel = new JLabel("Create a New CoLab:");
+		JLabel cancelLabel = new JLabel("Join a CoLab Room at another time:");
 		createField.setPreferredSize(new Dimension(200, 25));
 		
-		JPanel westPanel = new JPanel(new BorderLayout());
+		
+		JPanel westPanel = new JPanel(new BorderLayout(10, 10));
 		westPanel.add(listLabel, BorderLayout.NORTH);
 		westPanel.add(createLabel, BorderLayout.SOUTH);
-		JPanel centerPanel = new JPanel(new BorderLayout());
+		JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
 		centerPanel.add(listScrollPane, BorderLayout.NORTH);
 		centerPanel.add(createField, BorderLayout.SOUTH);
-		JPanel eastPanel = new JPanel(new BorderLayout());
+		JPanel eastPanel = new JPanel(new BorderLayout(10, 10));
 		eastPanel.add(joinButton, BorderLayout.NORTH);
 		eastPanel.add(createButton, BorderLayout.SOUTH);
+		JPanel southPanel = new JPanel(new BorderLayout(10, 10));
+		southPanel.add(cancelLabel, BorderLayout.WEST);
+		southPanel.add(cancelButton, BorderLayout.EAST);
 		
 		JLabel topLabel = new JLabel("Please choose an " +
 				"existing CoLab to join or create a new CoLab.");
 		topLabel.setBorder(new EmptyBorder(borderInsets));
-		JPanel mainPanel = new JPanel(new BorderLayout());
+		JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
 		mainPanel.add(topLabel, BorderLayout.NORTH);
 		mainPanel.add(westPanel, BorderLayout.WEST);
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		mainPanel.add(eastPanel, BorderLayout.EAST);
+		mainPanel.add(southPanel, BorderLayout.SOUTH);
+		mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.add(mainPanel);
 	}
 	
@@ -90,6 +104,14 @@ public class WindowJoinCoLab extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO check for existing coLab room with same name; create new coLab room
+				
+			}
+		});
+		
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO allow user to close Join CoLab dialog and join later
 				
 			}
 		});

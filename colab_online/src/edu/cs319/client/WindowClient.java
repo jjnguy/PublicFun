@@ -25,7 +25,7 @@ import edu.cs319.server.CoLabPrivilegeLevel;
 
 /**
  * 
- * @author Amelia
+ * @author Amelia Gee
  * @author Justin Nelson
  * 
  */
@@ -40,6 +40,12 @@ public class WindowClient extends JFrame implements IClient {
 	private JRoomList roomMemberList;
 	private JChatPanel chatPanel;
 
+	private JMenuItem openDocument;
+	private JMenuItem logIn;
+	private JMenuItem joinCoLabRoom;
+	private JMenuItem disconnect;
+	private JMenuItem exitCoLab;
+	
 	public WindowClient() {
 		setTitle("CoLab");
 		setSize(new Dimension(900, 500));
@@ -66,9 +72,11 @@ public class WindowClient extends JFrame implements IClient {
 		JMenu file = new JMenu("File");
 		JMenu view = new JMenu("View");
 		JMenu help = new JMenu("Help");
-		JMenuItem openDocument = new JMenuItem("Add New Document");
-		JMenuItem disconnect = new JMenuItem("Disconnect");
-		JMenuItem exitCoLab = new JMenuItem("Exit CoLab");
+		openDocument = new JMenuItem("Add New Document");
+		logIn = new JMenuItem("Log In");
+		joinCoLabRoom = new JMenuItem("Join CoLab Room");
+		disconnect = new JMenuItem("Disconnect");
+		exitCoLab = new JMenuItem("Exit CoLab");
 		final JCheckBox showChat = new JCheckBox("Display Chat Window");
 		showChat.setSelected(true);
 		ActionListener chatChecked = new ActionListener() {
@@ -82,16 +90,40 @@ public class WindowClient extends JFrame implements IClient {
 		file.setMnemonic(KeyEvent.VK_F);
 		help.setMnemonic(KeyEvent.VK_H);
 		openDocument.setMnemonic(KeyEvent.VK_O);
+		logIn.setMnemonic(KeyEvent.VK_L);
+		joinCoLabRoom.setMnemonic(KeyEvent.VK_J);
 		disconnect.setMnemonic(KeyEvent.VK_D);
 		exitCoLab.setMnemonic(KeyEvent.VK_X);
 
 		file.add(openDocument);
+		file.add(logIn);
+		file.add(joinCoLabRoom);
 		file.add(disconnect);
 		file.add(exitCoLab);
+		
+		openDocument.setEnabled(false);
+		joinCoLabRoom.setEnabled(false);
+		disconnect.setEnabled(false);
+		
 		mainMenu.add(file);
 		mainMenu.add(view);
 		mainMenu.add(help);
 		return mainMenu;
+	}
+	
+	private void setLogIn() {
+		joinCoLabRoom.setEnabled(true);
+		disconnect.setEnabled(true);
+	}
+	
+	private void setJoinedRoom() {
+		openDocument.setEnabled(true);
+	}
+	
+	private void setDisconnected() {
+		openDocument.setEnabled(false);
+		joinCoLabRoom.setEnabled(false);
+		disconnect.setEnabled(false);
 	}
 
 	@Override

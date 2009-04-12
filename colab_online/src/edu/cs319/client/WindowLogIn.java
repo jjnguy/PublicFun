@@ -21,7 +21,7 @@ import edu.cs319.connectionmanager.clientside.Proxy;
 
 /**
  * 
- * @author Amelia
+ * @author Amelia Gee
  * @author Justin Nelson
  * 
  */
@@ -52,7 +52,7 @@ public class WindowLogIn extends JDialog {
 		JLabel hostNameLabel = new JLabel("Host Name");
 		JLabel usernameLabel = new JLabel("User Name");
 		JLabel pwLabel = new JLabel("Password");
-		JLabel newUserLabel = new JLabel("New to CoLab?");
+//		JLabel newUserLabel = new JLabel("New to CoLab?");
 		Dimension textFieldSize = new Dimension(125, 25);
 		usernameField.setPreferredSize(textFieldSize);
 		pwField.setPreferredSize(textFieldSize);
@@ -88,14 +88,14 @@ public class WindowLogIn extends JDialog {
 		c.anchor = GridBagConstraints.CENTER;
 		mainPanel.add(logInButton, c);
 
-		c.gridx = 0;
-		c.gridy = 4;
-		c.anchor = GridBagConstraints.LINE_END;
-		mainPanel.add(newUserLabel, c);
-
-		c.gridx = 1;
-		c.anchor = GridBagConstraints.CENTER;
-		// mainPanel.add(newUserButton, c);
+//		c.gridx = 0;
+//		c.gridy = 4;
+//		c.anchor = GridBagConstraints.LINE_END;
+//		mainPanel.add(newUserLabel, c);
+//
+//		c.gridx = 1;
+//		c.anchor = GridBagConstraints.CENTER;
+//		mainPanel.add(newUserButton, c);
 
 		this.add(mainPanel);
 	}

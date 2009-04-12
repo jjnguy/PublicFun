@@ -13,7 +13,7 @@ import javax.swing.JSplitPane;
 
 /**
  * 
- * @author Amelia
+ * @author Amelia Gee
  *
  */
 public class JDocTabPanel extends JPanel {
