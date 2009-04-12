@@ -42,7 +42,9 @@ public class WindowLogIn extends JDialog {
 	private WindowLogIn(JFrame parent, IClient client) {
 		super(parent, "CoLab Log In");
 		this.client = client;
-		this.setSize(300, 250);
+		Dimension minSize = new Dimension(350, 150);
+		this.setSize(minSize);
+		this.setResizable(false);
 		setModal(true);
 		setUpAppearance();
 		setUpListeners();
@@ -51,52 +53,44 @@ public class WindowLogIn extends JDialog {
 	private void setUpAppearance() {
 		JLabel hostNameLabel = new JLabel("Host Name");
 		JLabel usernameLabel = new JLabel("User Name");
-		JLabel pwLabel = new JLabel("Password");
-		// JLabel newUserLabel = new JLabel("New to CoLab?");
-		Dimension textFieldSize = new Dimension(125, 25);
-
+		
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		Insets borderInsets = new Insets(5, 5, 5, 5);
+		c.insets = borderInsets;
+		
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = borderInsets;
-
-		c.gridx = 1;
-
-		c.gridx = 0;
-		c.gridy = 1;
 		c.anchor = GridBagConstraints.LINE_END;
 		mainPanel.add(usernameLabel, c);
 
 		c.gridx = 1;
+		c.gridwidth = 2;
 		c.anchor = GridBagConstraints.LINE_START;
 		mainPanel.add(usernameField, c);
 
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 1;
+		c.gridwidth = 1;
 		c.anchor = GridBagConstraints.LINE_END;
 		mainPanel.add(hostNameLabel, c);
 
 		c.gridx = 1;
+		c.gridwidth = 2;
 		c.anchor = GridBagConstraints.LINE_START;
 		mainPanel.add(hostField, c);
 
-		c.gridy = 3;
-		c.anchor = GridBagConstraints.CENTER;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		c.anchor = GridBagConstraints.LINE_END;
 		mainPanel.add(logInButton, c);
 
-		// c.gridx = 0;
-		// c.gridy = 4;
-		// c.anchor = GridBagConstraints.LINE_END;
-		// mainPanel.add(newUserLabel, c);
-		//
-		c.gridx = 0;
+		c.gridx = 2;
 		c.anchor = GridBagConstraints.CENTER;
 		mainPanel.add(cancelButton, c);
 
 		this.add(mainPanel);
-		pack();
+		//pack();
 	}
 
 	public static Proxy showLoginWindow(JFrame parent, IClient client) {
