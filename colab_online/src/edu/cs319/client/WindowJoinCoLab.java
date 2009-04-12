@@ -2,6 +2,8 @@ package edu.cs319.client;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,9 +74,25 @@ public class WindowJoinCoLab extends JDialog {
 		JLabel createLabel = new JLabel("Create a New CoLab:");
 		JLabel cancelLabel = new JLabel("Join a CoLab Room at another time:");
 		createField.setPreferredSize(new Dimension(200, 25));
+		
+		refreshButton.setSize(100, 25);
 
+		JPanel listLabelPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		Insets labelInsets = new Insets(0, 0, 10, 0);
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = labelInsets;
+		c.anchor = GridBagConstraints.LINE_START;
+		listLabelPanel.add(listLabel, c);
+		c.gridy = 1;
+		listLabelPanel.add(refreshTimeStamp, c);
+		c.gridy = 2;
+		c.anchor = GridBagConstraints.CENTER;
+		listLabelPanel.add(refreshButton, c);
+		
 		JPanel westPanel = new JPanel(new BorderLayout(10, 10));
-		westPanel.add(listLabel, BorderLayout.NORTH);
+		westPanel.add(listLabelPanel, BorderLayout.NORTH);
 		westPanel.add(createLabel, BorderLayout.SOUTH);
 		JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
 		centerPanel.add(listScrollPane, BorderLayout.CENTER);
