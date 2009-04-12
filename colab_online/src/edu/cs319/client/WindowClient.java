@@ -141,7 +141,10 @@ public class WindowClient extends JFrame implements IClient {
 		joinCoLabRoom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				colabRoomFrame.setVisible(true);
+				int result = colabRoomFrame.showRoomDialogue();
+				if (result == WindowJoinCoLab.ROOM_JOINED){
+					setJoinedRoom();
+				}
 			}
 		});
 		disconnect.addActionListener(new ActionListener() {

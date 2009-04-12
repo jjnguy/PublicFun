@@ -32,6 +32,8 @@ import edu.cs319.util.Util;
  */
 public class WindowJoinCoLab extends JDialog {
 
+	public static final int NO_ROOM = 32142;
+	public static final int ROOM_JOINED = -234;
 	private JRoomMemberList roomList;
 	private JTextField createField = new JTextField();
 	private JButton joinButton = new JButton("Join");
@@ -41,11 +43,13 @@ public class WindowJoinCoLab extends JDialog {
 	private JLabel refreshTimeStamp = new JLabel("No List Yet");
 
 	private WindowClient parent;
-
 	private IServer server;
 
+	private int closeStatus;
+	
 	public WindowJoinCoLab(WindowClient parent, IServer server) {
 		super(parent, "Join a CoLab Room");
+		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		if (server == null) {
 			if (Util.DEBUG) {
@@ -118,6 +122,11 @@ public class WindowJoinCoLab extends JDialog {
 		fillCoLabRoomList();
 	}
 
+	public int showRoomDialogue(){
+		setVisible(true);
+		return closeStatus;
+	}
+	
 	public void roomsUpdated(Collection<String> roomNames) {
 		roomList.getModel().clearList();
 		roomList.getModel().addAll(roomNames);
@@ -139,6 +148,7 @@ public class WindowJoinCoLab extends JDialog {
 				parent.setRoomName(joinName);
 				parent.chatLogin();
 				server.getClientsCurrentlyInRoom(parent.getUserName(), joinName);
+				closeStatus = ROOM_JOINED;
 				dispose();
 			}
 		});
@@ -153,6 +163,7 @@ public class WindowJoinCoLab extends JDialog {
 					server.joinCoLabRoom(parent.getUserName(), createField.getText(), null);
 					parent.chatLogin();
 					server.getClientsCurrentlyInRoom(parent.getUserName(), createField.getText());
+					closeStatus = ROOM_JOINED;
 					dispose();
 				}
 			}
@@ -168,6 +179,7 @@ public class WindowJoinCoLab extends JDialog {
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				closeStatus = NO_ROOM;
 				dispose();
 			}
 		});
