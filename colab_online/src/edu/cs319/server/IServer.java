@@ -9,13 +9,13 @@ public interface IServer {
 
 	public boolean joinCoLabRoom(String username, String roomName, byte[] password);
 
-	public boolean getAllCoLabRoomNames(String usename);
+	public boolean getAllCoLabRoomNames(String username);
 
 	public boolean getClientsCurrentlyInRoom(String username, String roomName);
 
 	public boolean addNewClient(IClient newClient, String username);
 
-	public boolean leaveCoLabRoom(String username, String rommname);
+	public boolean leaveCoLabRoom(String username, String roomname);
 
 	public boolean newSubSection(String username, String roomname, String documentName,
 			String sectionID, int idx);

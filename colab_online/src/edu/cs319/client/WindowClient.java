@@ -38,7 +38,9 @@ public class WindowClient extends JFrame implements IClient {
 	private WindowJoinCoLab colabRoomFrame;
 	
 	private String userName;
+	private String roomName;
 	
+	private JPanel roomPanel;
 	private JTabbedPane documentPane;
 	private JRoomList roomMemberList;
 	private JChatPanel chatPanel;
@@ -48,6 +50,7 @@ public class WindowClient extends JFrame implements IClient {
 	private JMenuItem joinCoLabRoom;
 	private JMenuItem disconnect;
 	private JMenuItem exitCoLab;
+	private final JCheckBox showRoomMembers = new JCheckBox("Display Room Members Window");
 	private final JCheckBox showChat = new JCheckBox("Display Chat Window");
 	private JMenuItem about;
 	
@@ -64,7 +67,7 @@ public class WindowClient extends JFrame implements IClient {
 		documentPane.addTab("panel2", new JDocTabPanel());
 		chatPanel = new JChatPanel();
 
-		JPanel roomPanel = new JPanel();
+		roomPanel = new JPanel();
 		roomPanel.add(roomMemberList);
 
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -94,6 +97,7 @@ public class WindowClient extends JFrame implements IClient {
 		joinCoLabRoom.setMnemonic(KeyEvent.VK_J);
 		disconnect.setMnemonic(KeyEvent.VK_D);
 		exitCoLab.setMnemonic(KeyEvent.VK_X);
+		showRoomMembers.setMnemonic(KeyEvent.VK_R);
 		showChat.setMnemonic(KeyEvent.VK_C);
 		about.setMnemonic(KeyEvent.VK_A);
 
@@ -103,9 +107,11 @@ public class WindowClient extends JFrame implements IClient {
 		file.add(disconnect);
 		file.add(exitCoLab);
 		view.add(showChat);
+		view.add(showRoomMembers);
 		
 		setDisconnected();
 		showChat.setSelected(true);
+		showRoomMembers.setSelected(true);
 		
 		mainMenu.add(file);
 		mainMenu.add(view);
@@ -147,11 +153,17 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				proxy.getServer().leaveCoLabRoom(userName, roomName);
 			}
 		});
 		
 		//VIEW menu items
+		showRoomMembers.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				roomPanel.setVisible(showRoomMembers.isSelected());
+			}
+		});
 		showChat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -286,6 +298,14 @@ public class WindowClient extends JFrame implements IClient {
 	
 	public void setUserName(String un) {
 		userName = un;
+	}
+	
+	public String getRoomName() {
+		return roomName;
+	}
+	
+	public void setRoomName(String rn) {
+		roomName = rn;
 	}
 	
 	/**
