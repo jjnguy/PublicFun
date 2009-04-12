@@ -215,6 +215,11 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean allCoLabRooms(Collection<String> roomNames) {
+		if (colabRoomFrame == null){
+			if (Util.DEBUG) {
+				System.out.println("Client was sent list of all rooms before frame was created");
+			}return false;
+		}
 		colabRoomFrame.roomsUpdated(roomNames);
 		return true;
 	}

@@ -138,6 +138,7 @@ public class WindowJoinCoLab extends JDialog {
 				server.joinCoLabRoom(parent.getUserName(), joinName, null);
 				parent.setRoomName(joinName);
 				parent.chatLogin();
+				server.getClientsCurrentlyInRoom(parent.getUserName(), joinName);
 				dispose();
 			}
 		});
@@ -151,6 +152,7 @@ public class WindowJoinCoLab extends JDialog {
 					parent.setRoomName(createField.getText());
 					server.joinCoLabRoom(parent.getUserName(), createField.getText(), null);
 					parent.chatLogin();
+					server.getClientsCurrentlyInRoom(parent.getUserName(), createField.getText());
 					dispose();
 				}
 			}
