@@ -124,6 +124,7 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
+				setLogIn();
 			}
 		});
 		joinCoLabRoom.addActionListener(new ActionListener() {
