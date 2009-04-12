@@ -128,8 +128,8 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean allCoLabRooms(Collection<String> roomNames) {
-		// TODO Auto-generated method stub
-		return false;
+		colabRoomFrame.roomsUpdated(roomNames);
+		return true;
 	}
 
 	@Override

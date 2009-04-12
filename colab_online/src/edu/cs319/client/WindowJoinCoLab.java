@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -95,6 +97,8 @@ public class WindowJoinCoLab extends JDialog {
 	public void roomsUpdated(Collection<String> roomNames) {
 		roomList.getModel().clearList();
 		roomList.getModel().addAll(roomNames);
+		Calendar c = GregorianCalendar.getInstance();
+		refreshTimeStamp.setText(c.getTime().toString());
 	}
 
 	private void fillCoLabRoomList() {
@@ -130,8 +134,7 @@ public class WindowJoinCoLab extends JDialog {
 		refreshButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				fillCoLabRoomList();
 			}
 		});
 
