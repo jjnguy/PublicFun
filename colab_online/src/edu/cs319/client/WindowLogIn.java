@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -13,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
@@ -27,13 +28,9 @@ import edu.cs319.connectionmanager.clientside.Proxy;
  */
 public class WindowLogIn extends JDialog {
 
-	// TODO check username for spaces or @
-
 	private JTextField hostField = new JTextField(20);
 	private JTextField usernameField = new JTextField(20);
-	private JPasswordField pwField = new JPasswordField();
 	private JButton logInButton = new JButton("Log In");
-	// private JButton newUserButton = new JButton("Create New User");
 	private JButton cancelButton = new JButton("Cancel");
 
 	private IClient client;
@@ -115,6 +112,10 @@ public class WindowLogIn extends JDialog {
 	}
 
 	private void setUpListeners() {
+		hostField.addKeyListener(enterKey);
+		usernameField.addKeyListener(enterKey);
+		logInButton.addKeyListener(enterKey);
+		cancelButton.addKeyListener(enterKey);
 		logInButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -137,4 +138,18 @@ public class WindowLogIn extends JDialog {
 			}
 		});
 	}
+	
+	private KeyListener enterKey = new KeyListener() {
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			if(arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+				logInButton.doClick();
+			}
+		}
+		@Override
+		public void keyReleased(KeyEvent arg0) {}
+		@Override
+		public void keyTyped(KeyEvent arg0) {}
+	};
+	
 }
