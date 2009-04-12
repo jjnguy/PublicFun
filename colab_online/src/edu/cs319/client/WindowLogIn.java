@@ -52,7 +52,7 @@ public class WindowLogIn extends JDialog {
 		JLabel hostNameLabel = new JLabel("Host Name");
 		JLabel usernameLabel = new JLabel("User Name");
 		JLabel pwLabel = new JLabel("Password");
-//		JLabel newUserLabel = new JLabel("New to CoLab?");
+		// JLabel newUserLabel = new JLabel("New to CoLab?");
 		Dimension textFieldSize = new Dimension(125, 25);
 		usernameField.setPreferredSize(textFieldSize);
 		pwField.setPreferredSize(textFieldSize);
@@ -88,21 +88,22 @@ public class WindowLogIn extends JDialog {
 		c.anchor = GridBagConstraints.CENTER;
 		mainPanel.add(logInButton, c);
 
-//		c.gridx = 0;
-//		c.gridy = 4;
-//		c.anchor = GridBagConstraints.LINE_END;
-//		mainPanel.add(newUserLabel, c);
-//
-//		c.gridx = 1;
-//		c.anchor = GridBagConstraints.CENTER;
-//		mainPanel.add(newUserButton, c);
+		// c.gridx = 0;
+		// c.gridy = 4;
+		// c.anchor = GridBagConstraints.LINE_END;
+		// mainPanel.add(newUserLabel, c);
+		//
+		// c.gridx = 1;
+		// c.anchor = GridBagConstraints.CENTER;
+		// mainPanel.add(newUserButton, c);
 
 		this.add(mainPanel);
 	}
 
-	public Proxy showLoginWindow() {
-		this.setVisible(true);
-		return serverConnection;
+	public static Proxy showLoginWindow(JFrame parent, IClient client) {
+		WindowLogIn win = new WindowLogIn(parent, client);
+		win.setVisible(true);
+		return win.serverConnection;
 	}
 
 	private void login(String host, String username) {
@@ -130,14 +131,6 @@ public class WindowLogIn extends JDialog {
 				dispose();
 			}
 		});
-
-		/*
-		 * newUserButton.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent arg0) { // TODO create new user
-		 * 
-		 * } });
-		 */
 
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
