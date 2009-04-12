@@ -17,8 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import edu.cs319.client.customcomponents.JRoomMemberList;
 import edu.cs319.server.IServer;
@@ -114,19 +112,12 @@ public class WindowJoinCoLab extends JDialog {
 	}
 
 	private void setUpListeners() {
-		roomList.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				// TODO list selection event
-
-			}
-		});
-
 		joinButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO join coLab room
-
+				String joinName = (String) roomList.getSelectedValue();
+				server.joinCoLabRoom(parent.getUserName(), joinName, null);
+				dispose();
 			}
 		});
 
@@ -137,6 +128,7 @@ public class WindowJoinCoLab extends JDialog {
 					return;
 				if (server.addNewCoLabRoom(parent.getUserName(), createField.getText(), null)) {
 					server.joinCoLabRoom(parent.getUserName(), createField.getText(), null);
+					dispose();
 				}
 			}
 		});

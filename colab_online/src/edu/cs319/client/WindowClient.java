@@ -49,7 +49,7 @@ public class WindowClient extends JFrame implements IClient {
 	private JMenuItem exitCoLab;
 	
 	public WindowClient() {
-		setLookAndFeel();
+		// setLookAndFeel();
 		setTitle("CoLab");
 		setSize(new Dimension(900, 500));
 		setJMenuBar(createMenuBar());
