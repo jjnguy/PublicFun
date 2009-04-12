@@ -196,6 +196,8 @@ public class WindowClient extends JFrame implements IClient {
 		logIn.setEnabled(false);
 		joinCoLabRoom.setEnabled(true);
 		disconnect.setEnabled(true);
+		String title = getTitle();
+		setTitle(title + " - " + getUserName());
 	}
 
 	/**
@@ -206,6 +208,8 @@ public class WindowClient extends JFrame implements IClient {
 		logIn.setEnabled(false);
 		joinCoLabRoom.setEnabled(false);
 		disconnect.setEnabled(true);
+		String title = getTitle();
+		setTitle(title + " - " + getRoomName());
 	}
 
 	/**
