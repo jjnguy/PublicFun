@@ -35,7 +35,6 @@ public class WindowClient extends JFrame implements IClient {
 
 	private Proxy proxy;
 
-	private WindowLogIn loginFrame;
 	private WindowJoinCoLab colabRoomFrame;
 	
 	private JTabbedPane documentPane;
@@ -130,8 +129,8 @@ public class WindowClient extends JFrame implements IClient {
 		joinCoLabRoom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
+				colabRoomFrame.setVisible(true);
 			}
 		});
 		disconnect.addActionListener(new ActionListener() {
