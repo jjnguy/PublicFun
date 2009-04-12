@@ -26,6 +26,7 @@ import edu.cs319.client.customcomponents.JRoomListPanel;
 import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
@@ -233,12 +234,12 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
+		chatPanel.newChatMessage("Server", "<New Chat member '"+ username +"'>");
 		return roomMemberListPanel.addUser(username);
 	}
 
@@ -250,51 +251,45 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean newChatMessage(String usernameSender, String message) {
 		chatPanel.newChatMessage(usernameSender, message);
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean newChatMessage(String usernameSender, String message, String recipiant) {
-		// TODO Auto-generated method stub
-		return false;
+		chatPanel.newChatMessage(usernameSender, message, recipiant);
+		return true;
 	}
 
 	@Override
 	public boolean newSubSection(String username, String sectionID, String documentName,
 			DocumentSubSection section, int idx) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionID) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionID) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean subSectionRemoved(String username, String sectionID, String documentName) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotYetImplementedException();
 	}
 
 	@Override
