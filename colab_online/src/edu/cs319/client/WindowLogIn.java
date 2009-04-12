@@ -9,11 +9,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import edu.cs319.connectionmanager.clientside.ConnectionFactory;
+import edu.cs319.connectionmanager.clientside.Proxy;
 
 /**
  * 
@@ -25,16 +29,19 @@ public class WindowLogIn extends JDialog {
 
 	// TODO check username for spaces or @
 
+	private JTextField hostField = new JTextField();
 	private JTextField usernameField = new JTextField();
 	private JPasswordField pwField = new JPasswordField();
 	private JButton logInButton = new JButton("Log In");
 	// private JButton newUserButton = new JButton("Create New User");
 	private JButton cancelButton = new JButton("Cancel");
-	
-	private int exitStatus;
 
-	private WindowLogIn() {
-		this.setTitle("CoLab Log In");
+	private IClient client;
+	private Proxy serverConnection;
+
+	private WindowLogIn(JFrame parent, IClient client) {
+		super(parent, "CoLab Log In");
+		this.client = client;
 		this.setSize(300, 250);
 		setModal(true);
 		setUpAppearance();
@@ -42,6 +49,7 @@ public class WindowLogIn extends JDialog {
 	}
 
 	private void setUpAppearance() {
+		JLabel hostNameLabel = new JLabel("Host Name");
 		JLabel usernameLabel = new JLabel("User Name");
 		JLabel pwLabel = new JLabel("Password");
 		JLabel newUserLabel = new JLabel("New to CoLab?");
@@ -70,11 +78,11 @@ public class WindowLogIn extends JDialog {
 		c.gridx = 0;
 		c.gridy = 2;
 		c.anchor = GridBagConstraints.LINE_END;
-		mainPanel.add(pwLabel, c);
+		mainPanel.add(hostNameLabel, c);
 
 		c.gridx = 1;
 		c.anchor = GridBagConstraints.LINE_START;
-		mainPanel.add(pwField, c);
+		mainPanel.add(hostField, c);
 
 		c.gridy = 3;
 		c.anchor = GridBagConstraints.CENTER;
@@ -87,41 +95,56 @@ public class WindowLogIn extends JDialog {
 
 		c.gridx = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		//mainPanel.add(newUserButton, c);
+		// mainPanel.add(newUserButton, c);
 
 		this.add(mainPanel);
 	}
 
-	public int showLoginWindow() {
+	public Proxy showLoginWindow() {
+		this.setVisible(true);
+		return serverConnection;
+	}
 
-		
-		return exitStatus;
+	private void login(String host, String username) {
+		serverConnection = ConnectionFactory.getNetworkedInstance().connect(host, 4444, client,
+				username);
+	}
+
+	public static boolean isValidUserName(String usernme) {
+		if (usernme.length() < 1)
+			return false;
+		return !(usernme.contains(" ") || usernme.startsWith("@"));
 	}
 
 	private void setUpListeners() {
 		logInButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO log in
-
+				if (!isValidUserName(usernameField.getText())) {
+					JOptionPane.showMessageDialog(WindowLogIn.this,
+							"Your username may not contain a space or begin with an '@'.  "
+									+ "It must also be at least one character long.");
+					return;
+				}
+				login(hostField.getText(), usernameField.getText());
+				dispose();
 			}
 		});
 
-		/*newUserButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO create new user
-
-			}
-		});*/
+		/*
+		 * newUserButton.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent arg0) { // TODO create new user
+		 * 
+		 * } });
+		 */
 
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				exitStatus = JOptionPane.CANCEL_OPTION;
+				serverConnection = null;
 				dispose();
 			}
 		});
 	}
-
 }
