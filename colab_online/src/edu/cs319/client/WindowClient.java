@@ -206,4 +206,10 @@ public class WindowClient extends JFrame implements IClient {
 		return false;
 	}
 
+	@Override
+	public String getUserName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
