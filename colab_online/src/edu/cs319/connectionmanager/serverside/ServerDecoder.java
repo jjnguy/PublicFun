@@ -78,7 +78,7 @@ public class ServerDecoder implements Runnable {
 				actualServer.newChatMessage(cln, args.get(0), args.get(1), args.get(2));
 				break;
 			case GET_ROOM_LIST:
-				actualServer.getAllCoLabRoomNames(cln );
+				actualServer.getAllCoLabRoomNames(cln);
 				break;
 			case MEMBERS_IN_ROOM:
 				actualServer.getClientsCurrentlyInRoom(cln, args.get(0));

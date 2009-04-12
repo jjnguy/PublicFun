@@ -125,7 +125,7 @@ public class ClientEncoder implements IClient {
 		for (String s : usernames) {
 			args.add(s);
 		}
-		Message m = new Message(MessageType.GET_ROOM_LIST, "Server Initiated", args);
+		Message m = new Message(MessageType.MEMBERS_IN_ROOM, "Server Initiated", args);
 		return printMessageToStream(m);
 	}
 

@@ -50,7 +50,7 @@ public class ServerEncoder implements IServer {
 		List<String> args = new ArrayList<String>();
 		args.add(roomname);
 		args.add(newPriv.toString());
-		Message m = new Message(MessageType.CHANGE_USER_PRIV,username,args);
+		Message m = new Message(MessageType.CHANGE_USER_PRIV, username, args);
 		return printMessageToStream(m);
 	}
 
@@ -112,7 +112,7 @@ public class ServerEncoder implements IServer {
 	@Override
 	public boolean getAllCoLabRoomNames(String username) {
 		List<String> args = new ArrayList<String>();
-		Message m = new Message(MessageType.GET_ROOM_LIST,username,args);
+		Message m = new Message(MessageType.GET_ROOM_LIST, username, args);
 		return printMessageToStream(m);
 	}
 
@@ -120,7 +120,7 @@ public class ServerEncoder implements IServer {
 	public boolean getClientsCurrentlyInRoom(String username, String roomName) {
 		List<String> args = new ArrayList<String>();
 		args.add(roomName);
-		Message m = new Message(MessageType.MEMBERS_IN_ROOM,username,args);
+		Message m = new Message(MessageType.MEMBERS_IN_ROOM, username, args);
 		return printMessageToStream(m);
 	}
 
@@ -132,7 +132,7 @@ public class ServerEncoder implements IServer {
 		args.add(documentName);
 		args.add(sectionID);
 		args.add(Integer.toString(idx));
-		Message m = new Message(MessageType.NEW_SUBSECTION,username,args);
+		Message m = new Message(MessageType.NEW_SUBSECTION, username, args);
 		return printMessageToStream(m);
 	}
 
@@ -143,7 +143,7 @@ public class ServerEncoder implements IServer {
 		args.add(roomname);
 		args.add(documentName);
 		args.add(sectionID);
-		Message m = new Message(MessageType.REMOVE_SUBSECTION,username,args);
+		Message m = new Message(MessageType.REMOVE_SUBSECTION, username, args);
 		return printMessageToStream(m);
 	}
 
@@ -155,47 +155,8 @@ public class ServerEncoder implements IServer {
 		args.add(sectionID);
 		args.add(documentName);
 		args.add(update.toDelimmitedString());
-		Message m = new Message(MessageType.UPDATE_SUBSECTION,username,args);
+		Message m = new Message(MessageType.UPDATE_SUBSECTION, username, args);
 		return printMessageToStream(m);
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

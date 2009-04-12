@@ -41,6 +41,7 @@ public class WindowLogIn extends JDialog {
 
 	private WindowLogIn(JFrame parent, IClient client) {
 		super(parent, "CoLab Log In");
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.client = client;
 		Dimension minSize = new Dimension(350, 150);
 		this.setSize(minSize);
@@ -53,12 +54,12 @@ public class WindowLogIn extends JDialog {
 	private void setUpAppearance() {
 		JLabel hostNameLabel = new JLabel("Host Name");
 		JLabel usernameLabel = new JLabel("User Name");
-		
+
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		Insets borderInsets = new Insets(5, 5, 5, 5);
 		c.insets = borderInsets;
-		
+
 		c.gridx = 0;
 		c.gridy = 0;
 		c.anchor = GridBagConstraints.LINE_END;
@@ -90,12 +91,15 @@ public class WindowLogIn extends JDialog {
 		mainPanel.add(cancelButton, c);
 
 		this.add(mainPanel);
-		//pack();
+		// pack();
 	}
 
-	public static Proxy showLoginWindow(JFrame parent, IClient client) {
+	public static Proxy showLoginWindow(WindowClient parent, IClient client) {
 		WindowLogIn win = new WindowLogIn(parent, client);
 		win.setVisible(true);
+		if (win.serverConnection == null)
+			return null;
+		parent.setUserName(win.usernameField.getText());
 		return win.serverConnection;
 	}
 

@@ -67,27 +67,37 @@ public class ClientDecoder implements Runnable {
 				args.add(DocumentSubSection.getFromDelimmitedString(arg.get(i)));
 			}
 			actualClient.updateAllSubsections(arg.get(0), args);
+			break;
 		case UPDATE_SUBSECTION:
 			actualClient.updateSubsection(username, arg.get(0), DocumentSubSection
 					.getFromDelimmitedString(arg.get(1)), arg.get(2));
+			break;
 		case SUBSECTION_LOCKED:
 			actualClient.subsectionLocked(username, arg.get(0), arg.get(1));
+			break;
 		case SUBSECTION_UNLOCKED:
 			actualClient.subsectionUnLocked(username, arg.get(0), arg.get(1));
+			break;
 		case NEW_SUBSECTION:
 			actualClient.newSubSection(username, arg.get(0), arg.get(1), DocumentSubSection
 					.getFromDelimmitedString(arg.get(2)), Integer.parseInt(arg.get(3)));
+			break;
 		case MEMBER_LEAVE_ROOM:
 			actualClient.coLabRoomMemberLeft(username);
+			break;
 		case MEMBERS_IN_ROOM:
 			actualClient.allUsersInRoom(arg);
+			break;
 		case CHANGE_USER_PRIV:
 			actualClient.changeUserPrivilege(username, CoLabPrivilegeLevel
 					.getPrivilegeLevelFromString(arg.get(0)));
+			break;
 		case GET_ROOM_LIST:
 			actualClient.allCoLabRooms(arg);
+			break;
 		case REMOVE_SUBSECTION:
 			actualClient.subSectionRemoved(username, arg.get(0), arg.get(1));
+			break;
 		default:
 			throw new NotYetImplementedException();
 		}
