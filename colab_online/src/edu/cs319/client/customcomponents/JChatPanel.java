@@ -9,8 +9,10 @@ import java.awt.TrayIcon.MessageType;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -54,8 +56,7 @@ public class JChatPanel extends JPanel {
 		this.clientID = clientID;
 		this.roomName = roomName;
 		// TODO get icons
-		this.trayI = new TrayIcon(null);
-		//this.trayI = new TrayIcon(ImageIO.read(new File("communicationBrakdown.bmp")));
+		this.trayI = new TrayIcon(ImageIO.read(new File("images/tempIcon.bmp")));
 		SystemTray tray = SystemTray.getSystemTray();
 		try {
 			tray.add(trayI);

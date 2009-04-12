@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import javax.swing.JTabbedPane;
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomList;
-import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
@@ -35,6 +33,9 @@ public class WindowClient extends JFrame implements IClient {
 
 	private Proxy proxy;
 
+	private WindowLogIn loginFrame;
+	private WindowJoinCoLab colabRoomFrame;
+	
 	private JTabbedPane documentPane;
 	private JRoomList roomMemberList;
 	private JChatPanel chatPanel;
@@ -57,15 +58,6 @@ public class WindowClient extends JFrame implements IClient {
 		panel.add(roomPanel, BorderLayout.WEST);
 		panel.add(documentPane, BorderLayout.CENTER);
 		panel.add(chatPanel, BorderLayout.EAST);
-		proxy = ConnectionFactory.getLocalInstance().connect(null, 0, this, "jjnguy");
-		proxy.getServer().addNewCoLabRoom("jjnguy", "room", null);
-		proxy.getServer().joinCoLabRoom("jjnguy", "room", null);
-		try {
-			chatPanel.connect(proxy.getServer(), "jjnguy", "room");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		add(panel);
 	}
 
