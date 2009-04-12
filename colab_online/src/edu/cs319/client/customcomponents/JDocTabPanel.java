@@ -1,6 +1,7 @@
 package edu.cs319.client.customcomponents;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -41,24 +42,22 @@ public class JDocTabPanel extends JPanel {
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		
-//		sectionList.setMinimumSize(new Dimension(150, 100));
-//		workPane.setMinimumSize(new Dimension(50, 75));
-		
 		JPanel buttonPanel = new JPanel(new BorderLayout(5, 5));
 		buttonPanel.add(sectionUpButton, BorderLayout.NORTH);
 		buttonPanel.add(sectionDownButton, BorderLayout.SOUTH);
 		sectionPanel = new JPanel(new BorderLayout(10, 10));
 		sectionPanel.add(sectionList, BorderLayout.CENTER);
 		sectionPanel.add(buttonPanel, BorderLayout.SOUTH);
-//		add(sectionPanel, BorderLayout.WEST);
-//		add(workspace, BorderLayout.CENTER);
+		
+		documentPane.setMinimumSize(new Dimension(0, 0));
+		workPane.setMinimumSize(new Dimension(0, 0));
 		
 		workspace = new JSplitPane(JSplitPane.VERTICAL_SPLIT, documentPane, workPane);
 		wholePane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sectionPanel, workspace);
 		
 		workspace.setDividerLocation(250);
 		workspace.setOneTouchExpandable(true);
-		wholePane.setDividerLocation(200);
+		wholePane.setDividerLocation(150);
 		wholePane.setOneTouchExpandable(true);
 		
 		add(wholePane, BorderLayout.CENTER);
