@@ -29,8 +29,8 @@ public class WindowLogIn extends JDialog {
 
 	// TODO check username for spaces or @
 
-	private JTextField hostField = new JTextField();
-	private JTextField usernameField = new JTextField();
+	private JTextField hostField = new JTextField(20);
+	private JTextField usernameField = new JTextField(20);
 	private JPasswordField pwField = new JPasswordField();
 	private JButton logInButton = new JButton("Log In");
 	// private JButton newUserButton = new JButton("Create New User");
@@ -54,8 +54,6 @@ public class WindowLogIn extends JDialog {
 		JLabel pwLabel = new JLabel("Password");
 		// JLabel newUserLabel = new JLabel("New to CoLab?");
 		Dimension textFieldSize = new Dimension(125, 25);
-		usernameField.setPreferredSize(textFieldSize);
-		pwField.setPreferredSize(textFieldSize);
 
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -93,11 +91,12 @@ public class WindowLogIn extends JDialog {
 		// c.anchor = GridBagConstraints.LINE_END;
 		// mainPanel.add(newUserLabel, c);
 		//
-		c.gridx = 1;
+		c.gridx = 0;
 		c.anchor = GridBagConstraints.CENTER;
 		mainPanel.add(cancelButton, c);
 
 		this.add(mainPanel);
+		pack();
 	}
 
 	public static Proxy showLoginWindow(JFrame parent, IClient client) {
