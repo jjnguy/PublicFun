@@ -29,7 +29,6 @@ public class JDocTabPanel extends JPanel {
 	
 	public JDocTabPanel() {
 		sectionList = new JList();
-		sectionPanel = new JPanel(new BorderLayout(10, 10));
 		documentPane = new JEditorPane();
 		workPane = new JEditorPane();
 		sectionUpButton = new JButton("Move Up");
@@ -39,7 +38,7 @@ public class JDocTabPanel extends JPanel {
 	}
 	
 	private void setUpAppearance() {
-		setLayout(new BorderLayout(10, 10));
+		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 //		sectionList.setMinimumSize(new Dimension(150, 100));
@@ -48,6 +47,7 @@ public class JDocTabPanel extends JPanel {
 		JPanel buttonPanel = new JPanel(new BorderLayout(5, 5));
 		buttonPanel.add(sectionUpButton, BorderLayout.NORTH);
 		buttonPanel.add(sectionDownButton, BorderLayout.SOUTH);
+		sectionPanel = new JPanel(new BorderLayout(10, 10));
 		sectionPanel.add(sectionList, BorderLayout.CENTER);
 		sectionPanel.add(buttonPanel, BorderLayout.SOUTH);
 //		add(sectionPanel, BorderLayout.WEST);

@@ -44,7 +44,6 @@ public class WindowClient extends JFrame implements IClient {
 	private String userName;
 	private String roomName;
 
-	private JPanel roomPanel;
 	private JTabbedPane documentPane;
 	private JRoomListPanel roomMemberListPanel;
 	private JChatPanel chatPanel;
@@ -166,7 +165,7 @@ public class WindowClient extends JFrame implements IClient {
 		showRoomMembers.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				roomPanel.setVisible(showRoomMembers.isSelected());
+				roomMemberListPanel.setVisible(showRoomMembers.isSelected());
 			}
 		});
 		showChat.addActionListener(new ActionListener() {
