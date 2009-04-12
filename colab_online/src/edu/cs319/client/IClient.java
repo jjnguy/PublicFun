@@ -36,5 +36,5 @@ public interface IClient {
 
 	public boolean allCoLabRooms(Collection<String> roomNames);
 
-	public String getName();
+	public String getUserName();
 }

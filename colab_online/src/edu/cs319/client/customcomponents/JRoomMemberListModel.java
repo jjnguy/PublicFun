@@ -1,6 +1,7 @@
 package edu.cs319.client.customcomponents;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -12,9 +13,9 @@ public class JRoomMemberListModel extends AbstractListModel {
 	public JRoomMemberListModel() {
 		userIDs = new ArrayList<String>();
 	}
-	
+
 	public List getAllRoomMembers() {
-		//TODO implement
+		// TODO implement
 		return null;
 	}
 
@@ -22,7 +23,7 @@ public class JRoomMemberListModel extends AbstractListModel {
 		if (userIDs.contains(userID))
 			return false;
 		userIDs.add(userID);
-		fireIntervalAdded(userID, 0, getSize());
+		fireIntervalAdded(this, 0, getSize());
 		return true;
 	}
 
@@ -31,8 +32,17 @@ public class JRoomMemberListModel extends AbstractListModel {
 		if (index == -1)
 			return false;
 		userIDs.remove(0);
-		fireIntervalRemoved(userID, 0, getSize());
+		fireIntervalRemoved(this, 0, getSize());
 		return true;
+	}
+
+	public void clearList() {
+		userIDs.clear();
+		fireIntervalRemoved(this, 0, getSize());
+	}
+
+	public void addAll(Collection<String> newVals) {
+		userIDs.addAll(newVals);
 	}
 
 	@Override
@@ -46,7 +56,7 @@ public class JRoomMemberListModel extends AbstractListModel {
 	public int getSize() {
 		return userIDs.size();
 	}
-	
+
 	public boolean contains(String userID) {
 		return userIDs.contains(userID);
 	}

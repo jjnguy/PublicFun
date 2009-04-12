@@ -5,12 +5,11 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -19,22 +18,33 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.cs319.client.customcomponents.JRoomMemberList;
+import edu.cs319.server.IServer;
+
 /**
  * 
  * @author Amelia Gee
+ * @author Justin Nelson
  * 
  */
 public class WindowJoinCoLab extends JDialog {
 
-	private JList roomList;
-	private DefaultListModel listModel;
+	private JRoomMemberList roomList;
 	private JTextField createField = new JTextField();
 	private JButton joinButton = new JButton("Join");
 	private JButton createButton = new JButton("Create");
 	private JButton cancelButton = new JButton("Cancel");
+	private JButton refreshButton = new JButton("Refresh");
+	private JLabel refreshTimeStamp = new JLabel("No List Yet");
 
-	public WindowJoinCoLab() {
-		this.setTitle("Join a CoLab Room");
+	private WindowClient parent;
+
+	private IServer server;
+
+	public WindowJoinCoLab(WindowClient parent, IServer server) {
+		super(parent, "Join a CoLab Room");
+		this.parent = parent;
+		this.server = server;
 		this.setSize(500, 400);
 		this.setMinimumSize(new Dimension(500, 400));
 		setUpAppearance();
@@ -44,8 +54,7 @@ public class WindowJoinCoLab extends JDialog {
 
 	private void setUpAppearance() {
 		Insets borderInsets = new Insets(0, 0, 20, 0);
-		listModel = new DefaultListModel();
-		roomList = new JList(listModel);
+		roomList = new JRoomMemberList();
 		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		roomList.setSelectedIndex(0);
 		roomList.setVisibleRowCount(8);
@@ -80,6 +89,17 @@ public class WindowJoinCoLab extends JDialog {
 		mainPanel.add(southPanel, BorderLayout.SOUTH);
 		mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.add(mainPanel);
+		fillCoLabRoomList();
+	}
+
+	public void roomsUpdated(Collection<String> roomNames) {
+		roomList.getModel().clearList();
+		roomList.getModel().addAll(roomNames);
+	}
+
+	private void fillCoLabRoomList() {
+		// ask for all room members
+		server.getAllCoLabRoomNames(parent.getUserName());
 	}
 
 	private void setUpListeners() {
@@ -107,6 +127,14 @@ public class WindowJoinCoLab extends JDialog {
 			}
 		});
 
+		refreshButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -115,7 +143,5 @@ public class WindowJoinCoLab extends JDialog {
 			}
 		});
 	}
-public static void main(String[] args) {
-	WindowLogIn.showLoginWindow(null, new WindowClient());
-}
+
 }

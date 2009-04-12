@@ -105,7 +105,7 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public String getName() {
+	public String getUserName() {
 		return username;
 	}
 
