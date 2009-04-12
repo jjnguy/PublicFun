@@ -15,6 +15,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
@@ -47,6 +49,7 @@ public class WindowClient extends JFrame implements IClient {
 	private JMenuItem exitCoLab;
 	
 	public WindowClient() {
+		setLookAndFeel();
 		setTitle("CoLab");
 		setSize(new Dimension(900, 500));
 		setJMenuBar(createMenuBar());
@@ -211,5 +214,21 @@ public class WindowClient extends JFrame implements IClient {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/**
+	 * Sets the look and feel of an application to that of the system it is running on. (Java's
+	 * default looks bad)
+	 */
+	private static void setLookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+	}
 }

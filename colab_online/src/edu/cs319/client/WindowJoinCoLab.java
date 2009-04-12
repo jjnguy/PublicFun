@@ -22,6 +22,7 @@ import javax.swing.event.ListSelectionListener;
 
 import edu.cs319.client.customcomponents.JRoomMemberList;
 import edu.cs319.server.IServer;
+import edu.cs319.util.Util;
 
 /**
  * 
@@ -45,6 +46,12 @@ public class WindowJoinCoLab extends JDialog {
 
 	public WindowJoinCoLab(WindowClient parent, IServer server) {
 		super(parent, "Join a CoLab Room");
+		if (server == null) {
+			if (Util.DEBUG) {
+				System.out.println("Null server passed into a join colab room frame");
+			}
+			throw new IllegalArgumentException("The server must not be null");
+		}
 		this.parent = parent;
 		this.server = server;
 		this.setSize(500, 400);
@@ -126,8 +133,11 @@ public class WindowJoinCoLab extends JDialog {
 		createButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO check for existing coLab room with same name; create new coLab room
-
+				if (createField.getText().length() == 0)
+					return;
+				if (server.addNewCoLabRoom(parent.getUserName(), createField.getText(), null)) {
+					server.joinCoLabRoom(parent.getUserName(), createField.getText(), null);
+				}
 			}
 		});
 
@@ -141,10 +151,8 @@ public class WindowJoinCoLab extends JDialog {
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO allow user to close Join CoLab dialog and join later
-
+				dispose();
 			}
 		});
 	}
-
 }
