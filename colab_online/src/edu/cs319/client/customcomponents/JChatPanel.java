@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import edu.cs319.server.IServer;
 import edu.cs319.util.Util;
@@ -43,6 +44,7 @@ public class JChatPanel extends JPanel {
 
 	public JChatPanel() {
 		super(new BorderLayout(10, 10));
+		setBorder(new EmptyBorder(10, 10, 10, 10));
 		Dimension pref = new Dimension(250, 200);
 		topText = new JTextArea();
 		topText.setEditable(false);

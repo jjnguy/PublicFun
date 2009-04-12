@@ -21,7 +21,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
-import edu.cs319.client.customcomponents.JRoomList;
+import edu.cs319.client.customcomponents.JRoomListPanel;
 import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
@@ -44,7 +44,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	private JPanel roomPanel;
 	private JTabbedPane documentPane;
-	private JRoomList roomMemberList;
+	private JRoomListPanel roomMemberListPanel;
 	private JChatPanel chatPanel;
 
 	private JMenuItem openDocument;
@@ -63,17 +63,14 @@ public class WindowClient extends JFrame implements IClient {
 		setJMenuBar(createMenuBar());
 		setListeners();
 
-		roomMemberList = new JRoomList();
+		roomMemberListPanel = new JRoomListPanel();
 		documentPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		documentPane.addTab("panel1", new JDocTabPanel());
 		documentPane.addTab("panel2", new JDocTabPanel());
 		chatPanel = new JChatPanel();
 
-		roomPanel = new JPanel();
-		roomPanel.add(roomMemberList);
-
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
-		panel.add(roomPanel, BorderLayout.WEST);
+		panel.add(roomMemberListPanel, BorderLayout.WEST);
 		panel.add(documentPane, BorderLayout.CENTER);
 		panel.add(chatPanel, BorderLayout.EAST);
 		add(panel);
@@ -226,7 +223,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean allUsersInRoom(Collection<String> usernames) {
-		roomMemberList.updateList(usernames);
+		roomMemberListPanel.updateList(usernames);
 		return true;
 	}
 
