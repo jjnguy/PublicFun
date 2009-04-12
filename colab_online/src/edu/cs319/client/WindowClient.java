@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import edu.cs319.client.customcomponents.JRoomList;
 import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.util.Util;
 
 /**
  * 
@@ -36,10 +38,10 @@ public class WindowClient extends JFrame implements IClient {
 	private Proxy proxy;
 
 	private WindowJoinCoLab colabRoomFrame;
-	
+
 	private String userName;
 	private String roomName;
-	
+
 	private JPanel roomPanel;
 	private JTabbedPane documentPane;
 	private JRoomList roomMemberList;
@@ -53,7 +55,7 @@ public class WindowClient extends JFrame implements IClient {
 	private final JCheckBox showRoomMembers = new JCheckBox("Display Room Members Window");
 	private final JCheckBox showChat = new JCheckBox("Display Chat Window");
 	private JMenuItem about;
-	
+
 	public WindowClient() {
 		// setLookAndFeel();
 		setTitle("CoLab");
@@ -88,7 +90,7 @@ public class WindowClient extends JFrame implements IClient {
 		disconnect = new JMenuItem("Disconnect");
 		exitCoLab = new JMenuItem("Exit CoLab");
 		about = new JMenuItem("About");
-		
+
 		file.setMnemonic(KeyEvent.VK_F);
 		view.setMnemonic(KeyEvent.VK_V);
 		help.setMnemonic(KeyEvent.VK_H);
@@ -108,24 +110,24 @@ public class WindowClient extends JFrame implements IClient {
 		file.add(exitCoLab);
 		view.add(showChat);
 		view.add(showRoomMembers);
-		
+
 		setDisconnected();
 		showChat.setSelected(true);
 		showRoomMembers.setSelected(true);
-		
+
 		mainMenu.add(file);
 		mainMenu.add(view);
 		mainMenu.add(help);
 		return mainMenu;
 	}
-	
+
 	private void setListeners() {
-		//FILE menu items
+		// FILE menu items
 		openDocument.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		logIn.addActionListener(new ActionListener() {
@@ -146,7 +148,7 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		exitCoLab.addActionListener(new ActionListener() {
@@ -156,8 +158,8 @@ public class WindowClient extends JFrame implements IClient {
 				proxy.getServer().leaveCoLabRoom(userName, roomName);
 			}
 		});
-		
-		//VIEW menu items
+
+		// VIEW menu items
 		showRoomMembers.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -170,17 +172,17 @@ public class WindowClient extends JFrame implements IClient {
 				chatPanel.setVisible(showChat.isSelected());
 			}
 		});
-		
-		//HELP menu items
+
+		// HELP menu items
 		about.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
-	
+
 	/**
 	 * Set menu items enabled/disabled for when user is logged in.
 	 */
@@ -190,7 +192,7 @@ public class WindowClient extends JFrame implements IClient {
 		joinCoLabRoom.setEnabled(true);
 		disconnect.setEnabled(true);
 	}
-	
+
 	/**
 	 * Set menu items enabled/disabled for when user has joined a CoLab Room.
 	 */
@@ -200,7 +202,7 @@ public class WindowClient extends JFrame implements IClient {
 		joinCoLabRoom.setEnabled(false);
 		disconnect.setEnabled(true);
 	}
-	
+
 	/**
 	 * Set menu items enabled/disabled for when user is disconnected.
 	 */
@@ -295,19 +297,28 @@ public class WindowClient extends JFrame implements IClient {
 	public String getUserName() {
 		return userName;
 	}
-	
+
 	public void setUserName(String un) {
 		userName = un;
 	}
-	
+
 	public String getRoomName() {
 		return roomName;
 	}
-	
+
 	public void setRoomName(String rn) {
 		roomName = rn;
 	}
-	
+
+	public void chatLogin() {
+		try {
+			chatPanel.connect(proxy.getServer(), userName, roomName);
+		} catch (IOException e) {
+			if (Util.DEBUG)
+				e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Sets the look and feel of an application to that of the system it is running on. (Java's
 	 * default looks bad)

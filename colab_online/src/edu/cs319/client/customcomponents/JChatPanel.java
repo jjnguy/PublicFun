@@ -13,12 +13,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import edu.cs319.server.IServer;
+import edu.cs319.util.Util;
 
 /**
  * 
@@ -62,8 +64,8 @@ public class JChatPanel extends JPanel {
 		try {
 			tray.add(trayI);
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (Util.DEBUG)
+				e.printStackTrace();
 		}
 	}
 
@@ -91,6 +93,11 @@ public class JChatPanel extends JPanel {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (server == null) {
+					JOptionPane.showMessageDialog(JChatPanel.this,
+							"This chat pannel is not connc=ected yet");
+					return;
+				}
 				if (bottomText.getText().startsWith("@")) {
 					int indexOfSpace = bottomText.getText().indexOf(" ");
 					if (indexOfSpace == -1)

@@ -137,6 +137,7 @@ public class WindowJoinCoLab extends JDialog {
 				String joinName = (String) roomList.getSelectedValue();
 				server.joinCoLabRoom(parent.getUserName(), joinName, null);
 				parent.setRoomName(joinName);
+				parent.chatLogin();
 				dispose();
 			}
 		});
@@ -149,6 +150,7 @@ public class WindowJoinCoLab extends JDialog {
 				if (server.addNewCoLabRoom(parent.getUserName(), createField.getText(), null)) {
 					parent.setRoomName(createField.getText());
 					server.joinCoLabRoom(parent.getUserName(), createField.getText(), null);
+					parent.chatLogin();
 					dispose();
 				}
 			}

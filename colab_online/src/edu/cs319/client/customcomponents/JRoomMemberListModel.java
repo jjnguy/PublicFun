@@ -14,11 +14,6 @@ public class JRoomMemberListModel extends AbstractListModel {
 		userIDs = new ArrayList<String>();
 	}
 
-	public List getAllRoomMembers() {
-		// TODO implement
-		return null;
-	}
-
 	public boolean addNewMember(String userID) {
 		if (userIDs.contains(userID))
 			return false;
@@ -43,6 +38,7 @@ public class JRoomMemberListModel extends AbstractListModel {
 
 	public void addAll(Collection<String> newVals) {
 		userIDs.addAll(newVals);
+		fireIntervalAdded(this, 0, getSize());
 	}
 
 	@Override
