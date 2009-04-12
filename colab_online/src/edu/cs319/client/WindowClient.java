@@ -28,6 +28,7 @@ import edu.cs319.server.CoLabPrivilegeLevel;
 /**
  * 
  * @author Amelia
+ * @author Justin Nelson
  * 
  */
 public class WindowClient extends JFrame implements IClient {
