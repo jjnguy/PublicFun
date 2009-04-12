@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
@@ -144,15 +145,17 @@ public class WindowClient extends JFrame implements IClient {
 		disconnect.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				proxy.getServer().leaveCoLabRoom(userName, roomName);
 			}
 		});
 		exitCoLab.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				proxy.getServer().leaveCoLabRoom(userName, roomName);
+				if(disconnect.isEnabled()) {
+					proxy.getServer().leaveCoLabRoom(userName, roomName);
+				}
+				WindowClient.this.processWindowEvent(new WindowEvent(WindowClient.this,
+						WindowEvent.WINDOW_CLOSING));
 			}
 		});
 
@@ -212,10 +215,11 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean allCoLabRooms(Collection<String> roomNames) {
-		if (colabRoomFrame == null){
+		if (colabRoomFrame == null) {
 			if (Util.DEBUG) {
 				System.out.println("Client was sent list of all rooms before frame was created");
-			}return false;
+			}
+			return false;
 		}
 		colabRoomFrame.roomsUpdated(roomNames);
 		return true;
