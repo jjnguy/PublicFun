@@ -133,8 +133,10 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
-				colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
-				setLogIn();
+				if (proxy != null) {
+					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
+					setLogIn();
+				}
 			}
 		});
 		joinCoLabRoom.addActionListener(new ActionListener() {
@@ -152,7 +154,7 @@ public class WindowClient extends JFrame implements IClient {
 		exitCoLab.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(disconnect.isEnabled()) {
+				if (disconnect.isEnabled()) {
 					proxy.getServer().leaveCoLabRoom(userName, roomName);
 				}
 				WindowClient.this.processWindowEvent(new WindowEvent(WindowClient.this,
@@ -239,7 +241,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
-		chatPanel.newChatMessage("Server", "<New Chat member '"+ username +"'>");
+		chatPanel.newChatMessage("Server", "<New Chat member '" + username + "'>");
 		return roomMemberListPanel.addUser(username);
 	}
 
