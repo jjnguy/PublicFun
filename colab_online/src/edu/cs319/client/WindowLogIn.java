@@ -93,9 +93,9 @@ public class WindowLogIn extends JDialog {
 		// c.anchor = GridBagConstraints.LINE_END;
 		// mainPanel.add(newUserLabel, c);
 		//
-		// c.gridx = 1;
-		// c.anchor = GridBagConstraints.CENTER;
-		// mainPanel.add(newUserButton, c);
+		c.gridx = 1;
+		c.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(cancelButton, c);
 
 		this.add(mainPanel);
 	}
