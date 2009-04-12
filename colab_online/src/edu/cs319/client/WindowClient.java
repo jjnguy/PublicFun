@@ -37,6 +37,8 @@ public class WindowClient extends JFrame implements IClient {
 
 	private WindowJoinCoLab colabRoomFrame;
 	
+	private String userName;
+	
 	private JTabbedPane documentPane;
 	private JRoomList roomMemberList;
 	private JChatPanel chatPanel;
@@ -279,9 +281,13 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public String getUserName() {
-		// TODO Auto-generated method stub
-		return null;
+		return userName;
 	}
+	
+	public void setUserName(String un) {
+		userName = un;
+	}
+	
 	/**
 	 * Sets the look and feel of an application to that of the system it is running on. (Java's
 	 * default looks bad)
