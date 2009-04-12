@@ -239,14 +239,12 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
-		// TODO Auto-generated method stub
-		return false;
+		return roomMemberListPanel.addUser(username);
 	}
 
 	@Override
 	public boolean coLabRoomMemberLeft(String username) {
-		// TODO Auto-generated method stub
-		return false;
+		return roomMemberListPanel.removeUser(username);
 	}
 
 	@Override
