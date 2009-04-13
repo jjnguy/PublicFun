@@ -1,6 +1,8 @@
-package edu.cs319.client;
+package edu.cs319.runnables;
 
 import javax.swing.JFrame;
+
+import edu.cs319.client.WindowClient;
 
 public class MainClient {
 
