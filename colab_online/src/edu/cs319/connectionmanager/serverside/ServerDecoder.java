@@ -65,6 +65,7 @@ public class ServerDecoder implements Runnable {
 			break;
 		case NEW_COLAB_ROOM:
 			actualServer.addNewCoLabRoom(cln, args.get(0), args.get(1).getBytes());
+			break;
 		case CHANGE_USER_PRIV:
 			actualServer.changeUserPrivledge(cln, args.get(0), CoLabPrivilegeLevel
 					.getPrivilegeLevelFromString(args.get(1)));
