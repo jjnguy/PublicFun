@@ -39,7 +39,6 @@ public class JChatPanel extends JPanel {
 
 	private TrayIcon trayI;
 
-	// TODO set the server if connected and in a room
 	private IServer server;
 
 	public JChatPanel() {

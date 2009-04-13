@@ -15,7 +15,6 @@ import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.util.Util;
 
 // TODO listen to boolean return types of client code
-// TODO the text change like methods don't hold a user accountable for the changes
 public class Server implements IServer {
 	private static Server instance = null;
 
