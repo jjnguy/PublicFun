@@ -9,18 +9,21 @@ import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.connectionmanager.clientside.ServerEncoder;
 import edu.cs319.server.IServer;
+import edu.cs319.util.Util;
 
 public class ConnectionFactoryNetworked extends ConnectionFactory {
 
 	@Override
 	public Proxy connect(String host, int port, IClient actualClient, String clientName) {
-		Proxy p = null;
 		try {
-			p = new ProxyImpl(new Socket(host, port), actualClient, clientName);
-		} catch(IOException e) {
-			e.printStackTrace();
+			return new ProxyImpl(new Socket(host, port), actualClient, clientName);
+		} catch (IOException e) {
+			if (Util.DEBUG) {
+				System.out.println("Error connecting to server");
+				e.printStackTrace();
+			}
 		}
-		return p;
+		return null;
 	}
 
 	static private class ProxyImpl implements Proxy {

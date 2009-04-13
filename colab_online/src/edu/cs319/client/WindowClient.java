@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Collection;
@@ -142,7 +143,7 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int result = colabRoomFrame.showRoomDialogue();
-				if (result == WindowJoinCoLab.ROOM_JOINED){
+				if (result == WindowJoinCoLab.ROOM_JOINED) {
 					setJoinedRoom();
 				}
 			}
@@ -156,9 +157,6 @@ public class WindowClient extends JFrame implements IClient {
 		exitCoLab.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (disconnect.isEnabled()) {
-					proxy.getServer().leaveCoLabRoom(userName, roomName);
-				}
 				WindowClient.this.processWindowEvent(new WindowEvent(WindowClient.this,
 						WindowEvent.WINDOW_CLOSING));
 			}
@@ -184,6 +182,15 @@ public class WindowClient extends JFrame implements IClient {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 
+			}
+		});
+
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				if (disconnect.isEnabled()) {
+					proxy.getServer().leaveCoLabRoom(userName, roomName);
+				}
 			}
 		});
 	}
@@ -247,12 +254,13 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
-		chatPanel.newChatMessage("Server", "<New Chat member '" + username + "'>");
+		chatPanel.newChatMessage("Server", "<New Chat Member '" + username + "'>");
 		return roomMemberListPanel.addUser(username);
 	}
 
 	@Override
 	public boolean coLabRoomMemberLeft(String username) {
+		chatPanel.newChatMessage("Server", "<Chat Member Left '" + username + "'>");
 		return roomMemberListPanel.removeUser(username);
 	}
 

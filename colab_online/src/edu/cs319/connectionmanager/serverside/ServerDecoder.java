@@ -22,7 +22,7 @@ import edu.cs319.util.Util;
  * @author Wayne Rowcliffe
  */
 public class ServerDecoder implements Runnable {
-	
+
 	private IServer actualServer;
 	private Socket socket;
 	private MessageInputStream in;
@@ -34,8 +34,8 @@ public class ServerDecoder implements Runnable {
 		try {
 			this.in = new MessageInputStream(socket.getInputStream());
 			this.out = socket.getOutputStream();
-		} catch(IOException e) {
-			if(Util.DEBUG) {
+		} catch (IOException e) {
+			if (Util.DEBUG) {
 				e.printStackTrace();
 			}
 		}
@@ -59,41 +59,47 @@ public class ServerDecoder implements Runnable {
 		String cln = message.getSentByClientName();
 		List<String> args = message.getArgumentList();
 		switch (message.getMessageType()) {
-			case NEW_CLIENT:
-				IClient toAdd = new ClientEncoder(cln , socket);
-				actualServer.addNewClient(toAdd, cln);
-				break;
-			case NEW_COLAB_ROOM:
-				actualServer.addNewCoLabRoom(cln , args.get(0), args.get(1).getBytes());
-			case CHANGE_USER_PRIV:
-				actualServer.changeUserPrivledge(cln , args.get(0), CoLabPrivilegeLevel.getPrivilegeLevelFromString(args.get(1)));
-				break;
-			case MEMBER_JOIN_ROOM:
-				actualServer.joinCoLabRoom(cln, args.get(0), args.get(1).getBytes());
-				break;
-			case NEW_MESSAGE:
-				actualServer.newChatMessage(cln, args.get(0), args.get(1));
-				break;
-			case NEW_PRIVATE_MESSAGE:
-				actualServer.newChatMessage(cln, args.get(0), args.get(1), args.get(2));
-				break;
-			case GET_ROOM_LIST:
-				actualServer.getAllCoLabRoomNames(cln);
-				break;
-			case MEMBERS_IN_ROOM:
-				actualServer.getClientsCurrentlyInRoom(cln, args.get(0));
-				break;
-			case NEW_SUBSECTION:
-				actualServer.newSubSection(cln, args.get(0), args.get(1), args.get(2), Integer.parseInt(args.get(3)));
-				break;
-			case REMOVE_SUBSECTION:
-				actualServer.subSectionRemoved(cln, args.get(0), args.get(1), args.get(2));
-				break;
-			case UPDATE_SUBSECTION:
-				actualServer.subSectionUpdated(cln, args.get(0), args.get(1), args.get(2), DocumentSubSection.getFromDelimmitedString(args.get(3)));
-				break;
-			default:
-				throw new NotYetImplementedException();
+		case NEW_CLIENT:
+			IClient toAdd = new ClientEncoder(cln, socket);
+			actualServer.addNewClient(toAdd, cln);
+			break;
+		case NEW_COLAB_ROOM:
+			actualServer.addNewCoLabRoom(cln, args.get(0), args.get(1).getBytes());
+		case CHANGE_USER_PRIV:
+			actualServer.changeUserPrivledge(cln, args.get(0), CoLabPrivilegeLevel
+					.getPrivilegeLevelFromString(args.get(1)));
+			break;
+		case MEMBER_JOIN_ROOM:
+			actualServer.joinCoLabRoom(cln, args.get(0), args.get(1).getBytes());
+			break;
+		case MEMBER_LEAVE_ROOM:
+			actualServer.leaveCoLabRoom(cln, args.get(0));
+			break;
+		case NEW_MESSAGE:
+			actualServer.newChatMessage(cln, args.get(0), args.get(1));
+			break;
+		case NEW_PRIVATE_MESSAGE:
+			actualServer.newChatMessage(cln, args.get(0), args.get(1), args.get(2));
+			break;
+		case GET_ROOM_LIST:
+			actualServer.getAllCoLabRoomNames(cln);
+			break;
+		case MEMBERS_IN_ROOM:
+			actualServer.getClientsCurrentlyInRoom(cln, args.get(0));
+			break;
+		case NEW_SUBSECTION:
+			actualServer.newSubSection(cln, args.get(0), args.get(1), args.get(2), Integer
+					.parseInt(args.get(3)));
+			break;
+		case REMOVE_SUBSECTION:
+			actualServer.subSectionRemoved(cln, args.get(0), args.get(1), args.get(2));
+			break;
+		case UPDATE_SUBSECTION:
+			actualServer.subSectionUpdated(cln, args.get(0), args.get(1), args.get(2),
+					DocumentSubSection.getFromDelimmitedString(args.get(3)));
+			break;
+		default:
+			throw new NotYetImplementedException();
 		}
 	}
 }

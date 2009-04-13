@@ -73,7 +73,9 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean coLabRoomMemberLeft(String username) {
-		throw new NotYetImplementedException();
+		Message tosend = new Message(MessageType.MEMBER_LEAVE_ROOM, username,
+				new ArrayList<String>());
+		return printMessageToStream(tosend);
 	}
 
 	@Override
@@ -161,8 +163,8 @@ public class ClientEncoder implements IClient {
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
 		List<String> args = new ArrayList<String>();
 		args.add(documentId);
-		for(DocumentSubSection doc : allSections){
-			args.add(doc.toDelimmitedString());			
+		for (DocumentSubSection doc : allSections) {
+			args.add(doc.toDelimmitedString());
 		}
 		Message m = new Message(MessageType.UPDATE_ALL_SUBSECTIONS, "Server Initiated", args);
 		return printMessageToStream(m);
