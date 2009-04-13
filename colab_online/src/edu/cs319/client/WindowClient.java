@@ -191,6 +191,7 @@ public class WindowClient extends JFrame implements IClient {
 				if (disconnect.isEnabled()) {
 					proxy.getServer().leaveCoLabRoom(userName, roomName);
 				}
+				chatPanel.shutdownTray();
 			}
 		});
 	}

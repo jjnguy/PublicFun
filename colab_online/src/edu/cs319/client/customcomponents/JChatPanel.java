@@ -86,6 +86,11 @@ public class JChatPanel extends JPanel {
 		if (!isVisible())
 			displayBottomPopup(usernameSender, message);
 	}
+	
+	public void shutdownTray(){
+		SystemTray t = SystemTray.getSystemTray();
+		t.remove(trayI);
+	}
 
 	private void displayBottomPopup(String usernameSender, String message) {
 		trayI.displayMessage("New Message From " + usernameSender, message, MessageType.INFO);

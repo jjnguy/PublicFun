@@ -39,6 +39,7 @@ public class WindowLogIn extends JDialog {
 	private WindowLogIn(JFrame parent, IClient client) {
 		super(parent, "CoLab Log In");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		hostField.setText("localhost");
 		this.client = client;
 		Dimension minSize = new Dimension(350, 150);
 		this.setSize(minSize);
