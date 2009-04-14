@@ -191,4 +191,20 @@ public class ClientEncoder implements IClient {
 		return printMessageToStream(m);
 	}
 
+	@Override
+	public boolean newDocument(String username, String documentName) {
+		List<String> args = new ArrayList<String>();
+		args.add(documentName);
+		Message m = new Message(MessageType.NEW_DOCUMENT, username, args);
+		return printMessageToStream(m);
+	}
+
+	@Override
+	public boolean removeDocument(String username, String documentName) {
+		List<String> args = new ArrayList<String>();
+		args.add(documentName);
+		Message m = new Message(MessageType.REMOVE_DOCUMENT, username, args);
+		return printMessageToStream(m);
+	}
+
 }

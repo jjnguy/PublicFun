@@ -16,7 +16,9 @@ public enum MessageType {
 	GET_ROOM_LIST((byte) 0x0c, "Get Room List"), 
 	NEW_COLAB_ROOM(	(byte) 0x0d, "New CoLab Room"), 
 	COMMUNICATION_FAIL((byte) 0x0e,	"A previous communication attempt failed"),
-	REMOVE_SUBSECTION((byte) 0x0f, "Remove A Subsection");
+	REMOVE_SUBSECTION((byte) 0x0f, "Remove A Subsection"),
+	NEW_DOCUMENT((byte) 0x10, "New Document"),
+	REMOVE_DOCUMENT((byte) 0x11, "Remove Document");
 
 	private byte code;
 	private String name;
@@ -69,6 +71,10 @@ public enum MessageType {
 			return COMMUNICATION_FAIL;
 		case 0xf:
 			return REMOVE_SUBSECTION;
+		case 0x10:
+			return NEW_DOCUMENT;
+		case 0x11:
+			return REMOVE_DOCUMENT;
 		default:
 			return null;
 		}

@@ -10,6 +10,8 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -46,6 +48,8 @@ public class WindowClient extends JFrame implements IClient {
 	private String roomName;
 
 	private JTabbedPane documentPane;
+	private Map<String,JDocTabPanel> documents;
+
 	private JRoomListPanel roomMemberListPanel;
 	private JChatPanel chatPanel;
 
@@ -67,8 +71,9 @@ public class WindowClient extends JFrame implements IClient {
 
 		roomMemberListPanel = new JRoomListPanel();
 		documentPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-		documentPane.addTab("panel1", new JDocTabPanel());
-		documentPane.addTab("panel2", new JDocTabPanel());
+		documents = new HashMap<String,JDocTabPanel>();
+		//documentPane.addTab("panel1", new JDocTabPanel());
+		//documentPane.addTab("panel2", new JDocTabPanel());
 		chatPanel = new JChatPanel();
 
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -280,6 +285,16 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean newSubSection(String username, String sectionID, String documentName,
 			DocumentSubSection section, int idx) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean newDocument(String username, String documentName) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean removeDocument(String username, String documentName) {
 		throw new NotYetImplementedException();
 	}
 

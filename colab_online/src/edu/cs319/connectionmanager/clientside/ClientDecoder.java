@@ -98,6 +98,11 @@ public class ClientDecoder implements Runnable {
 		case REMOVE_SUBSECTION:
 			actualClient.subSectionRemoved(username, arg.get(0), arg.get(1));
 			break;
+		case NEW_DOCUMENT:
+			actualClient.newDocument(username, arg.get(0));
+			break;
+		case REMOVE_DOCUMENT:
+			actualClient.removeDocument(username, arg.get(0));
 		default:
 			throw new NotYetImplementedException();
 		}
