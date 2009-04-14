@@ -285,44 +285,72 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean newSubSection(String username, String sectionID, String documentName,
 			DocumentSubSection section, int idx) {
-		throw new NotYetImplementedException();
+		
+		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
+		doc.addSubSection(section,idx);
+		return true;
 	}
 
 	@Override
 	public boolean newDocument(String username, String documentName) {
-		throw new NotYetImplementedException();
+		JDocTabPanel doc = documents.get(documentName);
+		if(doc != null) {
+			throw new IllegalStateException("Two documents cannot have the same name");
+		}
+		documents.put(documentName,doc);
+		documentPane.addTab(doc);
+		return true;
+
 	}
 
 	@Override
 	public boolean removeDocument(String username, String documentName) {
-		throw new NotYetImplementedException();
+		JDocTabPanel doc = documents.get(documentName);
+		if(doc == null) {
+			throw new IllegalStateException("This document does not exist");
+		}
+		documents.remove(documentName);
+		documentPane.remove(doc);
+		return true;
 	}
 
 	@Override
-	public boolean subsectionLocked(String usernameSender, String documentName, String sectionID) {
-		throw new NotYetImplementedException();
+	public boolean subsectionLocked(String usernameSender, String documentName, String sectionId) {
+		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
+		doc.getSection(sectionId).setLocked(usernameSender,true);
+		return true;
 	}
 
 	@Override
-	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionID) {
-		throw new NotYetImplementedException();
+	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionId) {
+		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
+		doc.getSection(sectionId).setLocked(usernameSender,false);
+		return true;
 	}
 
 	@Override
 	public boolean subSectionRemoved(String username, String sectionID, String documentName) {
-		throw new NotYetImplementedException();
+		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
+		doc.removeSubSection(sectionId);
 	}
 
 	@Override
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
-		throw new NotYetImplementedException();
+		SectionizedDocument doc = documents.get(documentId).getSectionizedDocument();
+		for(int i = 0 ; i < allSections.size() ; i++) {
+			doc.getSectionAt(i) = allSections.get(i);
+		}
+		return true;
 	}
 
 	@Override
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID) {
-		throw new NotYetImplementedException();
+		SectionizedDocument doc = documents.get(documentname).getSectionizedDocument();
+		doc.getSection(sectionID).setText(usernameSender,section.getText());
+		return true;
 	}
+
 
 	@Override
 	public String getUserName() {
