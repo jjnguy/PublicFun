@@ -2,7 +2,7 @@ package edu.cs319.client.customcomponents;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -56,12 +56,10 @@ public class JRoomListPanel extends JPanel {
 		return roomList.getModel().removeMember(id);
 	}
 
-	public void updateList(Collection<String> userNames) {
-		// roomList.getModel().clearList();
-		for (String s : userNames) {
-			if (!roomList.getModel().contains(s))
-				roomList.getModel().addNewMember(
-						new RoomMemberLite(s, CoLabPrivilegeLevel.OBSERVER));
+	public void updateList(List<String> userNames, List<CoLabPrivilegeLevel> privs) {
+		roomList.getModel().clearList();
+		for (int i = 0; i < userNames.size(); i++) {
+			roomList.getModel().addNewMember(new RoomMemberLite(userNames.get(i), privs.get(i)));
 		}
 	}
 

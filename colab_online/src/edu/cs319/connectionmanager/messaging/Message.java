@@ -67,7 +67,7 @@ public class Message {
 			throw new IllegalMessageFormatException();
 		byte[] clientBytes = Arrays.copyOfRange(info, 1, indexOfFirstDelim);
 		String clientName = new String(clientBytes);
-		//skip delimiters
+		// skip delimiters
 		byte[] argBytes = Arrays.copyOfRange(info, clientBytes.length + 2, info.length);
 		List<String> args = Message.getArgsFromBytes(argBytes);
 		return new Message(mtype, clientName, args);
@@ -76,7 +76,11 @@ public class Message {
 	private byte[] argsToByteArr() {
 		byte[][] brokenRet = new byte[arguments.size()][];
 		for (int i = 0; i < arguments.size(); i++) {
-			brokenRet[i] = arguments.get(i).getBytes();
+			if (arguments.get(i) != null) {
+				brokenRet[i] = arguments.get(i).getBytes();
+			}else{
+				brokenRet[i] = new byte[1];
+			}
 		}
 		int lengthNeeded = 0;
 		for (byte[] bs : brokenRet) {

@@ -228,7 +228,7 @@ public class Server implements IServer {
 	public boolean getClientsCurrentlyInRoom(String username, String roomname) {
 		CoLabRoom room = colabrooms.get(roomname);
 		IClient toSendTo = regularClients.get(username);
-		return toSendTo.allUsersInRoom(room.getAllClientNamesInRoom());
+		return toSendTo.allUsersInRoom(room.getAllClientNamesInRoom(), room.getAllPrivLevels());
 	}
 
 	@Override

@@ -9,9 +9,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -252,8 +252,8 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean allUsersInRoom(Collection<String> usernames) {
-		roomMemberListPanel.updateList(usernames);
+	public boolean allUsersInRoom(List<String> usernames, List<CoLabPrivilegeLevel> privs) {
+		roomMemberListPanel.updateList(usernames, privs);
 		return true;
 	}
 

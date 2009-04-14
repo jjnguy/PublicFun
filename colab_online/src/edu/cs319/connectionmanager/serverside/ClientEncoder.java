@@ -124,10 +124,14 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public boolean allUsersInRoom(Collection<String> usernames) {
+	public boolean allUsersInRoom(List<String> usernames, List<CoLabPrivilegeLevel> privs) {
 		List<String> args = new ArrayList<String>();
 		for (String s : usernames) {
 			args.add(s);
+		}
+		args.add(null);
+		for (CoLabPrivilegeLevel s : privs) {
+			args.add(s.toString());
 		}
 		Message m = new Message(MessageType.MEMBERS_IN_ROOM, "Server Initiated", args);
 		return printMessageToStream(m);

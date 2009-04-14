@@ -1,7 +1,6 @@
 package edu.cs319.dataobjects;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +73,7 @@ public class CoLabRoom {
 		return members.get(name);
 	}
 
-	public Collection<IClient> getAllClients() {
+	public List<IClient> getAllClients() {
 		List<IClient> ret = new ArrayList<IClient>();
 		for (CoLabRoomMember member : members.values()) {
 			ret.add(member.getClient());
@@ -82,10 +81,20 @@ public class CoLabRoom {
 		return ret;
 	}
 
-	public Collection<String> getAllClientNamesInRoom() {
-		return members.keySet();
+	public List<String> getAllClientNamesInRoom() {
+		List<String> ret = new ArrayList<String>();
+		ret.addAll(members.keySet());
+		return ret;
 	}
 
+	public List<CoLabPrivilegeLevel> getAllPrivLevels(){
+		List<CoLabPrivilegeLevel> ret = new ArrayList<CoLabPrivilegeLevel>();
+		for (CoLabRoomMember member : members.values()) {
+			ret.add(member.privledges());
+		}
+		return ret;
+	}
+	
 	public boolean removeMember(String name) {
 		if (!members.containsKey(name))
 			return false;

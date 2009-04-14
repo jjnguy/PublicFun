@@ -29,14 +29,14 @@ public interface IClient {
 	public boolean removeDocument(String username, String documentName);
 
 	public boolean subSectionRemoved(String username, String sectionID, String documentName);
-	
+
 	public boolean newChatMessage(String usernameSender, String message);
 
 	public boolean newChatMessage(String usernameSender, String message, String recipiant);
 
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv);
 
-	public boolean allUsersInRoom(Collection<String> usernames);
+	public boolean allUsersInRoom(List<String> usernames, List<CoLabPrivilegeLevel> privs);
 
 	public boolean allCoLabRooms(Collection<String> roomNames);
 

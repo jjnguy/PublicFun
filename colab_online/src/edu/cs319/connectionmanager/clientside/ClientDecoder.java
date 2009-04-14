@@ -86,7 +86,20 @@ public class ClientDecoder implements Runnable {
 			actualClient.coLabRoomMemberLeft(username);
 			break;
 		case MEMBERS_IN_ROOM:
-			actualClient.allUsersInRoom(arg);
+			List<String> usernames = new ArrayList<String>();
+			List<CoLabPrivilegeLevel> privs = new ArrayList<CoLabPrivilegeLevel>();
+			int nullIdx = -1;
+			for (int i = 0; i < arg.size(); i++) {
+				if (arg.get(i) == null) {
+					nullIdx = i;
+					break;
+				}
+				usernames.add(arg.get(i));
+			}
+			for (int i = nullIdx + 1; i < arg.size(); i++) {
+				privs.add(CoLabPrivilegeLevel.getPrivilegeLevelFromString(arg.get(i)));
+			}
+			actualClient.allUsersInRoom(usernames, privs);
 			break;
 		case CHANGE_USER_PRIV:
 			actualClient.changeUserPrivilege(username, CoLabPrivilegeLevel
