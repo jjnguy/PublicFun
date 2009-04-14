@@ -12,6 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
+import edu.cs319.dataobjects.SectionizedDocument;
+import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
+import edu.cs319.dataobjects.DocumentSubSection;
+import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
+
 /**
  * 
  * @author Amelia Gee
@@ -28,7 +33,11 @@ public class JDocTabPanel extends JPanel {
 	private JButton sectionUpButton;
 	private JButton sectionDownButton;
 	
-	public JDocTabPanel() {
+	private SectionizedDocument doc;
+
+	public JDocTabPanel(String name) {
+		doc = new SectionizedDocumentImpl(name);
+		
 		sectionList = new JList();
 		documentPane = new JEditorPane();
 		workPane = new JEditorPane();
@@ -93,4 +102,8 @@ public class JDocTabPanel extends JPanel {
 		return workPane;
 	}
 	*/
+
+	public SectionizedDocument getSectionizedDocument() {
+		return doc;
+	}
 }

@@ -26,8 +26,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
+
 import edu.cs319.connectionmanager.clientside.Proxy;
+
 import edu.cs319.dataobjects.DocumentSubSection;
+import edu.cs319.dataobjects.SectionizedDocument;
+
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
@@ -297,8 +301,9 @@ public class WindowClient extends JFrame implements IClient {
 		if(doc != null) {
 			throw new IllegalStateException("Two documents cannot have the same name");
 		}
+		doc = new JDocTabPanel(documentName);
 		documents.put(documentName,doc);
-		documentPane.addTab(doc);
+		documentPane.add(documentName, doc);
 		return true;
 
 	}
@@ -317,29 +322,29 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionId) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
-		doc.getSection(sectionId).setLocked(usernameSender,true);
+		doc.getSection(sectionId).setLocked(true,usernameSender);
 		return true;
 	}
 
 	@Override
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionId) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
-		doc.getSection(sectionId).setLocked(usernameSender,false);
+		doc.getSection(sectionId).setLocked(false,usernameSender);
 		return true;
 	}
 
 	@Override
-	public boolean subSectionRemoved(String username, String sectionID, String documentName) {
+	public boolean subSectionRemoved(String username, String sectionId, String documentName) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.removeSubSection(sectionId);
+		return true;
 	}
 
 	@Override
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
 		SectionizedDocument doc = documents.get(documentId).getSectionizedDocument();
-		for(int i = 0 ; i < allSections.size() ; i++) {
-			doc.getSectionAt(i) = allSections.get(i);
-		}
+		doc.removeAllSubSections();
+		doc.addAllSubSections(allSections);
 		return true;
 	}
 

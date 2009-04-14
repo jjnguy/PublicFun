@@ -8,6 +8,10 @@ public interface SectionizedDocument {
 
 	public List<DocumentSubSection> getAllSubSections();
 	
+	public void removeAllSubSections();
+
+	public void addAllSubSections(List<DocumentSubSection> ss);
+	
 	public int getSubsectionCount();
 	
 	public DocumentSubSection getSectionAt(int idx);

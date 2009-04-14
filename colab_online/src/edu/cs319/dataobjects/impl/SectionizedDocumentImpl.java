@@ -24,6 +24,14 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return new ArrayList<DocumentSubSection>(subSections);
 	}
 
+	public void removeAllSubSections() {
+		subSections.clear();
+	}
+
+	public void addAllSubSections(List<DocumentSubSection> dss) {
+		subSections.addAll(dss);
+	}
+
 	public int getSubsectionCount() {
 		return subSections.size();
 	}
