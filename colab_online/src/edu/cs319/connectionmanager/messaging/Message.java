@@ -78,7 +78,7 @@ public class Message {
 		for (int i = 0; i < arguments.size(); i++) {
 			if (arguments.get(i) != null) {
 				brokenRet[i] = arguments.get(i).getBytes();
-			}else{
+			} else {
 				brokenRet[i] = new byte[1];
 			}
 		}
@@ -113,7 +113,11 @@ public class Message {
 		List<String> ret = new ArrayList<String>();
 		int start = 0, end = Message.getNextDelimiterPos(argBytes, 0);
 		while (end != -1) {
-			ret.add(new String(Arrays.copyOfRange(argBytes, start, end)));
+			if (end - start == 1 && argBytes[start] == 0) {
+				ret.add(null);
+			} else {
+				ret.add(new String(Arrays.copyOfRange(argBytes, start, end)));
+			}
 			start = ++end;
 			end = Message.getNextDelimiterPos(argBytes, start);
 		}
