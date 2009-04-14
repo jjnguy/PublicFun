@@ -1,7 +1,6 @@
 package edu.cs319.connectionmanager.serverside;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.List;
 
@@ -26,14 +25,12 @@ public class ServerDecoder implements Runnable {
 	private IServer actualServer;
 	private Socket socket;
 	private MessageInputStream in;
-	private OutputStream out;
 
 	public ServerDecoder(IServer actualServer, Socket socket) {
 		this.actualServer = actualServer;
 		this.socket = socket;
 		try {
 			this.in = new MessageInputStream(socket.getInputStream());
-			this.out = socket.getOutputStream();
 		} catch (IOException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();

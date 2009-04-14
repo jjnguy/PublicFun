@@ -43,10 +43,10 @@ public class JRoomListPanel extends JPanel {
 		});
 	}
 
-	public boolean setUserPrivledge(String id, CoLabPrivilegeLevel newPriv){
+	public boolean setUserPrivledge(String id, CoLabPrivilegeLevel newPriv) {
 		return this.roomList.getModel().setMemberPriv(id, newPriv);
 	}
-	
+
 	public boolean addUser(String id) {
 		return roomList.getModel().addNewMember(
 				new RoomMemberLite(id, CoLabPrivilegeLevel.OBSERVER));
@@ -57,9 +57,11 @@ public class JRoomListPanel extends JPanel {
 	}
 
 	public void updateList(Collection<String> userNames) {
-		roomList.getModel().clearList();
+		// roomList.getModel().clearList();
 		for (String s : userNames) {
-			roomList.getModel().addNewMember(new RoomMemberLite(s, CoLabPrivilegeLevel.OBSERVER));
+			if (!roomList.getModel().contains(s))
+				roomList.getModel().addNewMember(
+						new RoomMemberLite(s, CoLabPrivilegeLevel.OBSERVER));
 		}
 	}
 

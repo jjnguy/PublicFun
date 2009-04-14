@@ -51,6 +51,9 @@ public class WindowJoinCoLab extends JDialog {
 		super(parent, "Join a CoLab Room");
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		if (Util.DEBUG){
+			createField.setText("New Room");
+		}
 		if (server == null) {
 			if (Util.DEBUG) {
 				System.out.println("Null server passed into a join colab room frame");

@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
+import edu.cs319.util.Util;
 
 /**
  * 
@@ -39,7 +40,10 @@ public class WindowLogIn extends JDialog {
 	private WindowLogIn(JFrame parent, IClient client) {
 		super(parent, "CoLab Log In");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		hostField.setText("localhost");
+		if (Util.DEBUG) {
+			hostField.setText("localhost");
+			usernameField.setText((int)(Math.random() * 20) + "");
+		}
 		this.client = client;
 		Dimension minSize = new Dimension(350, 150);
 		this.setSize(minSize);
@@ -139,18 +143,22 @@ public class WindowLogIn extends JDialog {
 			}
 		});
 	}
-	
+
 	private KeyListener enterKey = new KeyListener() {
 		@Override
 		public void keyPressed(KeyEvent arg0) {
-			if(arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+			if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 				logInButton.doClick();
 			}
 		}
+
 		@Override
-		public void keyReleased(KeyEvent arg0) {}
+		public void keyReleased(KeyEvent arg0) {
+		}
+
 		@Override
-		public void keyTyped(KeyEvent arg0) {}
+		public void keyTyped(KeyEvent arg0) {
+		}
 	};
-	
+
 }
