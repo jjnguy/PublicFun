@@ -85,12 +85,12 @@ public class JDocTabPanel extends JPanel {
 		return sectionList;
 	}
 	
-	public JEditorPane getDocPane() {
+	/*public JEditorPane getDocPane() {
 		return documentPane;
 	}
 	
 	public JEditorPane getWorkPane() {
 		return workPane;
 	}
-	
+	*/
 }

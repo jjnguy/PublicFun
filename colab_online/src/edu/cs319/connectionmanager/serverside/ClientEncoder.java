@@ -13,7 +13,6 @@ import edu.cs319.connectionmanager.messaging.MessageOutputStream;
 import edu.cs319.connectionmanager.messaging.MessageType;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
-import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
@@ -61,7 +60,10 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv) {
-		throw new NotYetImplementedException();
+		List<String> arg = new  ArrayList<String>();
+		arg.add(newPriv.toString());
+		Message tosent = new Message(MessageType.CHANGE_USER_PRIV, username, arg);
+		return printMessageToStream(tosent);
 	}
 
 	@Override

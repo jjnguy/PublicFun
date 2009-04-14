@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.cs319.server.CoLabPrivilegeLevel;
+
 public class JRoomListPanel extends JPanel {
 
 	private JRoomMemberList roomList;
@@ -41,8 +43,13 @@ public class JRoomListPanel extends JPanel {
 		});
 	}
 
+	public boolean setUserPrivledge(String id, CoLabPrivilegeLevel newPriv){
+		return this.roomList.getModel().setMemberPriv(id, newPriv);
+	}
+	
 	public boolean addUser(String id) {
-		return roomList.getModel().addNewMember(id);
+		return roomList.getModel().addNewMember(
+				new RoomMemberLite(id, CoLabPrivilegeLevel.OBSERVER));
 	}
 
 	public boolean removeUser(String id) {
@@ -51,7 +58,9 @@ public class JRoomListPanel extends JPanel {
 
 	public void updateList(Collection<String> userNames) {
 		roomList.getModel().clearList();
-		roomList.getModel().addAll(userNames);
+		for (String s : userNames) {
+			roomList.getModel().addNewMember(new RoomMemberLite(s, CoLabPrivilegeLevel.OBSERVER));
+		}
 	}
 
 }

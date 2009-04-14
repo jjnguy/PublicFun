@@ -6,55 +6,66 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
+import edu.cs319.server.CoLabPrivilegeLevel;
+
 public class JRoomMemberListModel extends AbstractListModel {
 
-	private List<String> userIDs;
+	private List<RoomMemberLite> members;
 
 	public JRoomMemberListModel() {
-		userIDs = new ArrayList<String>();
+		members = new ArrayList<RoomMemberLite>();
 	}
 
-	public boolean addNewMember(String userID) {
-		if (userIDs.contains(userID))
+	public boolean addNewMember(RoomMemberLite member) {
+		if (members.contains(member))
 			return false;
-		userIDs.add(userID);
+		members.add(member);
 		fireIntervalAdded(this, 0, getSize());
 		return true;
 	}
 
 	public boolean removeMember(String userID) {
-		int index = userIDs.indexOf(userID);
+		int index = members.indexOf(userID);
 		if (index == -1)
 			return false;
-		userIDs.remove(index);
+		members.remove(index);
 		fireIntervalRemoved(this, 0, getSize());
+		return true;
+	}
+	
+	public boolean setMemberPriv(String id, CoLabPrivilegeLevel priv){
+		RoomMemberLite dummy = new RoomMemberLite(id, priv);
+		int idx = members.indexOf(dummy);
+		RoomMemberLite mem = members.get(idx);
+		mem.setPriv(priv);
+		fireContentsChanged(this, 0, getSize());
 		return true;
 	}
 
 	public void clearList() {
-		userIDs.clear();
+		members.clear();
 		fireIntervalRemoved(this, 0, getSize());
 	}
 
-	public void addAll(Collection<String> newVals) {
-		userIDs.addAll(newVals);
+	public void addAll(Collection<RoomMemberLite> newVals) {
+		members.addAll(newVals);
 		fireIntervalAdded(this, 0, getSize());
 	}
 
 	@Override
 	public Object getElementAt(int arg0) {
-		if (userIDs.size() <= arg0)
+		if (members.size() <= arg0)
 			return null;
-		return userIDs.get(arg0);
+		return members.get(arg0);
 	}
 
 	@Override
 	public int getSize() {
-		return userIDs.size();
+		return members.size();
 	}
 
 	public boolean contains(String userID) {
-		return userIDs.contains(userID);
+		return members.contains(userID);
 	}
 
 }

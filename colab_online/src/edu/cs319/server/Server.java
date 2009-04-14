@@ -80,7 +80,10 @@ public class Server implements IServer {
 
 		if (Util.DEBUG) {
 			System.out.println("Server: CoLab Room added successfully");
+			System.out.println("Adding the creator to the room and setting his/her priv level");
 		}
+		joinCoLabRoom(username, roomName, password);
+		changeUserPrivledge(username, roomName, CoLabPrivilegeLevel.ADMIN);
 		return true;
 	}
 
@@ -96,7 +99,7 @@ public class Server implements IServer {
 			}
 			return false;
 		}
-		CoLabRoomMember member = room.getMemberByName(roomname);
+		CoLabRoomMember member = room.getMemberByName(username);
 		if (member == null) {
 			if (Util.DEBUG) {
 				System.out.println("Failed to change user privledge, user didn't exist in room");

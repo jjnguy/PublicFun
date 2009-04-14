@@ -250,7 +250,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv) {
-		throw new NotYetImplementedException();
+		return this.roomMemberListPanel.setUserPrivledge(username, newPriv);
 	}
 
 	@Override

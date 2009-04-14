@@ -16,8 +16,8 @@ public class CoLabRoomMember {
 	private CoLabPrivilegeLevel priv;
 
 	/**
-	 * Creates a new {@link CoLabRoomMember} with the supplied name and a
-	 * Privilege level of Observer.
+	 * Creates a new {@link CoLabRoomMember} with the supplied name and a Privilege level of
+	 * Observer.
 	 * 
 	 * @param name
 	 *            the name of the new CoLabRoomMember
@@ -59,13 +59,44 @@ public class CoLabRoomMember {
 	 */
 	public boolean setPrivLevel(CoLabPrivilegeLevel lvl) {
 		if (lvl == CoLabPrivilegeLevel.SUPER_ADMIN) {
-			if (!Util.isSuperAdmin(username)) return false;
+			if (!Util.isSuperAdmin(username))
+				return false;
 		}
 		priv = lvl;
 		return true;
 	}
 
-	public IClient getClient(){
+	public IClient getClient() {
 		return client;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (obj instanceof String) {
+			return obj.equals(username);
+		}
+		if (!(obj instanceof CoLabRoomMember)) {
+			return false;
+		}
+		CoLabRoomMember other = (CoLabRoomMember) obj;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+
 }

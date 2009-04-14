@@ -14,13 +14,13 @@ import java.util.GregorianCalendar;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
-import edu.cs319.client.customcomponents.JRoomMemberList;
 import edu.cs319.server.IServer;
 import edu.cs319.util.Util;
 
@@ -34,7 +34,7 @@ public class WindowJoinCoLab extends JDialog {
 
 	public static final int NO_ROOM = 32142;
 	public static final int ROOM_JOINED = -234;
-	private JRoomMemberList roomList;
+	private JList roomList;
 	private JTextField createField = new JTextField();
 	private JButton joinButton = new JButton("Join");
 	private JButton createButton = new JButton("Create");
@@ -46,7 +46,7 @@ public class WindowJoinCoLab extends JDialog {
 	private IServer server;
 
 	private int closeStatus;
-	
+
 	public WindowJoinCoLab(WindowClient parent, IServer server) {
 		super(parent, "Join a CoLab Room");
 		setModal(true);
@@ -68,7 +68,7 @@ public class WindowJoinCoLab extends JDialog {
 
 	private void setUpAppearance() {
 		Insets borderInsets = new Insets(0, 0, 20, 0);
-		roomList = new JRoomMemberList();
+		roomList = new JList();
 		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		roomList.setSelectedIndex(0);
 		roomList.setVisibleRowCount(8);
@@ -78,7 +78,7 @@ public class WindowJoinCoLab extends JDialog {
 		JLabel createLabel = new JLabel("Create a New CoLab:");
 		JLabel cancelLabel = new JLabel("Join a CoLab Room at another time:");
 		createField.setPreferredSize(new Dimension(200, 25));
-		
+
 		refreshButton.setSize(100, 25);
 
 		JPanel listLabelPanel = new JPanel(new GridBagLayout());
@@ -94,7 +94,7 @@ public class WindowJoinCoLab extends JDialog {
 		c.gridy = 2;
 		c.anchor = GridBagConstraints.CENTER;
 		listLabelPanel.add(refreshButton, c);
-		
+
 		JPanel westPanel = new JPanel(new BorderLayout(10, 10));
 		westPanel.add(listLabelPanel, BorderLayout.NORTH);
 		westPanel.add(createLabel, BorderLayout.SOUTH);
@@ -122,14 +122,13 @@ public class WindowJoinCoLab extends JDialog {
 		fillCoLabRoomList();
 	}
 
-	public int showRoomDialogue(){
+	public int showRoomDialogue() {
 		setVisible(true);
 		return closeStatus;
 	}
-	
+
 	public void roomsUpdated(Collection<String> roomNames) {
-		roomList.getModel().clearList();
-		roomList.getModel().addAll(roomNames);
+		roomList.setListData(roomNames.toArray());
 		Calendar c = GregorianCalendar.getInstance();
 		refreshTimeStamp.setText(c.getTime().toString());
 	}
@@ -160,7 +159,6 @@ public class WindowJoinCoLab extends JDialog {
 					return;
 				if (server.addNewCoLabRoom(parent.getUserName(), createField.getText(), null)) {
 					parent.setRoomName(createField.getText());
-					server.joinCoLabRoom(parent.getUserName(), createField.getText(), null);
 					parent.chatLogin();
 					server.getClientsCurrentlyInRoom(parent.getUserName(), createField.getText());
 					closeStatus = ROOM_JOINED;
