@@ -271,4 +271,26 @@ public class Server implements IServer {
 		}
 		return true;
 	}
+
+	@Override
+	public boolean documentRemoved(String username, String roomname, String documentName) {
+		if (colabrooms.get(roomname).removeDocument(documentName)) {
+			for (IClient client : colabrooms.get(roomname).getAllClients()) {
+				client.removeDocument(username, documentName);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean newDocument(String username, String roomname, String documentName) {
+		if (colabrooms.get(roomname).newDocument(documentName)) {
+			for (IClient client : colabrooms.get(roomname).getAllClients()) {
+				client.newDocument(username, documentName);
+			}
+			return true;
+		}
+		return false;
+	}
 }

@@ -99,6 +99,12 @@ public class ServerDecoder implements Runnable {
 			actualServer.subSectionUpdated(cln, args.get(0), args.get(1), args.get(2),
 					DocumentSubSection.getFromDelimmitedString(args.get(3)));
 			break;
+		case REMOVE_DOCUMENT:
+			actualServer.documentRemoved(cln, args.get(0), args.get(1));
+			break;
+		case NEW_DOCUMENT:
+			actualServer.newDocument(cln, args.get(0), args.get(1));
+			break;
 		default:
 			throw new NotYetImplementedException();
 		}

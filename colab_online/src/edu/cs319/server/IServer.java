@@ -17,6 +17,10 @@ public interface IServer {
 
 	public boolean leaveCoLabRoom(String username, String roomname);
 
+	public boolean newDocument(String username, String roomname, String documentName);
+
+	public boolean documentRemoved(String username, String roomname, String documentName);
+
 	public boolean newSubSection(String username, String roomname, String documentName,
 			String sectionID, int idx);
 

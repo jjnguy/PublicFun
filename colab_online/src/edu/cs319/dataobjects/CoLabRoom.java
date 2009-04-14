@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.cs319.client.IClient;
+import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 import edu.cs319.server.CoLabPrivilegeLevel;
 
 /**
@@ -81,10 +82,10 @@ public class CoLabRoom {
 		return ret;
 	}
 
-	public Collection<String> getAllClientNamesInRoom(){
+	public Collection<String> getAllClientNamesInRoom() {
 		return members.keySet();
 	}
-	
+
 	public boolean removeMember(String name) {
 		if (!members.containsKey(name))
 			return false;
@@ -92,10 +93,18 @@ public class CoLabRoom {
 		return true;
 	}
 
-	public List<SectionizedDocument> getAllDocuments(){
+	public List<SectionizedDocument> getAllDocuments() {
 		return documents;
 	}
-	
+
+	public boolean newDocument(String docName) {
+		SectionizedDocument doc = new SectionizedDocumentImpl(docName);
+		if (documents.contains(doc))
+			return false;
+		documents.add(doc);
+		return true;
+	}
+
 	public boolean addDocument(SectionizedDocument doc) {
 		for (SectionizedDocument doc2 : documents) {
 			if (doc2.getName().equals(doc.getName()))

@@ -159,4 +159,22 @@ public class ServerEncoder implements IServer {
 		return printMessageToStream(m);
 	}
 
+	@Override
+	public boolean documentRemoved(String username, String roomname, String documentName) {
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(documentName);
+		Message m = new Message(MessageType.REMOVE_DOCUMENT, username, args);
+		return printMessageToStream(m);
+	}
+
+	@Override
+	public boolean newDocument(String username, String roomname, String documentName) {
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(documentName);
+		Message m = new Message(MessageType.NEW_DOCUMENT, username, args);
+		return printMessageToStream(m);
+	}
+
 }

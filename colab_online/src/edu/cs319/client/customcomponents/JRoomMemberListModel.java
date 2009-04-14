@@ -25,7 +25,8 @@ public class JRoomMemberListModel extends AbstractListModel {
 	}
 
 	public boolean removeMember(String userID) {
-		int index = members.indexOf(userID);
+		RoomMemberLite dummy = new RoomMemberLite(userID, null)
+		;int index = members.indexOf(dummy);
 		if (index == -1)
 			return false;
 		members.remove(index);

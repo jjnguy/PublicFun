@@ -40,7 +40,7 @@ public class WindowJoinCoLab extends JDialog {
 	private JButton createButton = new JButton("Create");
 	private JButton cancelButton = new JButton("Cancel");
 	private JButton refreshButton = new JButton("Refresh");
-	private JLabel refreshTimeStamp = new JLabel("No List Yet");
+	private JLabel refreshTimeStamp = new JLabel("Click Refresh for a List of Available Rooms");
 
 	private WindowClient parent;
 	private IServer server;
