@@ -3,7 +3,6 @@ package edu.cs319.client.customcomponents;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.Collection;
-import java.util.Iterator;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -51,19 +50,8 @@ public class JRoomListPanel extends JPanel {
 	}
 
 	public void updateList(Collection<String> userNames) {
-		for (int i = 0; i < roomList.getModel().getSize(); i++) {
-			String cur = (String) roomList.getModel().getElementAt(i);
-			if (!userNames.contains(cur)) {
-				roomList.getModel().removeMember(cur);
-			}
-		}
-		Iterator<String> iter = userNames.iterator();
-		while (iter.hasNext()) {
-			String cur = iter.next();
-			if (!roomList.getModel().contains(cur)) {
-				roomList.getModel().addNewMember(cur);
-			}
-		}
+		roomList.getModel().clearList();
+		roomList.getModel().addAll(userNames);
 	}
 
 }
