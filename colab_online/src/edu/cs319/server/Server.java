@@ -237,6 +237,7 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
 		DocumentSubSection toAdd = new DocumentSubSectionImpl(sectionID);
+		toAdd.setLocked(true, username);
 		boolean addResult = doc.addSubSection(toAdd, idx);
 		if (!addResult)
 			return false;
