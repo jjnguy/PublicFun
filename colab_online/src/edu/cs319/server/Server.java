@@ -241,7 +241,13 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
 		DocumentSubSection toAdd = new DocumentSubSectionImpl(sectionID);
+		if (Util.DEBUG) {
+			System.out.println("Server.newSubSection:  Document created to add, locked = " + toAdd.isLocked() + " the guy who is locking it: " + toAdd.lockedByUser());
+		}
 		toAdd.setLocked(true, username);
+		if (Util.DEBUG) {
+			System.out.println("Server.newSubSection:  created doc, set locked by the user, locked = " + toAdd.isLocked() + " the guy who is locking it: " + toAdd.lockedByUser());
+		}
 		boolean addResult = doc.addSubSection(toAdd, idx);
 		if (!addResult)
 			return false;
@@ -273,6 +279,9 @@ public class Server implements IServer {
 		if (Util.DEBUG) {
 			System.out.println("Server.subSectionUpdated: docname: " + documentName + " sectID: "
 					+ sectionID);
+		}
+		if (Util.DEBUG) {
+			System.out.println("Server.subSectionUpdated:  Updated subsection passed in is, locked = " + update.isLocked() + " the guy who is locking it: " + update.lockedByUser());
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);

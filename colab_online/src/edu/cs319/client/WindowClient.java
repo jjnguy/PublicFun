@@ -137,9 +137,9 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser choose = new JFileChooser();
-				int choice = choose.showOpenDialog(WindowClient.this);
-				if (choice != JFileChooser.APPROVE_OPTION)
-					return;
+				// int choice = choose.showOpenDialog(WindowClient.this);
+				// if (choice != JFileChooser.APPROVE_OPTION)
+				// return;
 				String docName = JOptionPane.showInputDialog(WindowClient.this,
 						"Enter the name of the document:");
 				String secName = JOptionPane.showInputDialog(WindowClient.this,
@@ -151,14 +151,18 @@ public class WindowClient extends JFrame implements IClient {
 				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
 				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
 				try {
-					section.setText(username, new Scanner(choiceF).useDelimiter("\\Z").next());
+					section.setText(userName, new Scanner(new File(
+							"C:/Documents and Settings/Justin Nelson/My Documents/sitemap.xml"))
+							.useDelimiter("\\Z").next());
 				} catch (FileNotFoundException e1) {
 					if (Util.DEBUG)
 						e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
 					return;
 				}
-				System.out.println("WindowClient Upload Document: Username: " + userName + " DocumentName: " + docName + " SectionName: " + secName + " LockHolder: " + section.lockedByUser());
+				System.out.println("WindowClient Upload Document: Username: " + userName
+						+ " DocumentName: " + docName + " SectionName: " + secName
+						+ " LockHolder: " + section.lockedByUser());
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
 			}
 		});
@@ -321,7 +325,9 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean newSubSection(String username, String documentName, String sectionID,
 			DocumentSubSection section, int idx) {
-		System.out.println("WindowClient New SubSection: Username: " + username + " Document: " + documentName + " SectionID: " + sectionID + " LockHolder: " + section.lockedByUser());
+		System.out.println("WindowClient New SubSection: Username: " + username + " Document: "
+				+ documentName + " SectionID: " + sectionID + " LockHolder: "
+				+ section.lockedByUser());
 
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.addSubSection(section, idx);
@@ -338,7 +344,8 @@ public class WindowClient extends JFrame implements IClient {
 		doc = new JDocTabPanel(documentName);
 		documents.put(documentName, doc);
 		documentPane.add(documentName, doc);
-		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: " + documentName + " LockHolder: " + section.lockedByUser());
+		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: "
+				+ documentName);
 		return true;
 
 	}
@@ -357,8 +364,11 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionId) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
-		doc.getSection(sectionId).setLocked(true, usernameSender);
-		System.out.println("WindowClient SubSection Locked: Username: " + usernameSender + " Document: " + documentName + " SectionName: " + sectionId + " LockHolder: " + doc.lockedByUser());
+		DocumentSubSection hi = doc.getSection(sectionId);
+		hi.setLocked(true, usernameSender);
+		System.out.println("WindowClient SubSection Locked: Username: " + usernameSender
+				+ " Document: " + documentName + " SectionName: " + sectionId + " LockHolder: "
+				+ hi.lockedByUser());
 		return true;
 	}
 
@@ -392,7 +402,9 @@ public class WindowClient extends JFrame implements IClient {
 		SectionizedDocument doc = documents.get(documentname).getSectionizedDocument();
 		doc.getSection(sectionID).setText(usernameSender, section.getText());
 		documents.get(documentname).updateDocPane();
-		System.out.println("WindowClient Updating SubSection: Username: " + usernameSender + " Document: " + documentname + " SectionName: " + sectionID + " LockHolder: " + doc.lockedByUser());
+		System.out.println("WindowClient Updating SubSection: Username: " + usernameSender
+				+ " Document: " + documentname + " SectionName: " + sectionID + " LockHolder: "
+				+ section.lockedByUser());
 		return true;
 	}
 

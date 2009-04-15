@@ -83,8 +83,8 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		DocumentSubSection second = new DocumentSubSectionImpl(partB);
 		String text = ds.getText();
 		first.setLocked(true, "admin");
-		first.setText(text.substring(0, splitIndex), "admin");
-		second.setText(text.substring(splitIndex, text.length()), "admin");
+		first.setText("admin",text.substring(0, splitIndex));
+		second.setText("admin",text.substring(splitIndex, text.length()));
 		first.setLocked(false, "admin");
 		second.setLocked(false, "admin");
 		subSections.add(index, first);
@@ -99,7 +99,7 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		subSections.remove(second);
 		DocumentSubSection combined = new DocumentSubSectionImpl(combinedName);
 		combined.setLocked(true, "admin");
-		combined.setText(first.getText() + "\n" + second.getText(), "admin");
+		combined.setText("admin", first.getText() + "\n" + second.getText());
 		combined.setLocked(false, "admin");
 		subSections.add(index, combined);
 	}

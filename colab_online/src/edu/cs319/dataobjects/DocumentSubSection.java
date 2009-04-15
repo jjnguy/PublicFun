@@ -28,7 +28,7 @@ public abstract class DocumentSubSection {
 		DocumentSubSection ret = new DocumentSubSectionImpl(name);
 		if (lockHolder != null)
 			ret.setLocked(true, lockHolder);
-		ret.setText(text, lockHolder);
+		ret.setText(lockHolder, text);
 		return ret;
 	}
 }
