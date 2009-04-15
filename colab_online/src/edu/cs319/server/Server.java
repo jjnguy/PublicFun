@@ -293,4 +293,9 @@ public class Server implements IServer {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean logOut(String username) {
+		return null != regularClients.remove(username);
+	}
 }

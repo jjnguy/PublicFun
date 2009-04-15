@@ -177,4 +177,10 @@ public class ServerEncoder implements IServer {
 		return printMessageToStream(m);
 	}
 
+	@Override
+	public boolean logOut(String username) {
+		Message m = new Message(MessageType.LOG_OUT, username, new ArrayList<String>());
+		return printMessageToStream(m);
+	}
+
 }

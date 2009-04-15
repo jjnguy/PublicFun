@@ -18,7 +18,8 @@ public enum MessageType {
 	COMMUNICATION_FAIL((byte) 0x0e,	"A previous communication attempt failed"),
 	REMOVE_SUBSECTION((byte) 0x0f, "Remove A Subsection"),
 	NEW_DOCUMENT((byte) 0x10, "New Document"),
-	REMOVE_DOCUMENT((byte) 0x11, "Remove Document");
+	REMOVE_DOCUMENT((byte) 0x11, "Remove Document"),
+	LOG_OUT((byte)0x12, "Log Out");
 
 	private byte code;
 	private String name;
@@ -75,6 +76,8 @@ public enum MessageType {
 			return NEW_DOCUMENT;
 		case 0x11:
 			return REMOVE_DOCUMENT;
+		case 0x12:
+			return LOG_OUT;
 		default:
 			return null;
 		}

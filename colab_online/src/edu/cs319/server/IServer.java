@@ -37,4 +37,6 @@ public interface IServer {
 
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv);
 
+	public boolean logOut(String username);
+	
 }
