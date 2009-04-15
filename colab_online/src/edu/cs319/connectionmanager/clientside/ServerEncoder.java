@@ -148,12 +148,12 @@ public class ServerEncoder implements IServer {
 	}
 
 	@Override
-	public boolean subSectionUpdated(String username, String roomname, String sectionID,
-			String documentName, DocumentSubSection update) {
+	public boolean subSectionUpdated(String username, String roomname, String documentName,
+			String sectionId, DocumentSubSection update) {
 		List<String> args = new ArrayList<String>();
 		args.add(roomname);
-		args.add(sectionID);
 		args.add(documentName);
+		args.add(sectionId);
 		args.add(update.toDelimmitedString());
 		Message m = new Message(MessageType.UPDATE_SUBSECTION, username, args);
 		return printMessageToStream(m);
