@@ -158,6 +158,7 @@ public class WindowClient extends JFrame implements IClient {
 					JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
 					return;
 				}
+				System.out.println("WindowClient Upload Document: Username: " + username + " DocumentName: " + docName + " SectionName: " + secName);
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
 			}
 		});
@@ -324,6 +325,7 @@ public class WindowClient extends JFrame implements IClient {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.addSubSection(section, idx);
 		documents.get(documentName).updateDocPane();
+		System.out.println("WindowClient New SubSection: Username: " + username + " Document: " + documentName + " SectionID: " + sectionId);
 		return true;
 	}
 
@@ -336,6 +338,7 @@ public class WindowClient extends JFrame implements IClient {
 		doc = new JDocTabPanel(documentName);
 		documents.put(documentName, doc);
 		documentPane.add(documentName, doc);
+		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: " + documentName);
 		return true;
 
 	}
@@ -355,6 +358,7 @@ public class WindowClient extends JFrame implements IClient {
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionId) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.getSection(sectionId).setLocked(true, usernameSender);
+		System.out.println("WindowClient SubSection Locked: Username: " + usernameSender + " Document: " + documentName + " SectionName: " + sectionId);
 		return true;
 	}
 
@@ -388,6 +392,7 @@ public class WindowClient extends JFrame implements IClient {
 		SectionizedDocument doc = documents.get(documentname).getSectionizedDocument();
 		doc.getSection(sectionID).setText(usernameSender, section.getText());
 		documents.get(documentname).updateDocPane();
+		System.out.println("WindowClient Updating SubSection: Username: " + usernameSender + " Document: " + documentname + " SectionName: " + sectionID);
 		return true;
 	}
 
