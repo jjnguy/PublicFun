@@ -299,6 +299,7 @@ public class WindowClient extends JFrame implements IClient {
 		
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.addSubSection(section,idx);
+		documents.get(documentName).updateDocPane();
 		return true;
 	}
 
@@ -344,6 +345,7 @@ public class WindowClient extends JFrame implements IClient {
 	public boolean subSectionRemoved(String username, String sectionId, String documentName) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.removeSubSection(sectionId);
+		documents.get(documentName).updateDocPane();
 		return true;
 	}
 
@@ -352,6 +354,7 @@ public class WindowClient extends JFrame implements IClient {
 		SectionizedDocument doc = documents.get(documentId).getSectionizedDocument();
 		doc.removeAllSubSections();
 		doc.addAllSubSections(allSections);
+		documents.get(documentId).updateDocPane();
 		return true;
 	}
 
@@ -360,6 +363,7 @@ public class WindowClient extends JFrame implements IClient {
 			DocumentSubSection section, String sectionID) {
 		SectionizedDocument doc = documents.get(documentname).getSectionizedDocument();
 		doc.getSection(sectionID).setText(usernameSender,section.getText());
+		documents.get(documentname).updateDocPane();
 		return true;
 	}
 

@@ -94,11 +94,11 @@ public class JDocTabPanel extends JPanel {
 		return sectionList;
 	}
 	
-	/*public JEditorPane getDocPane() {
-		return documentPane;
+	public void  updateDocPane() {
+		documentPane.setText(doc.toString());
 	}
 	
-	public JEditorPane getWorkPane() {
+	/*public JEditorPane getWorkPane() {
 		return workPane;
 	}
 	*/
