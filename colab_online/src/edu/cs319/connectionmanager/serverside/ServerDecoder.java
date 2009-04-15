@@ -25,6 +25,7 @@ public class ServerDecoder implements Runnable {
 	private IServer actualServer;
 	private Socket socket;
 	private MessageInputStream in;
+	private String name;
 
 	public ServerDecoder(IServer actualServer, Socket socket) {
 		this.actualServer = actualServer;
@@ -47,6 +48,9 @@ public class ServerDecoder implements Runnable {
 				if (Util.DEBUG) {
 					e.printStackTrace();
 				}
+				if(name != null) {
+					actualServer.logOut(name);
+				}
 				return;
 			}
 		}
@@ -54,6 +58,7 @@ public class ServerDecoder implements Runnable {
 
 	public void decodeMessage(Message message) throws IOException {
 		String cln = message.getSentByClientName();
+		if(name == null) {name = cln;}
 		List<String> args = message.getArgumentList();
 		switch (message.getMessageType()) {
 		case NEW_CLIENT:
@@ -101,6 +106,16 @@ public class ServerDecoder implements Runnable {
 			break;
 		case NEW_DOCUMENT:
 			actualServer.newDocument(cln, args.get(0), args.get(1));
+			break;
+		case LOG_OUT:
+			actualServer.logOut(cln);
+			try {
+				socket.close();
+			} catch(IOException e) {
+				if(Util.DEBUG) {
+					e.printStackTrace();
+				}
+			}
 			break;
 		default:
 			throw new NotYetImplementedException();
