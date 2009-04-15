@@ -183,4 +183,24 @@ public class ServerEncoder implements IServer {
 		return printMessageToStream(m);
 	}
 
+	@Override
+	public boolean subSectionLocked(String username, String roomName, String documentName, String sectionId) {
+		List<String> args = new ArrayList<String>();
+		args.add(roomName);
+		args.add(documentName);
+		args.add(sectionId);
+		Message m = new Message(MessageType.SUBSECTION_LOCKED, username, args);
+		return printMessageToStream(m);
+	}
+
+	@Override
+	public boolean subSectionUnLocked(String username, String roomName, String documentName, String sectionId) {
+		List<String> args = new ArrayList<String>();
+		args.add(roomName);
+		args.add(documentName);
+		args.add(sectionId);
+		Message m = new Message(MessageType.SUBSECTION_UNLOCKED, username, args);
+		return printMessageToStream(m);
+	}
+
 }
