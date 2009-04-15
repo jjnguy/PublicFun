@@ -94,8 +94,8 @@ public class JDocTabPanel extends JPanel {
 		return sectionList;
 	}
 	
-	public void  updateDocPane() {
-		documentPane.setText(doc.toString());
+	public void updateDocPane() {
+		documentPane.setText(doc.getFullText());
 	}
 	
 	/*public JEditorPane getWorkPane() {
