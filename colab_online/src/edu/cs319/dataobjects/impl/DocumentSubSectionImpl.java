@@ -13,6 +13,7 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 	public DocumentSubSectionImpl(String name) {
 		this.name = name;
 		this.locked = false;
+		this.text = "";
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 	public boolean setText(String text, String username) {
 		boolean success = false;
 		if (locked && username.equals(lockHolder)) {
-			this.text = text;
+			this.text = (text == null) ? "" : text;
 			success = true;
 		}
 		return success;
