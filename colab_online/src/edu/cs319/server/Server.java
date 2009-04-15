@@ -235,7 +235,8 @@ public class Server implements IServer {
 	public boolean newSubSection(String username, String roomname, String documentName,
 			String sectionID, int idx) {
 		if (Util.DEBUG) {
-			System.out.println("Server.newSubSection: docname: " + documentName + " sectID: " + sectionID);
+			System.out.println("Server.newSubSection: docname: " + documentName + " sectID: "
+					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
@@ -245,7 +246,7 @@ public class Server implements IServer {
 		if (!addResult)
 			return false;
 		for (IClient client : room.getAllClients()) {
-			client.newSubSection(username, sectionID, documentName, toAdd, idx);
+			client.newSubSection(username, documentName, sectionID, toAdd, idx);
 		}
 		return true;
 	}
@@ -254,7 +255,8 @@ public class Server implements IServer {
 	public boolean subSectionRemoved(String username, String roomname, String documentName,
 			String sectionID) {
 		if (Util.DEBUG) {
-			System.out.println("Server.subSectionRemoved: docname: " + documentName + " sectID: " + sectionID);
+			System.out.println("Server.subSectionRemoved: docname: " + documentName + " sectID: "
+					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
@@ -269,7 +271,8 @@ public class Server implements IServer {
 	public boolean subSectionUpdated(String username, String roomname, String documentName,
 			String sectionID, DocumentSubSection update) {
 		if (Util.DEBUG) {
-			System.out.println("Server.subSectionUpdated: docname: " + documentName + " sectID: " + sectionID);
+			System.out.println("Server.subSectionUpdated: docname: " + documentName + " sectID: "
+					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
@@ -319,7 +322,8 @@ public class Server implements IServer {
 	public boolean subSectionLocked(String username, String roomname, String documentName,
 			String sectionID) {
 		if (Util.DEBUG) {
-			System.out.println("Server.subSectionLocked: docname: " + documentName + " sectID: " + sectionID);
+			System.out.println("Server.subSectionLocked: docname: " + documentName + " sectID: "
+					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		room.getDocument(documentName).getSection(sectionID).setLocked(true, username);
@@ -333,7 +337,8 @@ public class Server implements IServer {
 	public boolean subSectionUnLocked(String username, String roomname, String documentName,
 			String sectionID) {
 		if (Util.DEBUG) {
-			System.out.println("Server.subSectionUnLocked: docname: " + documentName + " sectID: " + sectionID);
+			System.out.println("Server.subSectionUnLocked: docname: " + documentName + " sectID: "
+					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		room.getDocument(documentName).getSection(sectionID).setLocked(false, username);

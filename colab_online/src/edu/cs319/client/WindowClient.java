@@ -158,7 +158,7 @@ public class WindowClient extends JFrame implements IClient {
 					JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
 					return;
 				}
-				System.out.println("WindowClient Upload Document: Username: " + username + " DocumentName: " + docName + " SectionName: " + secName);
+				System.out.println("WindowClient Upload Document: Username: " + userName + " DocumentName: " + docName + " SectionName: " + secName);
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
 			}
 		});
@@ -319,13 +319,13 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean newSubSection(String username, String sectionID, String documentName,
+	public boolean newSubSection(String username, String documentName, String sectionID,
 			DocumentSubSection section, int idx) {
+		System.out.println("WindowClient New SubSection: Username: " + username + " Document: " + documentName + " SectionID: " + sectionID);
 
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.addSubSection(section, idx);
 		documents.get(documentName).updateDocPane();
-		System.out.println("WindowClient New SubSection: Username: " + username + " Document: " + documentName + " SectionID: " + sectionId);
 		return true;
 	}
 
