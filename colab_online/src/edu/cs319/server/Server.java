@@ -298,4 +298,26 @@ public class Server implements IServer {
 	public boolean logOut(String username) {
 		return null != regularClients.remove(username);
 	}
+
+	@Override
+	public boolean subsectionLocked(String username, String roomname, String sectionID,
+			String documentName) {
+		CoLabRoom room = colabrooms.get(roomname);
+		room.getDocument(documentName).getSection(sectionID).setLocked(true, username);
+		for (IClient c : room.getAllClients()){
+			c.subsectionLocked(username, documentName, sectionID);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean subsectionUnLocked(String username, String roomname, String sectionID,
+			String documentName) {
+		CoLabRoom room = colabrooms.get(roomname);
+		room.getDocument(documentName).getSection(sectionID).setLocked(false, username);
+		for (IClient c : room.getAllClients()){
+			c.subsectionUnLocked(username, documentName, sectionID);
+		}
+		return true;
+	}
 }
