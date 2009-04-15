@@ -28,6 +28,7 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 
 	@Override
 	public boolean setText(String text, String username) {
+		System.out.println("Text: " + text  + " Username: " + username);
 		boolean success = false;
 		if (locked && username.equals(lockHolder)) {
 			this.text = (text == null) ? "" : text;
