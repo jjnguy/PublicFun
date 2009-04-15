@@ -151,7 +151,7 @@ public class WindowClient extends JFrame implements IClient {
 				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
 				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
 				try {
-					section.setText(new Scanner(choiceF).useDelimiter("\\Z").next(), userName);
+					section.setText(username, new Scanner(choiceF).useDelimiter("\\Z").next());
 				} catch (FileNotFoundException e1) {
 					if (Util.DEBUG)
 						e1.printStackTrace();

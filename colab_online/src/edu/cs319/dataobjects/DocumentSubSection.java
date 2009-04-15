@@ -8,7 +8,7 @@ public abstract class DocumentSubSection {
 
 	public abstract String getText();
 
-	public abstract boolean setText(String text, String username);
+	public abstract boolean setText(String username, String text);
 
 	public abstract boolean isLocked();
 
