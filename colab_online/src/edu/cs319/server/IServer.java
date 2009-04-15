@@ -30,6 +30,12 @@ public interface IServer {
 	public boolean subSectionUpdated(String username, String roomname, String sectionID,
 			String documentName, DocumentSubSection update);
 
+	public boolean subsectionLocked(String username, String roomname, String sectionID,
+			String documentName);
+	
+	public boolean subsectionUnLocked(String username, String roomname, String sectionID,
+			String documentName);
+	
 	public boolean newChatMessage(String senderName, String roomname, String message);
 
 	public boolean newChatMessage(String senderName, String roomname, String message,

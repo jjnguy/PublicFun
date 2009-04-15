@@ -40,10 +40,11 @@ public class ClientDecoder implements Runnable {
 		while (true) {
 			try {
 				decodeMessage(mIn.readMessage());
-			} catch (IOException e) {
+			} catch (IOException eof) {
 				if (Util.DEBUG) {
-					e.printStackTrace();
+					eof.printStackTrace();
 				}
+				break;
 			}
 		}
 	}

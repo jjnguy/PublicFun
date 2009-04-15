@@ -18,7 +18,7 @@ public class MessageInputStream {
 
 	public Message readMessage() throws IOException {
 		// if we need more that 1KB of data in a message, then we have a problem
-		byte[] buffer = new byte[1024];
+		byte[] buffer = new byte[1024 * 13];
 		int read;
 		int bytesRead = 0;
 		while ((read = in.read()) != Byte.MAX_VALUE) {

@@ -7,17 +7,22 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
@@ -26,14 +31,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
-
 import edu.cs319.connectionmanager.clientside.Proxy;
-
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
-
+import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.server.CoLabPrivilegeLevel;
-import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
@@ -52,7 +54,7 @@ public class WindowClient extends JFrame implements IClient {
 	private String roomName;
 
 	private JTabbedPane documentPane;
-	private Map<String,JDocTabPanel> documents;
+	private Map<String, JDocTabPanel> documents;
 
 	private JRoomListPanel roomMemberListPanel;
 	private JChatPanel chatPanel;
@@ -75,9 +77,9 @@ public class WindowClient extends JFrame implements IClient {
 
 		roomMemberListPanel = new JRoomListPanel();
 		documentPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-		documents = new HashMap<String,JDocTabPanel>();
-		//documentPane.addTab("panel1", new JDocTabPanel());
-		//documentPane.addTab("panel2", new JDocTabPanel());
+		documents = new HashMap<String, JDocTabPanel>();
+		// documentPane.addTab("panel1", new JDocTabPanel());
+		// documentPane.addTab("panel2", new JDocTabPanel());
 		chatPanel = new JChatPanel();
 
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -134,8 +136,29 @@ public class WindowClient extends JFrame implements IClient {
 		openDocument.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				JFileChooser choose = new JFileChooser();
+				int choice = choose.showOpenDialog(WindowClient.this);
+				if (choice != JFileChooser.APPROVE_OPTION)
+					return;
+				String docName = JOptionPane.showInputDialog(WindowClient.this,
+						"Enter the name of the document:");
+				String secName = JOptionPane.showInputDialog(WindowClient.this,
+						"Enter the name of the subsection:");
+				File choiceF = choose.getSelectedFile();
+				proxy.getServer().newDocument(userName, roomName, docName);
+				DocumentSubSection section = new DocumentSubSectionImpl(secName);
+				section.setLocked(true, userName);
+				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
+				// proxy.getServer().
+				try {
+					section.setText(new Scanner(choiceF).useDelimiter("\\Z").next(), userName);
+				} catch (FileNotFoundException e1) {
+					if (Util.DEBUG)
+						e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
+					return;
+				}
+				proxy.getServer().subSectionUpdated(userName, roomName, secName, docName, section);
 			}
 		});
 		logIn.addActionListener(new ActionListener() {
@@ -163,8 +186,8 @@ public class WindowClient extends JFrame implements IClient {
 				proxy.getServer().leaveCoLabRoom(userName, roomName);
 				try {
 					proxy.close();
-				}catch(IOException io) {
-					if(Util.DEBUG) {
+				} catch (IOException io) {
+					if (Util.DEBUG) {
 						io.printStackTrace();
 					}
 				}
@@ -206,6 +229,7 @@ public class WindowClient extends JFrame implements IClient {
 			public void windowClosing(WindowEvent e) {
 				if (disconnect.isEnabled()) {
 					proxy.getServer().leaveCoLabRoom(userName, roomName);
+					proxy.getServer().logOut(userName);
 				}
 				chatPanel.shutdownTray();
 			}
@@ -296,9 +320,9 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean newSubSection(String username, String sectionID, String documentName,
 			DocumentSubSection section, int idx) {
-		
+
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
-		doc.addSubSection(section,idx);
+		doc.addSubSection(section, idx);
 		documents.get(documentName).updateDocPane();
 		return true;
 	}
@@ -306,11 +330,11 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean newDocument(String username, String documentName) {
 		JDocTabPanel doc = documents.get(documentName);
-		if(doc != null) {
+		if (doc != null) {
 			throw new IllegalStateException("Two documents cannot have the same name");
 		}
 		doc = new JDocTabPanel(documentName);
-		documents.put(documentName,doc);
+		documents.put(documentName, doc);
 		documentPane.add(documentName, doc);
 		return true;
 
@@ -319,7 +343,7 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean removeDocument(String username, String documentName) {
 		JDocTabPanel doc = documents.get(documentName);
-		if(doc == null) {
+		if (doc == null) {
 			throw new IllegalStateException("This document does not exist");
 		}
 		documents.remove(documentName);
@@ -330,14 +354,14 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionId) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
-		doc.getSection(sectionId).setLocked(true,usernameSender);
+		doc.getSection(sectionId).setLocked(true, usernameSender);
 		return true;
 	}
 
 	@Override
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionId) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
-		doc.getSection(sectionId).setLocked(false,usernameSender);
+		doc.getSection(sectionId).setLocked(false, usernameSender);
 		return true;
 	}
 
@@ -362,11 +386,10 @@ public class WindowClient extends JFrame implements IClient {
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID) {
 		SectionizedDocument doc = documents.get(documentname).getSectionizedDocument();
-		doc.getSection(sectionID).setText(usernameSender,section.getText());
+		doc.getSection(sectionID).setText(usernameSender, section.getText());
 		documents.get(documentname).updateDocPane();
 		return true;
 	}
-
 
 	@Override
 	public String getUserName() {

@@ -91,9 +91,6 @@ public class Message {
 		int offset = 0;
 		int numDone = 0;
 		while (numDone < brokenRet.length) {
-			if (Util.DEBUG) {
-				System.out.println("Encoding message, offest ammnt: " + offset);
-			}
 			System.arraycopy(brokenRet[numDone], 0, ret, offset, brokenRet[numDone].length);
 			offset += brokenRet[numDone].length;
 			ret[offset] = Byte.MIN_VALUE;

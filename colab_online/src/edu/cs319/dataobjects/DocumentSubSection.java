@@ -26,6 +26,8 @@ public abstract class DocumentSubSection {
 		String lockHolder = string.substring(idxFirstDelim + 1, idxSecondDelim);
 		String text = string.substring(idxSecondDelim + 1);
 		DocumentSubSection ret = new DocumentSubSectionImpl(name);
+		if (lockHolder != null)
+			ret.setLocked(true, lockHolder);
 		ret.setText(text, lockHolder);
 		return ret;
 	}
