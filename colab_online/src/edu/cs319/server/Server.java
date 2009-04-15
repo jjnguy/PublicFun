@@ -234,6 +234,9 @@ public class Server implements IServer {
 	@Override
 	public boolean newSubSection(String username, String roomname, String documentName,
 			String sectionID, int idx) {
+		if (Util.DEBUG) {
+			System.out.println("Server.newSubSection: docname: " + documentName + " sectID: " + sectionID);
+		}
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
 		DocumentSubSection toAdd = new DocumentSubSectionImpl(sectionID);
@@ -250,6 +253,9 @@ public class Server implements IServer {
 	@Override
 	public boolean subSectionRemoved(String username, String roomname, String documentName,
 			String sectionID) {
+		if (Util.DEBUG) {
+			System.out.println("Server.subSectionRemoved: docname: " + documentName + " sectID: " + sectionID);
+		}
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
 		doc.removeSubSection(sectionID);
@@ -262,6 +268,9 @@ public class Server implements IServer {
 	@Override
 	public boolean subSectionUpdated(String username, String roomname, String documentName,
 			String sectionID, DocumentSubSection update) {
+		if (Util.DEBUG) {
+			System.out.println("Server.subSectionUpdated: docname: " + documentName + " sectID: " + sectionID);
+		}
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
 		int docIndex = doc.getSubSectionIndex(sectionID);
@@ -275,6 +284,9 @@ public class Server implements IServer {
 
 	@Override
 	public boolean documentRemoved(String username, String roomname, String documentName) {
+		if (Util.DEBUG) {
+			System.out.println("Server.documentRemoved: docname: " + documentName);
+		}
 		if (colabrooms.get(roomname).removeDocument(documentName)) {
 			for (IClient client : colabrooms.get(roomname).getAllClients()) {
 				client.removeDocument(username, documentName);
@@ -286,6 +298,9 @@ public class Server implements IServer {
 
 	@Override
 	public boolean newDocument(String username, String roomname, String documentName) {
+		if (Util.DEBUG) {
+			System.out.println("Server.newDocument: docname: " + documentName);
+		}
 		if (colabrooms.get(roomname).newDocument(documentName)) {
 			for (IClient client : colabrooms.get(roomname).getAllClients()) {
 				client.newDocument(username, documentName);
@@ -303,6 +318,9 @@ public class Server implements IServer {
 	@Override
 	public boolean subSectionLocked(String username, String roomname, String documentName,
 			String sectionID) {
+		if (Util.DEBUG) {
+			System.out.println("Server.subSectionLocked: docname: " + documentName + " sectID: " + sectionID);
+		}
 		CoLabRoom room = colabrooms.get(roomname);
 		room.getDocument(documentName).getSection(sectionID).setLocked(true, username);
 		for (IClient c : room.getAllClients()) {
@@ -315,7 +333,7 @@ public class Server implements IServer {
 	public boolean subSectionUnLocked(String username, String roomname, String documentName,
 			String sectionID) {
 		if (Util.DEBUG) {
-			System.out.println("Locking subsection: " + sectionID + " in doc: " + documentName);
+			System.out.println("Server.subSectionUnLocked: docname: " + documentName + " sectID: " + sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		room.getDocument(documentName).getSection(sectionID).setLocked(false, username);

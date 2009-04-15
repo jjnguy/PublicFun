@@ -60,7 +60,7 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv) {
-		List<String> arg = new  ArrayList<String>();
+		List<String> arg = new ArrayList<String>();
 		arg.add(newPriv.toString());
 		Message tosent = new Message(MessageType.CHANGE_USER_PRIV, username, arg);
 		return printMessageToStream(tosent);
@@ -140,6 +140,10 @@ public class ClientEncoder implements IClient {
 	@Override
 	public boolean newSubSection(String username, String documentName, String sectionID,
 			DocumentSubSection section, int idx) {
+		if (Util.DEBUG) {
+			System.out.println("ClientEncoder.newSubSection: docname: " + documentName
+					+ " sectID: " + sectionID);
+		}
 		List<String> args = new ArrayList<String>();
 		args.add(documentName);
 		args.add(sectionID);
@@ -151,6 +155,10 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionID) {
+		if (Util.DEBUG) {
+			System.out.println("ClientEncoder.subSectionLocked: docname: " + documentName
+					+ " sectID: " + sectionID);
+		}
 		List<String> args = new ArrayList<String>();
 		args.add(documentName);
 		args.add(sectionID);
@@ -160,6 +168,10 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionID) {
+		if (Util.DEBUG) {
+			System.out.println("ClientEncoder.subSectionUnLocked: docname: " + documentName
+					+ " sectID: " + sectionID);
+		}
 		List<String> args = new ArrayList<String>();
 		args.add(documentName);
 		args.add(sectionID);
@@ -169,6 +181,9 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
+		if (Util.DEBUG) {
+			System.out.println("ClientEncoder.updateAllSubsections: docname: " + documentId);
+		}
 		List<String> args = new ArrayList<String>();
 		args.add(documentId);
 		for (DocumentSubSection doc : allSections) {
@@ -181,6 +196,10 @@ public class ClientEncoder implements IClient {
 	@Override
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID) {
+		if (Util.DEBUG) {
+			System.out.println("ClientEncoder.updateSubsection: docname: " + documentname
+					+ " sectID: " + sectionID);
+		}
 		List<String> args = new ArrayList<String>();
 		args.add(documentname);
 		args.add(section.toDelimmitedString());
@@ -191,6 +210,10 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean subSectionRemoved(String username, String documentName, String sectionID) {
+		if (Util.DEBUG) {
+			System.out.println("ClientEncoder.subSectionRemoved: docname: " + documentName
+					+ " sectID: " + sectionID);
+		}
 		List<String> args = new ArrayList<String>();
 		args.add(documentName);
 		args.add(sectionID);
@@ -200,6 +223,9 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean newDocument(String username, String documentName) {
+		if (Util.DEBUG) {
+			System.out.println("ClientEncoder.newDocument: docname: " + documentName);
+		}
 		List<String> args = new ArrayList<String>();
 		args.add(documentName);
 		Message m = new Message(MessageType.NEW_DOCUMENT, username, args);
