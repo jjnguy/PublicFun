@@ -300,8 +300,7 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean subsectionLocked(String username, String roomname, String sectionID,
-			String documentName) {
+	public boolean subSectionLocked(String username, String roomname, String documentName, String sectionID) {
 		CoLabRoom room = colabrooms.get(roomname);
 		room.getDocument(documentName).getSection(sectionID).setLocked(true, username);
 		for (IClient c : room.getAllClients()){
@@ -311,8 +310,7 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean subsectionUnLocked(String username, String roomname, String sectionID,
-			String documentName) {
+	public boolean subSectionUnLocked(String username, String roomname, String documentName, String sectionID) {
 		CoLabRoom room = colabrooms.get(roomname);
 		room.getDocument(documentName).getSection(sectionID).setLocked(false, username);
 		for (IClient c : room.getAllClients()){

@@ -48,7 +48,7 @@ public class ServerDecoder implements Runnable {
 				if (Util.DEBUG) {
 					e.printStackTrace();
 				}
-				if(name != null) {
+				if (name != null) {
 					actualServer.logOut(name);
 				}
 				return;
@@ -58,7 +58,9 @@ public class ServerDecoder implements Runnable {
 
 	public void decodeMessage(Message message) throws IOException {
 		String cln = message.getSentByClientName();
-		if(name == null) {name = cln;}
+		if (name == null) {
+			name = cln;
+		}
 		List<String> args = message.getArgumentList();
 		switch (message.getMessageType()) {
 		case NEW_CLIENT:
@@ -101,6 +103,12 @@ public class ServerDecoder implements Runnable {
 			actualServer.subSectionUpdated(cln, args.get(0), args.get(1), args.get(2),
 					DocumentSubSection.getFromDelimmitedString(args.get(3)));
 			break;
+		case SUBSECTION_LOCKED:
+			actualServer.subSectionLocked(cln, args.get(0), args.get(1), args.get(2));
+			break;
+		case SUBSECTION_UNLOCKED:
+			actualServer.subSectionUnLocked(cln, args.get(0), args.get(1), args.get(2));
+			break;
 		case REMOVE_DOCUMENT:
 			actualServer.documentRemoved(cln, args.get(0), args.get(1));
 			break;
@@ -111,8 +119,8 @@ public class ServerDecoder implements Runnable {
 			actualServer.logOut(cln);
 			try {
 				socket.close();
-			} catch(IOException e) {
-				if(Util.DEBUG) {
+			} catch (IOException e) {
+				if (Util.DEBUG) {
 					e.printStackTrace();
 				}
 			}
