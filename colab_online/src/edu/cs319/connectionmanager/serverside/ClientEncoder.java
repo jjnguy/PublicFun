@@ -152,6 +152,7 @@ public class ClientEncoder implements IClient {
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionID) {
 		List<String> args = new ArrayList<String>();
+		args.add(documentName);
 		args.add(sectionID);
 		Message m = new Message(MessageType.SUBSECTION_LOCKED, usernameSender, args);
 		return printMessageToStream(m);
@@ -160,6 +161,7 @@ public class ClientEncoder implements IClient {
 	@Override
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionID) {
 		List<String> args = new ArrayList<String>();
+		args.add(documentName);
 		args.add(sectionID);
 		Message m = new Message(MessageType.SUBSECTION_UNLOCKED, usernameSender, args);
 		return printMessageToStream(m);
