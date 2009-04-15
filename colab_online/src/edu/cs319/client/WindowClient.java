@@ -55,6 +55,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	private JTabbedPane documentPane;
 	private Map<String, JDocTabPanel> documents;
+	
 
 	private JRoomListPanel roomMemberListPanel;
 	private JChatPanel chatPanel;
@@ -78,8 +79,6 @@ public class WindowClient extends JFrame implements IClient {
 		roomMemberListPanel = new JRoomListPanel();
 		documentPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		documents = new HashMap<String, JDocTabPanel>();
-		// documentPane.addTab("panel1", new JDocTabPanel());
-		// documentPane.addTab("panel2", new JDocTabPanel());
 		chatPanel = new JChatPanel();
 
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -144,22 +143,20 @@ public class WindowClient extends JFrame implements IClient {
 						"Enter the name of the document:");
 				String secName = JOptionPane.showInputDialog(WindowClient.this,
 						"Enter the name of the subsection:");
-				File choiceF = choose.getSelectedFile();
+				//File choiceF = choose.getSelectedFile();
 				proxy.getServer().newDocument(userName, roomName, docName);
 				DocumentSubSection section = new DocumentSubSectionImpl(secName);
 				section.setLocked(true, userName);
 				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
 				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
-				try {
-					section.setText(userName, new Scanner(new File(
-							"C:/Documents and Settings/Justin Nelson/My Documents/sitemap.xml"))
-							.useDelimiter("\\Z").next());
-				} catch (FileNotFoundException e1) {
-					if (Util.DEBUG)
-						e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
-					return;
-				}
+				//try {
+					section.setText(userName, "Working");
+				//} catch (FileNotFoundException e1) {
+				//	if (Util.DEBUG)
+					//	e1.printStackTrace();
+					//JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
+				//	return;
+				//}
 				System.out.println("WindowClient Upload Document: Username: " + userName
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());

@@ -120,4 +120,8 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 	public int hashCode() {
 		return getName().hashCode();
 	}
+	
+	public String toString() {
+		return getName();
+	}
 }

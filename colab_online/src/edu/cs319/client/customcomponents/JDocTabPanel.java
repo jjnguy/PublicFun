@@ -40,9 +40,10 @@ public class JDocTabPanel extends JPanel {
 		
 		sectionList = new JList();
 		documentPane = new JEditorPane();
+		documentPane.setEditable(false);
 		workPane = new JEditorPane();
-		sectionUpButton = new JButton("Move Up");
-		sectionDownButton = new JButton("Move Down");
+		sectionUpButton = new JButton("^");
+		sectionDownButton = new JButton("V");
 		setUpAppearance();
 		setUpListeners();
 	}
@@ -96,6 +97,7 @@ public class JDocTabPanel extends JPanel {
 	
 	public void updateDocPane() {
 		documentPane.setText(doc.getFullText());
+		sectionList.setListData(doc.getAllSubSections().toArray());
 	}
 	
 	/*public JEditorPane getWorkPane() {

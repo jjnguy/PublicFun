@@ -161,6 +161,10 @@ public class Server implements IServer {
 		for (IClient client2 : room.getAllClients()) {
 			client2.coLabRoomMemberArrived(username);
 		}
+		for(SectionizedDocument sd : room.getAllDocuments()) {
+			client.newDocument(username,sd.getName());
+			client.updateAllSubsections(sd.getName(),sd.getAllSubSections());
+		}
 		return true;
 	}
 

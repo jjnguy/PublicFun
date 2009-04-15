@@ -85,5 +85,9 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 	public String toDelimmitedString() {
 		return name + (char)31 + lockHolder+ (char)31 + text;
 	}
+	
+	public String toString() {
+		return getName() + " : " + lockHolder;
+	}
 
 }
