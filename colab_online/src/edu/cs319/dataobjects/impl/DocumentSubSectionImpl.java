@@ -29,10 +29,10 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 	@Override
 	public boolean setText(String text, String username) {
 		boolean success = false;
-		//if (locked && username.equals(lockHolder)) {
+		if (locked && username.equals(lockHolder)) {
 			this.text = (text == null) ? "" : text;
 			success = true;
-		//}
+		}
 		return success;
 	}
 
