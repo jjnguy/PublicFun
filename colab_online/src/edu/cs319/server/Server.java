@@ -260,8 +260,8 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean subSectionUpdated(String username, String roomname, String sectionID,
-			String documentName, DocumentSubSection update) {
+	public boolean subSectionUpdated(String username, String roomname, String documentName,
+			String sectionID, DocumentSubSection update) {
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
 		int docIndex = doc.getSubSectionIndex(sectionID);

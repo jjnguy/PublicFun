@@ -27,8 +27,8 @@ public interface IServer {
 	public boolean subSectionRemoved(String username, String roomname, String documentName,
 			String sectionID);
 
-	public boolean subSectionUpdated(String username, String roomname, String sectionID,
-			String documentName, DocumentSubSection update);
+	public boolean subSectionUpdated(String username, String roomname, String documentName,
+			String sectionID, DocumentSubSection update);
 
 	public boolean subSectionLocked(String username, String roomname, String documentName,
 			String sectionId);

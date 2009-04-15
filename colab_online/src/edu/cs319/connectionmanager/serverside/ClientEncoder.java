@@ -138,11 +138,11 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public boolean newSubSection(String username, String sectionID, String documentName,
+	public boolean newSubSection(String username, String documentName, String sectionID,
 			DocumentSubSection section, int idx) {
 		List<String> args = new ArrayList<String>();
-		args.add(sectionID);
 		args.add(documentName);
+		args.add(sectionID);
 		args.add(section.toDelimmitedString());
 		args.add("" + idx);
 		Message m = new Message(MessageType.NEW_SUBSECTION, username, args);
@@ -190,9 +190,10 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public boolean subSectionRemoved(String username, String sectionID, String documentName) {
+	public boolean subSectionRemoved(String username, String documentName, String sectionID) {
 		List<String> args = new ArrayList<String>();
 		args.add(documentName);
+		args.add(sectionID);
 		Message m = new Message(MessageType.REMOVE_SUBSECTION, username, args);
 		return printMessageToStream(m);
 	}

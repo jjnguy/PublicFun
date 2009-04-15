@@ -158,7 +158,7 @@ public class WindowClient extends JFrame implements IClient {
 					JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
 					return;
 				}
-				proxy.getServer().subSectionUpdated(userName, roomName, secName, docName, section);
+				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
 			}
 		});
 		logIn.addActionListener(new ActionListener() {
