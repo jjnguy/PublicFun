@@ -81,11 +81,19 @@ public class JDocTabPanel extends JPanel {
 		sectionPanel.add(sectionList, BorderLayout.CENTER);
 		sectionPanel.add(buttonPanel, BorderLayout.SOUTH);
 
+		JPanel bottomPane = new JPanel(new BorderLayout());
+		JPanel norht = new JPanel();
+		norht.add(sectionSelector);
+		norht.add(aquireLock);
+		norht.add(updateSection);
+		bottomPane.add(norht, BorderLayout.NORTH);
+		
 		documentPane.setMinimumSize(new Dimension(0, 0));
 		workPane.setMinimumSize(new Dimension(0, 0));
 		JScrollPane workScroll = new JScrollPane(workPane);
 		JScrollPane docScroll = new JScrollPane(documentPane);
-		workspace = new JSplitPane(JSplitPane.VERTICAL_SPLIT, docScroll, workScroll);
+		bottomPane.add(workScroll, BorderLayout.CENTER);
+		workspace = new JSplitPane(JSplitPane.VERTICAL_SPLIT, docScroll, bottomPane);
 		wholePane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sectionPanel, workspace);
 
 		workspace.setDividerLocation(250);
