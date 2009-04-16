@@ -32,9 +32,12 @@ import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
 import edu.cs319.connectionmanager.clientside.Proxy;
+
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
+import edu.cs319.dataobjects.DocumentInfo;
 import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
+import edu.cs319.dataobjects.impl.DocumentInfoImpl;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
@@ -337,7 +340,7 @@ public class WindowClient extends JFrame implements IClient {
 		if (doc != null) {
 			throw new IllegalStateException("Two documents cannot have the same name");
 		}
-		doc = new JDocTabPanel(documentName);
+		doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(),roomName,documentName,userName));
 		documents.put(documentName, doc);
 		documentPane.add(documentName, doc);
 		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: "

@@ -17,6 +17,8 @@ import javax.swing.text.PlainDocument;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 
+import edu.cs319.dataobjects.DocumentInfo;
+
 /**
  * 
  * @author Amelia Gee
@@ -34,9 +36,11 @@ public class JDocTabPanel extends JPanel {
 	private JButton sectionDownButton;
 	
 	private SectionizedDocument doc;
+	private DocumentInfo info;
 
-	public JDocTabPanel(String name) {
-		doc = new SectionizedDocumentImpl(name);
+	public JDocTabPanel(DocumentInfo info) {
+		this.info = info;
+		doc = new SectionizedDocumentImpl(info.getDocumentName());
 		
 		sectionList = new JList();
 		Font docFont = new Font("Courier New", Font.PLAIN, 11);
@@ -81,21 +85,10 @@ public class JDocTabPanel extends JPanel {
 	}
 	
 	private void setUpListeners() {
-		sectionUpButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
-		sectionDownButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		sectionUpButton.addActionListener(new UpButtonListener());
+		
+		sectionDownButton.addActionListener(new DownButtonListener());
 	}
 	
 	public JList getList() {
@@ -106,13 +99,38 @@ public class JDocTabPanel extends JPanel {
 		documentPane.setText(doc.getFullText());
 		sectionList.setListData(doc.getAllSubSections().toArray());
 	}
-	
-	/*public JEditorPane getWorkPane() {
-		return workPane;
-	}
-	*/
 
 	public SectionizedDocument getSectionizedDocument() {
 		return doc;
+	}
+	
+	private class UpButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}	
+	}
+	
+	private class DownButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}	
+	}
+	
+	private class AquireLockListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(), info.getDocumentName(), null);
+		}	
+	}
+	
+	private class UpdateSubSectionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(), info.getDocumentName(), null, doc.getSection(null));
+		}	
+	}
+	
+	private class SelectedSubSectionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}	
 	}
 }
