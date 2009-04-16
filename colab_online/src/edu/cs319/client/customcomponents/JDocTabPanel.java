@@ -7,19 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JComboBox;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.PlainDocument;
 
 import edu.cs319.dataobjects.DocumentInfo;
+import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
-import edu.cs319.dataobjects.DocumentSubSection;
 
 /**
  * 
@@ -38,14 +38,10 @@ public class JDocTabPanel extends JPanel {
 	private JEditorPane workPane;
 	private JButton sectionUpButton;
 	private JButton sectionDownButton;
-<<<<<<< .mine
 	private JButton aquireLock;
 	private JButton updateSection;
 	private JComboBox sectionSelector;
 	
-=======
-
->>>>>>> .r649
 	private SectionizedDocument doc;
 	private DocumentInfo info;
 
