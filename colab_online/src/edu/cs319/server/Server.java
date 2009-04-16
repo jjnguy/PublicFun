@@ -161,9 +161,9 @@ public class Server implements IServer {
 		for (IClient client2 : room.getAllClients()) {
 			client2.coLabRoomMemberArrived(username);
 		}
-		for(SectionizedDocument sd : room.getAllDocuments()) {
-			client.newDocument(username,sd.getName());
-			client.updateAllSubsections(sd.getName(),sd.getAllSubSections());
+		for (SectionizedDocument sd : room.getAllDocuments()) {
+			client.newDocument(username, sd.getName());
+			client.updateAllSubsections(sd.getName(), sd.getAllSubSections());
 		}
 		return true;
 	}
@@ -246,11 +246,16 @@ public class Server implements IServer {
 		SectionizedDocument doc = room.getDocument(documentName);
 		DocumentSubSection toAdd = new DocumentSubSectionImpl(sectionID);
 		if (Util.DEBUG) {
-			System.out.println("Server.newSubSection:  Document created to add, locked = " + toAdd.isLocked() + " the guy who is locking it: " + toAdd.lockedByUser());
+			System.out.println("Server.newSubSection:  Document created to add, locked = "
+					+ toAdd.isLocked() + " the guy who is locking it: " + toAdd.lockedByUser());
 		}
 		toAdd.setLocked(true, username);
 		if (Util.DEBUG) {
-			System.out.println("Server.newSubSection:  created doc, set locked by the user, locked = " + toAdd.isLocked() + " the guy who is locking it: " + toAdd.lockedByUser());
+			System.out
+					.println("Server.newSubSection:  created doc, set locked by the user, locked = "
+							+ toAdd.isLocked()
+							+ " the guy who is locking it: "
+							+ toAdd.lockedByUser());
 		}
 		boolean addResult = doc.addSubSection(toAdd, idx);
 		if (!addResult)
@@ -285,7 +290,11 @@ public class Server implements IServer {
 					+ sectionID);
 		}
 		if (Util.DEBUG) {
-			System.out.println("Server.subSectionUpdated:  Updated subsection passed in is, locked = " + update.isLocked() + " the guy who is locking it: " + update.lockedByUser());
+			System.out
+					.println("Server.subSectionUpdated:  Updated subsection passed in is, locked = "
+							+ update.isLocked()
+							+ " the guy who is locking it: "
+							+ update.lockedByUser());
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
@@ -339,7 +348,14 @@ public class Server implements IServer {
 					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
-		room.getDocument(documentName).getSection(sectionID).setLocked(true, username);
+		SectionizedDocument doc = room.getDocument(documentName);
+		// First, unlock any lock perviously held by the user on the doc
+		for (DocumentSubSection sec : doc.getAllSubSections()){
+			if (username.equals(sec.lockedByUser())){
+				subSectionUnLocked(username, roomname, documentName, sec.getName());
+			}
+		}
+		doc.getSection(sectionID).setLocked(true, username);
 		for (IClient c : room.getAllClients()) {
 			c.subsectionLocked(username, documentName, sectionID);
 		}
