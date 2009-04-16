@@ -12,12 +12,14 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JComboBox;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.PlainDocument;
 
 import edu.cs319.dataobjects.DocumentInfo;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
+import edu.cs319.dataobjects.DocumentSubSection;
 
 /**
  * 
@@ -36,7 +38,14 @@ public class JDocTabPanel extends JPanel {
 	private JEditorPane workPane;
 	private JButton sectionUpButton;
 	private JButton sectionDownButton;
+<<<<<<< .mine
+	private JButton aquireLock;
+	private JButton updateSection;
+	private JComboBox sectionSelector;
+	
+=======
 
+>>>>>>> .r649
 	private SectionizedDocument doc;
 	private DocumentInfo info;
 
@@ -58,6 +67,9 @@ public class JDocTabPanel extends JPanel {
 		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
 		sectionUpButton = new JButton("^");
 		sectionDownButton = new JButton("V");
+		aquireLock = new JButton("Aquire Lock");
+		updateSection = new JButton("Update");
+		sectionSelector = new JComboBox(doc.getAllSubSections().toArray());
 		setUpAppearance();
 		setUpListeners();
 	}
@@ -102,6 +114,12 @@ public class JDocTabPanel extends JPanel {
 	public void updateDocPane() {
 		documentPane.setText(doc.getFullText());
 		sectionList.setListData(doc.getAllSubSections().toArray());
+		Object selected = sectionSelector.getSelectedItem();
+		sectionSelector.removeAllItems();
+		for(DocumentSubSection ds : doc.getAllSubSections()) {
+			sectionSelector.addItem(ds);
+		}
+		sectionSelector.setSelectedItem(selected);
 	}
 
 	public SectionizedDocument getSectionizedDocument() {
