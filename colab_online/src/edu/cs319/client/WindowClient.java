@@ -55,7 +55,6 @@ public class WindowClient extends JFrame implements IClient {
 
 	private JTabbedPane documentPane;
 	private Map<String, JDocTabPanel> documents;
-	
 
 	private JRoomListPanel roomMemberListPanel;
 	private JChatPanel chatPanel;
@@ -136,27 +135,27 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser choose = new JFileChooser();
-				// int choice = choose.showOpenDialog(WindowClient.this);
-				// if (choice != JFileChooser.APPROVE_OPTION)
-				// return;
+				int choice = choose.showOpenDialog(WindowClient.this);
+				if (choice != JFileChooser.APPROVE_OPTION)
+					return;
 				String docName = JOptionPane.showInputDialog(WindowClient.this,
 						"Enter the name of the document:");
 				String secName = JOptionPane.showInputDialog(WindowClient.this,
 						"Enter the name of the subsection:");
-				//File choiceF = choose.getSelectedFile();
+				File choiceF = choose.getSelectedFile();
 				proxy.getServer().newDocument(userName, roomName, docName);
 				DocumentSubSection section = new DocumentSubSectionImpl(secName);
 				section.setLocked(true, userName);
 				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
 				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
-				//try {
-					section.setText(userName, "Working");
-				//} catch (FileNotFoundException e1) {
-				//	if (Util.DEBUG)
-					//	e1.printStackTrace();
-					//JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
-				//	return;
-				//}
+				try {
+					section.setText(userName, new Scanner(choiceF).useDelimiter("//Z").next());
+				} catch (FileNotFoundException e1) {
+					if (Util.DEBUG)
+						e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
+					return;
+				}
 				System.out.println("WindowClient Upload Document: Username: " + userName
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());

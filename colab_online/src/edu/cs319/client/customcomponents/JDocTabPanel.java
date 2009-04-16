@@ -2,6 +2,7 @@ package edu.cs319.client.customcomponents;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,11 +12,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.PlainDocument;
 
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
-import edu.cs319.dataobjects.DocumentSubSection;
-import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 
 /**
  * 
@@ -39,9 +39,16 @@ public class JDocTabPanel extends JPanel {
 		doc = new SectionizedDocumentImpl(name);
 		
 		sectionList = new JList();
+		Font docFont = new Font("Courier New", Font.PLAIN, 11);
 		documentPane = new JEditorPane();
 		documentPane.setEditable(false);
+		documentPane.setFont(docFont);
+		PlainDocument doc = (PlainDocument)documentPane.getDocument();
+		doc.putProperty(PlainDocument.tabSizeAttribute, 4);
 		workPane = new JEditorPane();
+		workPane.setFont(docFont);
+		doc = (PlainDocument)workPane.getDocument();
+		doc.putProperty(PlainDocument.tabSizeAttribute, 4);
 		sectionUpButton = new JButton("^");
 		sectionDownButton = new JButton("V");
 		setUpAppearance();
