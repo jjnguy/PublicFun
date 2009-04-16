@@ -10,22 +10,24 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.PlainDocument;
 
+import edu.cs319.dataobjects.DocumentInfo;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
-
-import edu.cs319.dataobjects.DocumentInfo;
 
 /**
  * 
  * @author Amelia Gee
- *
+ * @author Wayne
+ * @author Justin Nelson
+ * 
  */
 public class JDocTabPanel extends JPanel {
-	
+
 	private JList sectionList;
 	private JPanel sectionPanel;
 	private JSplitPane wholePane;
@@ -34,67 +36,69 @@ public class JDocTabPanel extends JPanel {
 	private JEditorPane workPane;
 	private JButton sectionUpButton;
 	private JButton sectionDownButton;
-	
+
 	private SectionizedDocument doc;
 	private DocumentInfo info;
 
 	public JDocTabPanel(DocumentInfo info) {
 		this.info = info;
 		doc = new SectionizedDocumentImpl(info.getDocumentName());
-		
+
 		sectionList = new JList();
 		Font docFont = new Font("Courier New", Font.PLAIN, 11);
 		documentPane = new JEditorPane();
 		documentPane.setEditable(false);
 		documentPane.setFont(docFont);
-		PlainDocument doc = (PlainDocument)documentPane.getDocument();
-		doc.putProperty(PlainDocument.tabSizeAttribute, 4);
+		PlainDocument doc2 = (PlainDocument) documentPane.getDocument();
+		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
+		doc2.putProperty(PlainDocument.lineLimitAttribute, Integer.MAX_VALUE);
 		workPane = new JEditorPane();
 		workPane.setFont(docFont);
-		doc = (PlainDocument)workPane.getDocument();
-		doc.putProperty(PlainDocument.tabSizeAttribute, 4);
+		doc2 = (PlainDocument) workPane.getDocument();
+		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
 		sectionUpButton = new JButton("^");
 		sectionDownButton = new JButton("V");
 		setUpAppearance();
 		setUpListeners();
 	}
-	
+
 	private void setUpAppearance() {
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
-		
+
 		JPanel buttonPanel = new JPanel(new BorderLayout(5, 5));
 		buttonPanel.add(sectionUpButton, BorderLayout.NORTH);
 		buttonPanel.add(sectionDownButton, BorderLayout.SOUTH);
 		sectionPanel = new JPanel(new BorderLayout(10, 10));
 		sectionPanel.add(sectionList, BorderLayout.CENTER);
 		sectionPanel.add(buttonPanel, BorderLayout.SOUTH);
-		
+
 		documentPane.setMinimumSize(new Dimension(0, 0));
 		workPane.setMinimumSize(new Dimension(0, 0));
-		
-		workspace = new JSplitPane(JSplitPane.VERTICAL_SPLIT, documentPane, workPane);
+		JScrollPane workScroll = new JScrollPane(workPane);
+		JScrollPane docScroll = new JScrollPane(documentPane);
+		workspace = new JSplitPane(JSplitPane.VERTICAL_SPLIT, docScroll, workScroll);
 		wholePane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sectionPanel, workspace);
-		
+
 		workspace.setDividerLocation(250);
 		workspace.setOneTouchExpandable(true);
 		wholePane.setDividerLocation(150);
 		wholePane.setOneTouchExpandable(true);
-		
+
 		add(wholePane, BorderLayout.CENTER);
 	}
-	
+
 	private void setUpListeners() {
-		
+
 		sectionUpButton.addActionListener(new UpButtonListener());
-		
+
 		sectionDownButton.addActionListener(new DownButtonListener());
 	}
-	
+
 	public JList getList() {
 		return sectionList;
 	}
-	
+
 	public void updateDocPane() {
 		documentPane.setText(doc.getFullText());
 		sectionList.setListData(doc.getAllSubSections().toArray());
@@ -103,34 +107,37 @@ public class JDocTabPanel extends JPanel {
 	public SectionizedDocument getSectionizedDocument() {
 		return doc;
 	}
-	
+
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
-		}	
+
+		}
 	}
-	
+
 	private class DownButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
-		}	
+
+		}
 	}
-	
+
 	private class AquireLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(), info.getDocumentName(), null);
-		}	
+			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
+					info.getDocumentName(), null);
+		}
 	}
-	
+
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(), info.getDocumentName(), null, doc.getSection(null));
-		}	
+			info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
+					info.getDocumentName(), null, doc.getSection(null));
+		}
 	}
-	
+
 	private class SelectedSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
-		}	
+
+		}
 	}
+
 }
