@@ -298,9 +298,8 @@ public class Server implements IServer {
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
-		int docIndex = doc.getSubSectionIndex(sectionID);
-		doc.removeSubSection(sectionID);
-		doc.addSubSection(update, docIndex);
+		DocumentSubSection sec = doc.getSection(sectionID);
+		sec.setText(username, update.getText());
 		for (IClient client : room.getAllClients()) {
 			client.updateSubsection(username, documentName, update, sectionID);
 		}
@@ -350,8 +349,8 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
 		// First, unlock any lock perviously held by the user on the doc
-		for (DocumentSubSection sec : doc.getAllSubSections()){
-			if (username.equals(sec.lockedByUser())){
+		for (DocumentSubSection sec : doc.getAllSubSections()) {
+			if (username.equals(sec.lockedByUser())) {
 				subSectionUnLocked(username, roomname, documentName, sec.getName());
 			}
 		}
