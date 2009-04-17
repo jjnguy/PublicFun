@@ -138,7 +138,7 @@ public class JDocTabPanel extends JPanel {
 		sectionDownButton.addActionListener(new DownButtonListener());
 		aquireLock.addActionListener(new AquireLockListener());
 		updateSection.addActionListener(new UpdateSubSectionListener());
-		sectionSelector.addActionListener(new SelectedSubSectionListener());
+		sectionList.addListSelectionListener(new SelectedSubSectionListener());
 		addSubSection.addActionListener(new NewSubSectionListener());
 		unlockSubSection.addActionListener(new ReleaseLockListener());
 	}
@@ -156,13 +156,9 @@ public class JDocTabPanel extends JPanel {
 		}
 		documentPane.setText(docText.toString());
 //		documentPane.setText(doc.getFullText());
+		DocumentSubSection ds = getCurrentSubSection();
 		sectionList.setListData(doc.getAllSubSections().toArray());
-		Object selected = sectionSelector.getSelectedItem();
-		sectionSelector.removeAllItems();
-		for (DocumentSubSection ds : doc.getAllSubSections()) {
-			sectionSelector.addItem(ds);
-		}
-		sectionSelector.setSelectedItem(selected);
+		sectionList.setSelectedValue(ds);
 	}
 
 	public SectionizedDocument getSectionizedDocument() {
@@ -178,7 +174,7 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private DocumentSubSection getCurrentSubSection() {
-		return (DocumentSubSection) sectionSelector.getSelectedItem();
+		return (DocumentSubSection) sectionList.getSelectedValue();
 	}
 
 	private class UpButtonListener implements ActionListener {
@@ -202,20 +198,21 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			updateSubSection((DocumentSubSection) sectionSelector.getSelectedItem(), workPane
-					.getText());
+			updateSubSection(getCurrentSubSection() , workPane.getText());
 		}
 	}
 
-	private class SelectedSubSectionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			DocumentSubSection ds = getCurrentSubSection();
-			if (ds != null) {
-				workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
-				workPane.setText(ds.getText());
-			} else {
-				workPane.setText("");
-				workPane.setEditable(false);
+	private class SelectedSubSectionListener implements ListSelectionListener {
+		public void valueChanged(ListSelectionEvent e) {
+			if(e.getValueIsAdjusting() == false) {
+				DocumentSubSection ds = getCurrentSubSection();
+				if (ds != null) {
+					workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
+					workPane.setText(ds.getText());
+				} else {
+					workPane.setText("");
+					workPane.setEditable(false);
+				}
 			}
 		}
 	}
