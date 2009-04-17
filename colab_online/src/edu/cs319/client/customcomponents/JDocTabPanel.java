@@ -41,7 +41,7 @@ public class JDocTabPanel extends JPanel {
 	private JButton aquireLock;
 	private JButton updateSection;
 	private JComboBox sectionSelector;
-	
+
 	private SectionizedDocument doc;
 	private DocumentInfo info;
 
@@ -87,7 +87,7 @@ public class JDocTabPanel extends JPanel {
 		norht.add(aquireLock);
 		norht.add(updateSection);
 		bottomPane.add(norht, BorderLayout.NORTH);
-		
+
 		documentPane.setMinimumSize(new Dimension(0, 0));
 		workPane.setMinimumSize(new Dimension(0, 0));
 		JScrollPane workScroll = new JScrollPane(workPane);
@@ -105,10 +105,11 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private void setUpListeners() {
-
 		sectionUpButton.addActionListener(new UpButtonListener());
-
 		sectionDownButton.addActionListener(new DownButtonListener());
+		aquireLock.addActionListener(new AquireLockListener());
+		updateSection.addActionListener(new UpdateSubSectionListener());
+		sectionSelector.addActionListener(new SelectedSubSectionListener());
 	}
 
 	public JList getList() {
@@ -120,7 +121,7 @@ public class JDocTabPanel extends JPanel {
 		sectionList.setListData(doc.getAllSubSections().toArray());
 		Object selected = sectionSelector.getSelectedItem();
 		sectionSelector.removeAllItems();
-		for(DocumentSubSection ds : doc.getAllSubSections()) {
+		for (DocumentSubSection ds : doc.getAllSubSections()) {
 			sectionSelector.addItem(ds);
 		}
 		sectionSelector.setSelectedItem(selected);
@@ -131,7 +132,8 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private void updateSubSection(DocumentSubSection ds) {
-		info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(), info.getDocumentName(), ds.getName(), ds);
+		info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
+				info.getDocumentName(), ds.getName(), ds);
 	}
 
 	private DocumentSubSection getCurrentSubSection() {
@@ -166,6 +168,8 @@ public class JDocTabPanel extends JPanel {
 	private class SelectedSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			DocumentSubSection ds = getCurrentSubSection();
+			if (ds == null)
+				return;
 			workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
 			workPane.setText(ds.getText());
 		}
