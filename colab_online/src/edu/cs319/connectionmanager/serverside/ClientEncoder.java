@@ -250,6 +250,5 @@ public class ClientEncoder implements IClient {
 		Message m = new Message(MessageType.SUBSECTION_FLOPPED, usernameSender, args);
 		return printMessageToStream(m);
 	}
-	}
 
 }
