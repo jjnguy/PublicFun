@@ -48,7 +48,8 @@ public class JDocTabPanel extends JPanel {
 	private JPanel sectionPanel;
 	private JSplitPane wholePane;
 	private JSplitPane workspace;
-	private JEditorPane documentPane;
+	// private JEditorPane documentPane;
+	private DocumentDisplayPane documentPane;
 	private JEditorPane workPane;
 	private JButton sectionUpButton;
 	private JButton sectionDownButton;
@@ -67,7 +68,7 @@ public class JDocTabPanel extends JPanel {
 
 		sectionList = new JList();
 		Font docFont = new Font("Courier New", Font.PLAIN, 11);
-		documentPane = new JEditorPane();
+		documentPane = new DocumentDisplayPane();
 		documentPane.setEditable(false);
 		documentPane.setFont(docFont);
 		PlainDocument doc2 = (PlainDocument) documentPane.getDocument();
@@ -153,13 +154,14 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void updateDocPane() {
-		StringBuilder docText = new StringBuilder();
+		/*StringBuilder docText = new StringBuilder();
 		for (int i = 0; i < doc.getSubsectionCount(); i++) {
 			docText.append("----------START SECTION <" + doc.getSectionAt(i).getName()
 					+ ">----------\n");
 			docText.append(doc.getSectionAt(i).getText());
 		}
-		documentPane.setText(docText.toString());
+		documentPane.setText(docText.toString());*/
+		documentPane.updateDocument(getSectionizedDocument());
 		DocumentSubSection ds = getCurrentSubSection();
 		sectionList.setListData(doc.getAllSubSections().toArray());
 		sectionList.setSelectedValue(ds, true);
