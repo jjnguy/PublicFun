@@ -4,7 +4,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import javax.swing.JEditorPane;
+import javax.swing.JTextArea;
 
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
@@ -14,7 +14,7 @@ import edu.cs319.dataobjects.SectionizedDocument;
  * @author Justin Nelson
  *
  */
-public class DocumentDisplayPane extends JEditorPane {
+public class DocumentDisplayPane extends JTextArea {
 
 	private SectionizedDocument doc;
 
@@ -43,5 +43,4 @@ public class DocumentDisplayPane extends JEditorPane {
 		String[] textSplit = text.split("\\n", -1);
 		return textSplit.length;
 	}
-
 }

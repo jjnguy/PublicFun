@@ -14,7 +14,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
@@ -57,7 +56,6 @@ public class JDocTabPanel extends JPanel {
 	private JButton updateSection;
 	private JButton addSubSection;
 	private JButton unlockSubSection;
-	private JComboBox sectionSelector;
 
 	private SectionizedDocument doc;
 	private DocumentInfo info;
@@ -71,12 +69,12 @@ public class JDocTabPanel extends JPanel {
 		documentPane = new DocumentDisplayPane();
 		documentPane.setEditable(false);
 		documentPane.setFont(docFont);
-		PlainDocument doc2 = (PlainDocument) documentPane.getDocument();
-		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
-		doc2.putProperty(PlainDocument.lineLimitAttribute, Integer.MAX_VALUE);
+		documentPane.setLineWrap(false);
+		documentPane.setTabSize(4);
+		
 		workPane = new JEditorPane();
 		workPane.setFont(docFont);
-		doc2 = (PlainDocument) workPane.getDocument();
+		PlainDocument doc2 = (PlainDocument) workPane.getDocument();
 		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
 		try {
 			sectionUpButton = new JButton(new ImageIcon(ImageIO.read(new File(
@@ -92,7 +90,6 @@ public class JDocTabPanel extends JPanel {
 		updateSection = new JButton("Update");
 		addSubSection = new JButton("New SubSection");
 		unlockSubSection = new JButton("Unlock");
-		sectionSelector = new JComboBox(doc.getAllSubSections().toArray());
 		setUpAppearance();
 		setUpListeners();
 	}
@@ -110,7 +107,6 @@ public class JDocTabPanel extends JPanel {
 
 		JPanel bottomPane = new JPanel(new BorderLayout());
 		JPanel norht = new JPanel();
-		norht.add(sectionSelector);
 		norht.add(aquireLock);
 		norht.add(updateSection);
 		norht.add(unlockSubSection);
