@@ -179,6 +179,7 @@ public class Server implements IServer {
 		}
 		boolean removesuccess = room.removeMember(username);
 		if (removesuccess) {
+			releaseAllLocksOnAllDocs(username, rommname, room);
 			for (IClient client : room.getAllClients()) {
 				client.coLabRoomMemberLeft(username);
 			}
@@ -186,6 +187,12 @@ public class Server implements IServer {
 		return removesuccess;
 	}
 
+	private void releaseAllLocksOnAllDocs(String username, String roomname, CoLabRoom room) {
+		for (SectionizedDocument doc : room.getAllDocuments()) {
+			releaseLocks(doc, username, roomname);
+		}
+	}
+	
 	@Override
 	public boolean newChatMessage(String usernameSender, String roomname, String message) {
 		CoLabRoom room = colabrooms.get(roomname);
