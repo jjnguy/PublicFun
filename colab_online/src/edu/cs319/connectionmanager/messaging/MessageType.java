@@ -19,7 +19,8 @@ public enum MessageType {
 	REMOVE_SUBSECTION((byte) 0x0f, "Remove A Subsection"),
 	NEW_DOCUMENT((byte) 0x10, "New Document"),
 	REMOVE_DOCUMENT((byte) 0x11, "Remove Document"),
-	LOG_OUT((byte)0x12, "Log Out");
+	LOG_OUT((byte)0x12, "Log Out"),
+	SUBSECTION_FLOPPED((byte) 0x13, "Flop subsections");
 
 	private byte code;
 	private String name;
@@ -78,6 +79,8 @@ public enum MessageType {
 			return REMOVE_DOCUMENT;
 		case 0x12:
 			return LOG_OUT;
+		case 0x13:
+			return SUBSECTION_FLOPPED;
 		default:
 			return null;
 		}

@@ -243,8 +243,13 @@ public class ClientEncoder implements IClient {
 	@Override
 	public boolean subsectionFlopped(String usernameSender, String documentName,
 			String sectionIDMoveUp, String sectionIDMoveDown) {
-		// TODO FIX ME TOO
-		return false;
+		List<String> args = new ArrayList<String>();
+		args.add(documentName);
+		args.add(sectionIDMoveUp);
+		args.add(sectionIDMoveDown);
+		Message m = new Message(MessageType.SUBSECTION_FLOPPED, usernameSender, args);
+		return printMessageToStream(m);
+	}
 	}
 
 }
