@@ -23,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.PlainDocument;
 
 import edu.cs319.dataobjects.DocumentInfo;
@@ -30,6 +32,7 @@ import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
+import edu.cs319.util.Util;
 
 /**
  * 
@@ -134,6 +137,7 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private void setUpListeners() {
+		sectionList.addMouseListener(new RightClickListener());
 		sectionUpButton.addActionListener(new UpButtonListener());
 		sectionDownButton.addActionListener(new DownButtonListener());
 		aquireLock.addActionListener(new AquireLockListener());
@@ -149,16 +153,18 @@ public class JDocTabPanel extends JPanel {
 
 	public void updateDocPane() {
 		StringBuilder docText = new StringBuilder();
-		for(int i = 0; i < doc.getSubsectionCount(); i++) {
-			docText.append("----------START SECTION <" + doc.getSectionAt(i).getName() + ">----------\n");
+		for (int i = 0; i < doc.getSubsectionCount(); i++) {
+			docText.append("----------START SECTION <" + doc.getSectionAt(i).getName()
+					+ ">----------\n");
 			docText.append(doc.getSectionAt(i).getText());
-			docText.append("\n----------END SECTION <" + doc.getSectionAt(i).getName() + ">------------\n");
+			docText.append("\n----------END SECTION <" + doc.getSectionAt(i).getName()
+					+ ">------------\n");
 		}
 		documentPane.setText(docText.toString());
-//		documentPane.setText(doc.getFullText());
+		// documentPane.setText(doc.getFullText());
 		DocumentSubSection ds = getCurrentSubSection();
 		sectionList.setListData(doc.getAllSubSections().toArray());
-		sectionList.setSelectedValue(ds);
+		sectionList.setSelectedValue(ds, true);
 	}
 
 	public SectionizedDocument getSectionizedDocument() {
@@ -198,13 +204,13 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			updateSubSection(getCurrentSubSection() , workPane.getText());
+			updateSubSection(getCurrentSubSection(), workPane.getText());
 		}
 	}
 
 	private class SelectedSubSectionListener implements ListSelectionListener {
 		public void valueChanged(ListSelectionEvent e) {
-			if(e.getValueIsAdjusting() == false) {
+			if (e.getValueIsAdjusting() == false) {
 				DocumentSubSection ds = getCurrentSubSection();
 				if (ds != null) {
 					workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
@@ -238,9 +244,12 @@ public class JDocTabPanel extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.getButton() != MouseEvent.BUTTON2)
+			if (e.getButton() != MouseEvent.BUTTON3)
 				return;
-			JMenu menu = new SectionRightClickMenu((DocumentSubSection)sectionList.getSelectedValue());
+			if (Util.DEBUG) {
+				System.out.println("click event");
+			}
+			JMenu menu = new SectionRightClickMenu(getCurrentSubSection());
 			menu.setVisible(true);
 		}
 
@@ -267,7 +276,6 @@ public class JDocTabPanel extends JPanel {
 			// TODO Auto-generated method stub
 
 		}
-
 	}
 
 	public class SectionRightClickMenu extends JMenu {
@@ -277,7 +285,7 @@ public class JDocTabPanel extends JPanel {
 		private JMenuItem newSubSectionItem;
 
 		private DocumentSubSection sec;
-		
+
 		public SectionRightClickMenu(DocumentSubSection section) {
 			super();
 			sec = section;
