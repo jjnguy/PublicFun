@@ -159,7 +159,6 @@ public class JDocTabPanel extends JPanel {
 			docText.append(doc.getSectionAt(i).getText());
 		}
 		documentPane.setText(docText.toString());
-		// documentPane.setText(doc.getFullText());
 		DocumentSubSection ds = getCurrentSubSection();
 		sectionList.setListData(doc.getAllSubSections().toArray());
 		sectionList.setSelectedValue(ds, true);
@@ -183,13 +182,27 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-
+			if (sectionList.getSelectedIndex() > 0) {
+				DocumentSubSection moveUp = (DocumentSubSection) sectionList.getSelectedValue();
+				DocumentSubSection moveDown = (DocumentSubSection) sectionList.getModel()
+						.getElementAt(sectionList.getSelectedIndex() - 1);
+				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
+						info.getDocumentName(), moveUp.getName(), moveDown.getName());
+				sectionList.setSelectedValue(moveUp, true);
+			}
 		}
 	}
 
 	private class DownButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-
+			if (sectionList.getSelectedIndex() < sectionList.getModel().getSize()) {
+				DocumentSubSection moveDown = (DocumentSubSection) sectionList.getSelectedValue();
+				DocumentSubSection moveUp = (DocumentSubSection) sectionList.getModel()
+						.getElementAt(sectionList.getSelectedIndex() + 1);
+				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
+						info.getDocumentName(), moveUp.getName(), moveDown.getName());
+				sectionList.setSelectedValue(moveDown, true);
+			}
 		}
 	}
 
