@@ -45,9 +45,6 @@ public class ServerDecoder implements Runnable {
 			try {
 				decodeMessage(in.readMessage());
 			} catch (IOException e) {
-				if (Util.DEBUG) {
-					e.printStackTrace();
-				}
 				if (name != null) {
 					actualServer.logOut(name);
 				}
