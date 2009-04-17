@@ -50,7 +50,8 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 		}
 		if (locked && !lock) {
 			if (username.equals(lockHolder)) {
-				locked = false;
+				this.locked = false;
+				this.lockHolder = "";
 			}
 		}
 	}
