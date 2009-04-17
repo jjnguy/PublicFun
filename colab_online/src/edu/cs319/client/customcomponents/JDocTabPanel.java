@@ -19,6 +19,7 @@ import javax.swing.text.PlainDocument;
 import edu.cs319.dataobjects.DocumentInfo;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
+import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 
 /**
@@ -40,6 +41,7 @@ public class JDocTabPanel extends JPanel {
 	private JButton sectionDownButton;
 	private JButton aquireLock;
 	private JButton updateSection;
+	private JButton addSubSection;
 	private JComboBox sectionSelector;
 
 	private SectionizedDocument doc;
@@ -65,6 +67,7 @@ public class JDocTabPanel extends JPanel {
 		sectionDownButton = new JButton("V");
 		aquireLock = new JButton("Aquire Lock");
 		updateSection = new JButton("Update");
+		addSubSection = new JButton("New SubSection");
 		sectionSelector = new JComboBox(doc.getAllSubSections().toArray());
 		setUpAppearance();
 		setUpListeners();
@@ -110,6 +113,7 @@ public class JDocTabPanel extends JPanel {
 		aquireLock.addActionListener(new AquireLockListener());
 		updateSection.addActionListener(new UpdateSubSectionListener());
 		sectionSelector.addActionListener(new SelectedSubSectionListener());
+		
 	}
 
 	public JList getList() {
@@ -131,9 +135,12 @@ public class JDocTabPanel extends JPanel {
 		return doc;
 	}
 
-	private void updateSubSection(DocumentSubSection ds) {
+	private void updateSubSection(DocumentSubSection ds, String newText) {
+		DocumentSubSection temp = new DocumentSubSectionImpl(ds.getName());
+		temp.setLocked(ds.isLocked(), ds.lockedByUser());
+		temp.setText(info.getUserName(), newText);
 		info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
-				info.getDocumentName(), ds.getName(), ds);
+				info.getDocumentName(), ds.getName(), temp);
 	}
 
 	private DocumentSubSection getCurrentSubSection() {
@@ -161,7 +168,7 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			updateSubSection(getCurrentSubSection());
+			updateSubSection((DocumentSubSection) sectionSelector.getSelectedItem(),workPane.getText());
 		}
 	}
 
