@@ -209,6 +209,8 @@ public class ServerEncoder implements IServer {
 		List<String> args = new ArrayList<String>();
 		args.add(roomname);
 		args.add(documentName);
+		args.add(sectionIdMoveDown);
+		args.add(sectionIdMoveUp);
 		Message m = new Message(MessageType.SUBSECTION_FLOPPED, username, args);
 		return printMessageToStream(m);
 	}

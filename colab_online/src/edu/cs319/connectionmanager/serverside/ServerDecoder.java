@@ -122,6 +122,9 @@ public class ServerDecoder implements Runnable {
 				}
 			}
 			break;
+		case SUBSECTION_FLOPPED:
+			actualServer.subSectionFlopped(cln, args.get(0), args.get(1), args.get(2), args.get(3));
+			break;
 		default:
 			throw new NotYetImplementedException();
 		}

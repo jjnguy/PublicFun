@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -261,6 +262,7 @@ public class JDocTabPanel extends JPanel {
 				System.out.println("click event");
 			}
 			JPopupMenu menu = new SectionRightClickMenu(getCurrentSubSection());
+			menu.setLocation(e.getLocationOnScreen());
 			menu.setVisible(true);
 		}
 
@@ -296,9 +298,11 @@ public class JDocTabPanel extends JPanel {
 		private JMenuItem newSubSectionItem;
 
 		private DocumentSubSection sec;
+		private long bornondate;
 
 		public SectionRightClickMenu(DocumentSubSection section) {
 			super();
+			bornondate = System.currentTimeMillis();
 			sec = section;
 			aquireLockItem = new JMenuItem("Aquire Lock");
 			aquireLockItem.addActionListener(new AquireLockListener());
@@ -309,6 +313,42 @@ public class JDocTabPanel extends JPanel {
 			newSubSectionItem = new JMenuItem("Add New SubSection");
 			newSubSectionItem.addActionListener(new NewSubSectionListener());
 			add(newSubSectionItem);
+			addMouseListener(mouseOutListener);
 		}
+
+		private MouseListener mouseOutListener = new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				long thetime = System.currentTimeMillis();
+				if(thetime-bornondate > 1000)
+				setVisible(false);
+				else
+					;
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		};
 	}
 }
