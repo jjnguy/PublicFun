@@ -161,17 +161,20 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			updateSubSection((DocumentSubSection) sectionSelector.getSelectedItem());
+			updateSubSection(getCurrentSubSection());
 		}
 	}
 
 	private class SelectedSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			DocumentSubSection ds = getCurrentSubSection();
-			if (ds == null)
-				return;
-			workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
-			workPane.setText(ds.getText());
+			if(ds != null) {
+				workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
+				workPane.setText(ds.getText());
+			} else {
+				workPane.setText("");
+				workPane.setEditable(false);
+			}
 		}
 	}
 
