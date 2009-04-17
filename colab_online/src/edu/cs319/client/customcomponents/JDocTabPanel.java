@@ -37,7 +37,7 @@ import edu.cs319.util.Util;
 /**
  * 
  * @author Amelia Gee
- * @author Wayne
+ * @author Wayne Wrowweeclifffe
  * @author Justin Nelson
  * 
  */
@@ -47,7 +47,6 @@ public class JDocTabPanel extends JPanel {
 	private JPanel sectionPanel;
 	private JSplitPane wholePane;
 	private JSplitPane workspace;
-	// private JEditorPane documentPane;
 	private DocumentDisplayPane documentPane;
 	private JEditorPane workPane;
 	private JButton sectionUpButton;
@@ -150,13 +149,6 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void updateDocPane() {
-		/*StringBuilder docText = new StringBuilder();
-		for (int i = 0; i < doc.getSubsectionCount(); i++) {
-			docText.append("----------START SECTION <" + doc.getSectionAt(i).getName()
-					+ ">----------\n");
-			docText.append(doc.getSectionAt(i).getText());
-		}
-		documentPane.setText(docText.toString());*/
 		documentPane.updateDocument(getSectionizedDocument());
 		DocumentSubSection ds = getCurrentSubSection();
 		sectionList.setListData(doc.getAllSubSections().toArray());
