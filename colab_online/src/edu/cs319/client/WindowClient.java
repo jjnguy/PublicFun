@@ -364,6 +364,7 @@ public class WindowClient extends JFrame implements IClient {
 		documentPane.add(documentName, doc);
 		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: "
 				+ documentName);
+		documents.get(documentName).updateDocPane();
 		return true;
 
 	}
@@ -376,6 +377,7 @@ public class WindowClient extends JFrame implements IClient {
 		}
 		documents.remove(documentName);
 		documentPane.remove(doc);
+		documents.get(documentName).updateDocPane();
 		return true;
 	}
 
@@ -387,6 +389,7 @@ public class WindowClient extends JFrame implements IClient {
 		System.out.println("WindowClient SubSection Locked: Username: " + usernameSender
 				+ " Document: " + documentName + " SectionName: " + sectionId + " LockHolder: "
 				+ hi.lockedByUser());
+		documents.get(documentName).updateDocPane();
 		return true;
 	}
 
@@ -394,6 +397,7 @@ public class WindowClient extends JFrame implements IClient {
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionId) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.getSection(sectionId).setLocked(false, usernameSender);
+		documents.get(documentName).updateDocPane();
 		return true;
 	}
 
@@ -419,10 +423,10 @@ public class WindowClient extends JFrame implements IClient {
 			DocumentSubSection section, String sectionID) {
 		SectionizedDocument doc = documents.get(documentname).getSectionizedDocument();
 		doc.getSection(sectionID).setText(usernameSender, section.getText());
-		documents.get(documentname).updateDocPane();
 		System.out.println("WindowClient Updating SubSection: Username: " + usernameSender
 				+ " Document: " + documentname + " SectionName: " + sectionID + " LockHolder: "
 				+ section.lockedByUser());
+		documents.get(documentname).updateDocPane();
 		return true;
 	}
 

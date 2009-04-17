@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -42,6 +43,7 @@ public class JDocTabPanel extends JPanel {
 	private JButton aquireLock;
 	private JButton updateSection;
 	private JButton addSubSection;
+	private JButton unlockSubSection;
 	private JComboBox sectionSelector;
 
 	private SectionizedDocument doc;
@@ -68,6 +70,7 @@ public class JDocTabPanel extends JPanel {
 		aquireLock = new JButton("Aquire Lock");
 		updateSection = new JButton("Update");
 		addSubSection = new JButton("New SubSection");
+		unlockSubSection = new JButton("Unlock");
 		sectionSelector = new JComboBox(doc.getAllSubSections().toArray());
 		setUpAppearance();
 		setUpListeners();
@@ -89,6 +92,8 @@ public class JDocTabPanel extends JPanel {
 		norht.add(sectionSelector);
 		norht.add(aquireLock);
 		norht.add(updateSection);
+		norht.add(unlockSubSection);
+		norht.add(addSubSection);
 		bottomPane.add(norht, BorderLayout.NORTH);
 
 		documentPane.setMinimumSize(new Dimension(0, 0));
@@ -107,13 +112,18 @@ public class JDocTabPanel extends JPanel {
 		add(wholePane, BorderLayout.CENTER);
 	}
 
+	private void newSubSection(String name) {
+		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(), name, doc.getSubsectionCount());
+	}
+
 	private void setUpListeners() {
 		sectionUpButton.addActionListener(new UpButtonListener());
 		sectionDownButton.addActionListener(new DownButtonListener());
 		aquireLock.addActionListener(new AquireLockListener());
 		updateSection.addActionListener(new UpdateSubSectionListener());
 		sectionSelector.addActionListener(new SelectedSubSectionListener());
-		
+		addSubSection.addActionListener(new NewSubSectionListener());
+		unlockSubSection.addActionListener(new ReleaseLockListener());
 	}
 
 	public JList getList() {
@@ -168,14 +178,15 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			updateSubSection((DocumentSubSection) sectionSelector.getSelectedItem(),workPane.getText());
+			updateSubSection((DocumentSubSection) sectionSelector.getSelectedItem(), workPane
+					.getText());
 		}
 	}
 
 	private class SelectedSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			DocumentSubSection ds = getCurrentSubSection();
-			if(ds != null) {
+			if (ds != null) {
 				workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
 				workPane.setText(ds.getText());
 			} else {
@@ -187,13 +198,17 @@ public class JDocTabPanel extends JPanel {
 
 	private class NewSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			newSubSection();
+			String name = JOptionPane.showInputDialog(JDocTabPanel.this,
+			"Name the subsection bitch!!");
+		if (name == null) return;
+			newSubSection(name);
 		}
 	}
 
 	private class ReleaseLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentSubSection().getName());
+			info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
+					info.getDocumentName(), getCurrentSubSection().getName());
 		}
 	}
 
