@@ -175,8 +175,19 @@ public class WindowClient extends JFrame implements IClient {
 		newDocument.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO make new document
-				
+				String docName = JOptionPane.showInputDialog(WindowClient.this,
+						"Enter the name of the document:");
+				String secName = JOptionPane.showInputDialog(WindowClient.this,
+						"Enter the name of the subsection:");
+				proxy.getServer().newDocument(userName, roomName, docName);
+				DocumentSubSection section = new DocumentSubSectionImpl(secName);
+				section.setLocked(true, userName);
+				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
+				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
+				System.out.println("WindowClient Upload Document: Username: " + userName
+						+ " DocumentName: " + docName + " SectionName: " + secName
+						+ " LockHolder: " + section.lockedByUser());
+				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
 			}
 		});
 		exitCoLab.addActionListener(new ActionListener() {
