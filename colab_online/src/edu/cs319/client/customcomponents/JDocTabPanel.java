@@ -16,10 +16,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JList;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
@@ -247,7 +247,7 @@ public class JDocTabPanel extends JPanel {
 			if (Util.DEBUG) {
 				System.out.println("click event");
 			}
-			JMenu menu = new SectionRightClickMenu(getCurrentSubSection());
+			JPopupMenu menu = new SectionRightClickMenu(getCurrentSubSection());
 			menu.setVisible(true);
 		}
 
@@ -276,7 +276,7 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
-	public class SectionRightClickMenu extends JMenu {
+	public class SectionRightClickMenu extends JPopupMenu {
 
 		private JMenuItem aquireLockItem;
 		private JMenuItem releaseLockItem;
