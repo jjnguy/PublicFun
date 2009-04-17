@@ -61,6 +61,7 @@ public class WindowClient extends JFrame implements IClient {
 	private JChatPanel chatPanel;
 
 	private JMenuItem openDocument;
+	private JMenuItem newDocument;
 	private JMenuItem logIn;
 	private JMenuItem joinCoLabRoom;
 	private JMenuItem disconnect;
@@ -91,9 +92,11 @@ public class WindowClient extends JFrame implements IClient {
 	private JMenuBar createMenuBar() {
 		JMenuBar mainMenu = new JMenuBar();
 		JMenu file = new JMenu("File");
+		JMenu connect = new JMenu("Connect");
 		JMenu view = new JMenu("View");
 		JMenu help = new JMenu("Help");
-		openDocument = new JMenuItem("Add New Document");
+		openDocument = new JMenuItem("Add Document From File");
+		newDocument = new JMenuItem("Add New Blank Document");
 		logIn = new JMenuItem("Log In");
 		joinCoLabRoom = new JMenuItem("Join CoLab Room");
 		disconnect = new JMenuItem("Disconnect");
@@ -101,9 +104,12 @@ public class WindowClient extends JFrame implements IClient {
 		about = new JMenuItem("About CoLab");
 
 		file.setMnemonic(KeyEvent.VK_F);
+		connect.setMnemonic(KeyEvent.VK_C);
 		view.setMnemonic(KeyEvent.VK_V);
 		help.setMnemonic(KeyEvent.VK_H);
-		openDocument.setMnemonic(KeyEvent.VK_O);
+		openDocument.setMnemonic(KeyEvent.VK_D);
+		openDocument.setDisplayedMnemonicIndex(4);
+		newDocument.setMnemonic(KeyEvent.VK_N);
 		logIn.setMnemonic(KeyEvent.VK_L);
 		joinCoLabRoom.setMnemonic(KeyEvent.VK_J);
 		disconnect.setMnemonic(KeyEvent.VK_D);
@@ -113,10 +119,11 @@ public class WindowClient extends JFrame implements IClient {
 		about.setMnemonic(KeyEvent.VK_A);
 
 		file.add(openDocument);
-		file.add(logIn);
-		file.add(joinCoLabRoom);
-		file.add(disconnect);
+		file.add(newDocument);
 		file.add(exitCoLab);
+		connect.add(logIn);
+		connect.add(joinCoLabRoom);
+		connect.add(disconnect);
 		view.add(showChat);
 		view.add(showRoomMembers);
 		help.add(about);
@@ -126,6 +133,7 @@ public class WindowClient extends JFrame implements IClient {
 		showRoomMembers.setSelected(true);
 
 		mainMenu.add(file);
+		mainMenu.add(connect);
 		mainMenu.add(view);
 		mainMenu.add(help);
 		return mainMenu;
@@ -164,6 +172,22 @@ public class WindowClient extends JFrame implements IClient {
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
 			}
 		});
+		newDocument.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO make new document
+				
+			}
+		});
+		exitCoLab.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				WindowClient.this.processWindowEvent(new WindowEvent(WindowClient.this,
+						WindowEvent.WINDOW_CLOSING));
+			}
+		});
+
+		// CONNECT menu items
 		logIn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -196,14 +220,7 @@ public class WindowClient extends JFrame implements IClient {
 				}
 			}
 		});
-		exitCoLab.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				WindowClient.this.processWindowEvent(new WindowEvent(WindowClient.this,
-						WindowEvent.WINDOW_CLOSING));
-			}
-		});
-
+		
 		// VIEW menu items
 		showRoomMembers.addActionListener(new ActionListener() {
 			@Override
@@ -244,6 +261,7 @@ public class WindowClient extends JFrame implements IClient {
 	 */
 	private void setLogIn() {
 		openDocument.setEnabled(false);
+		newDocument.setEnabled(false);
 		logIn.setEnabled(false);
 		joinCoLabRoom.setEnabled(true);
 		disconnect.setEnabled(true);
@@ -256,6 +274,7 @@ public class WindowClient extends JFrame implements IClient {
 	 */
 	private void setJoinedRoom() {
 		openDocument.setEnabled(true);
+		newDocument.setEnabled(true);
 		logIn.setEnabled(false);
 		joinCoLabRoom.setEnabled(false);
 		disconnect.setEnabled(true);
@@ -268,6 +287,7 @@ public class WindowClient extends JFrame implements IClient {
 	 */
 	private void setDisconnected() {
 		openDocument.setEnabled(false);
+		newDocument.setEnabled(false);
 		logIn.setEnabled(true);
 		joinCoLabRoom.setEnabled(false);
 		disconnect.setEnabled(false);
