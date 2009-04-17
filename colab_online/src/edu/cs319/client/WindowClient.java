@@ -60,12 +60,17 @@ public class WindowClient extends JFrame implements IClient {
 	private JRoomListPanel roomMemberListPanel;
 	private JChatPanel chatPanel;
 
-	private JMenuItem openDocument;
-	private JMenuItem newDocument;
 	private JMenuItem logIn;
 	private JMenuItem joinCoLabRoom;
 	private JMenuItem disconnect;
 	private JMenuItem exitCoLab;
+	private JMenuItem newDocument;
+	private JMenuItem openDocument;
+	private JMenuItem removeDocument;
+	private JMenuItem addSection;
+	private JMenuItem deleteSection;
+	private JMenuItem splitSection;
+	private JMenuItem mergeSection;
 	private final JCheckBox showRoomMembers = new JCheckBox("Display Room Members Window");
 	private final JCheckBox showChat = new JCheckBox("Display Chat Window");
 	private JMenuItem about;
@@ -93,37 +98,55 @@ public class WindowClient extends JFrame implements IClient {
 		JMenuBar mainMenu = new JMenuBar();
 		JMenu file = new JMenu("File");
 		JMenu connect = new JMenu("Connect");
+		JMenu doc = new JMenu("Document");
 		JMenu view = new JMenu("View");
 		JMenu help = new JMenu("Help");
-		openDocument = new JMenuItem("Add Document From File");
-		newDocument = new JMenuItem("Add New Blank Document");
 		logIn = new JMenuItem("Log In");
 		joinCoLabRoom = new JMenuItem("Join CoLab Room");
 		disconnect = new JMenuItem("Disconnect");
 		exitCoLab = new JMenuItem("Exit CoLab");
+		newDocument = new JMenuItem("Add New Document");
+		openDocument = new JMenuItem("Open Document From File");
+		removeDocument = new JMenuItem("Remove Document");
+		addSection = new JMenuItem("Add Section");
+		deleteSection = new JMenuItem("Delete Section");
+		splitSection = new JMenuItem("Split Section");
+		mergeSection = new JMenuItem("Merge Section");
 		about = new JMenuItem("About CoLab");
 
 		file.setMnemonic(KeyEvent.VK_F);
-		connect.setMnemonic(KeyEvent.VK_C);
+		doc.setMnemonic(KeyEvent.VK_D);
 		view.setMnemonic(KeyEvent.VK_V);
 		help.setMnemonic(KeyEvent.VK_H);
-		openDocument.setMnemonic(KeyEvent.VK_D);
-		openDocument.setDisplayedMnemonicIndex(4);
-		newDocument.setMnemonic(KeyEvent.VK_N);
 		logIn.setMnemonic(KeyEvent.VK_L);
 		joinCoLabRoom.setMnemonic(KeyEvent.VK_J);
 		disconnect.setMnemonic(KeyEvent.VK_D);
 		exitCoLab.setMnemonic(KeyEvent.VK_X);
+		newDocument.setMnemonic(KeyEvent.VK_N);
+		openDocument.setMnemonic(KeyEvent.VK_O);
+		removeDocument.setMnemonic(KeyEvent.VK_R);
+		addSection.setMnemonic(KeyEvent.VK_A);
+		deleteSection.setMnemonic(KeyEvent.VK_D);
+		splitSection.setMnemonic(KeyEvent.VK_S);
+		mergeSection.setMnemonic(KeyEvent.VK_M);
 		showRoomMembers.setMnemonic(KeyEvent.VK_R);
 		showChat.setMnemonic(KeyEvent.VK_C);
 		about.setMnemonic(KeyEvent.VK_A);
 
-		file.add(openDocument);
-		file.add(newDocument);
-		file.add(exitCoLab);
+		file.add(connect);
 		connect.add(logIn);
 		connect.add(joinCoLabRoom);
-		connect.add(disconnect);
+		file.add(disconnect);
+		file.addSeparator();
+		file.add(exitCoLab);
+		doc.add(newDocument);
+		doc.add(openDocument);
+		doc.add(removeDocument);
+		doc.addSeparator();
+		doc.add(addSection);
+		doc.add(deleteSection);
+		doc.add(splitSection);
+		doc.add(mergeSection);
 		view.add(showChat);
 		view.add(showRoomMembers);
 		help.add(about);
@@ -133,7 +156,7 @@ public class WindowClient extends JFrame implements IClient {
 		showRoomMembers.setSelected(true);
 
 		mainMenu.add(file);
-		mainMenu.add(connect);
+		mainMenu.add(doc);
 		mainMenu.add(view);
 		mainMenu.add(help);
 		return mainMenu;
@@ -141,63 +164,6 @@ public class WindowClient extends JFrame implements IClient {
 
 	private void setListeners() {
 		// FILE menu items
-		openDocument.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser choose = new JFileChooser();
-				int choice = choose.showOpenDialog(WindowClient.this);
-				if (choice != JFileChooser.APPROVE_OPTION)
-					return;
-				String docName = JOptionPane.showInputDialog(WindowClient.this,
-						"Enter the name of the document:");
-				String secName = JOptionPane.showInputDialog(WindowClient.this,
-						"Enter the name of the subsection:");
-				File choiceF = choose.getSelectedFile();
-				proxy.getServer().newDocument(userName, roomName, docName);
-				DocumentSubSection section = new DocumentSubSectionImpl(secName);
-				section.setLocked(true, userName);
-				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
-				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
-				try {
-					section.setText(userName, new Scanner(choiceF).useDelimiter("//Z").next());
-				} catch (FileNotFoundException e1) {
-					if (Util.DEBUG)
-						e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
-					return;
-				}
-				System.out.println("WindowClient Upload Document: Username: " + userName
-						+ " DocumentName: " + docName + " SectionName: " + secName
-						+ " LockHolder: " + section.lockedByUser());
-				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
-			}
-		});
-		newDocument.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String docName = JOptionPane.showInputDialog(WindowClient.this,
-						"Enter the name of the document:");
-				String secName = JOptionPane.showInputDialog(WindowClient.this,
-						"Enter the name of the subsection:");
-				proxy.getServer().newDocument(userName, roomName, docName);
-				DocumentSubSection section = new DocumentSubSectionImpl(secName);
-				section.setLocked(true, userName);
-				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
-				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
-				System.out.println("WindowClient New Blank Document: Username: " + userName
-						+ " DocumentName: " + docName + " SectionName: " + secName
-						+ " LockHolder: " + section.lockedByUser());
-				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
-			}
-		});
-		exitCoLab.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				WindowClient.this.processWindowEvent(new WindowEvent(WindowClient.this,
-						WindowEvent.WINDOW_CLOSING));
-			}
-		});
-
 		// CONNECT menu items
 		logIn.addActionListener(new ActionListener() {
 			@Override
@@ -231,7 +197,106 @@ public class WindowClient extends JFrame implements IClient {
 				}
 			}
 		});
-		
+		exitCoLab.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				WindowClient.this.processWindowEvent(new WindowEvent(WindowClient.this,
+						WindowEvent.WINDOW_CLOSING));
+			}
+		});
+
+		// DOCUMENT menu items
+		newDocument.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String docName = JOptionPane.showInputDialog(WindowClient.this,
+						"Enter the name of the document:");
+				String secName = JOptionPane.showInputDialog(WindowClient.this,
+						"Enter the name of the subsection:");
+				proxy.getServer().newDocument(userName, roomName, docName);
+				DocumentSubSection section = new DocumentSubSectionImpl(secName);
+				section.setLocked(true, userName);
+				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
+				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
+				System.out.println("WindowClient New Blank Document: Username: " + userName
+						+ " DocumentName: " + docName + " SectionName: " + secName
+						+ " LockHolder: " + section.lockedByUser());
+				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
+				setDocumentsOpen();
+			}
+		});
+		openDocument.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser choose = new JFileChooser();
+				int choice = choose.showOpenDialog(WindowClient.this);
+				if (choice != JFileChooser.APPROVE_OPTION)
+					return;
+				String docName = JOptionPane.showInputDialog(WindowClient.this,
+						"Enter the name of the document:");
+				String secName = JOptionPane.showInputDialog(WindowClient.this,
+						"Enter the name of the subsection:");
+				File choiceF = choose.getSelectedFile();
+				proxy.getServer().newDocument(userName, roomName, docName);
+				DocumentSubSection section = new DocumentSubSectionImpl(secName);
+				section.setLocked(true, userName);
+				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
+				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
+				try {
+					section.setText(userName, new Scanner(choiceF).useDelimiter("//Z").next());
+				} catch (FileNotFoundException e1) {
+					if (Util.DEBUG)
+						e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Shit, file could not be opened!!!!");
+					return;
+				}
+				System.out.println("WindowClient Upload Document: Username: " + userName
+						+ " DocumentName: " + docName + " SectionName: " + secName
+						+ " LockHolder: " + section.lockedByUser());
+				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
+				setDocumentsOpen();
+			}
+		});
+		removeDocument.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO NOT COMPLETE YET - agee
+				JDocTabPanel doc = (JDocTabPanel) documentPane.getSelectedComponent();
+				documentPane.remove(doc);
+				proxy.getServer().documentRemoved(userName, roomName, doc.getName());
+				documents.remove(doc.getName());
+				if (documents.size() == 0) {
+					// Sets menus enabled for user in room with no documents
+					setJoinedRoom();
+				}
+			}
+		});
+		addSection.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
+		deleteSection.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
+		splitSection.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
+		mergeSection.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		// VIEW menu items
 		showRoomMembers.addActionListener(new ActionListener() {
 			@Override
@@ -271,24 +336,53 @@ public class WindowClient extends JFrame implements IClient {
 	 * Set menu items enabled/disabled for when user is logged in.
 	 */
 	private void setLogIn() {
-		openDocument.setEnabled(false);
-		newDocument.setEnabled(false);
 		logIn.setEnabled(false);
 		joinCoLabRoom.setEnabled(true);
 		disconnect.setEnabled(true);
+		newDocument.setEnabled(false);
+		openDocument.setEnabled(false);
+		removeDocument.setEnabled(false);
+		addSection.setEnabled(false);
+		deleteSection.setEnabled(false);
+		splitSection.setEnabled(false);
+		mergeSection.setEnabled(false);
 		String title = getTitle();
 		setTitle(title + " - " + getUserName());
 	}
 
 	/**
-	 * Set menu items enabled/disabled for when user has joined a CoLab Room.
+	 * Set menu items enabled/disabled for when user has joined a CoLab Room or when all documents
+	 * are removed from CoLab Room.
 	 */
 	private void setJoinedRoom() {
-		openDocument.setEnabled(true);
-		newDocument.setEnabled(true);
 		logIn.setEnabled(false);
 		joinCoLabRoom.setEnabled(false);
 		disconnect.setEnabled(true);
+		newDocument.setEnabled(true);
+		openDocument.setEnabled(true);
+		removeDocument.setEnabled(true);
+		addSection.setEnabled(false);
+		deleteSection.setEnabled(false);
+		splitSection.setEnabled(false);
+		mergeSection.setEnabled(false);
+		String title = getTitle();
+		setTitle(title + " - " + getRoomName());
+	}
+
+	/**
+	 * Set menu items enabled/disabled for when documents are open in a CoLab Room.
+	 */
+	private void setDocumentsOpen() {
+		logIn.setEnabled(false);
+		joinCoLabRoom.setEnabled(false);
+		disconnect.setEnabled(true);
+		newDocument.setEnabled(true);
+		openDocument.setEnabled(true);
+		removeDocument.setEnabled(true);
+		addSection.setEnabled(true);
+		deleteSection.setEnabled(true);
+		splitSection.setEnabled(true);
+		mergeSection.setEnabled(true);
 		String title = getTitle();
 		setTitle(title + " - " + getRoomName());
 	}
@@ -297,11 +391,18 @@ public class WindowClient extends JFrame implements IClient {
 	 * Set menu items enabled/disabled for when user is disconnected.
 	 */
 	private void setDisconnected() {
-		openDocument.setEnabled(false);
-		newDocument.setEnabled(false);
 		logIn.setEnabled(true);
 		joinCoLabRoom.setEnabled(false);
 		disconnect.setEnabled(false);
+		newDocument.setEnabled(false);
+		openDocument.setEnabled(false);
+		removeDocument.setEnabled(false);
+		addSection.setEnabled(false);
+		deleteSection.setEnabled(false);
+		splitSection.setEnabled(false);
+		mergeSection.setEnabled(false);
+		String title = getTitle();
+		setTitle(title + " - " + getUserName());
 	}
 
 	@Override
@@ -370,12 +471,14 @@ public class WindowClient extends JFrame implements IClient {
 		if (doc != null) {
 			throw new IllegalStateException("Two documents cannot have the same name");
 		}
-		doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(),roomName,documentName,userName));
+		doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, documentName,
+				userName));
 		documents.put(documentName, doc);
 		documentPane.add(documentName, doc);
 		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: "
 				+ documentName);
 		documents.get(documentName).updateDocPane();
+		setDocumentsOpen();
 		return true;
 
 	}
@@ -388,7 +491,14 @@ public class WindowClient extends JFrame implements IClient {
 		}
 		documents.remove(documentName);
 		documentPane.remove(doc);
-		documents.get(documentName).updateDocPane();
+		// documents.get(documentName).updateDocPane();
+		if (documents.size() == 0) {
+			// Sets menus enabled for user in room with no documents
+			setJoinedRoom();
+		}
+		//TODO make sure this works!
+		documents.get(((JDocTabPanel) documentPane.getSelectedComponent()).getName())
+				.updateDocPane();
 		return true;
 	}
 
@@ -422,7 +532,7 @@ public class WindowClient extends JFrame implements IClient {
 		documents.get(documentName).updateDocPane();
 		return false;
 	}
-	
+
 	@Override
 	public boolean subSectionRemoved(String username, String sectionId, String documentName) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
@@ -430,7 +540,7 @@ public class WindowClient extends JFrame implements IClient {
 		documents.get(documentName).updateDocPane();
 		return true;
 	}
-	
+
 	@Override
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
 		SectionizedDocument doc = documents.get(documentId).getSectionizedDocument();
