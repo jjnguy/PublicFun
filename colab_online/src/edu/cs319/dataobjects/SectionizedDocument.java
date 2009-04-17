@@ -29,4 +29,6 @@ public interface SectionizedDocument {
 	public void splitSubSection(String name, String partA, String partB, int splitIndex);
 
 	public void combineSubSections(String partA, String partB, String combinedName);
+	
+	public void flopSubSections(int idx1, int idx2);
 }

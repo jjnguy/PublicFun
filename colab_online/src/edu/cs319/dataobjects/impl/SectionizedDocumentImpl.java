@@ -121,7 +121,15 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return getName().hashCode();
 	}
 	
+	@Override
 	public String toString() {
 		return getName();
+	}
+
+	@Override
+	public void flopSubSections(int idx1, int idx2) {
+		DocumentSubSection ds1 = subSections.get(idx1);
+		subSections.set(idx1, subSections.get(idx2));
+		subSections.set(idx2, ds1);
 	}
 }

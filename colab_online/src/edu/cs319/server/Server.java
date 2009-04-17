@@ -387,4 +387,11 @@ public class Server implements IServer {
 		}
 		return true;
 	}
+
+	@Override
+	public boolean subSectionFlopped(String username, String roomname, String documentName,
+			String sectionIdMoveUp, String sectionIdMoveDown) {
+		// TODO IMPLEMENT FLOPPING SECTIONS
+		return false;
+	}
 }

@@ -21,6 +21,9 @@ public interface IClient {
 
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionID);
 
+	public boolean subsectionFlopped(String usernameSender, String documentName,
+			String sectionIDMoveUp, String sectionIDMoveDown);
+
 	public boolean newSubSection(String username, String documentName, String sectionId,
 			DocumentSubSection section, int idx);
 

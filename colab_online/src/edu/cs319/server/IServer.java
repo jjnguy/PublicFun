@@ -36,6 +36,9 @@ public interface IServer {
 	public boolean subSectionUnLocked(String username, String roomname, String documentName,
 			String sectionId);
 	
+	public boolean subSectionFlopped(String username, String roomname, String documentName, 
+			String sectionIdMoveUp, String sectionIdMoveDown);
+	
 	public boolean newChatMessage(String senderName, String roomname, String message);
 
 	public boolean newChatMessage(String senderName, String roomname, String message,

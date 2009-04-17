@@ -413,13 +413,24 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
+	public boolean subsectionFlopped(String usernameSender, String documentName,
+			String sectionIDMoveUp, String sectionIDMoveDown) {
+		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
+		int idx1 = doc.getSubSectionIndex(sectionIDMoveUp);
+		int idx2 = doc.getSubSectionIndex(sectionIDMoveDown);
+		doc.flopSubSections(idx1, idx2);
+		documents.get(documentName).updateDocPane();
+		return false;
+	}
+	
+	@Override
 	public boolean subSectionRemoved(String username, String sectionId, String documentName) {
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.removeSubSection(sectionId);
 		documents.get(documentName).updateDocPane();
 		return true;
 	}
-
+	
 	@Override
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
 		SectionizedDocument doc = documents.get(documentId).getSectionizedDocument();
@@ -484,4 +495,5 @@ public class WindowClient extends JFrame implements IClient {
 			e.printStackTrace();
 		}
 	}
+
 }
