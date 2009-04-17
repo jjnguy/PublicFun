@@ -32,12 +32,10 @@ import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
 import edu.cs319.connectionmanager.clientside.Proxy;
-
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
-import edu.cs319.dataobjects.DocumentInfo;
-import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.dataobjects.impl.DocumentInfoImpl;
+import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
@@ -100,7 +98,7 @@ public class WindowClient extends JFrame implements IClient {
 		joinCoLabRoom = new JMenuItem("Join CoLab Room");
 		disconnect = new JMenuItem("Disconnect");
 		exitCoLab = new JMenuItem("Exit CoLab");
-		about = new JMenuItem("About");
+		about = new JMenuItem("About CoLab");
 
 		file.setMnemonic(KeyEvent.VK_F);
 		view.setMnemonic(KeyEvent.VK_V);
@@ -121,6 +119,7 @@ public class WindowClient extends JFrame implements IClient {
 		file.add(exitCoLab);
 		view.add(showChat);
 		view.add(showRoomMembers);
+		help.add(about);
 
 		setDisconnected();
 		showChat.setSelected(true);
@@ -223,7 +222,7 @@ public class WindowClient extends JFrame implements IClient {
 		about.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				// TODO make info window
 
 			}
 		});
