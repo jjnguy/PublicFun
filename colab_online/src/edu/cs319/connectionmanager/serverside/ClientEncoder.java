@@ -240,4 +240,11 @@ public class ClientEncoder implements IClient {
 		return printMessageToStream(m);
 	}
 
+	@Override
+	public boolean subsectionFlopped(String usernameSender, String documentName,
+			String sectionIDMoveUp, String sectionIDMoveDown) {
+		// TODO FIX ME TOO
+		return false;
+	}
+
 }

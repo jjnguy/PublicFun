@@ -203,4 +203,11 @@ public class ServerEncoder implements IServer {
 		return printMessageToStream(m);
 	}
 
+	@Override
+	public boolean subSectionFlopped(String username, String roomname, String documentName,
+			String sectionIdMoveUp, String sectionIdMoveDown) {
+		// TODO FIX ME
+		return false;
+	}
+
 }
