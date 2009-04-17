@@ -5,7 +5,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
@@ -65,8 +69,16 @@ public class JDocTabPanel extends JPanel {
 		workPane.setFont(docFont);
 		doc2 = (PlainDocument) workPane.getDocument();
 		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
-		sectionUpButton = new JButton("^");
-		sectionDownButton = new JButton("V");
+		try {
+			sectionUpButton = new JButton(new ImageIcon(ImageIO.read(new File("images/green_up_arrow_small.png"))));
+			sectionDownButton = new JButton(new ImageIcon(ImageIO.read(new File("images/green_down_arrow_small.png"))));
+		} catch (IOException e) {
+			e.printStackTrace();
+			sectionUpButton = new JButton("^");
+			sectionDownButton = new JButton("V");
+		}
+//		sectionUpButton = new JButton("^");
+//		sectionDownButton = new JButton("V");
 		aquireLock = new JButton("Aquire Lock");
 		updateSection = new JButton("Update");
 		addSubSection = new JButton("New SubSection");
