@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
@@ -31,6 +32,7 @@ public class WindowLogIn extends JDialog {
 
 	private JTextField hostField = new JTextField(20);
 	private JTextField usernameField = new JTextField(20);
+	private JPasswordField passwordField = new JPasswordField(20);
 	private JButton logInButton = new JButton("Log In");
 	private JButton cancelButton = new JButton("Cancel");
 
@@ -45,7 +47,7 @@ public class WindowLogIn extends JDialog {
 			usernameField.setText((int)(Math.random() * 20) + "");
 		}
 		this.client = client;
-		Dimension minSize = new Dimension(350, 150);
+		Dimension minSize = new Dimension(350, 180);
 		this.setSize(minSize);
 		this.setResizable(false);
 		setModal(true);
@@ -56,6 +58,7 @@ public class WindowLogIn extends JDialog {
 	private void setUpAppearance() {
 		JLabel hostNameLabel = new JLabel("Host Name");
 		JLabel usernameLabel = new JLabel("User Name");
+		JLabel passwordLabel = new JLabel("Password");
 
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -65,17 +68,6 @@ public class WindowLogIn extends JDialog {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.anchor = GridBagConstraints.LINE_END;
-		mainPanel.add(usernameLabel, c);
-
-		c.gridx = 1;
-		c.gridwidth = 2;
-		c.anchor = GridBagConstraints.LINE_START;
-		mainPanel.add(usernameField, c);
-
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 1;
-		c.anchor = GridBagConstraints.LINE_END;
 		mainPanel.add(hostNameLabel, c);
 
 		c.gridx = 1;
@@ -83,7 +75,29 @@ public class WindowLogIn extends JDialog {
 		c.anchor = GridBagConstraints.LINE_START;
 		mainPanel.add(hostField, c);
 
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		c.anchor = GridBagConstraints.LINE_END;
+		mainPanel.add(usernameLabel, c);
+
+		c.gridx = 1;
+		c.gridwidth = 2;
+		c.anchor = GridBagConstraints.LINE_START;
+		mainPanel.add(usernameField, c);
+		
+		c.gridx = 0;
 		c.gridy = 2;
+		c.gridwidth = 1;
+		c.anchor = GridBagConstraints.LINE_END;
+		mainPanel.add(passwordLabel, c);
+
+		c.gridx = 1;
+		c.gridwidth = 2;
+		c.anchor = GridBagConstraints.LINE_START;
+		mainPanel.add(passwordField, c);
+		
+		c.gridy = 3;
 		c.gridwidth = 1;
 		c.anchor = GridBagConstraints.LINE_END;
 		mainPanel.add(logInButton, c);
@@ -93,7 +107,6 @@ public class WindowLogIn extends JDialog {
 		mainPanel.add(cancelButton, c);
 
 		this.add(mainPanel);
-		// pack();
 	}
 
 	public static Proxy showLoginWindow(WindowClient parent, IClient client) {
@@ -115,10 +128,17 @@ public class WindowLogIn extends JDialog {
 			return false;
 		return !(usernme.contains(" ") || usernme.startsWith("@"));
 	}
+	
+	public static boolean isValidPassword(String pw) {
+		if (pw.length() < 1)
+			return false;
+		return true;
+	}
 
 	private void setUpListeners() {
 		hostField.addKeyListener(enterKey);
 		usernameField.addKeyListener(enterKey);
+		passwordField.addKeyListener(enterKey);
 		logInButton.addKeyListener(enterKey);
 		cancelButton.addKeyListener(enterKey);
 		logInButton.addActionListener(new ActionListener() {
