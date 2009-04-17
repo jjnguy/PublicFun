@@ -157,8 +157,6 @@ public class JDocTabPanel extends JPanel {
 			docText.append("----------START SECTION <" + doc.getSectionAt(i).getName()
 					+ ">----------\n");
 			docText.append(doc.getSectionAt(i).getText());
-			docText.append("\n----------END SECTION <" + doc.getSectionAt(i).getName()
-					+ ">------------\n");
 		}
 		documentPane.setText(docText.toString());
 		// documentPane.setText(doc.getFullText());
