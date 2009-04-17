@@ -184,7 +184,7 @@ public class WindowClient extends JFrame implements IClient {
 				section.setLocked(true, userName);
 				proxy.getServer().newSubSection(userName, roomName, docName, secName, 0);
 				proxy.getServer().subSectionLocked(userName, roomName, docName, secName);
-				System.out.println("WindowClient Upload Document: Username: " + userName
+				System.out.println("WindowClient New Blank Document: Username: " + userName
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
