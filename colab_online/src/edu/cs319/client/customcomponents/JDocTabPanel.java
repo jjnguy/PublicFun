@@ -185,4 +185,16 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	private class NewSubSectionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			newSubSection();
+		}
+	}
+
+	private class ReleaseLockListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentSubSection().getName());
+		}
+	}
+
 }
