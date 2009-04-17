@@ -130,6 +130,14 @@ public class JDocTabPanel extends JPanel {
 		return doc;
 	}
 
+	private void updateSubSection(DocumentSubSection ds) {
+		info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(), info.getDocumentName(), ds.getName(), ds);
+	}
+
+	private DocumentSubSection getCurrentSubSection() {
+		return (DocumentSubSection) sectionSelector.getSelectedItem();
+	}
+
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 
@@ -145,20 +153,21 @@ public class JDocTabPanel extends JPanel {
 	private class AquireLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
-					info.getDocumentName(), null);
+					info.getDocumentName(), getCurrentSubSection().getName());
 		}
 	}
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
-					info.getDocumentName(), null, doc.getSection(null));
+			updateSubSection((DocumentSubSection) sectionSelector.getSelectedItem());
 		}
 	}
 
 	private class SelectedSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-
+			DocumentSubSection ds = getCurrentSubSection();
+			workPane.setEditable(info.getName().equals(ds.lockedByUser()));
+			workPane.setText(ds.getText());
 		}
 	}
 
