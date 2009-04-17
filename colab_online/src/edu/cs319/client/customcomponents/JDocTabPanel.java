@@ -166,7 +166,7 @@ public class JDocTabPanel extends JPanel {
 	private class SelectedSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			DocumentSubSection ds = getCurrentSubSection();
-			workPane.setEditable(info.getName().equals(ds.lockedByUser()));
+			workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
 			workPane.setText(ds.getText());
 		}
 	}
