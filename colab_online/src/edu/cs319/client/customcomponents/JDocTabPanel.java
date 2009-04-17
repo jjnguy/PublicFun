@@ -143,7 +143,14 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void updateDocPane() {
-		documentPane.setText(doc.getFullText());
+		StringBuilder docText = new StringBuilder();
+		for(int i = 0; i < doc.getSubsectionCount(); i++) {
+			docText.append("----------START SECTION <" + doc.getSectionAt(i).getName() + ">----------\n");
+			docText.append(doc.getSectionAt(i).getText());
+			docText.append("\n----------END SECTION <" + doc.getSectionAt(i).getName() + ">------------\n");
+		}
+		documentPane.setText(docText.toString());
+//		documentPane.setText(doc.getFullText());
 		sectionList.setListData(doc.getAllSubSections().toArray());
 		Object selected = sectionSelector.getSelectedItem();
 		sectionSelector.removeAllItems();
