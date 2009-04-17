@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -70,15 +74,15 @@ public class JDocTabPanel extends JPanel {
 		doc2 = (PlainDocument) workPane.getDocument();
 		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
 		try {
-			sectionUpButton = new JButton(new ImageIcon(ImageIO.read(new File("images/green_up_arrow_small.png"))));
-			sectionDownButton = new JButton(new ImageIcon(ImageIO.read(new File("images/green_down_arrow_small.png"))));
+			sectionUpButton = new JButton(new ImageIcon(ImageIO.read(new File(
+					"images/green_up_arrow_small.png"))));
+			sectionDownButton = new JButton(new ImageIcon(ImageIO.read(new File(
+					"images/green_down_arrow_small.png"))));
 		} catch (IOException e) {
 			e.printStackTrace();
 			sectionUpButton = new JButton("^");
 			sectionDownButton = new JButton("V");
 		}
-//		sectionUpButton = new JButton("^");
-//		sectionDownButton = new JButton("V");
 		aquireLock = new JButton("Aquire Lock");
 		updateSection = new JButton("Update");
 		addSubSection = new JButton("New SubSection");
@@ -125,7 +129,8 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private void newSubSection(String name) {
-		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(), name, doc.getSubsectionCount());
+		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(), name,
+				doc.getSubsectionCount());
 	}
 
 	private void setUpListeners() {
@@ -218,8 +223,9 @@ public class JDocTabPanel extends JPanel {
 	private class NewSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String name = JOptionPane.showInputDialog(JDocTabPanel.this,
-			"Name the subsection bitch!!");
-		if (name == null) return;
+					"Name the subsection bitch!!");
+			if (name == null)
+				return;
 			newSubSection(name);
 		}
 	}
@@ -231,4 +237,62 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	private class RightClickListener extends MouseAdapter {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (e.getButton() != MouseEvent.BUTTON2)
+				return;
+			JMenu menu = new SectionRightClickMenu((DocumentSubSection)sectionList.getSelectedValue());
+			menu.setVisible(true);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
+	public class SectionRightClickMenu extends JMenu {
+
+		private JMenuItem aquireLockItem;
+		private JMenuItem releaseLockItem;
+		private JMenuItem newSubSectionItem;
+
+		private DocumentSubSection sec;
+		
+		public SectionRightClickMenu(DocumentSubSection section) {
+			super();
+			sec = section;
+			aquireLockItem = new JMenuItem("Aquire Lock");
+			aquireLockItem.addActionListener(new AquireLockListener());
+			add(aquireLockItem);
+			releaseLockItem = new JMenuItem("Release Lock");
+			releaseLockItem.addActionListener(new ReleaseLockListener());
+			add(releaseLockItem);
+			newSubSectionItem = new JMenuItem("Add New SubSection");
+			newSubSectionItem.addActionListener(new NewSubSectionListener());
+			add(newSubSectionItem);
+		}
+	}
 }
