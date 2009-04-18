@@ -105,11 +105,11 @@ public class JDocTabPanel extends JPanel {
 		sectionPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		JPanel bottomPane = new JPanel(new BorderLayout());
-		JPanel norht = new JPanel();
-		norht.add(aquireLock);
-		norht.add(updateSection);
-		norht.add(unlockSubSection);
-		norht.add(addSubSection);
+		JPanel north = new JPanel();
+		north.add(aquireLock);
+		north.add(updateSection);
+		north.add(unlockSubSection);
+		north.add(addSubSection);
 		bottomPane.add(norht, BorderLayout.NORTH);
 
 		documentPane.setMinimumSize(new Dimension(0, 0));
