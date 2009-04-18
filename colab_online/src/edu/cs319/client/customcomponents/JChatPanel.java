@@ -55,18 +55,28 @@ public class JChatPanel extends JPanel {
 		add(bottomText, BorderLayout.SOUTH);
 	}
 
-	public void connect(IServer serverP, String clientID, String roomName) throws IOException {
+	public void connect(IServer serverP, String clientID, String roomName) {
 		server = serverP;
 		this.clientID = clientID;
 		this.roomName = roomName;
 		// TODO get icons
-		this.trayI = new TrayIcon(ImageIO.read(new File("images/tempIcon.bmp")));
+		try {
+			this.trayI = new TrayIcon(ImageIO.read(new File("images/tempIcon.bmp")));
+		} catch(IOException e) {
+			if(Util.DEBUG) {
+				e.printStackTrace();
+			}
+		}
 		SystemTray tray = SystemTray.getSystemTray();
 		try {
 			tray.add(trayI);
 		} catch (AWTException e) {
 			if (Util.DEBUG)
 				e.printStackTrace();
+		} catch(NullPointerException e) {
+			if(Util.DEBUG) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -92,7 +102,9 @@ public class JChatPanel extends JPanel {
 	}
 
 	private void displayBottomPopup(String usernameSender, String message) {
-		trayI.displayMessage("New Message From " + usernameSender, message, MessageType.INFO);
+		if(trayI != null) {
+			trayI.displayMessage("New Message From " + usernameSender, message, MessageType.INFO);
+		}
 	}
 
 	private KeyListener enterpressedL = new KeyAdapter() {
