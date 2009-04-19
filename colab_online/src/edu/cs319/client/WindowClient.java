@@ -227,6 +227,7 @@ public class WindowClient extends JFrame implements IClient {
 				setDocumentsOpen();
 			}
 		});
+		
 		openDocument.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
