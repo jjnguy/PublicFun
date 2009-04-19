@@ -85,6 +85,7 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		DocumentSubSection second = new DocumentSubSectionImpl(partB);
 		String text = ds.getText();
 		first.setLocked(true, "admin");
+		second.setLocked(true, "admin");
 		first.setText("admin", text.substring(0, splitIndex));
 		second.setText("admin", text.substring(splitIndex, text.length()));
 		first.setLocked(false, "admin");

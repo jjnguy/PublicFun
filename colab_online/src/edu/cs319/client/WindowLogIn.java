@@ -44,7 +44,7 @@ public class WindowLogIn extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		if (Util.DEBUG) {
 			hostField.setText("localhost");
-			usernameField.setText((int)(Math.random() * 20) + "");
+			usernameField.setText((int)(Math.random() * 1000) + "");
 		}
 		this.client = client;
 		Dimension minSize = new Dimension(350, 180);

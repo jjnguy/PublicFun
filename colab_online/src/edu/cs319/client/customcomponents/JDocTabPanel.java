@@ -177,6 +177,7 @@ public class JDocTabPanel extends JPanel {
 
 	public void subSectionSplit(String username, String oldSecName,
 			String newName1, String newName2, int index) {
+		
 		doc.splitSubSection(oldSecName, newName1, newName2, index);
 	}
 	
@@ -267,14 +268,7 @@ public class JDocTabPanel extends JPanel {
 			int idx = SplitChooser.showSplitChooserDialog(sec);
 			if (idx == -1)
 				return;
-			doc.splitSubSection(sec.getName(), name1, name2, idx);
-			info.getServer().subSectionRemoved(info.getUserName(), info.getRoomName(),
-					doc.getName(), sec.getName());
-			info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(),
-					name1, doc.getSubsectionCount());
-			//info.getServer()
-			info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(),
-					name2, doc.getSubsectionCount());
+			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), doc.getName(), sec.getName(), name1, name2, idx);
 		}
 	}
 
