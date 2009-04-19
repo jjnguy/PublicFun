@@ -32,13 +32,16 @@ public interface IServer {
 
 	public boolean subSectionLocked(String username, String roomname, String documentName,
 			String sectionId);
-	
+
 	public boolean subSectionUnLocked(String username, String roomname, String documentName,
 			String sectionId);
-	
-	public boolean subSectionFlopped(String username, String roomname, String documentName, 
+
+	public boolean subSectionFlopped(String username, String roomname, String documentName,
 			String sectionIdMoveUp, String sectionIdMoveDown);
-	
+
+	public boolean subSectionSplit(String username, String roomname, String documentName,
+			String oldSection, String newName1, String newName2);
+
 	public boolean newChatMessage(String senderName, String roomname, String message);
 
 	public boolean newChatMessage(String senderName, String roomname, String message,
@@ -47,5 +50,5 @@ public interface IServer {
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv);
 
 	public boolean logOut(String username);
-	
+
 }
