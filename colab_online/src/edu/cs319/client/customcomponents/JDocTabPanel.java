@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -248,7 +249,7 @@ public class JDocTabPanel extends JPanel {
 	private class SplitSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			// TODO Should we add a subsection split method???
 			String name1 = JOptionPane
 					.showInputDialog(JDocTabPanel.this, "Name of the first part:");
 			if (name1 == null)
@@ -285,7 +286,11 @@ public class JDocTabPanel extends JPanel {
 			instr = new JLabel("Place your cursor where you would like to split the subsection");
 			theText = new JTextArea();
 			theText.setText(sec.getText());
-			theText.setEditable(false);
+			//theText.setEditable(false);
+			KeyListener[] list = theText.getKeyListeners();
+			for (KeyListener k : list){
+				theText.removeKeyListener(k);
+			}
 			theText.setTabSize(4);
 			ok = new JButton("Ok");
 			JScrollPane scroll = new JScrollPane(theText);
@@ -304,6 +309,9 @@ public class JDocTabPanel extends JPanel {
 		public static int showSplitChooserDialog(DocumentSubSection sec) {
 			SplitChooser ch = new SplitChooser(sec);
 			ch.setVisible(true);
+			if (Util.DEBUG) {
+				System.out.println("Index chosen: " + ch.getChosenIndex());
+			}
 			return ch.getChosenIndex();
 		}
 
@@ -399,7 +407,7 @@ public class JDocTabPanel extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				long thetime = System.currentTimeMillis();
-				if (thetime - bornondate > 1000)
+				if (thetime - bornondate > 500)
 					setVisible(false);
 				else
 					;

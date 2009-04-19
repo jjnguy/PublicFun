@@ -72,7 +72,9 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 	}
 
 	public void removeSubSection(String name) {
-		subSections.remove(getSubSectionIndex(name));
+		int idx = getSubSectionIndex(name);
+		if (idx != -1)
+			subSections.remove(idx);
 	}
 
 	public void splitSubSection(String name, String partA, String partB, int splitIndex) {
@@ -83,8 +85,8 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		DocumentSubSection second = new DocumentSubSectionImpl(partB);
 		String text = ds.getText();
 		first.setLocked(true, "admin");
-		first.setText("admin",text.substring(0, splitIndex));
-		second.setText("admin",text.substring(splitIndex, text.length()));
+		first.setText("admin", text.substring(0, splitIndex));
+		second.setText("admin", text.substring(splitIndex, text.length()));
 		first.setLocked(false, "admin");
 		second.setLocked(false, "admin");
 		subSections.add(index, first);
@@ -120,7 +122,7 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 	public int hashCode() {
 		return getName().hashCode();
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName();
