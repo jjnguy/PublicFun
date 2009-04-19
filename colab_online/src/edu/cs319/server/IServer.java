@@ -40,7 +40,7 @@ public interface IServer {
 			String sectionIdMoveUp, String sectionIdMoveDown);
 
 	public boolean subSectionSplit(String username, String roomname, String documentName,
-			String oldSection, String newName1, String newName2);
+			String oldSection, String newName1, String newName2, int index);
 
 	public boolean newChatMessage(String senderName, String roomname, String message);
 

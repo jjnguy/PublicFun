@@ -184,7 +184,8 @@ public class ServerEncoder implements IServer {
 	}
 
 	@Override
-	public boolean subSectionLocked(String username, String roomName, String documentName, String sectionId) {
+	public boolean subSectionLocked(String username, String roomName, String documentName,
+			String sectionId) {
 		List<String> args = new ArrayList<String>();
 		args.add(roomName);
 		args.add(documentName);
@@ -194,7 +195,8 @@ public class ServerEncoder implements IServer {
 	}
 
 	@Override
-	public boolean subSectionUnLocked(String username, String roomName, String documentName, String sectionId) {
+	public boolean subSectionUnLocked(String username, String roomName, String documentName,
+			String sectionId) {
 		List<String> args = new ArrayList<String>();
 		args.add(roomName);
 		args.add(documentName);
@@ -212,6 +214,21 @@ public class ServerEncoder implements IServer {
 		args.add(sectionIdMoveDown);
 		args.add(sectionIdMoveUp);
 		Message m = new Message(MessageType.SUBSECTION_FLOPPED, username, args);
+		return printMessageToStream(m);
+	}
+
+	@Override
+	public boolean subSectionSplit(String username, String roomname, String documentName,
+			String oldSection, String newName1, String newName2, int index) {
+		// TODO Auto-generated method stub
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(documentName);
+		args.add(oldSection);
+		args.add(newName1);
+		args.add(newName2);
+		args.add(index + "");
+		Message m = new Message(MessageType.SUBSECTION_SPLIT, username, args);
 		return printMessageToStream(m);
 	}
 

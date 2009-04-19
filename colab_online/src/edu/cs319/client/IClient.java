@@ -30,7 +30,7 @@ public interface IClient {
 	public boolean subSectionRemoved(String username, String documentName, String sectionId);
 
 	public boolean subSectionSplit(String username, String documentName, String oldSecName,
-			String newName1, String newName2);
+			String newName1, String newName2, int index);
 
 	public boolean newDocument(String username, String documentName);
 

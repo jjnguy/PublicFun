@@ -62,13 +62,14 @@ public class ClientDecoder implements Runnable {
 		case MEMBER_JOIN_ROOM:
 			actualClient.coLabRoomMemberArrived(username);
 			break;
-		case UPDATE_ALL_SUBSECTIONS:
+		case UPDATE_ALL_SUBSECTIONS: {
 			List<DocumentSubSection> args = new ArrayList<DocumentSubSection>();
 			for (int i = 1; i < arg.size(); i++) {
 				args.add(DocumentSubSection.getFromDelimmitedString(arg.get(i)));
 			}
 			actualClient.updateAllSubsections(arg.get(0), args);
 			break;
+		}
 		case UPDATE_SUBSECTION:
 			actualClient.updateSubsection(username, arg.get(0), DocumentSubSection
 					.getFromDelimmitedString(arg.get(1)), arg.get(2));
@@ -121,6 +122,9 @@ public class ClientDecoder implements Runnable {
 		case SUBSECTION_FLOPPED:
 			actualClient.subsectionFlopped(username, arg.get(0), arg.get(1), arg.get(2));
 			break;
+		case SUBSECTION_SPLIT:
+			actualClient.subSectionSplit(username, arg.get(0), arg.get(1), arg.get(2), arg.get(3),
+					Integer.parseInt(arg.get(4)));
 		default:
 			throw new NotYetImplementedException();
 		}

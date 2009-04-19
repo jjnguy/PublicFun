@@ -251,4 +251,17 @@ public class ClientEncoder implements IClient {
 		return printMessageToStream(m);
 	}
 
+	@Override
+	public boolean subSectionSplit(String username, String documentName, String oldSecName,
+			String newName1, String newName2, int index) {
+		List<String> args = new ArrayList<String>();
+		args.add(documentName);
+		args.add(oldSecName);
+		args.add(newName1);
+		args.add(newName2);
+		args.add(index + "");
+		Message m = new Message(MessageType.SUBSECTION_SPLIT, username, args);
+		return printMessageToStream(m);
+	}
+
 }

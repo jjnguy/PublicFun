@@ -391,7 +391,6 @@ public class Server implements IServer {
 	@Override
 	public boolean subSectionFlopped(String username, String roomname, String documentName,
 			String sectionIdMoveUp, String sectionIdMoveDown) {
-		// TODO IMPLEMENT FLOPPING SECTIONS
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
 		int idx1 = doc.getSubSectionIndex(sectionIdMoveDown);
@@ -399,6 +398,18 @@ public class Server implements IServer {
 		doc.flopSubSections(idx1, idx2);
 		for (IClient c : room.getAllClients()){
 			c.subsectionFlopped(username, documentName, sectionIdMoveUp, sectionIdMoveDown);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean subSectionSplit(String username, String roomname, String documentName,
+			String oldSection, String newName1, String newName2, int index) {
+		CoLabRoom room = colabrooms.get(roomname);
+		SectionizedDocument doc = room.getDocument(documentName);
+		doc.splitSubSection(oldSection, newName1, newName2, index);
+		for (IClient c : room.getAllClients()){
+			c.subSectionSplit(username, documentName, oldSection, newName1, newName2, index);
 		}
 		return true;
 	}

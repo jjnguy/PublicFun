@@ -564,6 +564,14 @@ public class WindowClient extends JFrame implements IClient {
 		documents.get(documentname).updateDocPane();
 		return true;
 	}
+	
+	@Override
+	public boolean subSectionSplit(String username, String documentName, String oldSecName,
+			String newName1, String newName2, int index) {
+		documents.get(documentName).subSectionSplit(username, oldSecName, newName1, newName2, index);
+		documents.get(documentName).updateDocPane();
+		return true;
+	}
 
 	@Override
 	public String getUserName() {
