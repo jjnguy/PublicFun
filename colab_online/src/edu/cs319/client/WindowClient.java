@@ -213,6 +213,8 @@ public class WindowClient extends JFrame implements IClient {
 						"Enter the name of the document:");
 				String secName = JOptionPane.showInputDialog(WindowClient.this,
 						"Enter the name of the subsection:");
+				if (docName == null || secName == null)
+					return;
 				proxy.getServer().newDocument(userName, roomName, docName);
 				DocumentSubSection section = new DocumentSubSectionImpl(secName);
 				section.setLocked(true, userName);
@@ -236,6 +238,8 @@ public class WindowClient extends JFrame implements IClient {
 						"Enter the name of the document:");
 				String secName = JOptionPane.showInputDialog(WindowClient.this,
 						"Enter the name of the subsection:");
+				if (docName == null || secName == null)
+					return;
 				File choiceF = choose.getSelectedFile();
 				proxy.getServer().newDocument(userName, roomName, docName);
 				DocumentSubSection section = new DocumentSubSectionImpl(secName);
@@ -347,7 +351,8 @@ public class WindowClient extends JFrame implements IClient {
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
 		String title = getTitle();
-		setTitle(title + " - " + getUserName());
+		if (userName != null)
+			setTitle(title + " - " + getUserName());
 	}
 
 	/**
@@ -366,7 +371,8 @@ public class WindowClient extends JFrame implements IClient {
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
 		String title = getTitle();
-		setTitle(title + " - " + getRoomName());
+		if (roomName != null)
+			setTitle(title + " - " + getRoomName());
 	}
 
 	/**
@@ -383,8 +389,6 @@ public class WindowClient extends JFrame implements IClient {
 		deleteSection.setEnabled(true);
 		splitSection.setEnabled(true);
 		mergeSection.setEnabled(true);
-		String title = getTitle();
-		setTitle(title + " - " + getRoomName());
 	}
 
 	/**
@@ -401,8 +405,6 @@ public class WindowClient extends JFrame implements IClient {
 		deleteSection.setEnabled(false);
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
-		String title = getTitle();
-		setTitle(title + " - " + getUserName());
 	}
 
 	@Override
@@ -530,7 +532,7 @@ public class WindowClient extends JFrame implements IClient {
 		int idx2 = doc.getSubSectionIndex(sectionIDMoveDown);
 		doc.flopSubSections(idx1, idx2);
 		documents.get(documentName).updateDocPane();
-		return false;
+		return true;
 	}
 
 	@Override
