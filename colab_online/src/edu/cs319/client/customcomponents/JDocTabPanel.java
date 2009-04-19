@@ -14,7 +14,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -22,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -70,7 +73,7 @@ public class JDocTabPanel extends JPanel {
 		documentPane.setFont(docFont);
 		documentPane.setLineWrap(false);
 		documentPane.setTabSize(4);
-		
+
 		workPane = new JEditorPane();
 		workPane.setFont(docFont);
 		PlainDocument doc2 = (PlainDocument) workPane.getDocument();
@@ -242,6 +245,77 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	private class SplitSubSectionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String name1 = JOptionPane
+					.showInputDialog(JDocTabPanel.this, "Name of the first part:");
+			if (name1 == null)
+				return;
+			String name2 = JOptionPane.showInputDialog(JDocTabPanel.this,
+					"Name of the second part:");
+			if (name2 == null)
+				return;
+			DocumentSubSection sec = getCurrentSubSection();
+			int idx = SplitChooser.showSplitChooserDialog(sec);
+			if (idx == -1)
+				return;
+			doc.splitSubSection(sec.getName(), name1, name2, idx);
+			info.getServer().subSectionRemoved(info.getUserName(), info.getRoomName(),
+					doc.getName(), sec.getName());
+			info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(),
+					name1, doc.getSubsectionCount());
+			//info.getServer()
+			info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(),
+					name2, doc.getSubsectionCount());
+		}
+	}
+
+	@SuppressWarnings("serial")
+	private static class SplitChooser extends JDialog {
+		private JTextArea theText;
+		private JButton ok;
+		private JLabel instr;
+		private int retIndex = -1;
+
+		private SplitChooser(DocumentSubSection sec) {
+			super();
+			setModal(true);
+			instr = new JLabel("Place your cursor where you would like to split the subsection");
+			theText = new JTextArea();
+			theText.setText(sec.getText());
+			theText.setEditable(false);
+			theText.setTabSize(4);
+			ok = new JButton("Ok");
+			JScrollPane scroll = new JScrollPane(theText);
+			add(scroll, BorderLayout.CENTER);
+			add(instr, BorderLayout.NORTH);
+			add(ok, BorderLayout.SOUTH);
+			ok.addActionListener(okAction);
+			setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			pack();
+		}
+
+		public int getChosenIndex() {
+			return retIndex;
+		}
+
+		public static int showSplitChooserDialog(DocumentSubSection sec) {
+			SplitChooser ch = new SplitChooser(sec);
+			ch.setVisible(true);
+			return ch.getChosenIndex();
+		}
+
+		private ActionListener okAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				retIndex = theText.getCaretPosition();
+				SplitChooser.this.dispose();
+			}
+		};
+	}
+
 	private class RightClickListener extends MouseAdapter {
 
 		@Override
@@ -285,6 +359,7 @@ public class JDocTabPanel extends JPanel {
 
 		private JMenuItem aquireLockItem;
 		private JMenuItem releaseLockItem;
+		private JMenuItem splitSectionItem;
 		private JMenuItem newSubSectionItem;
 
 		private DocumentSubSection sec;
@@ -300,6 +375,9 @@ public class JDocTabPanel extends JPanel {
 			releaseLockItem = new JMenuItem("Release Lock");
 			releaseLockItem.addActionListener(new ReleaseLockListener());
 			add(releaseLockItem);
+			splitSectionItem = new JMenuItem("Split SubSection");
+			splitSectionItem.addActionListener(new SplitSubSectionListener());
+			add(splitSectionItem);
 			newSubSectionItem = new JMenuItem("Add New SubSection");
 			newSubSectionItem.addActionListener(new NewSubSectionListener());
 			add(newSubSectionItem);
@@ -321,8 +399,8 @@ public class JDocTabPanel extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				long thetime = System.currentTimeMillis();
-				if(thetime-bornondate > 1000)
-				setVisible(false);
+				if (thetime - bornondate > 1000)
+					setVisible(false);
 				else
 					;
 			}
