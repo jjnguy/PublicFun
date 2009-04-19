@@ -496,7 +496,7 @@ public class WindowClient extends JFrame implements IClient {
 			// Sets menus enabled for user in room with no documents
 			setJoinedRoom();
 		}
-		//TODO make sure this works!
+		// TODO make sure this works!
 		documents.get(((JDocTabPanel) documentPane.getSelectedComponent()).getName())
 				.updateDocPane();
 		return true;
@@ -580,12 +580,7 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	public void chatLogin() {
-		try {
-			chatPanel.connect(proxy.getServer(), userName, roomName);
-		} catch (IOException e) {
-			if (Util.DEBUG)
-				e.printStackTrace();
-		}
+		chatPanel.connect(proxy.getServer(), userName, roomName);
 	}
 
 	/**

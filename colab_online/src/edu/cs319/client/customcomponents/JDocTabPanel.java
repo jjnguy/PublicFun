@@ -110,7 +110,7 @@ public class JDocTabPanel extends JPanel {
 		north.add(updateSection);
 		north.add(unlockSubSection);
 		north.add(addSubSection);
-		bottomPane.add(norht, BorderLayout.NORTH);
+		bottomPane.add(north, BorderLayout.NORTH);
 
 		documentPane.setMinimumSize(new Dimension(0, 0));
 		workPane.setMinimumSize(new Dimension(0, 0));
