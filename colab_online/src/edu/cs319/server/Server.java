@@ -192,7 +192,7 @@ public class Server implements IServer {
 			releaseLocks(doc, username, roomname);
 		}
 	}
-	
+
 	@Override
 	public boolean newChatMessage(String usernameSender, String roomname, String message) {
 		CoLabRoom room = colabrooms.get(roomname);
@@ -355,11 +355,13 @@ public class Server implements IServer {
 					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
-		SectionizedDocument doc = room.getDocument(documentName);
-		releaseLocks(doc, username, roomname);
-		doc.getSection(sectionID).setLocked(true, username);
-		for (IClient c : room.getAllClients()) {
-			c.subsectionLocked(username, documentName, sectionID);
+		synchronized (room) {
+			SectionizedDocument doc = room.getDocument(documentName);
+			releaseLocks(doc, username, roomname);
+			doc.getSection(sectionID).setLocked(true, username);
+			for (IClient c : room.getAllClients()) {
+				c.subsectionLocked(username, documentName, sectionID);
+			}
 		}
 		return true;
 	}
@@ -381,9 +383,11 @@ public class Server implements IServer {
 					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
-		room.getDocument(documentName).getSection(sectionID).setLocked(false, username);
-		for (IClient c : room.getAllClients()) {
-			c.subsectionUnLocked(username, documentName, sectionID);
+		synchronized (room) {
+			room.getDocument(documentName).getSection(sectionID).setLocked(false, username);
+			for (IClient c : room.getAllClients()) {
+				c.subsectionUnLocked(username, documentName, sectionID);
+			}
 		}
 		return true;
 	}
@@ -396,7 +400,7 @@ public class Server implements IServer {
 		int idx1 = doc.getSubSectionIndex(sectionIdMoveDown);
 		int idx2 = doc.getSubSectionIndex(sectionIdMoveUp);
 		doc.flopSubSections(idx1, idx2);
-		for (IClient c : room.getAllClients()){
+		for (IClient c : room.getAllClients()) {
 			c.subsectionFlopped(username, documentName, sectionIdMoveUp, sectionIdMoveDown);
 		}
 		return true;
@@ -408,7 +412,7 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		SectionizedDocument doc = room.getDocument(documentName);
 		doc.splitSubSection(oldSection, newName1, newName2, index);
-		for (IClient c : room.getAllClients()){
+		for (IClient c : room.getAllClients()) {
 			c.subSectionSplit(username, documentName, oldSection, newName1, newName2, index);
 		}
 		return true;

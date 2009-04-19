@@ -172,15 +172,21 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private DocumentSubSection getCurrentSubSection() {
-		return (DocumentSubSection) sectionList.getSelectedValue();
+		DocumentSubSection sel = (DocumentSubSection) sectionList.getSelectedValue();
+		if (sel == null) {
+			if (sectionList.getModel().getSize() == 0)
+				return null;
+			return (DocumentSubSection)sectionList.getModel().getElementAt(0);
+		}
+		return sel;
 	}
 
-	public void subSectionSplit(String username, String oldSecName,
-			String newName1, String newName2, int index) {
-		
+	public void subSectionSplit(String username, String oldSecName, String newName1,
+			String newName2, int index) {
+
 		doc.splitSubSection(oldSecName, newName1, newName2, index);
 	}
-	
+
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (sectionList.getSelectedIndex() > 0) {
@@ -268,7 +274,8 @@ public class JDocTabPanel extends JPanel {
 			int idx = SplitChooser.showSplitChooserDialog(sec);
 			if (idx == -1)
 				return;
-			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), doc.getName(), sec.getName(), name1, name2, idx);
+			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), doc.getName(),
+					sec.getName(), name1, name2, idx);
 		}
 	}
 
@@ -285,9 +292,9 @@ public class JDocTabPanel extends JPanel {
 			instr = new JLabel("Place your cursor where you would like to split the subsection");
 			theText = new JTextArea();
 			theText.setText(sec.getText());
-			//theText.setEditable(false);
+			// theText.setEditable(false);
 			KeyListener[] list = theText.getKeyListeners();
-			for (KeyListener k : list){
+			for (KeyListener k : list) {
 				theText.removeKeyListener(k);
 			}
 			theText.setTabSize(4);
