@@ -13,6 +13,7 @@ public class SubSectionList extends JList {
 
 	public SubSectionList() {
 		model = new JFlexibleListModel<DocumentSubSection>();
+		this.setModel(model);
 	}
 
 	public void addSubSection(DocumentSubSection sec) {

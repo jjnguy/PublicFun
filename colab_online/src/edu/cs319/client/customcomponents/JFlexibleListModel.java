@@ -19,6 +19,7 @@ public class JFlexibleListModel<E> extends AbstractListModel {
 			return false;
 		contents.add(e);
 		fireIntervalAdded(this, 0, getSize());
+		System.out.println(contents);
 		return true;
 	}
 
@@ -54,6 +55,7 @@ public class JFlexibleListModel<E> extends AbstractListModel {
 	}
 
 	public boolean contains(E e) {
+		System.out.println("Checking contains e");
 		return contents.contains(e);
 	}
 
@@ -63,6 +65,7 @@ public class JFlexibleListModel<E> extends AbstractListModel {
 	}
 
 	public boolean contains(String someID) {
+		System.out.println("Checking contains String: someId");
 		return contents.contains(someID);
 	}
 
