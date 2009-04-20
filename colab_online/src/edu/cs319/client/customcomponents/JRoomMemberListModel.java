@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import edu.cs319.server.CoLabPrivilegeLevel;
-
 public class JRoomMemberListModel<E> extends AbstractListModel {
 
 	private List<E> members;
@@ -24,26 +22,18 @@ public class JRoomMemberListModel<E> extends AbstractListModel {
 		return true;
 	}
 
-	public boolean removeMember(String userID) {
-		RoomMemberLite dummy = new RoomMemberLite(userID, null)
-		;int index = members.indexOf(dummy);
-		if (index == -1)
-			return false;
-		members.remove(index);
+	public boolean remove(E obj){
+		int idx = members.indexOf(obj);
+		if (idx == -1)return false;;
+		members.remove(idx);
 		fireIntervalRemoved(this, 0, getSize());
 		return true;
 	}
 	
-	public boolean setMemberPriv(String id, CoLabPrivilegeLevel priv){
-		RoomMemberLite dummy = new RoomMemberLite(id, priv);
-		int idx = members.indexOf(dummy);
-		E mem = members.get(idx);
-		// TODO fix
-		//mem.setPriv(priv);
-		fireContentsChanged(this, 0, getSize());
-		return true;
+	public int indexOf(Object o){
+		return members.indexOf(o);
 	}
-
+	
 	public void clearList() {
 		members.clear();
 		fireIntervalRemoved(this, 0, getSize());
@@ -68,6 +58,10 @@ public class JRoomMemberListModel<E> extends AbstractListModel {
 
 	public boolean contains(String userID) {
 		return members.contains(userID);
+	}
+	
+	public void update(){
+		fireContentsChanged(this, 0, getSize());
 	}
 
 }

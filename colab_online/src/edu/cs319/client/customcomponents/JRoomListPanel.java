@@ -44,7 +44,7 @@ public class JRoomListPanel extends JPanel {
 	}
 
 	public boolean setUserPrivledge(String id, CoLabPrivilegeLevel newPriv) {
-		return this.roomList.getModel().setMemberPriv(id, newPriv);
+		return this.roomList.setMemberPriv(id, newPriv);
 	}
 
 	public boolean addUser(String id) {
@@ -53,7 +53,7 @@ public class JRoomListPanel extends JPanel {
 	}
 
 	public boolean removeUser(String id) {
-		return roomList.getModel().removeMember(id);
+		return roomList.removeMember(id);
 	}
 
 	public void updateList(List<String> userNames, List<CoLabPrivilegeLevel> privs) {
