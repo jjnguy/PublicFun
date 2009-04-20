@@ -11,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -52,7 +51,6 @@ public class JDocTabPanel extends JPanel {
 	// Number of milliseconds between automatic updates
 	private final static int UPDATE_NUM_MS = 500;
 
-	private SubSectionList sectionList;
 	private JPanel sectionPanel;
 	private JSplitPane wholePane;
 	private JSplitPane workspace;
@@ -65,14 +63,13 @@ public class JDocTabPanel extends JPanel {
 	private JButton addSubSection;
 	private JButton unlockSubSection;
 
-	private SectionizedDocument doc;
+	private SubSectionList doc;
 	private DocumentInfo info;
 
 	public JDocTabPanel(DocumentInfo info) {
 		this.info = info;
-		doc = new SectionizedDocumentImpl(info.getDocumentName());
 
-		sectionList = new SubSectionList();
+		doc = new SubSectionList(new SectionizedDocumentImpl(info.getDocumentName()));
 		Font docFont = new Font("Courier New", Font.PLAIN, 11);
 		documentPane = new DocumentDisplayPane();
 		documentPane.setEditable(false);
@@ -114,7 +111,7 @@ public class JDocTabPanel extends JPanel {
 		buttonPanel.add(sectionUpButton, BorderLayout.NORTH);
 		buttonPanel.add(sectionDownButton, BorderLayout.SOUTH);
 		sectionPanel = new JPanel(new BorderLayout(10, 10));
-		sectionPanel.add(sectionList, BorderLayout.CENTER);
+		sectionPanel.add(doc, BorderLayout.CENTER);
 		sectionPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		JPanel bottomPane = new JPanel(new BorderLayout());
@@ -147,42 +144,22 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private void setUpListeners() {
-		sectionList.addMouseListener(new RightClickListener());
+		doc.addMouseListener(new RightClickListener());
 		sectionUpButton.addActionListener(new UpButtonListener());
 		sectionDownButton.addActionListener(new DownButtonListener());
 		aquireLock.addActionListener(new AquireLockListener());
 		updateSection.addActionListener(new UpdateSubSectionListener());
-		sectionList.addListSelectionListener(new SelectedSubSectionListener());
+		doc.addListSelectionListener(new SelectedSubSectionListener());
 		addSubSection.addActionListener(new NewSubSectionListener());
 		unlockSubSection.addActionListener(new ReleaseLockListener());
 	}
 
 	public JList getList() {
-		return sectionList;
+		return doc;
 	}
 
 	public void updateDocumentView(){
 		documentPane.updateDocument(doc);
-	}
-	
-	public void addSubSectionToList(DocumentSubSection sec){
-		sectionList.addSubSection(sec);
-	}
-
-	public void removeSubSectionFromList(String name){
-		sectionList.subSectionRemoved(name);
-	}
-
-	public void subSectionUpdated(DocumentSubSection sec){
-		sectionList.subSectionUpdated(sec);
-	}
-	
-	public void refreshSubSectionList(List<DocumentSubSection> secs){
-		sectionList.fullyRefreshList(secs);
-	}
-	
-	public void updateDocPane(){
-		sectionList.fullyRefreshList(doc.getAllSubSections());
 	}
 	
 	public SectionizedDocument getSectionizedDocument() {
@@ -198,37 +175,37 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private DocumentSubSection getCurrentSubSection() {
-		DocumentSubSection sel = (DocumentSubSection) sectionList.getSelectedValue();
+		DocumentSubSection sel = (DocumentSubSection) doc.getSelectedValue();
 		if (sel == null) {
-			if (sectionList.getModel().getSize() == 0)
+			if (doc.getModel().getSize() == 0)
 				return null;
-			return (DocumentSubSection) sectionList.getModel().getElementAt(0);
+			return (DocumentSubSection) doc.getModel().getElementAt(0);
 		}
 		return sel;
 	}
 
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (sectionList.getSelectedIndex() > 0) {
-				DocumentSubSection moveUp = (DocumentSubSection) sectionList.getSelectedValue();
-				DocumentSubSection moveDown = (DocumentSubSection) sectionList.getModel()
-						.getElementAt(sectionList.getSelectedIndex() - 1);
+			if (doc.getSelectedIndex() > 0) {
+				DocumentSubSection moveUp = (DocumentSubSection) doc.getSelectedValue();
+				DocumentSubSection moveDown = (DocumentSubSection) doc.getModel()
+						.getElementAt(doc.getSelectedIndex() - 1);
 				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), moveUp.getName(), moveDown.getName());
-				sectionList.setSelectedValue(moveUp, true);
+				doc.setSelectedValue(moveUp, true);
 			}
 		}
 	}
 
 	private class DownButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (sectionList.getSelectedIndex() < sectionList.getModel().getSize()) {
-				DocumentSubSection moveDown = (DocumentSubSection) sectionList.getSelectedValue();
-				DocumentSubSection moveUp = (DocumentSubSection) sectionList.getModel()
-						.getElementAt(sectionList.getSelectedIndex() + 1);
+			if (doc.getSelectedIndex() < doc.getModel().getSize()) {
+				DocumentSubSection moveDown = (DocumentSubSection) doc.getSelectedValue();
+				DocumentSubSection moveUp = (DocumentSubSection) doc.getModel()
+						.getElementAt(doc.getSelectedIndex() + 1);
 				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), moveUp.getName(), moveDown.getName());
-				sectionList.setSelectedValue(moveDown, true);
+				doc.setSelectedValue(moveDown, true);
 			}
 		}
 	}

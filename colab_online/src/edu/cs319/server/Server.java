@@ -41,7 +41,7 @@ public class Server implements IServer {
 	 * Creates a new server
 	 */
 	private Server() {
-		//ServerLog.log.log(Level.FINE, "Creating server");
+		// ServerLog.log.log(Level.FINE, "Creating server");
 		// Lets be thread safe about this
 		// Its best to always use protection
 		colabrooms = Collections.synchronizedMap(new HashMap<String, CoLabRoom>());
@@ -59,15 +59,15 @@ public class Server implements IServer {
 				if (Util.DEBUG) {
 					System.out.println("Tried to add a colabroom whos name already exists");
 				}
-				//ServerLog.log
-						//.log(Level.WARNING, "Faild adding colabroom because of insitinct name");
+				// ServerLog.log
+				// .log(Level.WARNING, "Faild adding colabroom because of insitinct name");
 				return false;
 			}
 		}
 		IClient roomOwner = regularClients.get(username);
 		if (roomOwner == null) {
-			//ServerLog.log.log(Level.WARNING,
-					//"Username that didn't exist tried to add new CoLabRoom");
+			// ServerLog.log.log(Level.WARNING,
+			// "Username that didn't exist tried to add new CoLabRoom");
 			if (Util.DEBUG) {
 				System.out.println("Failed to add colab room");
 			}
@@ -124,10 +124,10 @@ public class Server implements IServer {
 
 	@Override
 	public boolean addNewClient(IClient newClient, String username) {
-		//ServerLog.log.log(Level.FINE, "Adding client: " + username);
+		// ServerLog.log.log(Level.FINE, "Adding client: " + username);
 		if (regularClients.containsKey(username)) {
 			if (Util.DEBUG) {
-				//ServerLog.log.log(Level.WARNING, "Client add failed du t ononunique username");
+				// ServerLog.log.log(Level.WARNING, "Client add failed du t ononunique username");
 				System.out.println("Failed to add new client due to non unigque username");
 			}
 			return false;
@@ -439,22 +439,22 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
 			SectionizedDocument doc = room.getDocument(documentName);
-			doc.splitSubSection(oldSection, newName1, newName2, index,username);
+			doc.splitSubSection(oldSection, newName1, newName2, index, username);
 			for (IClient c : room.getAllClients()) {
 				c.subSectionSplit(username, documentName, oldSection, newName1, newName2, index);
 			}
 			return true;
 		}
 	}
-	
+
 	public boolean subSectionCombined(String username, String roomname, String documentname,
 			String sectionA, String sectionB, String newName) {
-				
+
 		CoLabRoom room = colabrooms.get(roomname);
-		synchronized(room) {
+		synchronized (room) {
 			SectionizedDocument doc = room.getDocument(documentname);
 			doc.combineSubSections(sectionA, sectionB, newName);
-			for(IClient c : room.getAllClients()) {
+			for (IClient c : room.getAllClients()) {
 				c.subSectionCombined(username, documentname, sectionA, sectionB, newName);
 			}
 			return true;
