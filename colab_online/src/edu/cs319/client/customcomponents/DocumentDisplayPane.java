@@ -12,7 +12,7 @@ import edu.cs319.dataobjects.SectionizedDocument;
 /**
  * 
  * @author Justin Nelson
- *
+ * 
  */
 public class DocumentDisplayPane extends JTextArea {
 
@@ -32,7 +32,7 @@ public class DocumentDisplayPane extends JTextArea {
 		int curOffset = 0;
 		if (doc != null)
 			for (DocumentSubSection sec : doc.getAllSubSections()) {
-				curOffset += lineCount(sec) * lineHeight-1;
+				curOffset += lineCount(sec) * lineHeight - 1;
 				g.drawLine(0, curOffset, this.getWidth(), curOffset);
 				curOffset++; // new line between subsections
 			}

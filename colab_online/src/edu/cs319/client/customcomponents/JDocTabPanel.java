@@ -88,9 +88,11 @@ public class JDocTabPanel extends JPanel {
 			sectionDownButton = new JButton(new ImageIcon(ImageIO.read(new File(
 					"images/green_down_arrow_small.png"))));
 		} catch (IOException e) {
-			e.printStackTrace();
+			if (Util.DEBUG) {
+				e.printStackTrace();
+			}
 			sectionUpButton = new JButton("^");
-			sectionDownButton = new JButton("V");
+			sectionDownButton = new JButton("v");
 		}
 		aquireLock = new JButton("Aquire Lock");
 		updateSection = new JButton("Update");
@@ -99,7 +101,7 @@ public class JDocTabPanel extends JPanel {
 		setUpAppearance();
 		setUpListeners();
 
-		Timer timer = new Timer(UPDATE_NUM_MS, new UpdateSubSectionListener());
+		Timer timer = new Timer(UPDATE_NUM_MS, new AutoUpdateTask());
 		timer.start();
 	}
 
@@ -190,6 +192,24 @@ public class JDocTabPanel extends JPanel {
 		return sel;
 	}
 
+	private class AutoUpdateTask implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (workPane.getText().trim().equals("")) {
+				if (Util.DEBUG) {
+					System.out.println("Not sending blank text update");
+				}return;
+			}
+			if (getCurrentSubSection().getText().equals(workPane.getText())) {
+				if (Util.DEBUG) {
+					System.out.println("Not sending same text update");
+				}
+				return;
+			}
+			updateSubSection(getCurrentSubSection(), workPane.getText());
+		}
+	}
+
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (doc.getSelectedIndex() > 0) {
@@ -226,8 +246,7 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (!workPane.getText().trim().equals(""))
-				updateSubSection(getCurrentSubSection(), workPane.getText());
+			updateSubSection(getCurrentSubSection(), workPane.getText());
 		}
 	}
 

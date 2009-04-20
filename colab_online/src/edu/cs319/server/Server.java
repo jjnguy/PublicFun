@@ -2,6 +2,7 @@ package edu.cs319.server;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -201,6 +202,15 @@ public class Server implements IServer {
 		}
 	}
 
+	private void releaseLocks(SectionizedDocument doc, String username, String roomname) {
+		for (DocumentSubSection sec : doc.getAllSubSections()) {
+			if (username.equals(sec.lockedByUser())) {
+				System.out.println("Releasing lock on " + sec + " held by " + username);
+				subSectionUnLocked(username, roomname, doc.getName(), sec.getName());
+			}
+		}
+	}
+
 	@Override
 	public boolean newChatMessage(String usernameSender, String roomname, String message) {
 		CoLabRoom room = colabrooms.get(roomname);
@@ -211,7 +221,12 @@ public class Server implements IServer {
 				}
 				return false;
 			}
-			for (IClient client : room.getAllClients()) {
+			List<IClient> clientsInRoom = room.getAllClients();
+			if (clientsInRoom.size() == 1 && clientsInRoom.get(0).getUserName().equals(usernameSender)){
+				clientsInRoom.get(0).newChatMessage("The Darkness", "You are all alone.  Watch your back!");
+				return true;
+			}
+			for (IClient client : clientsInRoom) {
 				if (Util.DEBUG) {
 					System.out.println("Sending chat message to: " + client.toString());
 				}
@@ -315,11 +330,15 @@ public class Server implements IServer {
 		synchronized (room) {
 			SectionizedDocument doc = room.getDocument(documentName);
 			DocumentSubSection sec = doc.getSection(sectionID);
-			// DOn't send updates that don't change anything
+			// Don't send updates that don't change anything
 			if (sec.getName().equals(sectionID) && sec.isLocked() == update.isLocked()
 					&& sec.lockedByUser().equals(update.lockedByUser())
-					&& sec.getText().equals(update.getText()))
+					&& sec.getText().equals(update.getText())) {
+				if (Util.DEBUG) {
+					System.out.println("Ignoring no change update");
+				}
 				return false;
+			}
 			sec.setText(username, update.getText());
 			System.out.println("Updating SubSection->  Name: " + sec.getName() + " LockHolder: "
 					+ sec.lockedByUser() + " Updated By: " + username);
@@ -379,6 +398,12 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
 			SectionizedDocument doc = room.getDocument(documentName);
+			if (doc.getSection(sectionID).isLocked()) {
+				if (Util.DEBUG) {
+					System.out.println("Ignoring already locked lock request");
+				}
+				return true;
+			}
 			releaseLocks(doc, username, roomname);
 			doc.getSection(sectionID).setLocked(true, username);
 			for (IClient c : room.getAllClients()) {
@@ -388,22 +413,18 @@ public class Server implements IServer {
 		return true;
 	}
 
-	private void releaseLocks(SectionizedDocument doc, String username, String roomname) {
-		for (DocumentSubSection sec : doc.getAllSubSections()) {
-			if (username.equals(sec.lockedByUser())) {
-				System.out.println("Releasing lock on " + sec + " held by " + username);
-				subSectionUnLocked(username, roomname, doc.getName(), sec.getName());
-			}
-		}
-	}
-
 	@Override
 	public boolean subSectionUnLocked(String username, String roomname, String documentName,
 			String sectionID) {
-
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
 			DocumentSubSection ds = room.getDocument(documentName).getSection(sectionID);
+			if (!ds.isLocked()) {
+				if (Util.DEBUG) {
+					System.out.println("Ignoring already unlocked unlock request");
+				}
+				return true;
+			}
 			ds.setLocked(false, username);
 			System.out.println("SubSection Status->  Name: " + ds.getName() + " LockHolder: "
 					+ ds.lockedByUser());

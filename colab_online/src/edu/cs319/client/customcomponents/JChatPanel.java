@@ -48,6 +48,7 @@ public class JChatPanel extends JPanel {
 		topText = new JTextArea();
 		topText.setEditable(false);
 		topText.setPreferredSize(pref);
+		topText.setLineWrap(true);
 		JScrollPane topScroll = new JScrollPane(topText);
 		bottomText = new JTextField();
 		bottomText.addKeyListener(enterpressedL);
