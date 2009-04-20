@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -51,7 +52,7 @@ public class JDocTabPanel extends JPanel {
 	//Number of milliseconds between automatic updates
 	private final static int UPDATE_NUM_MS = 500;
 
-	private JList sectionList;
+	private SubSectionList sectionList;
 	private JPanel sectionPanel;
 	private JSplitPane wholePane;
 	private JSplitPane workspace;
@@ -71,7 +72,7 @@ public class JDocTabPanel extends JPanel {
 		this.info = info;
 		doc = new SectionizedDocumentImpl(info.getDocumentName());
 
-		sectionList = new JList();
+		sectionList = new SubSectionList();
 		Font docFont = new Font("Courier New", Font.PLAIN, 11);
 		documentPane = new DocumentDisplayPane();
 		documentPane.setEditable(false);
@@ -102,7 +103,7 @@ public class JDocTabPanel extends JPanel {
 		setUpListeners();
 		
 		Timer timer = new Timer(UPDATE_NUM_MS, new UpdateSubSectionListener());
-		timer.start();
+		// timer.start();
 	}
 	
 	private void setUpAppearance() {
@@ -160,14 +161,29 @@ public class JDocTabPanel extends JPanel {
 		return sectionList;
 	}
 
-	public void updateDocPane() {
-		documentPane.updateDocument(getSectionizedDocument());
-		DocumentSubSection ds = getCurrentSubSection();
-		sectionList.setListData(doc.getAllSubSections().toArray());
-		sectionList.setSelectedValue(ds, true);
+	public void updateDocumentView(){
+		documentPane.updateDocument(doc);
+	}
+	
+	public void addSubSectionToList(DocumentSubSection sec){
+		sectionList.addSubSection(sec);
 	}
 
-	// public void update
+	public void removeSubSectionFromList(String name){
+		sectionList.subSectionRemoved(name);
+	}
+	
+	public void subSectionUpdated(DocumentSubSection sec){
+		sectionList.subSectionUpdated(sec);
+	}
+	
+	public void refreshSubSectionList(List<DocumentSubSection> secs){
+		sectionList.fullyRefreshList(secs);
+	}
+	
+	public void updateDocPane(){
+		sectionList.fullyRefreshList(doc.getAllSubSections());
+	}
 	
 	public SectionizedDocument getSectionizedDocument() {
 		return doc;

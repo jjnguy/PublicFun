@@ -8,59 +8,65 @@ import javax.swing.AbstractListModel;
 
 public class JFlexibleListModel<E> extends AbstractListModel {
 
-	private List<E> members;
+	private List<E> contents;
 
 	public JFlexibleListModel() {
-		members = new ArrayList<E>();
+		contents = new ArrayList<E>();
 	}
 
-	public boolean addNewMember(E member) {
-		if (members.contains(member))
+	public boolean add(E e) {
+		if (contents.contains(e))
 			return false;
-		members.add(member);
+		contents.add(e);
 		fireIntervalAdded(this, 0, getSize());
 		return true;
 	}
 
-	public boolean remove(E obj){
-		int idx = members.indexOf(obj);
-		if (idx == -1)return false;;
-		members.remove(idx);
+	public boolean remove(E obj) {
+		int idx = contents.indexOf(obj);
+		if (idx == -1)
+			return false;
+		;
+		contents.remove(idx);
 		fireIntervalRemoved(this, 0, getSize());
 		return true;
 	}
-	
-	public int indexOf(Object o){
-		return members.indexOf(o);
+
+	public int indexOf(Object o) {
+		return contents.indexOf(o);
 	}
-	
+
 	public void clearList() {
-		members.clear();
+		contents.clear();
 		fireIntervalRemoved(this, 0, getSize());
 	}
 
 	public void addAll(Collection<E> newVals) {
-		members.addAll(newVals);
+		contents.addAll(newVals);
 		fireIntervalAdded(this, 0, getSize());
 	}
 
 	@Override
 	public Object getElementAt(int arg0) {
-		if (members.size() <= arg0)
+		if (contents.size() <= arg0)
 			return null;
-		return members.get(arg0);
+		return contents.get(arg0);
+	}
+
+	public boolean contains(E e) {
+		return contents.contains(e);
 	}
 
 	@Override
 	public int getSize() {
-		return members.size();
+		return contents.size();
 	}
 
-	public boolean contains(String userID) {
-		return members.contains(userID);
+	public boolean contains(String someID) {
+		return contents.contains(someID);
 	}
-	
-	public void update(){
+
+	public void update() {
 		fireContentsChanged(this, 0, getSize());
 	}
 

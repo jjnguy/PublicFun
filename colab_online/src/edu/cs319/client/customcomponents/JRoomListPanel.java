@@ -48,7 +48,7 @@ public class JRoomListPanel extends JPanel {
 	}
 
 	public boolean addUser(String id) {
-		return roomList.getModel().addNewMember(
+		return roomList.getModel().add(
 				new RoomMemberLite(id, CoLabPrivilegeLevel.OBSERVER));
 	}
 
@@ -59,7 +59,7 @@ public class JRoomListPanel extends JPanel {
 	public void updateList(List<String> userNames, List<CoLabPrivilegeLevel> privs) {
 		roomList.getModel().clearList();
 		for (int i = 0; i < userNames.size(); i++) {
-			roomList.getModel().addNewMember(new RoomMemberLite(userNames.get(i), privs.get(i)));
+			roomList.getModel().add(new RoomMemberLite(userNames.get(i), privs.get(i)));
 		}
 	}
 
