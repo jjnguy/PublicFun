@@ -13,14 +13,15 @@ import javax.swing.event.ListSelectionListener;
 
 import edu.cs319.client.IClient;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.server.IServer;
 
 public class JRoomListPanel extends JPanel {
 
 	private JRoomMemberList roomList;
 	JScrollPane listScroll;
 
-	public JRoomListPanel(IClient c) {
-		roomList = new JRoomMemberList(c.getUserName(), c);
+	public JRoomListPanel(IClient c, IServer s) {
+		roomList = new JRoomMemberList(c.getUserName(),s);
 		setUpAppearance();
 		setUpListeners();
 		setPreferredSize(new Dimension(150, 425));
@@ -44,8 +45,16 @@ public class JRoomListPanel extends JPanel {
 		});
 	}
 
+	public void setRoom(String room){
+		roomList.setRoom(room);
+	}
+	
 	public void setUser(String username){
 		roomList.setUser(username);
+	}
+	
+	public void setServer(IServer s){
+		roomList.setServer(s);
 	}
 	
 	public boolean setUserPrivledge(String id, CoLabPrivilegeLevel newPriv) {

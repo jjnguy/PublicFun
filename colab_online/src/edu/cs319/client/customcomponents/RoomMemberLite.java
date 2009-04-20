@@ -16,10 +16,10 @@ public class RoomMemberLite {
 		priv = newPriv;
 	}
 
-	public CoLabPrivilegeLevel getPriv(){
+	public CoLabPrivilegeLevel getPriv() {
 		return priv;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name + ": " + priv.toString();
@@ -55,7 +55,6 @@ public class RoomMemberLite {
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 

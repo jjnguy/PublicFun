@@ -1,5 +1,6 @@
 package edu.cs319.client.customcomponents;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,18 +10,19 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import edu.cs319.client.IClient;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.server.IServer;
 import edu.cs319.util.Util;
 
 public class JRoomMemberList extends JList {
 
 	private JFlexibleListModel<RoomMemberLite> model;
 	private String username;
-	private IClient client;
-
-	public JRoomMemberList(String username, IClient client) {
-		this.client = client;
+	private IServer server;
+	private String roomName;
+	
+	public JRoomMemberList(String username, IServer server) {
+		this.server = server;
 		this.username = username;
 		model = new JFlexibleListModel<RoomMemberLite>();
 		setModel(model);
@@ -32,6 +34,14 @@ public class JRoomMemberList extends JList {
 		return model;
 	}
 
+	public void setRoom(String room){
+		roomName = room;
+	}
+	
+	public void setServer(IServer server){
+		this.server = server;
+	}
+	
 	public boolean removeMember(String userID) {
 		RoomMemberLite dummy = new RoomMemberLite(userID, null);
 		return model.remove(dummy);
@@ -74,7 +84,8 @@ public class JRoomMemberList extends JList {
 		}
 
 		private void doPop(MouseEvent e) {
-			JPopupMenu menu = new RoomMemberPopupMenu(username, ((RoomMemberLite)getSelectedValue()).getName());
+			JPopupMenu menu = new RoomMemberPopupMenu(username,
+					((RoomMemberLite) getSelectedValue()).getName());
 			menu.show(e.getComponent(), e.getX(), e.getY());
 		}
 	};
@@ -84,10 +95,15 @@ public class JRoomMemberList extends JList {
 		private JMenuItem promoteUser;
 		private JMenuItem demoteUser;
 
+		private String clicker, clickee;
+
 		public RoomMemberPopupMenu(String clicker, String clickee) {
+			this.clickee = clickee;
+			this.clicker = clicker;
 			RoomMemberLite clcikerMem = getFromID(clicker);
 			RoomMemberLite clickeeMem = getFromID(clickee);
-			if (clcikerMem.equals(clickeeMem))return;
+			if (clcikerMem.equals(clickeeMem))
+				return;
 			// observers can't do anything, and super admins can't have anything done to them
 			if (clcikerMem.getPriv() == CoLabPrivilegeLevel.OBSERVER
 					|| clcikerMem.getPriv() == CoLabPrivilegeLevel.SUPER_ADMIN) {
@@ -113,8 +129,22 @@ public class JRoomMemberList extends JList {
 			add(promoteUser);
 		}
 
-		private ActionListener promoteAction;
-		private ActionListener demoteAction;
+		private ActionListener promoteAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CoLabPrivilegeLevel newPriv = CoLabPrivilegeLevel.PARTICIPANT;
+				server.changeUserPrivledge(clickee, roomName, newPriv);
+			}
+		};
+		private ActionListener demoteAction = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (getFromID(clickee).getPriv() == CoLabPrivilegeLevel.OBSERVER)
+					return;
+				server.changeUserPrivledge(clickee, roomName, CoLabPrivilegeLevel.OBSERVER);
+			}
+		};
 		private ActionListener kickOutAction;
 	}
 
