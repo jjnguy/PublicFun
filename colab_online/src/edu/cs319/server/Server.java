@@ -125,10 +125,8 @@ public class Server implements IServer {
 
 	@Override
 	public boolean addNewClient(IClient newClient, String username) {
-		// ServerLog.log.log(Level.FINE, "Adding client: " + username);
 		if (regularClients.containsKey(username)) {
 			if (Util.DEBUG) {
-				// ServerLog.log.log(Level.WARNING, "Client add failed du t ononunique username");
 				System.out.println("Failed to add new client due to non unigque username");
 			}
 			return false;
@@ -197,7 +195,6 @@ public class Server implements IServer {
 
 	private void releaseAllLocksOnAllDocs(String username, String roomname, CoLabRoom room) {
 		for (SectionizedDocument doc : room.getAllDocuments()) {
-			System.out.println("Releasing all locks on " + doc + " held by " + username);
 			releaseLocks(doc, username, roomname);
 		}
 	}
@@ -205,7 +202,6 @@ public class Server implements IServer {
 	private void releaseLocks(SectionizedDocument doc, String username, String roomname) {
 		for (DocumentSubSection sec : doc.getAllSubSections()) {
 			if (username.equals(sec.lockedByUser())) {
-				System.out.println("Releasing lock on " + sec + " held by " + username);
 				subSectionUnLocked(username, roomname, doc.getName(), sec.getName());
 			}
 		}
@@ -222,6 +218,7 @@ public class Server implements IServer {
 				return false;
 			}
 			List<IClient> clientsInRoom = room.getAllClients();
+			// if the user is all alone...have some fun
 			if (clientsInRoom.size() == 1 && clientsInRoom.get(0).getUserName().equals(usernameSender)){
 				clientsInRoom.get(0).newChatMessage("The Darkness", "You are all alone.  Watch your back!");
 				return true;
