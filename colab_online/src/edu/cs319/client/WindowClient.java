@@ -79,7 +79,7 @@ public class WindowClient extends JFrame implements IClient {
 	public WindowClient() {
 		// setLookAndFeel();
 		setTitle("CoLab");
-		setSize(new Dimension(900, 500));
+		setSize(new Dimension(1000, 500));
 		setJMenuBar(createMenuBar());
 		setListeners();
 
@@ -509,7 +509,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionId) {
-		SubSectionList doc =(SubSectionList) documents.get(documentName).getSectionizedDocument();
+		SubSectionList doc = (SubSectionList) documents.get(documentName).getSectionizedDocument();
 		DocumentSubSection hi = doc.getSection(sectionId);
 		hi.setLocked(true, usernameSender);
 		doc.subSectionUpdated(hi);
@@ -521,8 +521,10 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionId) {
-		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
-		doc.getSection(sectionId).setLocked(false, usernameSender);
+		SubSectionList doc = (SubSectionList) documents.get(documentName).getSectionizedDocument();
+		DocumentSubSection sec = doc.getSection(sectionId);
+		sec.setLocked(false, usernameSender);
+		doc.subSectionUpdated(sec);
 		return true;
 	}
 
@@ -561,6 +563,7 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID) {
+		JDocTabPanel docPane = documents.get(documentname);
 		System.out.println("----------");
 		System.out.println("WindowClient Updating SubSection: Username: " + usernameSender
 				+ " Document: " + documentname + " SectionName: " + sectionID + " LockHolder: "
@@ -568,25 +571,39 @@ public class WindowClient extends JFrame implements IClient {
 		SectionizedDocument doc = documents.get(documentname).getSectionizedDocument();
 		doc.getSection(sectionID).setText(usernameSender, section.getText());
 		documents.get(documentname).updateDocumentView();
+		if (userName.equals(usernameSender)) {
+			docPane.updateWorkPane(section);
+		}
 		return true;
 	}
 
 	@Override
 	public boolean subSectionSplit(String username, String documentName, String oldSecName,
 			String newName1, String newName2, int index) {
-		documents.get(documentName).getSectionizedDocument().splitSubSection(oldSecName, newName1,
-				newName2, index, username);
-		documents.get(documentName).updateDocumentView();
+		JDocTabPanel docPane = documents.get(documentName);
+		docPane.getSectionizedDocument().splitSubSection(oldSecName, newName1, newName2, index,
+				username);
+		docPane.updateDocumentView();
+		if (username.equals(userName)) {
+			((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
+					.getSectionizedDocument().getSection(newName1), true);
+			docPane.updateWorkPane(newName1);
+		}
 		return true;
 	}
 
 	@Override
 	public boolean subSectionCombined(String username, String documentName, String sectionA,
 			String sectionB, String newSection) {
-
+		JDocTabPanel docPane = documents.get(documentName);
 		documents.get(documentName).getSectionizedDocument().combineSubSections(sectionA, sectionB,
 				newSection);
 		documents.get(documentName).updateDocumentView();
+		if (username.equals(userName)) {
+			((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
+					.getSectionizedDocument().getSection(newSection), true);
+			docPane.updateWorkPane(newSection);
+		}
 		return true;
 	}
 

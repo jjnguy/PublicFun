@@ -129,7 +129,7 @@ public class ServerDecoder implements Runnable {
 			actualServer.subSectionSplit(cln, args.get(0), args.get(1), args.get(2), args.get(3), args.get(4), Integer.parseInt(args.get(5)));
 			break;
 		case SUBSECTION_COMBINE:
-			actualServer.subSectionCombined(cln, args.get(0), args.get(1), args.get(2), args.get(3), args.get(5));
+			actualServer.subSectionCombined(cln, args.get(0), args.get(1), args.get(2), args.get(3), args.get(4));
 			break;
 		default:
 			throw new NotYetImplementedException();

@@ -8,6 +8,7 @@ import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 
 public class SectionizedDocListModel extends AbstractListModel implements SectionizedDocument {
+	
 	private SectionizedDocument doc;
 
 	public SectionizedDocListModel(SectionizedDocument doc) {

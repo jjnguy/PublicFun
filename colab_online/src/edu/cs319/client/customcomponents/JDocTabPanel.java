@@ -227,17 +227,25 @@ public class JDocTabPanel extends JPanel {
 		public void valueChanged(ListSelectionEvent e) {
 			if (e.getValueIsAdjusting() == false) {
 				DocumentSubSection ds = getCurrentSubSection();
-				if (ds != null) {
-					workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
-					workPane.setText(ds.getText());
-				} else {
-					workPane.setText("");
-					workPane.setEditable(false);
-				}
+				updateWorkPane(ds);
 			}
 		}
 	}
 
+	public void updateWorkPane(String secName){
+		updateWorkPane(doc.getSection(secName));
+	}
+	
+	public void updateWorkPane(DocumentSubSection ds){
+		if (ds != null) {
+			workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
+			workPane.setText(ds.getText());
+		} else {
+			workPane.setText("");
+			workPane.setEditable(false);
+		}
+	}
+	
 	private class NewSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String name = JOptionPane.showInputDialog(JDocTabPanel.this,
