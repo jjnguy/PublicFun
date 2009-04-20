@@ -100,6 +100,10 @@ public class Server implements IServer {
 				}
 				return false;
 			}
+			// Super admins stay superadmins
+			if (Util.isSuperAdmin(username)){
+				return true;
+			}
 			CoLabRoomMember member = room.getMemberByName(username);
 			if (member == null) {
 				if (Util.DEBUG) {

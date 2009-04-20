@@ -16,6 +16,10 @@ public class RoomMemberLite {
 		priv = newPriv;
 	}
 
+	public CoLabPrivilegeLevel getPriv(){
+		return priv;
+	}
+	
 	@Override
 	public String toString() {
 		return name + ": " + priv.toString();
@@ -48,6 +52,11 @@ public class RoomMemberLite {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
 	}
 
 }

@@ -85,7 +85,7 @@ public class WindowClient extends JFrame implements IClient {
 		setJMenuBar(createMenuBar());
 		setListeners();
 
-		roomMemberListPanel = new JRoomListPanel();
+		roomMemberListPanel = new JRoomListPanel(this);
 		documentPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		documents = new HashMap<String, JDocTabPanel>();
 		chatPanel = new JChatPanel();
@@ -383,6 +383,7 @@ public class WindowClient extends JFrame implements IClient {
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
 		String title = getTitle();
+		this.roomMemberListPanel.setUser(userName);
 		if (userName != null)
 			setTitle(title + " - " + getUserName());
 	}
