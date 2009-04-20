@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +69,7 @@ public class WindowClient extends JFrame implements IClient {
 	private JMenuItem newDocument;
 	private JMenuItem openDocument;
 	private JMenuItem removeDocument;
+	private JMenuItem saveDocument;
 	private JMenuItem addSection;
 	private JMenuItem deleteSection;
 	private JMenuItem splitSection;
@@ -109,6 +111,7 @@ public class WindowClient extends JFrame implements IClient {
 		newDocument = new JMenuItem("Add New Document");
 		openDocument = new JMenuItem("Open Document From File");
 		removeDocument = new JMenuItem("Remove Document");
+		saveDocument = new JMenuItem("Save Document");
 		addSection = new JMenuItem("Add Section");
 		deleteSection = new JMenuItem("Delete Section");
 		splitSection = new JMenuItem("Split Section");
@@ -126,6 +129,7 @@ public class WindowClient extends JFrame implements IClient {
 		newDocument.setMnemonic(KeyEvent.VK_N);
 		openDocument.setMnemonic(KeyEvent.VK_O);
 		removeDocument.setMnemonic(KeyEvent.VK_R);
+		saveDocument.setMnemonic(KeyEvent.VK_S);
 		addSection.setMnemonic(KeyEvent.VK_A);
 		deleteSection.setMnemonic(KeyEvent.VK_D);
 		splitSection.setMnemonic(KeyEvent.VK_S);
@@ -143,6 +147,7 @@ public class WindowClient extends JFrame implements IClient {
 		doc.add(newDocument);
 		doc.add(openDocument);
 		doc.add(removeDocument);
+		doc.add(saveDocument);
 		doc.addSeparator();
 		doc.add(addSection);
 		doc.add(deleteSection);
@@ -277,6 +282,30 @@ public class WindowClient extends JFrame implements IClient {
 				}
 			}
 		});
+		saveDocument.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser choose = new JFileChooser();
+				int choice = choose.showSaveDialog(WindowClient.this);
+				if (choice != JFileChooser.APPROVE_OPTION)
+					return;
+				File f = choose.getSelectedFile();
+				PrintStream out = null;
+				try {
+					out = new PrintStream(f);
+				} catch (FileNotFoundException e1) {
+					if (Util.DEBUG)
+						e1.printStackTrace();
+					JOptionPane.showMessageDialog(WindowClient.this, "Oops, error",
+							"The file could not be saved.  Try again maybe??",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
+				String docName = selectedTab.getName();
+				out.println(documents.get(docName).getSectionizedDocument().getFullText());
+			}
+		});
 		addSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -348,6 +377,7 @@ public class WindowClient extends JFrame implements IClient {
 		newDocument.setEnabled(false);
 		openDocument.setEnabled(false);
 		removeDocument.setEnabled(false);
+		saveDocument.setEnabled(false);
 		addSection.setEnabled(false);
 		deleteSection.setEnabled(false);
 		splitSection.setEnabled(false);
@@ -367,7 +397,8 @@ public class WindowClient extends JFrame implements IClient {
 		disconnect.setEnabled(true);
 		newDocument.setEnabled(true);
 		openDocument.setEnabled(true);
-		removeDocument.setEnabled(true);
+		removeDocument.setEnabled(false);
+		saveDocument.setEnabled(false);
 		addSection.setEnabled(false);
 		deleteSection.setEnabled(false);
 		splitSection.setEnabled(false);
@@ -387,6 +418,7 @@ public class WindowClient extends JFrame implements IClient {
 		newDocument.setEnabled(true);
 		openDocument.setEnabled(true);
 		removeDocument.setEnabled(true);
+		saveDocument.setEnabled(true);
 		addSection.setEnabled(true);
 		deleteSection.setEnabled(true);
 		splitSection.setEnabled(true);
@@ -403,6 +435,7 @@ public class WindowClient extends JFrame implements IClient {
 		newDocument.setEnabled(false);
 		openDocument.setEnabled(false);
 		removeDocument.setEnabled(false);
+		saveDocument.setEnabled(false);
 		addSection.setEnabled(false);
 		deleteSection.setEnabled(false);
 		splitSection.setEnabled(false);

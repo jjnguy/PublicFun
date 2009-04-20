@@ -10,13 +10,13 @@ import java.util.List;
  * 
  */
 public class Util {
-	
+
 	/**
-	 * boolean used to determine the status of the project
-	 * It is used to allow debug print statements and logging and the sort.
+	 * boolean used to determine the status of the project It is used to allow debug print
+	 * statements and logging and the sort.
 	 */
 	public static final boolean DEBUG = true;
-	
+
 	private static List<String> privledgedUsers;
 	static {
 		privledgedUsers = new ArrayList<String>();

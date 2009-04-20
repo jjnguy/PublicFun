@@ -68,7 +68,7 @@ public class JDocTabPanel extends JPanel {
 
 	public JDocTabPanel(DocumentInfo info) {
 		this.info = info;
-
+		setName(info.getDocumentName());
 		doc = new SubSectionList(new SectionizedDocumentImpl(info.getDocumentName()));
 		Font docFont = new Font("Courier New", Font.PLAIN, 11);
 		documentPane = new DocumentDisplayPane();
@@ -199,7 +199,8 @@ public class JDocTabPanel extends JPanel {
 
 	private class DownButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (doc.getSelectedIndex() < doc.getModel().getSize() - 1) {
+			if (doc.getSelectedIndex() != -1
+					&& doc.getSelectedIndex() < doc.getModel().getSize() - 1) {
 				DocumentSubSection moveDown = (DocumentSubSection) doc.getSelectedValue();
 				DocumentSubSection moveUp = (DocumentSubSection) doc.getModel().getElementAt(
 						doc.getSelectedIndex() + 1);
@@ -232,11 +233,11 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
-	public void updateWorkPane(String secName){
+	public void updateWorkPane(String secName) {
 		updateWorkPane(doc.getSection(secName));
 	}
-	
-	public void updateWorkPane(DocumentSubSection ds){
+
+	public void updateWorkPane(DocumentSubSection ds) {
 		if (ds != null) {
 			workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
 			workPane.setText(ds.getText());
@@ -245,7 +246,7 @@ public class JDocTabPanel extends JPanel {
 			workPane.setEditable(false);
 		}
 	}
-	
+
 	private class NewSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String name = JOptionPane.showInputDialog(JDocTabPanel.this,
@@ -391,14 +392,15 @@ public class JDocTabPanel extends JPanel {
 			if (Util.DEBUG) {
 				System.out.println("click event");
 			}
-			JPopupMenu menu;
-			if (e.getSource() == workPane) {
-				menu = new WorkingViewRightClickMenu();
-			} else {
-				menu = new SectionRightClickMenu(getCurrentSubSection());
+			if (e.isPopupTrigger()) {
+				JPopupMenu menu;
+				if (e.getSource() == workPane) {
+					menu = new WorkingViewRightClickMenu();
+				} else {
+					menu = new SectionRightClickMenu(getCurrentSubSection());
+				}
+				menu.show(JDocTabPanel.this, e.getX(), e.getY());
 			}
-			menu.setLocation(e.getLocationOnScreen());
-			menu.setVisible(true);
 		}
 	}
 
@@ -483,23 +485,7 @@ public class JDocTabPanel extends JPanel {
 			newSubSectionItem = new JMenuItem("Add New SubSection");
 			newSubSectionItem.addActionListener(new NewSubSectionListener());
 			add(newSubSectionItem);
-			addMouseListener(mouseOutListener);
 		}
 
-		private MouseListener mouseOutListener = new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				long thetime = System.currentTimeMillis();
-				if (thetime - bornondate > 500)
-					setVisible(false);
-				else
-					;
-			}
-		};
 	}
 }
