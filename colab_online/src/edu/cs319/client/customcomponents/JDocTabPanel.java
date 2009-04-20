@@ -173,11 +173,6 @@ public class JDocTabPanel extends JPanel {
 			}
 			return;
 		}
-		if (newText.trim().equals("")){
-			if (Util.DEBUG) {
-				System.out.println("Ignoring blank text update");
-			}return;
-		}
 		DocumentSubSection temp = new DocumentSubSectionImpl(ds.getName());
 		temp.setLocked(ds.isLocked(), ds.lockedByUser());
 		temp.setText(info.getUserName(), newText);
@@ -231,7 +226,8 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			updateSubSection(getCurrentSubSection(), workPane.getText());
+			if (!workPane.getText().trim().equals(""))
+				updateSubSection(getCurrentSubSection(), workPane.getText());
 		}
 	}
 
@@ -264,7 +260,7 @@ public class JDocTabPanel extends JPanel {
 	private class NewSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String name = JOptionPane.showInputDialog(JDocTabPanel.this,
-					"Name the subsection bitch!!");
+					"Enter a name for the new SubSection");
 			if (name == null)
 				return;
 			newSubSection(name);

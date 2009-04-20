@@ -600,7 +600,7 @@ public class WindowClient extends JFrame implements IClient {
 		SectionizedDocument doc = documents.get(documentname).getSectionizedDocument();
 		doc.getSection(sectionID).setText(usernameSender, section.getText());
 		documents.get(documentname).updateDocumentView();
-		if (userName.equals(usernameSender)) {
+		if (!userName.equals(usernameSender)) {
 			docPane.updateWorkPane(section);
 		}
 		return true;
@@ -613,11 +613,9 @@ public class WindowClient extends JFrame implements IClient {
 		docPane.getSectionizedDocument().splitSubSection(oldSecName, newName1, newName2, index,
 				username);
 		docPane.updateDocumentView();
-		if (username.equals(userName)) {
 			((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
 					.getSectionizedDocument().getSection(newName1), true);
 			docPane.updateWorkPane(newName1);
-		}
 		return true;
 	}
 
@@ -628,11 +626,9 @@ public class WindowClient extends JFrame implements IClient {
 		documents.get(documentName).getSectionizedDocument().combineSubSections(sectionA, sectionB,
 				newSection);
 		documents.get(documentName).updateDocumentView();
-		if (username.equals(userName)) {
 			((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
 					.getSectionizedDocument().getSection(newSection), true);
 			docPane.updateWorkPane(newSection);
-		}
 		return true;
 	}
 
