@@ -386,7 +386,11 @@ public class JDocTabPanel extends JPanel {
 
 	private class RightClickListener extends MouseAdapter {
 		@Override
-		public void mouseClicked(MouseEvent e) {
+		public void mousePressed(MouseEvent e) {
+			doPop(e);
+		}
+		
+		private void doPop(MouseEvent e){
 			if (e.getButton() != MouseEvent.BUTTON3)
 				return;
 			if (Util.DEBUG) {
@@ -399,8 +403,13 @@ public class JDocTabPanel extends JPanel {
 				} else {
 					menu = new SectionRightClickMenu(getCurrentSubSection());
 				}
-				menu.show(JDocTabPanel.this, e.getX(), e.getY());
+				menu.show(e.getComponent(), e.getX(), e.getY());
 			}
+		}
+		
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			doPop(e);
 		}
 	}
 
