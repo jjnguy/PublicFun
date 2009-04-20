@@ -142,7 +142,7 @@ public class JDocTabPanel extends JPanel {
 
 	private void newSubSection(String name) {
 		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(), name,
-				doc.getSubsectionCount());
+				doc.getSubSectionCount());
 	}
 
 	private void setUpListeners() {
@@ -193,7 +193,7 @@ public class JDocTabPanel extends JPanel {
 
 	public void subSectionSplit(String username, String oldSecName, String newName1,
 			String newName2, int index) {
-		doc.splitSubSection(oldSecName, newName1, newName2, index);
+		doc.splitSubSection(oldSecName, newName1, newName2, index,username);
 	}
 
 	private class UpButtonListener implements ActionListener {
