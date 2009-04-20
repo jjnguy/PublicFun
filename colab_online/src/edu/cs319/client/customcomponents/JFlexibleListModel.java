@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-public class JRoomMemberListModel<E> extends AbstractListModel {
+public class JFlexibleListModel<E> extends AbstractListModel {
 
 	private List<E> members;
 
-	public JRoomMemberListModel() {
+	public JFlexibleListModel() {
 		members = new ArrayList<E>();
 	}
 

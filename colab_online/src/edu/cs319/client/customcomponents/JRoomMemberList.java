@@ -6,15 +6,15 @@ import edu.cs319.server.CoLabPrivilegeLevel;
 
 public class JRoomMemberList extends JList {
 
-	private JRoomMemberListModel<RoomMemberLite> model;
+	private JFlexibleListModel<RoomMemberLite> model;
 
 	public JRoomMemberList() {
-		model = new JRoomMemberListModel<RoomMemberLite>();
+		model = new JFlexibleListModel<RoomMemberLite>();
 		setModel(model);
 	}
 
 	@Override
-	public JRoomMemberListModel<RoomMemberLite> getModel() {
+	public JFlexibleListModel<RoomMemberLite> getModel() {
 		return model;
 	}
 

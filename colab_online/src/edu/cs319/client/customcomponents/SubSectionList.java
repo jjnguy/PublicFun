@@ -6,10 +6,10 @@ import edu.cs319.dataobjects.DocumentSubSection;
 
 public class SubSectionList extends JList {
 
-	private JRoomMemberListModel<DocumentSubSection> model;
+	private JFlexibleListModel<DocumentSubSection> model;
 	
 	public SubSectionList(){
-		model = new JRoomMemberListModel<DocumentSubSection>();
+		model = new JFlexibleListModel<DocumentSubSection>();
 	}
 	
 }
