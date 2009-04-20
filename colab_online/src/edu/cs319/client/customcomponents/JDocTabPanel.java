@@ -48,8 +48,8 @@ import edu.cs319.util.Util;
  * 
  */
 public class JDocTabPanel extends JPanel {
-	
-	//Number of milliseconds between automatic updates
+
+	// Number of milliseconds between automatic updates
 	private final static int UPDATE_NUM_MS = 500;
 
 	private SubSectionList sectionList;
@@ -101,11 +101,11 @@ public class JDocTabPanel extends JPanel {
 		unlockSubSection = new JButton("Unlock");
 		setUpAppearance();
 		setUpListeners();
-		
+
 		Timer timer = new Timer(UPDATE_NUM_MS, new UpdateSubSectionListener());
 		// timer.start();
 	}
-	
+
 	private void setUpAppearance() {
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -172,7 +172,7 @@ public class JDocTabPanel extends JPanel {
 	public void removeSubSectionFromList(String name){
 		sectionList.subSectionRemoved(name);
 	}
-	
+
 	public void subSectionUpdated(DocumentSubSection sec){
 		sectionList.subSectionUpdated(sec);
 	}
@@ -298,6 +298,53 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	private class MergeSubSectionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			DocumentSubSection cur = getCurrentSubSection();
+			int idx = doc.getSubSectionIndex(cur.getName());
+			int count = doc.getSubSectionCount();
+			if (idx == 0 && count > 1) {
+				DocumentSubSection second = doc.getSectionAt(idx + 1);
+				String name = JOptionPane.showInputDialog(JDocTabPanel.this,
+						"Name of merged section:");
+				if (name == null)
+					return;
+				info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
+						doc.getName(), cur.getName(), second.getName(), name);
+			} else if (idx == count - 1 && count > 1) {
+				DocumentSubSection first = doc.getSectionAt(idx - 1);
+				String name = JOptionPane.showInputDialog(JDocTabPanel.this,
+						"Name of merged section:");
+				if (name == null)
+					return;
+				info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
+						doc.getName(), first.getName(), cur.getName(), name);
+			} else {
+				String[] values = { "Above", "Below" };
+				String aboveOrBelow = (String) JOptionPane
+						.showInputDialog(
+								JDocTabPanel.this,
+								"Would you like to merge the selected section \nwith the section above or below?",
+								"Merge SubSections", JOptionPane.QUESTION_MESSAGE, null, values,
+								values[0]);
+				String name = JOptionPane.showInputDialog(JDocTabPanel.this,
+						"Name of merged section:");
+				if (name == null)
+					return;
+				if (aboveOrBelow.equals("Above")) {
+					DocumentSubSection second = doc.getSectionAt(idx + 1);
+					info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
+							doc.getName(), cur.getName(), second.getName(), name);
+				} else if (aboveOrBelow.equals("Below")) {
+					DocumentSubSection first = doc.getSectionAt(idx - 1);
+					info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
+							doc.getName(), first.getName(), cur.getName(), name);
+				}
+			}
+		}
+	}
+
 	@SuppressWarnings("serial")
 	private static class SplitChooser extends JDialog {
 		private JTextArea theText;
@@ -352,7 +399,6 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private class RightClickListener extends MouseAdapter {
-
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getButton() != MouseEvent.BUTTON3)
@@ -368,30 +414,6 @@ public class JDocTabPanel extends JPanel {
 			}
 			menu.setLocation(e.getLocationOnScreen());
 			menu.setVisible(true);
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 	}
 
@@ -409,15 +431,9 @@ public class JDocTabPanel extends JPanel {
 		}
 
 		private MouseListener mouseOutListener = new MouseAdapter() {
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 				setVisible(false);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
 			}
 
 			@Override
@@ -428,19 +444,6 @@ public class JDocTabPanel extends JPanel {
 				else
 					;
 			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
 		};
 	}
 
@@ -470,6 +473,7 @@ public class JDocTabPanel extends JPanel {
 		private JMenuItem aquireLockItem;
 		private JMenuItem releaseLockItem;
 		private JMenuItem splitSectionItem;
+		private JMenuItem mergeSectionItem;
 		private JMenuItem newSubSectionItem;
 
 		private DocumentSubSection sec;
@@ -488,6 +492,9 @@ public class JDocTabPanel extends JPanel {
 			splitSectionItem = new JMenuItem("Split SubSection");
 			splitSectionItem.addActionListener(new SplitSubSectionListener());
 			add(splitSectionItem);
+			mergeSectionItem = new JMenuItem("Merge Subsection");
+			mergeSectionItem.addActionListener(new MergeSubSectionListener());
+			add(mergeSectionItem);
 			newSubSectionItem = new JMenuItem("Add New SubSection");
 			newSubSectionItem.addActionListener(new NewSubSectionListener());
 			add(newSubSectionItem);
@@ -495,15 +502,9 @@ public class JDocTabPanel extends JPanel {
 		}
 
 		private MouseListener mouseOutListener = new MouseAdapter() {
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 				setVisible(false);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
 			}
 
 			@Override
@@ -514,19 +515,6 @@ public class JDocTabPanel extends JPanel {
 				else
 					;
 			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
 		};
 	}
 }

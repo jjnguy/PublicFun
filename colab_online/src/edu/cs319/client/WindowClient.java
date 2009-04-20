@@ -574,6 +574,7 @@ public class WindowClient extends JFrame implements IClient {
 		return true;
 	}
 	
+	@Override
 	public boolean subSectionCombined(String username, String documentName, String sectionA,
 			String sectionB, String newSection) {
 				
