@@ -32,7 +32,7 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		subSections.addAll(dss);
 	}
 
-	public int getSubsectionCount() {
+	public int getSubSectionCount() {
 		return subSections.size();
 	}
 
@@ -41,7 +41,8 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 	}
 
 	public DocumentSubSection getSection(String id) {
-		return subSections.get(getSubSectionIndex(id));
+		int section = getSubSectionIndex(id);
+		return (section >= 0) ? subSections.get(section) : null;
 	}
 
 	public int getSubSectionIndex(String sectionID) {
@@ -64,47 +65,84 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 
 	public boolean addSubSection(DocumentSubSection ds, int index) {
 		boolean success = false;
-		if (!subSections.contains(ds)) {
+		if (!subSections.contains(ds) && (index >= 0) && (index <= subSections.size())) {
 			subSections.add(index, ds);
 			success = true;
 		}
 		return success;
 	}
 
-	public void removeSubSection(String name) {
+	public boolean removeSubSection(String name) {
+		boolean success = false;
 		int idx = getSubSectionIndex(name);
-		if (idx != -1)
+		if (idx != -1) {
 			subSections.remove(idx);
+			success = true;
+		}
+		return success;
 	}
 
-	public void splitSubSection(String name, String partA, String partB, int splitIndex) {
+	public boolean splitSubSection(String name, String partA, String partB, int splitIndex, String userName) {
+		boolean success = false;
 		int index = getSubSectionIndex(name);
-		DocumentSubSection ds = subSections.get(index);
-		subSections.remove(ds);
-		DocumentSubSection first = new DocumentSubSectionImpl(partA);
-		DocumentSubSection second = new DocumentSubSectionImpl(partB);
-		String text = ds.getText();
-		first.setLocked(true, "admin");
-		second.setLocked(true, "admin");
-		first.setText("admin", text.substring(0, splitIndex));
-		second.setText("admin", text.substring(splitIndex, text.length()));
-		first.setLocked(false, "admin");
-		second.setLocked(false, "admin");
-		subSections.add(index, first);
-		subSections.add(index + 1, second);
+		if(index >= 0) {
+			DocumentSubSection ds = subSections.get(index);
+			if( !(ds.isLocked()) || ds.lockedByUser().equals(userName)) {
+				String text = ds.getText();
+				if((text.length() > splitIndex) && (splitIndex >= 0)) {
+					subSections.remove(ds);
+					DocumentSubSection first = new DocumentSubSectionImpl(partA);
+					DocumentSubSection second = new DocumentSubSectionImpl(partB);
+					first.setLocked(true, "admin");
+					second.setLocked(true, "admin");
+					first.setText("admin", text.substring(0, splitIndex));
+					second.setText("admin", text.substring(splitIndex, text.length()));
+					first.setLocked(false, "admin");
+					second.setLocked(false, "admin");
+					subSections.add(index, first);
+					subSections.add(index + 1, second);
+					if(ds.isLocked()) {
+						first.setLocked(true,ds.lockedByUser());
+						second.setLocked(true,ds.lockedByUser());
+					}
+					success = true;
+				}
+			}
+		}
+		return success;
 	}
 
-	public void combineSubSections(String partA, String partB, String combinedName) {
+	public boolean combineSubSections(String partA, String partB, String combinedName) {
+		boolean success = false;
 		int index = getSubSectionIndex(partA);
-		DocumentSubSection first = subSections.get(index);
-		DocumentSubSection second = subSections.get(getSubSectionIndex(partB));
-		subSections.remove(first);
-		subSections.remove(second);
-		DocumentSubSection combined = new DocumentSubSectionImpl(combinedName);
-		combined.setLocked(true, "admin");
-		combined.setText("admin", first.getText() + "\n" + second.getText());
-		combined.setLocked(false, "admin");
-		subSections.add(index, combined);
+		int index2 = getSubSectionIndex(partB);
+		if((index >= 0) && (index2 >= 0)) {
+			DocumentSubSection first = subSections.get(index);
+			DocumentSubSection second = subSections.get(index2);
+			if(!(first.isLocked() || second.isLocked())) {
+				subSections.remove(first);
+				subSections.remove(second);
+				DocumentSubSection combined = new DocumentSubSectionImpl(combinedName);
+				combined.setLocked(true, "admin");
+				combined.setText("admin", first.getText() + "\n" + second.getText());
+				combined.setLocked(false, "admin");
+				int retIndex = (index > subSections.size()) ? subSections.size() : index;
+				subSections.add(retIndex, combined);
+				success = true;
+			}
+		}
+		return success;
+	}
+
+	public boolean flopSubSections(int idx1, int idx2) {
+		boolean success = false;
+		if((idx1 >= 0) && (idx1 < subSections.size()) && (idx2 >= 0) && (idx2 < subSections.size())) {
+			DocumentSubSection ds1 = subSections.get(idx1);
+			subSections.set(idx1, subSections.get(idx2));
+			subSections.set(idx2, ds1);
+			success = true;
+		}
+		return success;
 	}
 
 	@Override
@@ -129,10 +167,5 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return getName();
 	}
 
-	@Override
-	public void flopSubSections(int idx1, int idx2) {
-		DocumentSubSection ds1 = subSections.get(idx1);
-		subSections.set(idx1, subSections.get(idx2));
-		subSections.set(idx2, ds1);
-	}
+
 }
