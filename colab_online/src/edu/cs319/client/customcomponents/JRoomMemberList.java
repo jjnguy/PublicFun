@@ -100,18 +100,18 @@ public class JRoomMemberList extends JList {
 		public RoomMemberPopupMenu(String clicker, String clickee) {
 			this.clickee = clickee;
 			this.clicker = clicker;
-			RoomMemberLite clcikerMem = getFromID(clicker);
+			RoomMemberLite clickerMem = getFromID(clicker);
 			RoomMemberLite clickeeMem = getFromID(clickee);
-			if (clcikerMem.equals(clickeeMem))
+			if (clickerMem.equals(clickeeMem))
 				return;
 			// observers can't do anything, and super admins can't have anything done to them
-			if (clcikerMem.getPriv() == CoLabPrivilegeLevel.OBSERVER
-					|| clcikerMem.getPriv() == CoLabPrivilegeLevel.SUPER_ADMIN) {
+			if (clickerMem.getPriv() == CoLabPrivilegeLevel.OBSERVER
+					|| clickeeMem.getPriv() == CoLabPrivilegeLevel.SUPER_ADMIN) {
 				return;
 			}
 			// admins can kick any user out
-			if (clcikerMem.getPriv() == CoLabPrivilegeLevel.ADMIN
-					|| clcikerMem.getPriv() == CoLabPrivilegeLevel.SUPER_ADMIN) {
+			if (clickerMem.getPriv() == CoLabPrivilegeLevel.ADMIN
+					|| clickerMem.getPriv() == CoLabPrivilegeLevel.SUPER_ADMIN) {
 				kickOutMember = new JMenuItem("Kick Out Member");
 				kickOutMember.addActionListener(kickOutAction);
 				add(kickOutMember);
@@ -120,7 +120,7 @@ public class JRoomMemberList extends JList {
 				add(demoteUser);
 			}
 			// Participants can only promote observers
-			if (clcikerMem.getPriv() == CoLabPrivilegeLevel.PARTICIPANT
+			if (clickerMem.getPriv() == CoLabPrivilegeLevel.PARTICIPANT
 					&& clickeeMem.getPriv() != CoLabPrivilegeLevel.OBSERVER) {
 				return;
 			}

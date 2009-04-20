@@ -112,7 +112,6 @@ public class Server implements IServer {
 				}
 				return false;
 			}
-			// observers will lose all locks
 			boolean privSetSuccess = member.setPrivLevel(newPriv);
 			if (!privSetSuccess) {
 				if (Util.DEBUG) {
@@ -121,6 +120,7 @@ public class Server implements IServer {
 				}
 				return false;
 			}
+			// observers will lose all locks
 			if (newPriv == CoLabPrivilegeLevel.OBSERVER) {
 				releaseAllLocksOnAllDocs(username, roomname, room);
 			}
