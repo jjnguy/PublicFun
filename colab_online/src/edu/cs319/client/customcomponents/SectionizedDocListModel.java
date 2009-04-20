@@ -117,4 +117,8 @@ public class SectionizedDocListModel extends AbstractListModel implements Sectio
 		return false;
 	}
 
+	public void refreshView() {
+		fireContentsChanged(this, 0, getSize());
+	}
+
 }

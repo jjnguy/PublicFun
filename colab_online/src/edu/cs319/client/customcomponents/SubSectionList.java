@@ -22,6 +22,7 @@ public class SubSectionList extends JList implements SectionizedDocument {
 			return;
 		DocumentSubSection oldSec = (DocumentSubSection) model.getElementAt(idx);
 		oldSec.setText(oldSec.lockedByUser(), sec.getText());
+		model.refreshView();
 	}
 
 	public void fullyRefreshList(List<DocumentSubSection> newSet){
@@ -93,5 +94,10 @@ public class SubSectionList extends JList implements SectionizedDocument {
 	public boolean splitSubSection(String name, String partA, String partB, int splitIndex,
 			String userName) {
 		return model.splitSubSection(name, partA, partB, splitIndex, userName);
+	}
+	
+	@Override
+	public String getName() {
+		return model.getName();
 	}
 }

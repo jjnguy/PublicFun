@@ -158,10 +158,10 @@ public class JDocTabPanel extends JPanel {
 		return doc;
 	}
 
-	public void updateDocumentView(){
+	public void updateDocumentView() {
 		documentPane.updateDocument(doc);
 	}
-	
+
 	public SectionizedDocument getSectionizedDocument() {
 		return doc;
 	}
@@ -188,8 +188,8 @@ public class JDocTabPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (doc.getSelectedIndex() > 0) {
 				DocumentSubSection moveUp = (DocumentSubSection) doc.getSelectedValue();
-				DocumentSubSection moveDown = (DocumentSubSection) doc.getModel()
-						.getElementAt(doc.getSelectedIndex() - 1);
+				DocumentSubSection moveDown = (DocumentSubSection) doc.getModel().getElementAt(
+						doc.getSelectedIndex() - 1);
 				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), moveUp.getName(), moveDown.getName());
 				doc.setSelectedValue(moveUp, true);
@@ -199,10 +199,10 @@ public class JDocTabPanel extends JPanel {
 
 	private class DownButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (doc.getSelectedIndex() < doc.getModel().getSize()) {
+			if (doc.getSelectedIndex() < doc.getModel().getSize() - 1) {
 				DocumentSubSection moveDown = (DocumentSubSection) doc.getSelectedValue();
-				DocumentSubSection moveUp = (DocumentSubSection) doc.getModel()
-						.getElementAt(doc.getSelectedIndex() + 1);
+				DocumentSubSection moveUp = (DocumentSubSection) doc.getModel().getElementAt(
+						doc.getSelectedIndex() + 1);
 				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), moveUp.getName(), moveDown.getName());
 				doc.setSelectedValue(moveDown, true);
