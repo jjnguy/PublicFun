@@ -196,6 +196,7 @@ public class Server implements IServer {
 
 	private void releaseAllLocksOnAllDocs(String username, String roomname, CoLabRoom room) {
 		for (SectionizedDocument doc : room.getAllDocuments()) {
+			System.out.println("Releasing all locks on " + doc + " held by " + username);
 			releaseLocks(doc, username, roomname);
 		}
 	}
@@ -310,22 +311,12 @@ public class Server implements IServer {
 	@Override
 	public boolean subSectionUpdated(String username, String roomname, String documentName,
 			String sectionID, DocumentSubSection update) {
-		if (Util.DEBUG) {
-			System.out.println("Server.subSectionUpdated: docname: " + documentName + " sectID: "
-					+ sectionID);
-		}
-		if (Util.DEBUG) {
-			System.out
-					.println("Server.subSectionUpdated:  Updated subsection passed in is, locked = "
-							+ update.isLocked()
-							+ " the guy who is locking it: "
-							+ update.lockedByUser());
-		}
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
 			SectionizedDocument doc = room.getDocument(documentName);
 			DocumentSubSection sec = doc.getSection(sectionID);
 			sec.setText(username, update.getText());
+			System.out.println("Updating SubSection->  Name: " + sec.getName() + " LockHolder: " + sec.lockedByUser() + " Updated By: " + username);
 			for (IClient client : room.getAllClients()) {
 				client.updateSubsection(username, documentName, update, sectionID);
 			}
@@ -377,7 +368,7 @@ public class Server implements IServer {
 			String sectionID) {
 		if (Util.DEBUG) {
 			System.out.println("Server.subSectionLocked: docname: " + documentName + " sectID: "
-					+ sectionID);
+					+ sectionID + " LockHolder: " + username);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
@@ -392,9 +383,9 @@ public class Server implements IServer {
 	}
 
 	private void releaseLocks(SectionizedDocument doc, String username, String roomname) {
-		// First, unlock any lock perviously held by the user on the doc
 		for (DocumentSubSection sec : doc.getAllSubSections()) {
 			if (username.equals(sec.lockedByUser())) {
+				System.out.println("Releasing lock on " + sec + " held by " + username);
 				subSectionUnLocked(username, roomname, doc.getName(), sec.getName());
 			}
 		}
@@ -403,13 +394,12 @@ public class Server implements IServer {
 	@Override
 	public boolean subSectionUnLocked(String username, String roomname, String documentName,
 			String sectionID) {
-		if (Util.DEBUG) {
-			System.out.println("Server.subSectionUnLocked: docname: " + documentName + " sectID: "
-					+ sectionID);
-		}
+		
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
-			room.getDocument(documentName).getSection(sectionID).setLocked(false, username);
+			DocumentSubSection ds = room.getDocument(documentName).getSection(sectionID);
+			ds.setLocked(false, username);
+			System.out.println("SubSection Status->  Name: " + ds.getName() + " LockHolder: " + ds.lockedByUser());
 			for (IClient c : room.getAllClients()) {
 				c.subsectionUnLocked(username, documentName, sectionID);
 			}
