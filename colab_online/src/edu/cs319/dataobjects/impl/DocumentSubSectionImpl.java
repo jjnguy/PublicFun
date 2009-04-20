@@ -1,6 +1,7 @@
 package edu.cs319.dataobjects.impl;
 
 import edu.cs319.dataobjects.DocumentSubSection;
+import edu.cs319.util.Util;
 
 public class DocumentSubSectionImpl extends DocumentSubSection {
 
@@ -28,7 +29,7 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 
 	@Override
 	public boolean setText(String username, String text) {
-		System.out.println("Text: " + text  + " Username: " + username);
+		System.out.println("Text: " + text + " Username: " + username);
 		boolean success = false;
 		if (locked && username.equals(lockHolder)) {
 			this.text = (text == null) ? "" : text;
@@ -66,11 +67,11 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 	}
 
 	@Override
-	public  boolean equals(Object o) {
-		if(o instanceof String) {
+	public boolean equals(Object o) {
+		if (o instanceof String) {
 			String s = (String) o;
 			return s.equals(getName());
-		} else if(o instanceof DocumentSubSection) {
+		} else if (o instanceof DocumentSubSection) {
 			DocumentSubSection ds = (DocumentSubSection) o;
 			return ds.getName().equals(this.getName());
 		}
@@ -84,11 +85,13 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 
 	@Override
 	public String toDelimmitedString() {
-		return name + (char)31 + lockHolder+ (char)31 + text;
-	}
-	
-	public String toString() {
-		return getName() + " : " + lockHolder;
+		return name + (char) 31 + lockHolder + (char) 31 + text;
 	}
 
+	@Override
+	public String toString() {
+		if (Util.DEBUG)
+			return getName() + " : " + (locked ? lockHolder : "Not Locked");
+		return getName() + " : " + lockHolder;
+	}
 }

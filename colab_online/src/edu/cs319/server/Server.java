@@ -93,29 +93,32 @@ public class Server implements IServer {
 			System.out.println("Attempting to change user privledge.  Sent by " + username);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to change user privledge, room didn't exist");
+		synchronized (room) {
+			if (room == null) {
+				if (Util.DEBUG) {
+					System.out.println("Failed to change user privledge, room didn't exist");
+				}
+				return false;
 			}
-			return false;
-		}
-		CoLabRoomMember member = room.getMemberByName(username);
-		if (member == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to change user privledge, user didn't exist in room");
+			CoLabRoomMember member = room.getMemberByName(username);
+			if (member == null) {
+				if (Util.DEBUG) {
+					System.out
+							.println("Failed to change user privledge, user didn't exist in room");
+				}
+				return false;
 			}
-			return false;
-		}
-		boolean privSetSuccess = member.setPrivLevel(newPriv);
-		if (!privSetSuccess) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to change user (" + username + ") priv in room "
-						+ roomname);
+			boolean privSetSuccess = member.setPrivLevel(newPriv);
+			if (!privSetSuccess) {
+				if (Util.DEBUG) {
+					System.out.println("Failed to change user (" + username + ") priv in room "
+							+ roomname);
+				}
+				return false;
 			}
-			return false;
-		}
-		for (IClient client : room.getAllClients()) {
-			client.changeUserPrivilege(username, newPriv);
+			for (IClient client : room.getAllClients()) {
+				client.changeUserPrivilege(username, newPriv);
+			}
 		}
 		return true;
 	}
@@ -138,32 +141,35 @@ public class Server implements IServer {
 	public boolean joinCoLabRoom(String username, String roomName, byte[] password) {
 		// TODO password protection support
 		CoLabRoom room = colabrooms.get(roomName);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to join colabroom, room id doesn't exist");
+		synchronized (room) {
+			if (room == null) {
+				if (Util.DEBUG) {
+					System.out.println("Failed to join colabroom, room id doesn't exist");
+				}
+				return false;
 			}
-			return false;
-		}
-		IClient client = regularClients.get(username);
-		if (client == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to join colabroom, client id doesn't exist");
+			IClient client = regularClients.get(username);
+			if (client == null) {
+				if (Util.DEBUG) {
+					System.out.println("Failed to join colabroom, client id doesn't exist");
+				}
+				return false;
 			}
-			return false;
-		}
-		boolean addtoroomsuccess = room.addMember(username, new CoLabRoomMember(username, client));
-		if (!addtoroomsuccess) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to add " + username + " to colabroom " + roomName);
+			boolean addtoroomsuccess = room.addMember(username, new CoLabRoomMember(username,
+					client));
+			if (!addtoroomsuccess) {
+				if (Util.DEBUG) {
+					System.out.println("Failed to add " + username + " to colabroom " + roomName);
+				}
+				return false;
 			}
-			return false;
-		}
-		for (IClient client2 : room.getAllClients()) {
-			client2.coLabRoomMemberArrived(username);
-		}
-		for (SectionizedDocument sd : room.getAllDocuments()) {
-			client.newDocument(username, sd.getName());
-			client.updateAllSubsections(sd.getName(), sd.getAllSubSections());
+			for (IClient client2 : room.getAllClients()) {
+				client2.coLabRoomMemberArrived(username);
+			}
+			for (SectionizedDocument sd : room.getAllDocuments()) {
+				client.newDocument(username, sd.getName());
+				client.updateAllSubsections(sd.getName(), sd.getAllSubSections());
+			}
 		}
 		return true;
 	}
@@ -171,20 +177,22 @@ public class Server implements IServer {
 	@Override
 	public boolean leaveCoLabRoom(String username, String rommname) {
 		CoLabRoom room = colabrooms.get(rommname);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed to leave colabroom, room id doesn't exist");
+		synchronized (room) {
+			if (room == null) {
+				if (Util.DEBUG) {
+					System.out.println("Failed to leave colabroom, room id doesn't exist");
+				}
+				return false;
 			}
-			return false;
-		}
-		boolean removesuccess = room.removeMember(username);
-		if (removesuccess) {
-			releaseAllLocksOnAllDocs(username, rommname, room);
-			for (IClient client : room.getAllClients()) {
-				client.coLabRoomMemberLeft(username);
+			boolean removesuccess = room.removeMember(username);
+			if (removesuccess) {
+				releaseAllLocksOnAllDocs(username, rommname, room);
+				for (IClient client : room.getAllClients()) {
+					client.coLabRoomMemberLeft(username);
+				}
 			}
+			return removesuccess;
 		}
-		return removesuccess;
 	}
 
 	private void releaseAllLocksOnAllDocs(String username, String roomname, CoLabRoom room) {
@@ -196,17 +204,19 @@ public class Server implements IServer {
 	@Override
 	public boolean newChatMessage(String usernameSender, String roomname, String message) {
 		CoLabRoom room = colabrooms.get(roomname);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed send chat message, room id doesn't exist");
+		synchronized (room) {
+			if (room == null) {
+				if (Util.DEBUG) {
+					System.out.println("Failed send chat message, room id doesn't exist");
+				}
+				return false;
 			}
-			return false;
-		}
-		for (IClient client : room.getAllClients()) {
-			if (Util.DEBUG) {
-				System.out.println("Sending chat message to: " + client.toString());
+			for (IClient client : room.getAllClients()) {
+				if (Util.DEBUG) {
+					System.out.println("Sending chat message to: " + client.toString());
+				}
+				client.newChatMessage(usernameSender, message);
 			}
-			client.newChatMessage(usernameSender, message);
 		}
 		return true;
 	}
@@ -215,14 +225,16 @@ public class Server implements IServer {
 	public boolean newChatMessage(String usernameSender, String roomname, String message,
 			String recipiant) {
 		CoLabRoom room = colabrooms.get(roomname);
-		if (room == null) {
-			if (Util.DEBUG) {
-				System.out.println("Failed send chat message, room id doesn't exist");
+		synchronized (room) {
+			if (room == null) {
+				if (Util.DEBUG) {
+					System.out.println("Failed send chat message, room id doesn't exist");
+				}
+				return false;
 			}
-			return false;
-		}
-		for (IClient client : room.getAllClients()) {
-			client.newChatMessage(usernameSender, message, recipiant);
+			for (IClient client : room.getAllClients()) {
+				client.newChatMessage(usernameSender, message, recipiant);
+			}
 		}
 		return true;
 	}
@@ -238,8 +250,10 @@ public class Server implements IServer {
 	@Override
 	public boolean getClientsCurrentlyInRoom(String username, String roomname) {
 		CoLabRoom room = colabrooms.get(roomname);
-		IClient toSendTo = regularClients.get(username);
-		return toSendTo.allUsersInRoom(room.getAllClientNamesInRoom(), room.getAllPrivLevels());
+		synchronized (room) {
+			IClient toSendTo = regularClients.get(username);
+			return toSendTo.allUsersInRoom(room.getAllClientNamesInRoom(), room.getAllPrivLevels());
+		}
 	}
 
 	@Override
@@ -250,26 +264,28 @@ public class Server implements IServer {
 					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
-		SectionizedDocument doc = room.getDocument(documentName);
-		DocumentSubSection toAdd = new DocumentSubSectionImpl(sectionID);
-		releaseLocks(doc, username, roomname);
-		if (Util.DEBUG) {
-			System.out.println("Server.newSubSection:  Document created to add, locked = "
-					+ toAdd.isLocked() + " the guy who is locking it: " + toAdd.lockedByUser());
-		}
-		toAdd.setLocked(true, username);
-		if (Util.DEBUG) {
-			System.out
-					.println("Server.newSubSection:  created doc, set locked by the user, locked = "
-							+ toAdd.isLocked()
-							+ " the guy who is locking it: "
-							+ toAdd.lockedByUser());
-		}
-		boolean addResult = doc.addSubSection(toAdd, idx);
-		if (!addResult)
-			return false;
-		for (IClient client : room.getAllClients()) {
-			client.newSubSection(username, documentName, sectionID, toAdd, idx);
+		synchronized (room) {
+			SectionizedDocument doc = room.getDocument(documentName);
+			DocumentSubSection toAdd = new DocumentSubSectionImpl(sectionID);
+			releaseLocks(doc, username, roomname);
+			if (Util.DEBUG) {
+				System.out.println("Server.newSubSection:  Document created to add, locked = "
+						+ toAdd.isLocked() + " the guy who is locking it: " + toAdd.lockedByUser());
+			}
+			toAdd.setLocked(true, username);
+			if (Util.DEBUG) {
+				System.out
+						.println("Server.newSubSection:  created doc, set locked by the user, locked = "
+								+ toAdd.isLocked()
+								+ " the guy who is locking it: "
+								+ toAdd.lockedByUser());
+			}
+			boolean addResult = doc.addSubSection(toAdd, idx);
+			if (!addResult)
+				return false;
+			for (IClient client : room.getAllClients()) {
+				client.newSubSection(username, documentName, sectionID, toAdd, idx);
+			}
 		}
 		return true;
 	}
@@ -282,10 +298,12 @@ public class Server implements IServer {
 					+ sectionID);
 		}
 		CoLabRoom room = colabrooms.get(roomname);
-		SectionizedDocument doc = room.getDocument(documentName);
-		doc.removeSubSection(sectionID);
-		for (IClient client : room.getAllClients()) {
-			client.subSectionRemoved(username, sectionID, documentName);
+		synchronized (room) {
+			SectionizedDocument doc = room.getDocument(documentName);
+			doc.removeSubSection(sectionID);
+			for (IClient client : room.getAllClients()) {
+				client.subSectionRemoved(username, sectionID, documentName);
+			}
 		}
 		return true;
 	}
@@ -305,11 +323,13 @@ public class Server implements IServer {
 							+ update.lockedByUser());
 		}
 		CoLabRoom room = colabrooms.get(roomname);
-		SectionizedDocument doc = room.getDocument(documentName);
-		DocumentSubSection sec = doc.getSection(sectionID);
-		sec.setText(username, update.getText());
-		for (IClient client : room.getAllClients()) {
-			client.updateSubsection(username, documentName, update, sectionID);
+		synchronized (room) {
+			SectionizedDocument doc = room.getDocument(documentName);
+			DocumentSubSection sec = doc.getSection(sectionID);
+			sec.setText(username, update.getText());
+			for (IClient client : room.getAllClients()) {
+				client.updateSubsection(username, documentName, update, sectionID);
+			}
 		}
 		return true;
 	}
@@ -319,13 +339,16 @@ public class Server implements IServer {
 		if (Util.DEBUG) {
 			System.out.println("Server.documentRemoved: docname: " + documentName);
 		}
-		if (colabrooms.get(roomname).removeDocument(documentName)) {
-			for (IClient client : colabrooms.get(roomname).getAllClients()) {
-				client.removeDocument(username, documentName);
+		CoLabRoom room = colabrooms.get(roomname);
+		synchronized (room) {
+			if (colabrooms.get(roomname).removeDocument(documentName)) {
+				for (IClient client : room.getAllClients()) {
+					client.removeDocument(username, documentName);
+				}
+				return true;
 			}
-			return true;
+			return false;
 		}
-		return false;
 	}
 
 	@Override
@@ -333,13 +356,16 @@ public class Server implements IServer {
 		if (Util.DEBUG) {
 			System.out.println("Server.newDocument: docname: " + documentName);
 		}
-		if (colabrooms.get(roomname).newDocument(documentName)) {
-			for (IClient client : colabrooms.get(roomname).getAllClients()) {
-				client.newDocument(username, documentName);
+		CoLabRoom room = colabrooms.get(roomname);
+		synchronized (room) {
+			if (room.newDocument(documentName)) {
+				for (IClient client : room.getAllClients()) {
+					client.newDocument(username, documentName);
+				}
+				return true;
 			}
-			return true;
+			return false;
 		}
-		return false;
 	}
 
 	@Override
@@ -396,12 +422,14 @@ public class Server implements IServer {
 	public boolean subSectionFlopped(String username, String roomname, String documentName,
 			String sectionIdMoveUp, String sectionIdMoveDown) {
 		CoLabRoom room = colabrooms.get(roomname);
-		SectionizedDocument doc = room.getDocument(documentName);
-		int idx1 = doc.getSubSectionIndex(sectionIdMoveDown);
-		int idx2 = doc.getSubSectionIndex(sectionIdMoveUp);
-		doc.flopSubSections(idx1, idx2);
-		for (IClient c : room.getAllClients()) {
-			c.subsectionFlopped(username, documentName, sectionIdMoveUp, sectionIdMoveDown);
+		synchronized (room) {
+			SectionizedDocument doc = room.getDocument(documentName);
+			int idx1 = doc.getSubSectionIndex(sectionIdMoveDown);
+			int idx2 = doc.getSubSectionIndex(sectionIdMoveUp);
+			doc.flopSubSections(idx1, idx2);
+			for (IClient c : room.getAllClients()) {
+				c.subsectionFlopped(username, documentName, sectionIdMoveUp, sectionIdMoveDown);
+			}
 		}
 		return true;
 	}
@@ -410,11 +438,13 @@ public class Server implements IServer {
 	public boolean subSectionSplit(String username, String roomname, String documentName,
 			String oldSection, String newName1, String newName2, int index) {
 		CoLabRoom room = colabrooms.get(roomname);
-		SectionizedDocument doc = room.getDocument(documentName);
-		doc.splitSubSection(oldSection, newName1, newName2, index);
-		for (IClient c : room.getAllClients()) {
-			c.subSectionSplit(username, documentName, oldSection, newName1, newName2, index);
+		synchronized (room) {
+			SectionizedDocument doc = room.getDocument(documentName);
+			doc.splitSubSection(oldSection, newName1, newName2, index);
+			for (IClient c : room.getAllClients()) {
+				c.subSectionSplit(username, documentName, oldSection, newName1, newName2, index);
+			}
+			return true;
 		}
-		return true;
 	}
 }

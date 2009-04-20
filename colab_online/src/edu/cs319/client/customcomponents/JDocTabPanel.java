@@ -77,6 +77,7 @@ public class JDocTabPanel extends JPanel {
 
 		workPane = new JEditorPane();
 		workPane.setFont(docFont);
+		workPane.addMouseListener(new RightClickListener());
 		PlainDocument doc2 = (PlainDocument) workPane.getDocument();
 		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
 		try {
@@ -176,7 +177,7 @@ public class JDocTabPanel extends JPanel {
 		if (sel == null) {
 			if (sectionList.getModel().getSize() == 0)
 				return null;
-			return (DocumentSubSection)sectionList.getModel().getElementAt(0);
+			return (DocumentSubSection) sectionList.getModel().getElementAt(0);
 		}
 		return sel;
 	}
@@ -261,7 +262,6 @@ public class JDocTabPanel extends JPanel {
 	private class SplitSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Should we add a subsection split method???
 			String name1 = JOptionPane
 					.showInputDialog(JDocTabPanel.this, "Name of the first part:");
 			if (name1 == null)
@@ -293,6 +293,8 @@ public class JDocTabPanel extends JPanel {
 			theText = new JTextArea();
 			theText.setText(sec.getText());
 			// theText.setEditable(false);
+			Font f = new Font("Courier New", Font.PLAIN, 11);
+			theText.setFont(f);
 			KeyListener[] list = theText.getKeyListeners();
 			for (KeyListener k : list) {
 				theText.removeKeyListener(k);
@@ -339,7 +341,12 @@ public class JDocTabPanel extends JPanel {
 			if (Util.DEBUG) {
 				System.out.println("click event");
 			}
-			JPopupMenu menu = new SectionRightClickMenu(getCurrentSubSection());
+			JPopupMenu menu;
+			if (e.getSource() == workPane) {
+				menu = new WorkingViewRightClickMenu();
+			} else {
+				menu = new SectionRightClickMenu(getCurrentSubSection());
+			}
 			menu.setLocation(e.getLocationOnScreen());
 			menu.setVisible(true);
 		}
@@ -367,6 +374,76 @@ public class JDocTabPanel extends JPanel {
 			// TODO Auto-generated method stub
 
 		}
+	}
+
+	public class WorkingViewRightClickMenu extends JPopupMenu {
+
+		private JMenuItem splitSubSectionItem;
+		private long bornondate;
+
+		public WorkingViewRightClickMenu() {
+			bornondate = System.currentTimeMillis();
+			splitSubSectionItem = new JMenuItem("Split SubSection At Carrot");
+			splitSubSectionItem.addActionListener(new SplitAtCarrotListener());
+			add(splitSubSectionItem);
+			addMouseListener(mouseOutListener);
+		}
+
+		private MouseListener mouseOutListener = new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				setVisible(false);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				long thetime = System.currentTimeMillis();
+				if (thetime - bornondate > 500)
+					setVisible(false);
+				else
+					;
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		};
+	}
+
+	private class SplitAtCarrotListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int i = workPane.getCaretPosition();
+			if (i == -1)
+				return;
+			String name1 = JOptionPane
+					.showInputDialog(JDocTabPanel.this, "Name of the first part:");
+			if (name1 == null)
+				return;
+			String name2 = JOptionPane.showInputDialog(JDocTabPanel.this,
+					"Name of the second part:");
+			if (name2 == null)
+				return;
+			DocumentSubSection sec = getCurrentSubSection();
+			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), doc.getName(),
+					sec.getName(), name1, name2, i);
+		}
+
 	}
 
 	public class SectionRightClickMenu extends JPopupMenu {
@@ -403,7 +480,7 @@ public class JDocTabPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				setVisible(false);
 			}
 
 			@Override
