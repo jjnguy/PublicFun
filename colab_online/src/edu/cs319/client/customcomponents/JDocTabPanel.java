@@ -26,6 +26,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -46,6 +47,9 @@ import edu.cs319.util.Util;
  * 
  */
 public class JDocTabPanel extends JPanel {
+	
+	//Number of milliseconds between automatic updates
+	private final static int UPDATE_NUM_MS = 500;
 
 	private JList sectionList;
 	private JPanel sectionPanel;
@@ -96,8 +100,11 @@ public class JDocTabPanel extends JPanel {
 		unlockSubSection = new JButton("Unlock");
 		setUpAppearance();
 		setUpListeners();
+		
+		Timer timer = new Timer(UPDATE_NUM_MS, new UpdateSubSectionListener());
+		timer.start();
 	}
-
+	
 	private void setUpAppearance() {
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -153,7 +160,7 @@ public class JDocTabPanel extends JPanel {
 		return sectionList;
 	}
 
-	private void updateDocPane() {
+	public void updateDocPane() {
 		documentPane.updateDocument(getSectionizedDocument());
 		DocumentSubSection ds = getCurrentSubSection();
 		sectionList.setListData(doc.getAllSubSections().toArray());
