@@ -4,15 +4,15 @@ import javax.swing.JList;
 
 public class JRoomMemberList extends JList {
 
-	private JRoomMemberListModel model;
+	private JRoomMemberListModel<RoomMemberLite> model;
 
 	public JRoomMemberList() {
-		model = new JRoomMemberListModel();
+		model = new JRoomMemberListModel<RoomMemberLite>();
 		setModel(model);
 	}
 
 	@Override
-	public JRoomMemberListModel getModel() {
+	public JRoomMemberListModel<RoomMemberLite> getModel() {
 		return model;
 	}
 

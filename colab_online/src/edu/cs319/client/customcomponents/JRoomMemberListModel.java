@@ -8,15 +8,15 @@ import javax.swing.AbstractListModel;
 
 import edu.cs319.server.CoLabPrivilegeLevel;
 
-public class JRoomMemberListModel extends AbstractListModel {
+public class JRoomMemberListModel<E> extends AbstractListModel {
 
-	private List<RoomMemberLite> members;
+	private List<E> members;
 
 	public JRoomMemberListModel() {
-		members = new ArrayList<RoomMemberLite>();
+		members = new ArrayList<E>();
 	}
 
-	public boolean addNewMember(RoomMemberLite member) {
+	public boolean addNewMember(E member) {
 		if (members.contains(member))
 			return false;
 		members.add(member);
@@ -37,8 +37,9 @@ public class JRoomMemberListModel extends AbstractListModel {
 	public boolean setMemberPriv(String id, CoLabPrivilegeLevel priv){
 		RoomMemberLite dummy = new RoomMemberLite(id, priv);
 		int idx = members.indexOf(dummy);
-		RoomMemberLite mem = members.get(idx);
-		mem.setPriv(priv);
+		E mem = members.get(idx);
+		// TODO fix
+		//mem.setPriv(priv);
 		fireContentsChanged(this, 0, getSize());
 		return true;
 	}
@@ -48,7 +49,7 @@ public class JRoomMemberListModel extends AbstractListModel {
 		fireIntervalRemoved(this, 0, getSize());
 	}
 
-	public void addAll(Collection<RoomMemberLite> newVals) {
+	public void addAll(Collection<E> newVals) {
 		members.addAll(newVals);
 		fireIntervalAdded(this, 0, getSize());
 	}

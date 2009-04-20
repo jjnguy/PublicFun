@@ -153,13 +153,15 @@ public class JDocTabPanel extends JPanel {
 		return sectionList;
 	}
 
-	public void updateDocPane() {
+	private void updateDocPane() {
 		documentPane.updateDocument(getSectionizedDocument());
 		DocumentSubSection ds = getCurrentSubSection();
 		sectionList.setListData(doc.getAllSubSections().toArray());
 		sectionList.setSelectedValue(ds, true);
 	}
 
+	// public void update
+	
 	public SectionizedDocument getSectionizedDocument() {
 		return doc;
 	}
@@ -184,7 +186,6 @@ public class JDocTabPanel extends JPanel {
 
 	public void subSectionSplit(String username, String oldSecName, String newName1,
 			String newName2, int index) {
-
 		doc.splitSubSection(oldSecName, newName1, newName2, index);
 	}
 
