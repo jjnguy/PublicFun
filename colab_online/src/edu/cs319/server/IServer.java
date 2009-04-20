@@ -42,6 +42,9 @@ public interface IServer {
 	public boolean subSectionSplit(String username, String roomname, String documentName,
 			String oldSection, String newName1, String newName2, int index);
 
+	public boolean subSectionCombined(String username, String roomname, String documentname,
+			String sectionA, String sectionB, String newName);
+
 	public boolean newChatMessage(String senderName, String roomname, String message);
 
 	public boolean newChatMessage(String senderName, String roomname, String message,

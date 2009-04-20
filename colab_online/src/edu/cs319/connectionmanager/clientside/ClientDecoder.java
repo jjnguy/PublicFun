@@ -126,6 +126,9 @@ public class ClientDecoder implements Runnable {
 			actualClient.subSectionSplit(username, arg.get(0), arg.get(1), arg.get(2), arg.get(3),
 					Integer.parseInt(arg.get(4)));
 			break;
+		case SUBSECTION_COMBINE:
+			actualClient.subSectionCombined(username, arg.get(0), arg.get(1), arg.get(2), arg.get(3));
+			break;
 		default:
 			throw new NotYetImplementedException();
 		}

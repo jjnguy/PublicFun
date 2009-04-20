@@ -31,6 +31,9 @@ public interface IClient {
 
 	public boolean subSectionSplit(String username, String documentName, String oldSecName,
 			String newName1, String newName2, int index);
+			
+	public boolean subSectionCombined(String username, String documentName, String sectionA,
+			String sectionB, String newSection);
 
 	public boolean newDocument(String username, String documentName);
 

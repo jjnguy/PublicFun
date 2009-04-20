@@ -263,5 +263,17 @@ public class ClientEncoder implements IClient {
 		Message m = new Message(MessageType.SUBSECTION_SPLIT, username, args);
 		return printMessageToStream(m);
 	}
+	
+	public boolean subSectionCombined(String username, String documentName, String sectionA,
+			String sectionB, String newSection) {
+				
+		List<String> args = new ArrayList<String>();
+		args.add(documentName);
+		args.add(sectionA);
+		args.add(sectionB);
+		args.add(newSection);
+		Message m = new Message(MessageType.SUBSECTION_COMBINE, username, args);
+		return printMessageToStream(m);
+	}
 
 }

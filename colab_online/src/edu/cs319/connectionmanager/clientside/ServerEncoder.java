@@ -231,5 +231,18 @@ public class ServerEncoder implements IServer {
 		Message m = new Message(MessageType.SUBSECTION_SPLIT, username, args);
 		return printMessageToStream(m);
 	}
+	
+	public boolean subSectionCombined(String username, String roomname, String documentname,
+			String sectionA, String sectionB, String newName) {
+				
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(documentname);
+		args.add(sectionA);
+		args.add(sectionB);
+		args.add(newName);
+		Message m = new Message(MessageType.SUBSECTION_COMBINE, username, args);
+		return printMessageToStream(m);
+	}
 
 }

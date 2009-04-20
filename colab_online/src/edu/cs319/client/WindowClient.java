@@ -568,10 +568,20 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean subSectionSplit(String username, String documentName, String oldSecName,
 			String newName1, String newName2, int index) {
-		documents.get(documentName).subSectionSplit(username, oldSecName, newName1, newName2, index);
+		documents.get(documentName).getSectionizedDocument().splitSubSection(oldSecName, newName1, newName2, index, username);
 		documents.get(documentName).updateDocPane();
 		return true;
 	}
+	
+	public boolean subSectionCombined(String username, String documentName, String sectionA,
+			String sectionB, String newSection) {
+				
+		documents.get(documentName).getSectionizedDocument().combineSubSections(sectionA, sectionB, newSection);
+		documents.get(documentName).updateDocPane();
+		return true;
+	}
+
+
 
 	@Override
 	public String getUserName() {

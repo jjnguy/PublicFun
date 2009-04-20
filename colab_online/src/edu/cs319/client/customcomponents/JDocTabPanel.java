@@ -191,11 +191,6 @@ public class JDocTabPanel extends JPanel {
 		return sel;
 	}
 
-	public void subSectionSplit(String username, String oldSecName, String newName1,
-			String newName2, int index) {
-		doc.splitSubSection(oldSecName, newName1, newName2, index,username);
-	}
-
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (sectionList.getSelectedIndex() > 0) {

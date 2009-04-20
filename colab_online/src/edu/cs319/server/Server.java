@@ -440,9 +440,23 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
 			SectionizedDocument doc = room.getDocument(documentName);
-			doc.splitSubSection(oldSection, newName1, newName2, index, username);
+			doc.splitSubSection(oldSection, newName1, newName2, index,username);
 			for (IClient c : room.getAllClients()) {
 				c.subSectionSplit(username, documentName, oldSection, newName1, newName2, index);
+			}
+			return true;
+		}
+	}
+	
+	public boolean subSectionCombined(String username, String roomname, String documentname,
+			String sectionA, String sectionB, String newName) {
+				
+		CoLabRoom room = colabrooms.get(roomname);
+		synchronized(room) {
+			SectionizedDocument doc = room.getDocument(documentname);
+			doc.combineSubSections(sectionA, sectionB, newName);
+			for(IClient c : room.getAllClients()) {
+				c.subSectionCombined(username, documentname, sectionA, sectionB, newName);
 			}
 			return true;
 		}
