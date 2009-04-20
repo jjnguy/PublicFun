@@ -64,7 +64,7 @@ public class JDocTabPanel extends JPanel {
 	private JButton unlockSubSection;
 
 	private SubSectionList doc;
-	private DocumentInfo info;
+	final private DocumentInfo info;
 
 	public JDocTabPanel(DocumentInfo info) {
 		this.info = info;
@@ -100,7 +100,7 @@ public class JDocTabPanel extends JPanel {
 		setUpListeners();
 
 		Timer timer = new Timer(UPDATE_NUM_MS, new UpdateSubSectionListener());
-		// timer.start();
+		timer.start();
 	}
 
 	private void setUpAppearance() {
@@ -167,6 +167,12 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private void updateSubSection(DocumentSubSection ds, String newText) {
+		if (ds == null) {
+			if (Util.DEBUG) {
+				System.out.println("JDocTabedPanel.updateSubSection  the document was null...wtf");
+			}
+			return;
+		}
 		DocumentSubSection temp = new DocumentSubSectionImpl(ds.getName());
 		temp.setLocked(ds.isLocked(), ds.lockedByUser());
 		temp.setText(info.getUserName(), newText);
@@ -238,9 +244,12 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void updateWorkPane(DocumentSubSection ds) {
+		int carrotPos = workPane.getCaretPosition();
 		if (ds != null) {
 			workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
 			workPane.setText(ds.getText());
+			int length = workPane.getText().length();
+			workPane.setCaretPosition(carrotPos < length ? carrotPos : length - 1);
 		} else {
 			workPane.setText("");
 			workPane.setEditable(false);
@@ -389,8 +398,8 @@ public class JDocTabPanel extends JPanel {
 		public void mousePressed(MouseEvent e) {
 			doPop(e);
 		}
-		
-		private void doPop(MouseEvent e){
+
+		private void doPop(MouseEvent e) {
 			if (e.getButton() != MouseEvent.BUTTON3)
 				return;
 			if (Util.DEBUG) {
@@ -406,7 +415,7 @@ public class JDocTabPanel extends JPanel {
 				menu.show(e.getComponent(), e.getX(), e.getY());
 			}
 		}
-		
+
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			doPop(e);

@@ -597,10 +597,6 @@ public class WindowClient extends JFrame implements IClient {
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID) {
 		JDocTabPanel docPane = documents.get(documentname);
-		System.out.println("----------");
-		System.out.println("WindowClient Updating SubSection: Username: " + usernameSender
-				+ " Document: " + documentname + " SectionName: " + sectionID + " LockHolder: "
-				+ section.lockedByUser());
 		SectionizedDocument doc = documents.get(documentname).getSectionizedDocument();
 		doc.getSection(sectionID).setText(usernameSender, section.getText());
 		documents.get(documentname).updateDocumentView();

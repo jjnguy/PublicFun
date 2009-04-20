@@ -1,6 +1,5 @@
 package edu.cs319.client.customcomponents;
 
-import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -22,7 +21,6 @@ public class DocumentDisplayPane extends JTextArea {
 	public void updateDocument(SectionizedDocument doc) {
 		this.doc = doc;
 		this.setText(doc.getFullText());
-		setPreferredSize(new Dimension(600, 400));
 	}
 
 	@Override
