@@ -173,6 +173,11 @@ public class JDocTabPanel extends JPanel {
 			}
 			return;
 		}
+		if (newText.trim().equals("")){
+			if (Util.DEBUG) {
+				System.out.println("Ignoring blank text update");
+			}return;
+		}
 		DocumentSubSection temp = new DocumentSubSectionImpl(ds.getName());
 		temp.setLocked(ds.isLocked(), ds.lockedByUser());
 		temp.setText(info.getUserName(), newText);
@@ -249,7 +254,7 @@ public class JDocTabPanel extends JPanel {
 			workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
 			workPane.setText(ds.getText());
 			int length = workPane.getText().length();
-			workPane.setCaretPosition(carrotPos < length ? carrotPos : length - 1);
+			workPane.setCaretPosition(carrotPos <= length ? carrotPos : length);
 		} else {
 			workPane.setText("");
 			workPane.setEditable(false);
