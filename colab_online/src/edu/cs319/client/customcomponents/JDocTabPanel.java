@@ -82,6 +82,14 @@ public class JDocTabPanel extends JPanel {
 		workPane.addMouseListener(new RightClickListener());
 		PlainDocument doc2 = (PlainDocument) workPane.getDocument();
 		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
+		setUpAppearance();
+		setUpListeners();
+
+		Timer timer = new Timer(UPDATE_NUM_MS, new AutoUpdateTask());
+		timer.start();
+	}
+
+	private void setUpAppearance() {
 		try {
 			sectionUpButton = new JButton(new ImageIcon(ImageIO.read(new File(
 					"images/green_up_arrow_small.png"))));
@@ -94,18 +102,12 @@ public class JDocTabPanel extends JPanel {
 			sectionUpButton = new JButton("^");
 			sectionDownButton = new JButton("v");
 		}
+		sectionUpButton.setToolTipText("Move Section Up");
+		sectionDownButton.setToolTipText("Move Section Down");
 		aquireLock = new JButton("Aquire Lock");
 		updateSection = new JButton("Update");
 		addSubSection = new JButton("New SubSection");
 		unlockSubSection = new JButton("Unlock");
-		setUpAppearance();
-		setUpListeners();
-
-		Timer timer = new Timer(UPDATE_NUM_MS, new AutoUpdateTask());
-		timer.start();
-	}
-
-	private void setUpAppearance() {
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
