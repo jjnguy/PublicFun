@@ -41,6 +41,7 @@ public class WindowLogIn extends JDialog {
 
 	private WindowLogIn(JFrame parent, IClient client) {
 		super(parent, "CoLab Log In");
+		setLocation(parent.getLocation());
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		if (Util.DEBUG) {
 			hostField.setText("localhost");

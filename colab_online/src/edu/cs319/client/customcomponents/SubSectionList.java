@@ -3,6 +3,7 @@ package edu.cs319.client.customcomponents;
 import java.util.List;
 
 import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
@@ -13,6 +14,7 @@ public class SubSectionList extends JList implements SectionizedDocument {
 
 	public SubSectionList(SectionizedDocument doc) {
 		model = new SectionizedDocListModel(doc);
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setModel(model);
 	}
 

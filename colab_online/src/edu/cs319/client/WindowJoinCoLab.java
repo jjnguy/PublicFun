@@ -49,6 +49,7 @@ public class WindowJoinCoLab extends JDialog {
 
 	public WindowJoinCoLab(WindowClient parent, IServer server) {
 		super(parent, "Join a CoLab Room");
+		setLocation(parent.getLocation());
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		if (Util.DEBUG){
