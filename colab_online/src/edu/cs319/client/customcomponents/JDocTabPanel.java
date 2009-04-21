@@ -171,7 +171,7 @@ public class JDocTabPanel extends JPanel {
 	private void updateSubSection(DocumentSubSection ds, String newText) {
 		if (ds == null) {
 			if (Util.DEBUG) {
-				System.out.println("JDocTabedPanel.updateSubSection  the document was null...wtf");
+				System.out.println("JDocTabedPanel.updateSubSection  the section was null...wtf");
 			}
 			return;
 		}
@@ -198,19 +198,19 @@ public class JDocTabPanel extends JPanel {
 			// if the current subsection is not locked by this user, don't send the updates
 			if (!info.getUserName().equals(getCurrentSubSection().lockedByUser())) {
 				if (Util.DEBUG) {
-					System.out.println("Not sending not locked-by-user update");
+					System.out.println("Not sending not locked-by-user update : ClientSide");
 				}
 				return;
 			}
 			if (workPane.getText().trim().equals("")) {
 				if (Util.DEBUG) {
-					System.out.println("Not sending blank text update");
+					System.out.println("Not sending blank text update : ClientSide");
 				}
 				return;
 			}
 			if (getCurrentSubSection().getText().equals(workPane.getText())) {
 				if (Util.DEBUG) {
-					System.out.println("Not sending same text update");
+					System.out.println("Not sending same text update : ClientSide");
 				}
 				return;
 			}
@@ -329,8 +329,7 @@ public class JDocTabPanel extends JPanel {
 			int count = doc.getSubSectionCount();
 			if (count < 2)
 				return;
-			DocumentSubSection top = null;
-			DocumentSubSection bottom = null;
+			DocumentSubSection top = null, bottom = null;
 			if (doc.getSelectedIndex() == 0) {
 				top = doc.getSectionAt(0);
 				bottom = doc.getSectionAt(1);

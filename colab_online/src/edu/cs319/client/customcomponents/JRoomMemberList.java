@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JList;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
 import edu.cs319.server.CoLabPrivilegeLevel;
@@ -20,7 +21,7 @@ public class JRoomMemberList extends JList {
 	private String username;
 	private IServer server;
 	private String roomName;
-	
+
 	public JRoomMemberList(String username, IServer server) {
 		this.server = server;
 		this.username = username;
@@ -34,14 +35,14 @@ public class JRoomMemberList extends JList {
 		return model;
 	}
 
-	public void setRoom(String room){
+	public void setRoom(String room) {
 		roomName = room;
 	}
-	
-	public void setServer(IServer server){
+
+	public void setServer(IServer server) {
 		this.server = server;
 	}
-	
+
 	public boolean removeMember(String userID) {
 		RoomMemberLite dummy = new RoomMemberLite(userID, null);
 		return model.remove(dummy);
@@ -132,8 +133,22 @@ public class JRoomMemberList extends JList {
 		private ActionListener promoteAction = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CoLabPrivilegeLevel newPriv = CoLabPrivilegeLevel.PARTICIPANT;
-				server.changeUserPrivledge(clickee, roomName, newPriv);
+				CoLabPrivilegeLevel newPriv = getFromID(clickee).getPriv() == CoLabPrivilegeLevel.OBSERVER ? CoLabPrivilegeLevel.PARTICIPANT
+						: CoLabPrivilegeLevel.ADMIN;
+				if (newPriv == CoLabPrivilegeLevel.ADMIN) {
+					int choice = JOptionPane
+							.showConfirmDialog(
+									JRoomMemberList.this,
+									"Promoting this user will cause them to become the admin, and you to become a participant.\nAre you sure you want to do that?");
+					if (choice != JOptionPane.OK_OPTION) {
+						return;
+					}else {
+						server.changeUserPrivledge(clicker, roomName, CoLabPrivilegeLevel.PARTICIPANT);
+						server.changeUserPrivledge(clickee, roomName, newPriv);
+					}
+				} else {
+					server.changeUserPrivledge(clickee, roomName, newPriv);
+				}
 			}
 		};
 		private ActionListener demoteAction = new ActionListener() {
