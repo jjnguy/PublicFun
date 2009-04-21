@@ -102,7 +102,7 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 					subSections.add(index, first);
 					subSections.add(index + 1, second);
 					if(ds.isLocked()) {
-						first.setLocked(true,ds.lockedByUser());
+						//first.setLocked(true,ds.lockedByUser());
 						second.setLocked(true,ds.lockedByUser());
 					}
 					success = true;

@@ -20,8 +20,9 @@ public class SubSectionList extends JList implements SectionizedDocument {
 
 	public void subSectionUpdated(DocumentSubSection sec) {
 		int idx = model.getSubSectionIndex(sec.getName());
-		if (idx == -1)
+		if (idx == -1) {
 			return;
+		}
 		DocumentSubSection oldSec = (DocumentSubSection) model.getElementAt(idx);
 		oldSec.setText(oldSec.lockedByUser(), sec.getText());
 		model.refreshView();

@@ -68,13 +68,18 @@ public class JChatPanel extends JPanel {
 				e.printStackTrace();
 			}
 		}
-		SystemTray tray = SystemTray.getSystemTray();
+		
 		try {
+			SystemTray tray = SystemTray.getSystemTray();
 			tray.add(trayI);
 		} catch (AWTException e) {
 			if (Util.DEBUG)
 				e.printStackTrace();
 		} catch(NullPointerException e) {
+			if(Util.DEBUG) {
+				e.printStackTrace();
+			}
+		} catch(UnsupportedOperationException e) {
 			if(Util.DEBUG) {
 				e.printStackTrace();
 			}
@@ -98,8 +103,14 @@ public class JChatPanel extends JPanel {
 	}
 	
 	public void shutdownTray(){
-		SystemTray t = SystemTray.getSystemTray();
-		t.remove(trayI);
+		try {
+			SystemTray t = SystemTray.getSystemTray();
+			t.remove(trayI);
+		} catch(UnsupportedOperationException e) {
+			if(Util.DEBUG) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void displayBottomPopup(String usernameSender, String message) {

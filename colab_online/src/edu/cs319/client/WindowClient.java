@@ -546,12 +546,12 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionId) {
 		SubSectionList doc = (SubSectionList) documents.get(documentName).getSectionizedDocument();
-		DocumentSubSection hi = doc.getSection(sectionId);
-		hi.setLocked(true, usernameSender);
-		doc.subSectionUpdated(hi);
+		DocumentSubSection ds = doc.getSection(sectionId);
+		ds.setLocked(true, usernameSender);
+		doc.subSectionUpdated(ds);
 		System.out.println("WindowClient SubSection Locked: Username: " + usernameSender
 				+ " Document: " + documentName + " SectionName: " + sectionId + " LockHolder: "
-				+ hi.lockedByUser());
+				+ ds.lockedByUser());
 		return true;
 	}
 
