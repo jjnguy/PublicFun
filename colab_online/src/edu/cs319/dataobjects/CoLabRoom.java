@@ -1,6 +1,7 @@
 package edu.cs319.dataobjects;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +80,10 @@ public class CoLabRoom {
 			ret.add(member.getClient());
 		}
 		return ret;
+	}
+	
+	public Collection<CoLabRoomMember> getAllMembers(){
+		return members.values();
 	}
 
 	public List<String> getAllClientNamesInRoom() {

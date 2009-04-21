@@ -170,7 +170,7 @@ public class Server implements IServer {
 				return false;
 			}
 			// if the room was empty, the new member should asume admin role
-			if (room.getAllClients().size()==1 ){
+			if (room.getAllClients().size() == 1) {
 				changeUserPrivledge(username, roomName, CoLabPrivilegeLevel.ADMIN);
 			}
 			for (IClient client2 : room.getAllClients()) {
@@ -194,14 +194,24 @@ public class Server implements IServer {
 				}
 				return false;
 			}
-			boolean removesuccess = room.removeMember(username);
-			if (removesuccess) {
-				releaseAllLocksOnAllDocs(username, rommname, room);
-				for (IClient client : room.getAllClients()) {
-					client.coLabRoomMemberLeft(username);
+			CoLabRoomMember c = room.getMemberByName(username);
+			if (!room.removeMember(username))
+				return false;
+			// If an admin leaves, someone else should be promoted to admin
+			if (c.privledges() == CoLabPrivilegeLevel.ADMIN) {
+				for (CoLabRoomMember member : room.getAllMembers()) {
+					if (member.privledges() != CoLabPrivilegeLevel.ADMIN) {
+						changeUserPrivledge(member.name(), rommname, CoLabPrivilegeLevel.ADMIN);
+						break;
+					}
 				}
 			}
-			return removesuccess;
+			releaseAllLocksOnAllDocs(username, rommname, room);
+			for (IClient client : room.getAllClients()) {
+				client.coLabRoomMemberLeft(username);
+			}
+
+			return true;
 		}
 	}
 
