@@ -1,7 +1,10 @@
 package edu.cs319.client;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FocusTraversalPolicy;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -67,6 +71,7 @@ public class WindowJoinCoLab extends JDialog {
 		this.setMinimumSize(new Dimension(500, 400));
 		setUpAppearance();
 		setUpListeners();
+		fillCoLabRoomList();
 		this.repaint();
 	}
 
@@ -123,7 +128,16 @@ public class WindowJoinCoLab extends JDialog {
 		mainPanel.add(southPanel, BorderLayout.SOUTH);
 		mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.add(mainPanel);
-		fillCoLabRoomList();
+		
+		Vector<Component> order = new Vector<Component>(6);
+		order.add(createField);
+		order.add(createButton);
+		order.add(cancelButton);
+		order.add(refreshButton);
+		order.add(roomList);
+		order.add(joinButton);
+		setFocusTraversalPolicy(new JoinCoLabFocusTraversalPolicy(order));
+		//fillCoLabRoomList();
 	}
 
 	public int showRoomDialogue() {
@@ -185,5 +199,43 @@ public class WindowJoinCoLab extends JDialog {
 				dispose();
 			}
 		});
+	}
+	
+	public static class JoinCoLabFocusTraversalPolicy extends FocusTraversalPolicy {
+		
+		Vector<Component> order;
+		
+		public JoinCoLabFocusTraversalPolicy(Vector<Component> ord) {
+			order = new Vector<Component>(ord.size());
+			order.addAll(ord);
+		}
+
+		@Override
+		public Component getComponentAfter(Container arg0, Component arg1) {
+			int idx = (order.indexOf(arg1) + 1) % order.size();
+			return order.get(idx);
+		}
+
+		@Override
+		public Component getComponentBefore(Container arg0, Component arg1) {
+			int idx = (order.indexOf(arg1) - 1) % order.size();
+			return order.get(idx);
+		}
+
+		@Override
+		public Component getDefaultComponent(Container arg0) {
+			return order.get(0);
+		}
+
+		@Override
+		public Component getFirstComponent(Container arg0) {
+			return order.get(0);
+		}
+
+		@Override
+		public Component getLastComponent(Container arg0) {
+			return order.lastElement();
+		}
+		
 	}
 }
