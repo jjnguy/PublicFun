@@ -195,10 +195,18 @@ public class JDocTabPanel extends JPanel {
 	private class AutoUpdateTask implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			// if the current subsection is not locked by this user, don't send the updates
+			if (!info.getUserName().equals(getCurrentSubSection().lockedByUser())) {
+				if (Util.DEBUG) {
+					System.out.println("Not sending not locked-by-user update");
+				}
+				return;
+			}
 			if (workPane.getText().trim().equals("")) {
 				if (Util.DEBUG) {
 					System.out.println("Not sending blank text update");
-				}return;
+				}
+				return;
 			}
 			if (getCurrentSubSection().getText().equals(workPane.getText())) {
 				if (Util.DEBUG) {
@@ -264,15 +272,17 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void updateWorkPane(DocumentSubSection ds) {
-		int carrotPos = workPane.getCaretPosition();
-		if (ds != null) {
-			workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
-			workPane.setText(ds.getText());
-			int length = workPane.getText().length();
-			workPane.setCaretPosition(carrotPos <= length ? carrotPos : length);
-		} else {
-			workPane.setText("");
-			workPane.setEditable(false);
+		synchronized (workPane) {
+			int carrotPos = workPane.getCaretPosition();
+			if (ds != null) {
+				workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
+				workPane.setText(ds.getText());
+				int length = workPane.getText().length();
+				workPane.setCaretPosition(carrotPos <= length ? carrotPos : length);
+			} else {
+				workPane.setText("");
+				workPane.setEditable(false);
+			}
 		}
 	}
 
@@ -316,25 +326,17 @@ public class JDocTabPanel extends JPanel {
 	private class MergeSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			DocumentSubSection cur = getCurrentSubSection();
-			int idx = doc.getSubSectionIndex(cur.getName());
 			int count = doc.getSubSectionCount();
-			if (idx == 0 && count > 1) {
-				DocumentSubSection second = doc.getSectionAt(idx + 1);
-				String name = JOptionPane.showInputDialog(JDocTabPanel.this,
-						"Name of merged section:");
-				if (name == null)
-					return;
-				info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
-						doc.getName(), cur.getName(), second.getName(), name);
-			} else if (idx == count - 1 && count > 1) {
-				DocumentSubSection first = doc.getSectionAt(idx - 1);
-				String name = JOptionPane.showInputDialog(JDocTabPanel.this,
-						"Name of merged section:");
-				if (name == null)
-					return;
-				info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
-						doc.getName(), first.getName(), cur.getName(), name);
+			if (count < 2)
+				return;
+			DocumentSubSection top = null;
+			DocumentSubSection bottom = null;
+			if (doc.getSelectedIndex() == 0) {
+				top = doc.getSectionAt(0);
+				bottom = doc.getSectionAt(1);
+			} else if (doc.getSelectedIndex() == count - 1) {
+				top = doc.getSectionAt(count - 2);
+				bottom = doc.getSectionAt(count - 1);
 			} else {
 				String[] values = { "Above", "Below" };
 				String aboveOrBelow = (String) JOptionPane
@@ -343,20 +345,21 @@ public class JDocTabPanel extends JPanel {
 								"Would you like to merge the selected section \nwith the section above or below?",
 								"Merge SubSections", JOptionPane.QUESTION_MESSAGE, null, values,
 								values[0]);
-				String name = JOptionPane.showInputDialog(JDocTabPanel.this,
-						"Name of merged section:");
-				if (name == null)
+				if (aboveOrBelow == null)
 					return;
 				if (aboveOrBelow.equals("Above")) {
-					DocumentSubSection second = doc.getSectionAt(idx + 1);
-					info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
-							doc.getName(), cur.getName(), second.getName(), name);
+					top = doc.getSectionAt(doc.getSelectedIndex() - 1);
+					bottom = doc.getSectionAt(doc.getSelectedIndex());
 				} else if (aboveOrBelow.equals("Below")) {
-					DocumentSubSection first = doc.getSectionAt(idx - 1);
-					info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
-							doc.getName(), first.getName(), cur.getName(), name);
+					top = doc.getSectionAt(doc.getSelectedIndex());
+					bottom = doc.getSectionAt(doc.getSelectedIndex() + 1);
 				}
 			}
+			String name = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of merged section:");
+			if (name == null)
+				return;
+			info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
+					doc.getName(), top.getName(), bottom.getName(), name);
 		}
 	}
 

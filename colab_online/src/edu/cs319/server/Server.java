@@ -169,6 +169,10 @@ public class Server implements IServer {
 				}
 				return false;
 			}
+			// if the room was empty, the new member should asume admin role
+			if (room.getAllClients().size()==1 ){
+				changeUserPrivledge(username, roomName, CoLabPrivilegeLevel.ADMIN);
+			}
 			for (IClient client2 : room.getAllClients()) {
 				client2.coLabRoomMemberArrived(username);
 			}
