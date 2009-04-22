@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.SwingUtilities;
 
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
@@ -190,7 +191,6 @@ public class WindowClient extends JFrame implements IClient {
 		joinCoLabRoom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				proxy.getServer().getAllCoLabRoomNames(userName);
 				int result = colabRoomFrame.showRoomDialogue();
 				if (result == WindowJoinCoLab.ROOM_JOINED) {
 					setMenusForUserJoinedRoom();
@@ -522,139 +522,221 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean newSubSection(String username, String documentName, String sectionID,
 			DocumentSubSection section, int idx) {
-		if (Util.DEBUG){
-			System.out.println("WindowClient New SubSection: Username: " + username + " Document: "
-					+ documentName + " SectionID: " + sectionID + " LockHolder: "
-					+ section.lockedByUser());}
+		final String user = username;
+		final String document = documentName;
+		final String secID = sectionID;
+		final DocumentSubSection sec = section;
+		final int index = idx;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				if (Util.DEBUG){
+					System.out.println("WindowClient New SubSection: Username: " + user + " Document: "
+							+ document + " SectionID: " + secID + " LockHolder: "
+							+ sec.lockedByUser());}
 
-		SectionizedDocument doc = documentTabs.get(documentName).getSectionizedDocument();
-		doc.addSubSection(section, idx);
+				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
+				doc.addSubSection(sec, index);
+			}
+		});			
 		return true;
 	}
 
 	@Override
 	public boolean newDocument(String username, String documentName) {
-		JDocTabPanel doc = documentTabs.get(documentName);
-		if (doc != null) {
-			throw new IllegalStateException("Two documents cannot have the same name");
-		}
-		doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, documentName,
-				userName), this);
-		documentTabs.put(documentName, doc);
-		tabbedDocumentPane.add(documentName, doc);
-		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: "
-				+ documentName);
-		// TODO keep update? documents.get(documentName).updateDocumentView();
-		setMenusForRoomWithDocumentsOpen();
+		final String user = username;
+		final String document = documentName;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				JDocTabPanel doc = documentTabs.get(document);
+				if (doc != null) {
+					throw new IllegalStateException("Two documents cannot have the same name");
+				}
+				doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, document,
+						user), WindowClient.this);
+				documentTabs.put(document, doc);
+				tabbedDocumentPane.add(document, doc);
+				System.out.println("WindowClient New Document: Username: " + user + " DocumentName: "
+						+ document);
+				// TODO keep update? documents.get(documentName).updateDocumentView();
+				setMenusForRoomWithDocumentsOpen();
+			}
+		});
 		return true;
 
 	}
 
 	@Override
 	public boolean removeDocument(String username, String documentName) {
-		JDocTabPanel doc = documentTabs.get(documentName);
-		if (doc == null) {
-			throw new IllegalStateException("This document does not exist");
-		}
-		documentTabs.remove(documentName);
-		tabbedDocumentPane.remove(doc);
-		// documents.get(documentName).updateDocPane();
-		if (documentTabs.size() == 0) {
-			// Sets menus enabled for user in room with no documents
-			setMenusForUserJoinedRoom();
-		}
-		// TODO make sure this works!
-		// documents.get(((JDocTabPanel) documentPane.getSelectedComponent()).getName())
-		// .updateDocPane();
-		documentTabs.get(documentName).updateTopDocumentPane();
+		final String user = username;
+		final String document = documentName;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				JDocTabPanel doc = documentTabs.get(document);
+				if (doc == null) {
+					throw new IllegalStateException("This document does not exist");
+				}
+				documentTabs.remove(document);
+				tabbedDocumentPane.remove(doc);
+				// documents.get(documentName).updateDocPane();
+				if (documentTabs.size() == 0) {
+					// Sets menus enabled for user in room with no documents
+					setMenusForUserJoinedRoom();
+				}
+				// TODO make sure this works!
+				// documents.get(((JDocTabPanel) documentPane.getSelectedComponent()).getName())
+				// .updateDocPane();
+				documentTabs.get(document).updateTopDocumentPane();
+			}
+		});
 		return true;
 	}
 
 	@Override
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionId) {
-		SubSectionList doc = (SubSectionList) documentTabs.get(documentName).getSectionizedDocument();
-		DocumentSubSection ds = doc.getSection(sectionId);
-		ds.setLocked(true, usernameSender);
-		doc.subSectionUpdated(ds);
-		System.out.println("WindowClient SubSection Locked: Username: " + usernameSender
-				+ " Document: " + documentName + " SectionName: " + sectionId + " LockHolder: "
-				+ ds.lockedByUser());
+		final String user = usernameSender;
+		final String document = documentName;
+		final String section = sectionId;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				SubSectionList doc = (SubSectionList) documentTabs.get(document).getSectionizedDocument();
+				DocumentSubSection ds = doc.getSection(section);
+				ds.setLocked(true, user);
+				doc.subSectionUpdated(ds);
+				System.out.println("WindowClient SubSection Locked: Username: " + user
+						+ " Document: " + document + " SectionName: " + section + " LockHolder: "
+						+ ds.lockedByUser());
+			}
+		});
 		return true;
 	}
 
 	@Override
 	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionId) {
-		SubSectionList doc = (SubSectionList) documentTabs.get(documentName).getSectionizedDocument();
-		DocumentSubSection sec = doc.getSection(sectionId);
-		sec.setLocked(false, usernameSender);
-		doc.subSectionUpdated(sec);
+		final String user = usernameSender;
+		final String document = documentName;
+		final String section = sectionId;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				SubSectionList doc = (SubSectionList) documentTabs.get(document).getSectionizedDocument();
+				DocumentSubSection sec = doc.getSection(section);
+				sec.setLocked(false, user);
+				doc.subSectionUpdated(sec);
+			}
+		});
 		return true;
 	}
 
 	@Override
 	public boolean subsectionFlopped(String usernameSender, String documentName,
 			String sectionIDMoveUp, String sectionIDMoveDown) {
-		SectionizedDocument doc = documentTabs.get(documentName).getSectionizedDocument();
-		int idx1 = doc.getSubSectionIndex(sectionIDMoveUp);
-		int idx2 = doc.getSubSectionIndex(sectionIDMoveDown);
-		doc.flopSubSections(idx1, idx2);
-		documentTabs.get(documentName).updateTopDocumentPane();
+		final String user = usernameSender;
+		final String document = documentName;
+		final String up = sectionIDMoveUp;
+		final String down = sectionIDMoveDown;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
+				int idx1 = doc.getSubSectionIndex(up);
+				int idx2 = doc.getSubSectionIndex(down);
+				doc.flopSubSections(idx1, idx2);
+				// TODO need method to do this in the tabbed doc pane
+				// documents.get(documentName).updateDocPane();
+				documentTabs.get(document).updateTopDocumentPane();
+			}
+		});
 		return true;
 	}
 
 	@Override
 	public boolean subSectionRemoved(String username, String sectionId, String documentName) {
-		SectionizedDocument doc = documentTabs.get(documentName).getSectionizedDocument();
-		doc.removeSubSection(sectionId);
-		documentTabs.get(documentName).updateTopDocumentPane();
+		final String user = username;
+		final String document = documentName;
+		final String section = sectionId;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
+				doc.removeSubSection(section);
+				documentTabs.get(document).updateTopDocumentPane();
+			}
+		});
 		return true;
 	}
 
 	@Override
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
-		SectionizedDocument doc = documentTabs.get(documentId).getSectionizedDocument();
-		doc.removeAllSubSections();
-		doc.addAllSubSections(allSections);
-		documentTabs.get(documentId).updateTopDocumentPane();
+		final String document = documentId;
+		final List<DocumentSubSection> all = allSections;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
+				doc.removeAllSubSections();
+				doc.addAllSubSections(all);
+				documentTabs.get(document).updateTopDocumentPane();
+			}
+		});
 		return true;
 	}
 
 	@Override
 	public boolean updateSubsection(String usernameSender, String documentname,
 			DocumentSubSection section, String sectionID) {
-		JDocTabPanel docPane = documentTabs.get(documentname);
-		SectionizedDocument doc = documentTabs.get(documentname).getSectionizedDocument();
-		doc.getSection(sectionID).setText(usernameSender, section.getText());
-		documentTabs.get(documentname).updateTopDocumentPane();
-		if (!userName.equals(usernameSender)) {
-			docPane.updateWorkPane(section);
-		}
+		final String user = usernameSender;
+		final String document = documentname;
+		final DocumentSubSection sec = section;
+		final String secId = sectionID;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				JDocTabPanel docPane = documentTabs.get(document);
+				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
+				doc.getSection(secId).setText(user, sec.getText());
+				documentTabs.get(document).updateTopDocumentPane();
+				if (!userName.equals(user)) {
+					docPane.updateWorkPane(sec);
+				}
+			}
+		});
 		return true;
 	}
 
 	@Override
 	public boolean subSectionSplit(String username, String documentName, String oldSecName,
-			String newName1, String newName2, int index) {
-		JDocTabPanel docPane = documentTabs.get(documentName);
-		docPane.getSectionizedDocument().splitSubSection(oldSecName, newName1, newName2, index,
-				username);
-		docPane.updateTopDocumentPane();
-			((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
-					.getSectionizedDocument().getSection(newName1), true);
-			docPane.updateWorkPane(newName1);
+			String newName1, String newName2, int idx) {
+		final String user = username;
+		final String document = documentName;
+		final String old = oldSecName;
+		final String one = newName1;
+		final String two = newName2;
+		final int index = idx;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				JDocTabPanel docPane = documentTabs.get(document);
+				docPane.getSectionizedDocument().splitSubSection(old, one, two, index, user);
+				docPane.updateTopDocumentPane();
+				((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane.getSectionizedDocument().getSection(two), true);
+				docPane.updateWorkPane(two);
+			}
+		});
 		return true;
 	}
 
 	@Override
 	public boolean subSectionCombined(String username, String documentName, String sectionA,
 			String sectionB, String newSection) {
-		JDocTabPanel docPane = documentTabs.get(documentName);
-		documentTabs.get(documentName).getSectionizedDocument().combineSubSections(sectionA, sectionB,
-				newSection);
-		documentTabs.get(documentName).updateTopDocumentPane();
-			((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
-					.getSectionizedDocument().getSection(newSection), true);
-			docPane.updateWorkPane(newSection);
+		final String user = username;
+		final String document = documentName;
+		final String one = sectionA;
+		final String two = sectionB;
+		final String sec = newSection;
+		SwingUtilities.invokeLater( new Runnable() {
+			public void run() {
+				JDocTabPanel docPane = documentTabs.get(document);
+				documentTabs.get(document).getSectionizedDocument().combineSubSections(one, two, sec);
+				documentTabs.get(document).updateTopDocumentPane();
+					((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
+							.getSectionizedDocument().getSection(sec), true);
+				docPane.updateWorkPane(sec);
+			}
+		});
 		return true;
 	}
 
