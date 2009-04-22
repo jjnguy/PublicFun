@@ -272,6 +272,7 @@ public class JDocTabPanel extends JPanel {
 				return;
 			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentSubSection().getName());
+			updateWorkPane(getCurrentSubSection());
 		}
 	}
 
@@ -327,6 +328,7 @@ public class JDocTabPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentSubSection().getName());
+			updateWorkPane(getCurrentSubSection());
 		}
 	}
 
