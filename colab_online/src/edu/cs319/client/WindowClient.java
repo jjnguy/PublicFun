@@ -27,9 +27,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.SwingUtilities;
 
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
@@ -94,6 +94,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	/**
 	 * Creates a menu bar for the window.
+	 * 
 	 * @return a JMenuBar for the window client
 	 */
 	private JMenuBar createMenuBar() {
@@ -178,10 +179,11 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
-				String username = r.nextInt(1000)+"";
-				proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,username);
+				String username = r.nextInt(1000) + "";
+				proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
+						username);
 				setUserName(username);
-				//proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
+				// proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
 				if (proxy != null) {
 					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
 					setMenusForUserLoggedIn();
@@ -194,6 +196,9 @@ public class WindowClient extends JFrame implements IClient {
 				int result = colabRoomFrame.showRoomDialogue();
 				if (result == WindowJoinCoLab.ROOM_JOINED) {
 					setMenusForUserJoinedRoom();
+				}
+				if(getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
+					setMenusForUserObserver();
 				}
 			}
 		});
@@ -223,8 +228,12 @@ public class WindowClient extends JFrame implements IClient {
 		newDocument.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (!JDocTabPanel.hasPermission(WindowClient.this))
+					return;
 				String docName = JOptionPane.showInputDialog(WindowClient.this,
 						"Enter the name of the document:");
+				if (docName == null)
+					return;
 				String secName = JOptionPane.showInputDialog(WindowClient.this,
 						"Enter the name of the subsection:");
 				if (docName == null || secName == null)
@@ -238,13 +247,19 @@ public class WindowClient extends JFrame implements IClient {
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
-				setMenusForRoomWithDocumentsOpen();
+				if(getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
+					setMenusForRoomWithDocumentsOpen();
+				} else {
+					setMenusForUserObserver();
+				}
 			}
 		});
 
 		openDocument.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (!JDocTabPanel.hasPermission(WindowClient.this))
+					return;
 				JFileChooser choose = new JFileChooser();
 				int choice = choose.showOpenDialog(WindowClient.this);
 				if (choice != JFileChooser.APPROVE_OPTION)
@@ -273,20 +288,28 @@ public class WindowClient extends JFrame implements IClient {
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
-				setMenusForRoomWithDocumentsOpen();
+				if(getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
+					setMenusForRoomWithDocumentsOpen();
+				} else {
+					setMenusForUserObserver();
+				}
 			}
 		});
 		removeDocument.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO NOT COMPLETE YET - agee
+				if (!JDocTabPanel.hasPermission(WindowClient.this))
+					return;
 				JDocTabPanel doc = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
 				tabbedDocumentPane.remove(doc);
 				proxy.getServer().documentRemoved(userName, roomName, doc.getName());
 				documentTabs.remove(doc.getName());
-				if (documentTabs.size() == 0) {
-					// Sets menus enabled for user in room with no documents
-					setMenusForUserJoinedRoom();
+				if(documentTabs.size() == 0) {
+					if(getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
+						setMenusForUserObserver();
+					} else {
+						setMenusForUserJoinedRoom();
+					}
 				}
 			}
 		});
@@ -317,7 +340,10 @@ public class WindowClient extends JFrame implements IClient {
 		addSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String name = JOptionPane.showInputDialog(WindowClient.this, "Enter a name for the new SubSection");
+				if (!JDocTabPanel.hasPermission(WindowClient.this))
+					return;
+				String name = JOptionPane.showInputDialog(WindowClient.this,
+						"Enter a name for the new SubSection");
 				if (name == null)
 					return;
 				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
@@ -327,6 +353,8 @@ public class WindowClient extends JFrame implements IClient {
 		deleteSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (!JDocTabPanel.hasPermission(WindowClient.this))
+					return;
 				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
 				selectedTab.deleteSubSection();
 			}
@@ -334,6 +362,8 @@ public class WindowClient extends JFrame implements IClient {
 		splitSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (!JDocTabPanel.hasPermission(WindowClient.this))
+					return;
 				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
 				selectedTab.splitSubSection();
 			}
@@ -341,6 +371,8 @@ public class WindowClient extends JFrame implements IClient {
 		mergeSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (!JDocTabPanel.hasPermission(WindowClient.this))
+					return;
 				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
 				selectedTab.mergeSubSection();
 			}
@@ -377,7 +409,7 @@ public class WindowClient extends JFrame implements IClient {
 					proxy.getServer().logOut(userName);
 					try {
 						proxy.close();
-					} catch(IOException io) {
+					} catch (IOException io) {
 						io.printStackTrace();
 					}
 				}
@@ -408,6 +440,32 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	/**
+	 * Set menu items enabled/disabled for an observer user
+	 */
+	private void setMenusForUserObserver() {
+		logIn.setEnabled(false);
+		joinCoLabRoom.setEnabled(false);
+		disconnect.setEnabled(true);
+		newDocument.setEnabled(false);
+		openDocument.setEnabled(false);
+		removeDocument.setEnabled(false);
+		if(documentTabs.size() == 0) {
+			saveDocument.setEnabled(false);
+		} else {
+			saveDocument.setEnabled(true);
+		}
+		addSection.setEnabled(false);
+		deleteSection.setEnabled(false);
+		splitSection.setEnabled(false);
+		mergeSection.setEnabled(false);
+		String title = getTitle();
+		this.roomMemberListPanel.setRoom(roomName);
+		this.roomMemberListPanel.setServer(proxy.getServer());
+		if (roomName != null)
+			setTitle(title + " - " + getRoomName());
+	}
+
+	/**
 	 * Set menu items enabled/disabled for when user has joined a CoLab Room or when all documents
 	 * are removed from CoLab Room.
 	 */
@@ -434,17 +492,19 @@ public class WindowClient extends JFrame implements IClient {
 	 * Set menu items enabled/disabled for when documents are open in a CoLab Room.
 	 */
 	private void setMenusForRoomWithDocumentsOpen() {
-		logIn.setEnabled(false);
-		joinCoLabRoom.setEnabled(false);
-		disconnect.setEnabled(true);
-		newDocument.setEnabled(true);
-		openDocument.setEnabled(true);
-		removeDocument.setEnabled(true);
-		saveDocument.setEnabled(true);
-		addSection.setEnabled(true);
-		deleteSection.setEnabled(true);
-		splitSection.setEnabled(true);
-		mergeSection.setEnabled(true);
+		if (this.getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
+			logIn.setEnabled(false);
+			joinCoLabRoom.setEnabled(false);
+			disconnect.setEnabled(true);
+			newDocument.setEnabled(true);
+			openDocument.setEnabled(true);
+			removeDocument.setEnabled(true);
+			saveDocument.setEnabled(true);
+			addSection.setEnabled(true);
+			deleteSection.setEnabled(true);
+			splitSection.setEnabled(true);
+			mergeSection.setEnabled(true);
+		}
 	}
 
 	/**
@@ -463,12 +523,13 @@ public class WindowClient extends JFrame implements IClient {
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
 	}
-	
+
 	/**
 	 * Returns the privilege level of the user signed into this client.
+	 * 
 	 * @return the privilege level of the user signed into this client.
 	 */
-	public CoLabPrivilegeLevel getPrivLevel(){
+	public CoLabPrivilegeLevel getPrivLevel() {
 		return roomMemberListPanel.getMember(userName).getPriv();
 	}
 
@@ -492,13 +553,30 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean changeUserPrivilege(String username, CoLabPrivilegeLevel newPriv) {
+		if (username.equals(this.userName)) {
+			if (newPriv == CoLabPrivilegeLevel.OBSERVER) {
+				setMenusForUserObserver();
+			} else {
+				if (documentTabs.size() == 0) {
+					// Sets menus enabled for user in room with no documents
+					setMenusForUserJoinedRoom();
+				} else {
+					setMenusForRoomWithDocumentsOpen();
+				}
+			}
+		}
 		return this.roomMemberListPanel.setUserPrivledge(username, newPriv);
 	}
 
 	@Override
 	public boolean coLabRoomMemberArrived(String username) {
 		chatPanel.newChatMessage("Server", "<New Chat Member '" + username + "'>");
-		return roomMemberListPanel.addUser(username);
+		boolean add = roomMemberListPanel.addUser(username);
+		if (username.equals(this.userName) && add) {
+			setMenusForUserObserver();
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -559,6 +637,12 @@ public class WindowClient extends JFrame implements IClient {
 						+ document);
 				// TODO keep update? documents.get(documentName).updateDocumentView();
 				setMenusForRoomWithDocumentsOpen();
+				// TODO keep update? documents.get(documentName).updateDocumentView();
+				if(getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
+					setMenusForRoomWithDocumentsOpen();
+				} else {
+					setMenusForUserObserver();
+				}
 			}
 		});
 		return true;
@@ -578,9 +662,12 @@ public class WindowClient extends JFrame implements IClient {
 				documentTabs.remove(document);
 				tabbedDocumentPane.remove(doc);
 				// documents.get(documentName).updateDocPane();
-				if (documentTabs.size() == 0) {
-					// Sets menus enabled for user in room with no documents
-					setMenusForUserJoinedRoom();
+				if(documentTabs.size() == 0) {
+					if(getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
+						setMenusForUserObserver();
+					} else {
+						setMenusForUserJoinedRoom();
+					}
 				}
 				// TODO make sure this works!
 				// documents.get(((JDocTabPanel) documentPane.getSelectedComponent()).getName())
@@ -752,6 +839,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	/**
 	 * Returns the name of the room this user is in.
+	 * 
 	 * @return the name of the room this user is in
 	 */
 	public String getRoomName() {
@@ -760,7 +848,9 @@ public class WindowClient extends JFrame implements IClient {
 
 	/**
 	 * Sets the name of the room this user has joined.
-	 * @param rn - room name
+	 * 
+	 * @param rn -
+	 *            room name
 	 */
 	public void setRoomName(String rn) {
 		roomName = rn;

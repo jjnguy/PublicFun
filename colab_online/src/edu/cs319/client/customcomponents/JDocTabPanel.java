@@ -514,8 +514,8 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void deleteSubSection() {
-		if(!hasPermission(client))
-			return;
+/*		if(!hasPermission(client))
+			return;*/
 		DocumentSubSection sec = getCurrentlySelectedSubSection();
 		if (info.getUserName().equals(sec.lockedByUser())) {
 			int newSelection = listOfSubSections.getSelectedIndex();
@@ -526,8 +526,8 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void splitSubSection() {
-		if (!hasPermission(client))
-			return;
+/*		if (!hasPermission(client))
+			return;*/
 		String name1 = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of the first part:");
 		if (name1 == null)
 			return;
@@ -543,8 +543,8 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void mergeSubSection() {
-		if (!hasPermission(client))
-			return;
+/*		if (!hasPermission(client))
+			return;*/
 		int count = listOfSubSections.getSubSectionCount();
 		if (count < 2)
 			return;
