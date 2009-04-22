@@ -209,7 +209,7 @@ public class JDocTabPanel extends JPanel {
 				info.getDocumentName(), ds.getName(), temp);
 	}
 
-	private DocumentSubSection getCurrentSubSection() {
+	private DocumentSubSection getCurrentlySelectedSubSection() {
 		DocumentSubSection sel = (DocumentSubSection) listOfSubSections.getSelectedValue();
 		if (sel == null) {
 			if (listOfSubSections.getModel().getSize() == 0)
@@ -223,16 +223,16 @@ public class JDocTabPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// if the current subsection is not locked by this user, don't send the updates
-			if (!info.getUserName().equals(getCurrentSubSection().lockedByUser())) {
+			if (!info.getUserName().equals(getCurrentlySelectedSubSection().lockedByUser())) {
 				return;
 			}
 			if (currentWorkintPane.getText().trim().equals("")) {
 				return;
 			}
-			if (getCurrentSubSection().getText().equals(currentWorkintPane.getText())) {
+			if (getCurrentlySelectedSubSection().getText().equals(currentWorkintPane.getText())) {
 				return;
 			}
-			updateSubSection(getCurrentSubSection(), currentWorkintPane.getText());
+			updateSubSection(getCurrentlySelectedSubSection(), currentWorkintPane.getText());
 		}
 	}
 
@@ -272,8 +272,8 @@ public class JDocTabPanel extends JPanel {
 			if (!hasPermission())
 				return;
 			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
-					info.getDocumentName(), getCurrentSubSection().getName());
-			updateWorkPane(getCurrentSubSection());
+					info.getDocumentName(), getCurrentlySelectedSubSection().getName());
+			updateWorkPane(getCurrentlySelectedSubSection());
 		}
 	}
 
@@ -281,14 +281,14 @@ public class JDocTabPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (!hasPermission())
 				return;
-			updateSubSection(getCurrentSubSection(), currentWorkintPane.getText());
+			updateSubSection(getCurrentlySelectedSubSection(), currentWorkintPane.getText());
 		}
 	}
 
 	private class SelectedSubSectionListener implements ListSelectionListener {
 		public void valueChanged(ListSelectionEvent e) {
 			if (e.getValueIsAdjusting() == false) {
-				DocumentSubSection ds = getCurrentSubSection();
+				DocumentSubSection ds = getCurrentlySelectedSubSection();
 				updateWorkPane(ds);
 			}
 		}
@@ -328,8 +328,8 @@ public class JDocTabPanel extends JPanel {
 	private class ReleaseLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
-					info.getDocumentName(), getCurrentSubSection().getName());
-			updateWorkPane(getCurrentSubSection());
+					info.getDocumentName(), getCurrentlySelectedSubSection().getName());
+			updateWorkPane(getCurrentlySelectedSubSection());
 		}
 	}
 
@@ -425,7 +425,7 @@ public class JDocTabPanel extends JPanel {
 				if (e.getSource() == currentWorkintPane) {
 					menu = new WorkingViewRightClickMenu();
 				} else {
-					menu = new SectionRightClickMenu(getCurrentSubSection());
+					menu = new SectionRightClickMenu(getCurrentlySelectedSubSection());
 				}
 				menu.show(e.getComponent(), e.getX(), e.getY());
 			}
@@ -465,7 +465,7 @@ public class JDocTabPanel extends JPanel {
 					"Name of the second part:");
 			if (name2 == null)
 				return;
-			DocumentSubSection sec = getCurrentSubSection();
+			DocumentSubSection sec = getCurrentlySelectedSubSection();
 			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), listOfSubSections.getName(),
 					sec.getName(), name1, name2, i);
 		}
@@ -517,7 +517,7 @@ public class JDocTabPanel extends JPanel {
 		String name2 = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of the second part:");
 		if (name2 == null)
 			return;
-		DocumentSubSection sec = getCurrentSubSection();
+		DocumentSubSection sec = getCurrentlySelectedSubSection();
 		int idx = SplitChooser.showSplitChooserDialog(sec);
 		if (idx == -1)
 			return;
