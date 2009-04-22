@@ -202,6 +202,8 @@ public class JDocTabPanel extends JPanel {
 			}
 			return;
 		}
+		System.out.println("");
+		System.out.println("AutoUpdating!!!");
 		DocumentSubSection temp = new DocumentSubSectionImpl(ds.getName());
 		temp.setLocked(ds.isLocked(), ds.lockedByUser());
 		temp.setText(info.getUserName(), newText);

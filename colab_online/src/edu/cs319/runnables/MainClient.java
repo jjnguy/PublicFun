@@ -22,9 +22,9 @@ public class MainClient {
 		WindowClient client = new WindowClient();
 		client.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		client.setVisible(true);
-		WindowClient client2 = new WindowClient();
-		client2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		client2.setVisible(true);
+		//WindowClient client2 = new WindowClient();
+		//client2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//client2.setVisible(true);
 	}
 
 }
