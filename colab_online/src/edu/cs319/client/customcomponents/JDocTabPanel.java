@@ -278,7 +278,7 @@ public class JDocTabPanel extends JPanel {
 				return;
 			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentlySelectedSubSection().getName());
-			updateWorkPane(getCurrentlySelectedSubSection());
+			// TODO updateWorkPane(getCurrentlySelectedSubSection());
 		}
 	}
 
@@ -305,10 +305,18 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void updateWorkPane(DocumentSubSection ds) {
+		updateWorkPane(ds, false, false);
+	}
+
+	private void updateWorkPane(DocumentSubSection ds, boolean force, boolean editable) {
 		synchronized (currentWorkintPane) {
 			int carrotPos = currentWorkintPane.getCaretPosition();
 			if (ds != null) {
-				currentWorkintPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
+				if (force) {
+					currentWorkintPane.setEditable(editable);
+				} else {
+					currentWorkintPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
+				}
 				currentWorkintPane.setText(ds.getText());
 				int length = currentWorkintPane.getText().length();
 				currentWorkintPane.setCaretPosition(carrotPos <= length ? carrotPos : length);
@@ -339,7 +347,7 @@ public class JDocTabPanel extends JPanel {
 					getCurrentlySelectedSubSection());
 			info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentlySelectedSubSection().getName());
-			updateWorkPane(getCurrentlySelectedSubSection());
+			// TODO updateWorkPane(getCurrentlySelectedSubSection());
 		}
 	}
 
@@ -364,7 +372,6 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
-	@SuppressWarnings("serial")
 	private static class SplitChooser extends JDialog {
 		private JTextArea theText;
 		private JButton ok;
@@ -518,8 +525,9 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void deleteSubSection() {
-/*		if(!hasPermission(client))
-			return;*/
+		/*
+		 * if(!hasPermission(client)) return;
+		 */
 		DocumentSubSection sec = getCurrentlySelectedSubSection();
 		if (info.getUserName().equals(sec.lockedByUser())) {
 			int newSelection = listOfSubSections.getSelectedIndex();
@@ -530,8 +538,9 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void splitSubSection() {
-/*		if (!hasPermission(client))
-			return;*/
+		/*
+		 * if (!hasPermission(client)) return;
+		 */
 		String name1 = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of the first part:");
 		if (name1 == null)
 			return;
@@ -547,8 +556,9 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void mergeSubSection() {
-/*		if (!hasPermission(client))
-			return;*/
+		/*
+		 * if (!hasPermission(client)) return;
+		 */
 		int count = listOfSubSections.getSubSectionCount();
 		if (count < 2)
 			return;

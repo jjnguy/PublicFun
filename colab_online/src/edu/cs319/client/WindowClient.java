@@ -683,6 +683,7 @@ public class WindowClient extends JFrame implements IClient {
 				System.out.println("WindowClient SubSection Locked: Username: " + user
 						+ " Document: " + document + " SectionName: " + section + " LockHolder: "
 						+ ds.lockedByUser());
+				documentTabs.get(document).updateWorkPane(ds);
 			}
 		});
 		return true;
@@ -699,6 +700,7 @@ public class WindowClient extends JFrame implements IClient {
 				DocumentSubSection sec = doc.getSection(section);
 				sec.setLocked(false, user);
 				doc.subSectionUpdated(sec);
+				documentTabs.get(document).updateWorkPane(sec);
 			}
 		});
 		return true;
