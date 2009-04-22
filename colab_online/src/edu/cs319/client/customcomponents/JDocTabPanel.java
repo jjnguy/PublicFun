@@ -344,7 +344,6 @@ public class JDocTabPanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			deleteSubSection();
 		}
-
 	}
 
 	private class SplitSubSectionListener implements ActionListener {
