@@ -142,6 +142,7 @@ public class JDocTabPanel extends JPanel {
 		wholePane.setContinuousLayout(true);
 		
 		workspace.setDividerLocation(250);
+		workspace.setContinuousLayout(true);
 		workspace.setOneTouchExpandable(true);
 		wholePane.setDividerLocation(150);
 		wholePane.setOneTouchExpandable(true);
