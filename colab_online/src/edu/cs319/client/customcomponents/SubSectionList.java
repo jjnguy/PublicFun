@@ -1,8 +1,12 @@
 package edu.cs319.client.customcomponents;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
 import edu.cs319.dataobjects.DocumentSubSection;
@@ -15,6 +19,7 @@ public class SubSectionList extends JList implements SectionizedDocument {
 	public SubSectionList(SectionizedDocument doc) {
 		model = new SectionizedDocListModel(doc);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		setCellRenderer(new SectionCellRenderer());
 		this.setModel(model);
 	}
 
@@ -26,14 +31,15 @@ public class SubSectionList extends JList implements SectionizedDocument {
 		DocumentSubSection oldSec = (DocumentSubSection) model.getElementAt(idx);
 		oldSec.setText(oldSec.lockedByUser(), sec.getText());
 		model.refreshView();
-		DocumentSubSection selected = (DocumentSubSection)getSelectedValue();
-		if (selected == null)return;
-		if(sec.getName().equals(((DocumentSubSection)getSelectedValue()).getName())) {
+		DocumentSubSection selected = (DocumentSubSection) getSelectedValue();
+		if (selected == null)
+			return;
+		if (sec.getName().equals(((DocumentSubSection) getSelectedValue()).getName())) {
 			setSelectedIndex(getSelectedIndex());
 		}
 	}
 
-	public void fullyRefreshList(List<DocumentSubSection> newSet){
+	public void fullyRefreshList(List<DocumentSubSection> newSet) {
 		model.removeAllSubSections();
 		model.addAllSubSections(newSet);
 	}
@@ -103,9 +109,38 @@ public class SubSectionList extends JList implements SectionizedDocument {
 			String userName) {
 		return model.splitSubSection(name, partA, partB, splitIndex, userName);
 	}
-	
+
 	@Override
 	public String getName() {
 		return model.getName();
+	}
+
+	private class SectionCellRenderer extends JLabel implements ListCellRenderer {
+		public SectionCellRenderer() {
+			setOpaque(true);
+		}
+
+		@Override
+		public Component getListCellRendererComponent(JList list, Object value, int index,
+				boolean isSelected, boolean cellHasFocus) {
+			DocumentSubSection sec = (DocumentSubSection) value;
+			setText(sec.toString());
+			if (sec.isLocked()) {
+				setForeground(Color.LIGHT_GRAY);
+				if (isSelected) {
+					setBackground(new Color(98, 102, 145));
+				} else {
+					setBackground(Color.WHITE);
+				}
+			} else {
+				setForeground(Color.BLACK);
+				if (isSelected) {
+					setBackground(new Color(185, 196, 225));
+				} else {
+					setBackground(Color.WHITE);
+				}
+			}
+			return this;
+		}
 	}
 }

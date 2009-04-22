@@ -47,9 +47,9 @@ public class JChatPanel extends JPanel {
 		Dimension pref = new Dimension(250, 200);
 		topText = new JTextArea();
 		topText.setEditable(false);
-		topText.setPreferredSize(pref);
 		topText.setLineWrap(true);
 		JScrollPane topScroll = new JScrollPane(topText);
+		topScroll.setPreferredSize(pref);
 		bottomText = new JTextField();
 		bottomText.addKeyListener(enterpressedL);
 		add(topScroll, BorderLayout.CENTER);
@@ -63,24 +63,24 @@ public class JChatPanel extends JPanel {
 		// TODO get icons
 		try {
 			this.trayI = new TrayIcon(ImageIO.read(new File("images/tempIcon.bmp")));
-		} catch(IOException e) {
-			if(Util.DEBUG) {
+		} catch (IOException e) {
+			if (Util.DEBUG) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		try {
 			SystemTray tray = SystemTray.getSystemTray();
 			tray.add(trayI);
 		} catch (AWTException e) {
 			if (Util.DEBUG)
 				e.printStackTrace();
-		} catch(NullPointerException e) {
-			if(Util.DEBUG) {
+		} catch (NullPointerException e) {
+			if (Util.DEBUG) {
 				e.printStackTrace();
 			}
-		} catch(UnsupportedOperationException e) {
-			if(Util.DEBUG) {
+		} catch (UnsupportedOperationException e) {
+			if (Util.DEBUG) {
 				e.printStackTrace();
 			}
 		}
@@ -101,20 +101,20 @@ public class JChatPanel extends JPanel {
 		if (!isVisible())
 			displayBottomPopup(usernameSender, message);
 	}
-	
-	public void shutdownTray(){
+
+	public void shutdownTray() {
 		try {
 			SystemTray t = SystemTray.getSystemTray();
 			t.remove(trayI);
-		} catch(UnsupportedOperationException e) {
-			if(Util.DEBUG) {
+		} catch (UnsupportedOperationException e) {
+			if (Util.DEBUG) {
 				e.printStackTrace();
 			}
 		}
 	}
 
 	private void displayBottomPopup(String usernameSender, String message) {
-		if(trayI != null) {
+		if (trayI != null) {
 			trayI.displayMessage("New Message From " + usernameSender, message, MessageType.INFO);
 		}
 	}

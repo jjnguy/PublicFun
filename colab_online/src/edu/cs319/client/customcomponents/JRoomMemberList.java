@@ -98,6 +98,7 @@ public class JRoomMemberList extends JList {
 	};
 
 	private class RoomMemberCelRenderer extends JLabel implements ListCellRenderer {
+		
 		public RoomMemberCelRenderer() {
 			setOpaque(true);
 		}
@@ -113,7 +114,7 @@ public class JRoomMemberList extends JList {
 					setForeground(new Color(000, 100, 200));
 
 					setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-					setBackground(new Color(146, 163, 207));
+					setBackground(new Color(185, 196, 225));
 				} else {
 					setForeground(new Color(250, 100, 100));
 					setBorder(BorderFactory.createEmptyBorder());
@@ -123,7 +124,7 @@ public class JRoomMemberList extends JList {
 				setForeground(Color.BLACK);
 				if (isSelected) {
 					setBorder(BorderFactory.createEmptyBorder());
-					setBackground(new Color(146, 163, 207));
+					setBackground(new Color(185, 196, 225));
 				} else {
 					setBorder(BorderFactory.createEmptyBorder());
 					setBackground(Color.WHITE);
