@@ -53,8 +53,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	private WindowJoinCoLab colabRoomFrame;
 
-	private String userName;
-	private String roomName;
+	private String userName, roomName;
 
 	private JTabbedPane documentPane;
 	private Map<String, JDocTabPanel> documents;
@@ -62,18 +61,11 @@ public class WindowClient extends JFrame implements IClient {
 	private JRoomListPanel roomMemberListPanel;
 	private JChatPanel chatPanel;
 
-	private JMenuItem logIn;
-	private JMenuItem joinCoLabRoom;
+	private JMenuItem logIn, joinCoLabRoom;
 	private JMenuItem disconnect;
 	private JMenuItem exitCoLab;
-	private JMenuItem newDocument;
-	private JMenuItem openDocument;
-	private JMenuItem removeDocument;
-	private JMenuItem saveDocument;
-	private JMenuItem addSection;
-	private JMenuItem deleteSection;
-	private JMenuItem splitSection;
-	private JMenuItem mergeSection;
+	private JMenuItem newDocument, openDocument, removeDocument, saveDocument;
+	private JMenuItem addSection, deleteSection, splitSection, mergeSection;
 	private final JCheckBox showRoomMembers = new JCheckBox("Display Room Members Window");
 	private final JCheckBox showChat = new JCheckBox("Display Chat Window");
 	private JMenuItem about;
@@ -97,6 +89,10 @@ public class WindowClient extends JFrame implements IClient {
 		add(panel);
 	}
 
+	/**
+	 * Creates a menu bar for the window.
+	 * @return a JMenuBar for the window client
+	 */
 	private JMenuBar createMenuBar() {
 		JMenuBar mainMenu = new JMenuBar();
 		JMenu file = new JMenu("File");
@@ -158,7 +154,7 @@ public class WindowClient extends JFrame implements IClient {
 		view.add(showRoomMembers);
 		help.add(about);
 
-		setDisconnected();
+		setMenusForUserDisconnected();
 		showChat.setSelected(true);
 		showRoomMembers.setSelected(true);
 
@@ -169,6 +165,9 @@ public class WindowClient extends JFrame implements IClient {
 		return mainMenu;
 	}
 
+	/**
+	 * Sets listeners for the menu items.
+	 */
 	private void setListeners() {
 		// FILE menu items
 		// CONNECT menu items
@@ -178,7 +177,7 @@ public class WindowClient extends JFrame implements IClient {
 				proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
 				if (proxy != null) {
 					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
-					setLogIn();
+					setMenusForUserLoggedIn();
 				}
 			}
 		});
@@ -187,7 +186,7 @@ public class WindowClient extends JFrame implements IClient {
 			public void actionPerformed(ActionEvent e) {
 				int result = colabRoomFrame.showRoomDialogue();
 				if (result == WindowJoinCoLab.ROOM_JOINED) {
-					setJoinedRoom();
+					setMenusForUserJoinedRoom();
 				}
 			}
 		});
@@ -202,7 +201,7 @@ public class WindowClient extends JFrame implements IClient {
 						io.printStackTrace();
 					}
 				}
-				setDisconnected();
+				setMenusForUserDisconnected();
 			}
 		});
 		exitCoLab.addActionListener(new ActionListener() {
@@ -232,7 +231,7 @@ public class WindowClient extends JFrame implements IClient {
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
-				setDocumentsOpen();
+				setMenusForRoomWithDocumentsOpen();
 			}
 		});
 
@@ -267,7 +266,7 @@ public class WindowClient extends JFrame implements IClient {
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
-				setDocumentsOpen();
+				setMenusForRoomWithDocumentsOpen();
 			}
 		});
 		removeDocument.addActionListener(new ActionListener() {
@@ -280,7 +279,7 @@ public class WindowClient extends JFrame implements IClient {
 				documents.remove(doc.getName());
 				if (documents.size() == 0) {
 					// Sets menus enabled for user in room with no documents
-					setJoinedRoom();
+					setMenusForUserJoinedRoom();
 				}
 			}
 		});
@@ -383,7 +382,7 @@ public class WindowClient extends JFrame implements IClient {
 	/**
 	 * Set menu items enabled/disabled for when user is logged in.
 	 */
-	private void setLogIn() {
+	private void setMenusForUserLoggedIn() {
 		logIn.setEnabled(false);
 		joinCoLabRoom.setEnabled(true);
 		disconnect.setEnabled(true);
@@ -405,7 +404,7 @@ public class WindowClient extends JFrame implements IClient {
 	 * Set menu items enabled/disabled for when user has joined a CoLab Room or when all documents
 	 * are removed from CoLab Room.
 	 */
-	private void setJoinedRoom() {
+	private void setMenusForUserJoinedRoom() {
 		logIn.setEnabled(false);
 		joinCoLabRoom.setEnabled(false);
 		disconnect.setEnabled(true);
@@ -427,7 +426,7 @@ public class WindowClient extends JFrame implements IClient {
 	/**
 	 * Set menu items enabled/disabled for when documents are open in a CoLab Room.
 	 */
-	private void setDocumentsOpen() {
+	private void setMenusForRoomWithDocumentsOpen() {
 		logIn.setEnabled(false);
 		joinCoLabRoom.setEnabled(false);
 		disconnect.setEnabled(true);
@@ -444,7 +443,7 @@ public class WindowClient extends JFrame implements IClient {
 	/**
 	 * Set menu items enabled/disabled for when user is disconnected.
 	 */
-	private void setDisconnected() {
+	private void setMenusForUserDisconnected() {
 		logIn.setEnabled(true);
 		joinCoLabRoom.setEnabled(false);
 		disconnect.setEnabled(false);
@@ -458,6 +457,10 @@ public class WindowClient extends JFrame implements IClient {
 		mergeSection.setEnabled(false);
 	}
 	
+	/**
+	 * Returns the privilege level of the user signed into this client.
+	 * @return the privilege level of the user signed into this client.
+	 */
 	public CoLabPrivilegeLevel getPrivLevel(){
 		return roomMemberListPanel.getMember(userName).getPriv();
 	}
@@ -535,7 +538,7 @@ public class WindowClient extends JFrame implements IClient {
 		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: "
 				+ documentName);
 		// TODO keep update? documents.get(documentName).updateDocumentView();
-		setDocumentsOpen();
+		setMenusForRoomWithDocumentsOpen();
 		return true;
 
 	}
@@ -551,7 +554,7 @@ public class WindowClient extends JFrame implements IClient {
 		// documents.get(documentName).updateDocPane();
 		if (documents.size() == 0) {
 			// Sets menus enabled for user in room with no documents
-			setJoinedRoom();
+			setMenusForUserJoinedRoom();
 		}
 		// TODO make sure this works!
 		// documents.get(((JDocTabPanel) documentPane.getSelectedComponent()).getName())
@@ -657,6 +660,7 @@ public class WindowClient extends JFrame implements IClient {
 		return userName;
 	}
 
+	@Override
 	public void setUserName(String un) {
 		userName = un;
 	}

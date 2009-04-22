@@ -50,4 +50,6 @@ public interface IClient {
 	public boolean allCoLabRooms(Collection<String> roomNames);
 
 	public String getUserName();
+	
+	public void setUserName(String username);
 }

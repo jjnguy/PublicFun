@@ -40,10 +40,6 @@ public class ClientEncoder implements IClient {
 		this.connection = connection;
 	}
 
-	public String getUername() {
-		return username;
-	}
-
 	private boolean printMessageToStream(Message m) {
 		MessageOutputStream out;
 		try {
@@ -111,6 +107,11 @@ public class ClientEncoder implements IClient {
 	@Override
 	public String getUserName() {
 		return username;
+	}
+	
+	@Override
+	public void setUserName(String un) {
+		username = un;
 	}
 
 	@Override
