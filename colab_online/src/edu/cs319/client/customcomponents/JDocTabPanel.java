@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -38,6 +37,7 @@ import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
+import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
 /**
@@ -146,7 +146,20 @@ public class JDocTabPanel extends JPanel {
 		add(wholePane, BorderLayout.CENTER);
 	}
 
+	private boolean hasPermission(){
+		if (client.getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
+			JOptionPane
+					.showMessageDialog(
+							this,
+							"Insufficient Permissions",
+							"You do not have permission to do this action.  Ask your Admin for a promotion",
+							JOptionPane.INFORMATION_MESSAGE, null);
+			return false;
+		}return true;
+	}
+	
 	private void newSubSection(String name) {
+		if (!hasPermission())return;
 		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(), name,
 				doc.getSubSectionCount());
 	}
@@ -175,6 +188,7 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private void updateSubSection(DocumentSubSection ds, String newText) {
+		if (!hasPermission())return;
 		if (ds == null) {
 			if (Util.DEBUG) {
 				System.out.println("JDocTabedPanel.updateSubSection  the section was null...wtf");
@@ -226,6 +240,7 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if (!hasPermission())return;
 			if (doc.getSelectedIndex() > 0) {
 				DocumentSubSection moveUp = (DocumentSubSection) doc.getSelectedValue();
 				DocumentSubSection moveDown = (DocumentSubSection) doc.getModel().getElementAt(
@@ -239,6 +254,7 @@ public class JDocTabPanel extends JPanel {
 
 	private class DownButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if (!hasPermission())return;
 			if (doc.getSelectedIndex() != -1
 					&& doc.getSelectedIndex() < doc.getModel().getSize() - 1) {
 				DocumentSubSection moveDown = (DocumentSubSection) doc.getSelectedValue();
@@ -253,6 +269,7 @@ public class JDocTabPanel extends JPanel {
 
 	private class AquireLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if (!hasPermission())return;
 			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentSubSection().getName());
 		}
@@ -260,6 +277,7 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if (!hasPermission())return;
 			updateSubSection(getCurrentSubSection(), workPane.getText());
 		}
 	}
@@ -294,6 +312,7 @@ public class JDocTabPanel extends JPanel {
 
 	private class NewSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if (!hasPermission())return;
 			String name = JOptionPane.showInputDialog(JDocTabPanel.this,
 					"Enter a name for the new SubSection");
 			if (name == null)
@@ -312,6 +331,7 @@ public class JDocTabPanel extends JPanel {
 	private class SplitSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (!hasPermission())return;
 			String name1 = JOptionPane
 					.showInputDialog(JDocTabPanel.this, "Name of the first part:");
 			if (name1 == null)
@@ -332,6 +352,7 @@ public class JDocTabPanel extends JPanel {
 	private class MergeSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			if (!hasPermission())return;
 			int count = doc.getSubSectionCount();
 			if (count < 2)
 				return;
@@ -460,24 +481,8 @@ public class JDocTabPanel extends JPanel {
 			splitSubSectionItem = new JMenuItem("Split SubSection At Carrot");
 			splitSubSectionItem.addActionListener(new SplitAtCarrotListener());
 			add(splitSubSectionItem);
-			addMouseListener(mouseOutListener);
 		}
 
-		private MouseListener mouseOutListener = new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				long thetime = System.currentTimeMillis();
-				if (thetime - bornondate > 500)
-					setVisible(false);
-				else
-					;
-			}
-		};
 	}
 
 	private class SplitAtCarrotListener implements ActionListener {
@@ -510,11 +515,9 @@ public class JDocTabPanel extends JPanel {
 		private JMenuItem newSubSectionItem;
 
 		private DocumentSubSection sec;
-		private long bornondate;
 
 		public SectionRightClickMenu(DocumentSubSection section) {
 			super();
-			bornondate = System.currentTimeMillis();
 			sec = section;
 			aquireLockItem = new JMenuItem("Aquire Lock");
 			aquireLockItem.addActionListener(new AquireLockListener());
