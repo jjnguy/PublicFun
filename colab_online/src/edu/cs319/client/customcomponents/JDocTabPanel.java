@@ -77,7 +77,7 @@ public class JDocTabPanel extends JPanel {
 		documentPane.setLineWrap(false);
 		documentPane.setTabSize(4);
 
-		workPane = new JEditorPane();
+		workPane = new WorkingPane();
 		workPane.setFont(docFont);
 		workPane.addMouseListener(new RightClickListener());
 		PlainDocument doc2 = (PlainDocument) workPane.getDocument();
