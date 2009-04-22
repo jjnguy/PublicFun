@@ -198,9 +198,9 @@ public class Server implements IServer {
 				}
 				return false;
 			}
-			CoLabRoomMember c = room.getMemberByName(username);
 			if (!room.removeMember(username))
 				return false;
+			CoLabRoomMember c = room.getMemberByName(username);
 			// If an admin leaves, someone else should be promoted to admin
 			if (c.privledges() == CoLabPrivilegeLevel.ADMIN) {
 				for (CoLabRoomMember member : room.getAllMembers()) {

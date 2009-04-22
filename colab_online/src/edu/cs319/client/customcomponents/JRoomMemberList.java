@@ -142,8 +142,9 @@ public class JRoomMemberList extends JList {
 									"Promoting this user will cause them to become the admin, and you to become a participant.\nAre you sure you want to do that?");
 					if (choice != JOptionPane.OK_OPTION) {
 						return;
-					}else {
-						server.changeUserPrivledge(clicker, roomName, CoLabPrivilegeLevel.PARTICIPANT);
+					} else {
+						server.changeUserPrivledge(clicker, roomName,
+								CoLabPrivilegeLevel.PARTICIPANT);
 						server.changeUserPrivledge(clickee, roomName, newPriv);
 					}
 				} else {
@@ -160,7 +161,12 @@ public class JRoomMemberList extends JList {
 				server.changeUserPrivledge(clickee, roomName, CoLabPrivilegeLevel.OBSERVER);
 			}
 		};
-		private ActionListener kickOutAction;
+		private ActionListener kickOutAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				server.leaveCoLabRoom(clickee, roomName);
+			}
+		};
 	}
 
 	public void setUser(String username) {

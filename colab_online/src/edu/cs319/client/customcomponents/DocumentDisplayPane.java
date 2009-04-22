@@ -39,7 +39,6 @@ public class DocumentDisplayPane extends JTextArea {
 	}
 
 	private void paintDottedLine(Graphics2D g, int height) {
-		
 		for (int i = 0; i < this.getWidth(); i += 8) {
 			g.drawLine(i, height, i + 4, height);
 		}
