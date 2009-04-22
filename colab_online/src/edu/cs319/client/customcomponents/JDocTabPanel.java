@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.PlainDocument;
 
+import edu.cs319.client.WindowClient;
 import edu.cs319.dataobjects.DocumentInfo;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
@@ -66,8 +67,11 @@ public class JDocTabPanel extends JPanel {
 	private SubSectionList doc;
 	final private DocumentInfo info;
 
-	public JDocTabPanel(DocumentInfo info) {
+	private WindowClient client;
+
+	public JDocTabPanel(DocumentInfo info, WindowClient client) {
 		this.info = info;
+		this.client = client;
 		setName(info.getDocumentName());
 		doc = new SubSectionList(new SectionizedDocumentImpl(info.getDocumentName()));
 		Font docFont = new Font("Courier New", Font.PLAIN, 11);
@@ -206,13 +210,13 @@ public class JDocTabPanel extends JPanel {
 			}
 			if (workPane.getText().trim().equals("")) {
 				if (Util.DEBUG) {
-					//System.out.println("Not sending blank text update : ClientSide");
+					// System.out.println("Not sending blank text update : ClientSide");
 				}
 				return;
 			}
 			if (getCurrentSubSection().getText().equals(workPane.getText())) {
 				if (Util.DEBUG) {
-					//System.out.println("Not sending same text update : ClientSide");
+					// System.out.println("Not sending same text update : ClientSide");
 				}
 				return;
 			}

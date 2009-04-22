@@ -45,6 +45,10 @@ public class JRoomListPanel extends JPanel {
 		});
 	}
 
+	public RoomMemberLite getMember(String name){
+		return roomList.getFromID(name);
+	}
+	
 	public void setRoom(String room){
 		roomList.setRoom(room);
 	}

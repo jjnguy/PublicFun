@@ -451,6 +451,10 @@ public class WindowClient extends JFrame implements IClient {
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
 	}
+	
+	public CoLabPrivilegeLevel getPrivLevel(){
+		return roomMemberListPanel.getMember(userName).getPriv();
+	}
 
 	@Override
 	public boolean allCoLabRooms(Collection<String> roomNames) {
@@ -519,7 +523,7 @@ public class WindowClient extends JFrame implements IClient {
 			throw new IllegalStateException("Two documents cannot have the same name");
 		}
 		doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, documentName,
-				userName));
+				userName), this);
 		documents.put(documentName, doc);
 		documentPane.add(documentName, doc);
 		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: "
