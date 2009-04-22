@@ -534,4 +534,16 @@ public class JDocTabPanel extends JPanel {
 		}
 
 	}
+	
+	public void deleteSubSection() {
+		
+	}
+	
+	public void splitSubSection() {
+		
+	}
+	
+	public void mergeSubSection() {
+		
+	}
 }
