@@ -49,7 +49,15 @@ public interface IClient {
 
 	public boolean allCoLabRooms(Collection<String> roomNames);
 
+	/**
+	 * Returns the userName used on this client.
+	 * @return the userName used on this client.
+	 */
 	public String getUserName();
 	
+	/**
+	 * Sets the userName variable to the input username.
+	 * @param username - String to change userName to
+	 */
 	public void setUserName(String username);
 }

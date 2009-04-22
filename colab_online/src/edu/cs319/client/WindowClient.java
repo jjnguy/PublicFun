@@ -665,10 +665,18 @@ public class WindowClient extends JFrame implements IClient {
 		userName = un;
 	}
 
+	/**
+	 * Returns the name of the room this user is in.
+	 * @return the name of the room this user is in
+	 */
 	public String getRoomName() {
 		return roomName;
 	}
 
+	/**
+	 * Sets the name of the room this user has joined.
+	 * @param rn - room name
+	 */
 	public void setRoomName(String rn) {
 		roomName = rn;
 	}
