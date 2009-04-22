@@ -312,25 +312,28 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
 			}
 		});
 		deleteSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
 			}
 		});
 		splitSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
 			}
 		});
 		mergeSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-
+				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
 			}
 		});
 
