@@ -66,7 +66,7 @@ public class JDocTabPanel extends JPanel {
 	private JButton unlockSubSection;
 
 	private SubSectionList listOfSubSections;
-	
+
 	final private DocumentInfo info;
 
 	private WindowClient client;
@@ -140,7 +140,7 @@ public class JDocTabPanel extends JPanel {
 		workspace = new JSplitPane(JSplitPane.VERTICAL_SPLIT, docScroll, bottomPane);
 		wholePane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sectionPanel, workspace);
 		wholePane.setContinuousLayout(true);
-		
+
 		workspace.setDividerLocation(250);
 		workspace.setContinuousLayout(true);
 		workspace.setOneTouchExpandable(true);
@@ -166,8 +166,8 @@ public class JDocTabPanel extends JPanel {
 		if (!hasPermission()) {
 			return;
 		}
-		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), listOfSubSections.getName(), name,
-				listOfSubSections.getSubSectionCount());
+		info.getServer().newSubSection(info.getUserName(), info.getRoomName(),
+				listOfSubSections.getName(), name, listOfSubSections.getSubSectionCount());
 	}
 
 	private void setUpListeners() {
@@ -241,9 +241,10 @@ public class JDocTabPanel extends JPanel {
 			if (!hasPermission())
 				return;
 			if (listOfSubSections.getSelectedIndex() > 0) {
-				DocumentSubSection moveUp = (DocumentSubSection) listOfSubSections.getSelectedValue();
-				DocumentSubSection moveDown = (DocumentSubSection) listOfSubSections.getModel().getElementAt(
-						listOfSubSections.getSelectedIndex() - 1);
+				DocumentSubSection moveUp = (DocumentSubSection) listOfSubSections
+						.getSelectedValue();
+				DocumentSubSection moveDown = (DocumentSubSection) listOfSubSections.getModel()
+						.getElementAt(listOfSubSections.getSelectedIndex() - 1);
 				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), moveUp.getName(), moveDown.getName());
 				listOfSubSections.setSelectedValue(moveUp, true);
@@ -256,10 +257,12 @@ public class JDocTabPanel extends JPanel {
 			if (!hasPermission())
 				return;
 			if (listOfSubSections.getSelectedIndex() != -1
-					&& listOfSubSections.getSelectedIndex() < listOfSubSections.getModel().getSize() - 1) {
-				DocumentSubSection moveDown = (DocumentSubSection) listOfSubSections.getSelectedValue();
-				DocumentSubSection moveUp = (DocumentSubSection) listOfSubSections.getModel().getElementAt(
-						listOfSubSections.getSelectedIndex() + 1);
+					&& listOfSubSections.getSelectedIndex() < listOfSubSections.getModel()
+							.getSize() - 1) {
+				DocumentSubSection moveDown = (DocumentSubSection) listOfSubSections
+						.getSelectedValue();
+				DocumentSubSection moveUp = (DocumentSubSection) listOfSubSections.getModel()
+						.getElementAt(listOfSubSections.getSelectedIndex() + 1);
 				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), moveUp.getName(), moveDown.getName());
 				listOfSubSections.setSelectedValue(moveDown, true);
@@ -327,6 +330,9 @@ public class JDocTabPanel extends JPanel {
 
 	private class ReleaseLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
+					info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
+					getCurrentlySelectedSubSection());
 			info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentlySelectedSubSection().getName());
 			updateWorkPane(getCurrentlySelectedSubSection());
@@ -466,8 +472,8 @@ public class JDocTabPanel extends JPanel {
 			if (name2 == null)
 				return;
 			DocumentSubSection sec = getCurrentlySelectedSubSection();
-			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), listOfSubSections.getName(),
-					sec.getName(), name1, name2, i);
+			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(),
+					listOfSubSections.getName(), sec.getName(), name1, name2, i);
 		}
 
 	}
@@ -505,12 +511,13 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void deleteSubSection() {
-		if(!hasPermission())
+		if (!hasPermission())
 			return;
 		DocumentSubSection sec = getCurrentlySelectedSubSection();
-		if(info.getUserName().equals(sec.lockedByUser())) {
+		if (info.getUserName().equals(sec.lockedByUser())) {
 			int newSelection = listOfSubSections.getSelectedIndex();
-			info.getServer().subSectionRemoved(info.getUserName(), info.getRoomName(), info.getDocumentName(), sec.getName());
+			info.getServer().subSectionRemoved(info.getUserName(), info.getRoomName(),
+					info.getDocumentName(), sec.getName());
 			listOfSubSections.setSelectedIndex(newSelection);
 		}
 	}
@@ -528,8 +535,8 @@ public class JDocTabPanel extends JPanel {
 		int idx = SplitChooser.showSplitChooserDialog(sec);
 		if (idx == -1)
 			return;
-		info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), listOfSubSections.getName(),
-				sec.getName(), name1, name2, idx);
+		info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(),
+				listOfSubSections.getName(), sec.getName(), name1, name2, idx);
 	}
 
 	public void mergeSubSection() {
@@ -567,7 +574,7 @@ public class JDocTabPanel extends JPanel {
 		if (name == null) {
 			return;
 		}
-		info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(), listOfSubSections.getName(),
-				top.getName(), bottom.getName(), name);
+		info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
+				listOfSubSections.getName(), top.getName(), bottom.getName(), name);
 	}
 }

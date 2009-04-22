@@ -147,6 +147,7 @@ public class Server implements IServer {
 	public boolean joinCoLabRoom(String username, String roomName, byte[] password) {
 		// TODO password protection support
 		CoLabRoom room = colabrooms.get(roomName);
+		if (room == null)return false;
 		synchronized (room) {
 			if (room == null) {
 				if (Util.DEBUG) {
