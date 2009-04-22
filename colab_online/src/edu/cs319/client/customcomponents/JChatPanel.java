@@ -3,6 +3,7 @@ package edu.cs319.client.customcomponents;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
@@ -89,6 +90,7 @@ public class JChatPanel extends JPanel {
 	public void newChatMessage(String usernameSender, String message) {
 		String fullTExt = usernameSender + ": " + message + "\n";
 		topText.append(fullTExt);
+		topText.scrollRectToVisible(new Rectangle(0, topText.getHeight() - topText.getVisibleRect().height, topText.getWidth(), topText.getHeight()));
 		if (!isVisible())
 			displayBottomPopup(usernameSender, message);
 	}

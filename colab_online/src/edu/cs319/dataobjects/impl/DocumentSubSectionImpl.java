@@ -92,6 +92,6 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 	public String toString() {
 		if (Util.DEBUG)
 			return getName() + " : " + (locked ? lockHolder : "Not Locked");
-		return getName() + " : " + lockHolder;
+		return getName() + " : " + (locked ? lockHolder : "");
 	}
 }
