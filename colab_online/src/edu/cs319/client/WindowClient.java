@@ -190,6 +190,7 @@ public class WindowClient extends JFrame implements IClient {
 		joinCoLabRoom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				proxy.getServer().getAllCoLabRoomNames(userName);
 				int result = colabRoomFrame.showRoomDialogue();
 				if (result == WindowJoinCoLab.ROOM_JOINED) {
 					setMenusForUserJoinedRoom();
