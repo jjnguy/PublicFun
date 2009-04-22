@@ -56,8 +56,8 @@ public class JDocTabPanel extends JPanel {
 	private JPanel sectionPanel;
 	private JSplitPane wholePane;
 	private JSplitPane workspace;
-	private DocumentDisplayPane documentPane;
-	private JEditorPane workPane;
+	private DocumentDisplayPane topFullDocumentPane;
+	private JEditorPane currentWorkintPane;
 	private JButton sectionUpButton;
 	private JButton sectionDownButton;
 	private JButton aquireLock;
@@ -65,7 +65,8 @@ public class JDocTabPanel extends JPanel {
 	private JButton addSubSection;
 	private JButton unlockSubSection;
 
-	private SubSectionList doc;
+	private SubSectionList listOfSubSections;
+	
 	final private DocumentInfo info;
 
 	private WindowClient client;
@@ -74,18 +75,18 @@ public class JDocTabPanel extends JPanel {
 		this.info = info;
 		this.client = client;
 		setName(info.getDocumentName());
-		doc = new SubSectionList(new SectionizedDocumentImpl(info.getDocumentName()));
+		listOfSubSections = new SubSectionList(new SectionizedDocumentImpl(info.getDocumentName()));
 		Font docFont = new Font("Courier New", Font.PLAIN, 11);
-		documentPane = new DocumentDisplayPane();
-		documentPane.setEditable(false);
-		documentPane.setFont(docFont);
-		documentPane.setLineWrap(false);
-		documentPane.setTabSize(4);
+		topFullDocumentPane = new DocumentDisplayPane();
+		topFullDocumentPane.setEditable(false);
+		topFullDocumentPane.setFont(docFont);
+		topFullDocumentPane.setLineWrap(false);
+		topFullDocumentPane.setTabSize(4);
 
-		workPane = new WorkingPane();
-		workPane.setFont(docFont);
-		workPane.addMouseListener(new RightClickListener());
-		PlainDocument doc2 = (PlainDocument) workPane.getDocument();
+		currentWorkintPane = new WorkingPane();
+		currentWorkintPane.setFont(docFont);
+		currentWorkintPane.addMouseListener(new RightClickListener());
+		PlainDocument doc2 = (PlainDocument) currentWorkintPane.getDocument();
 		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
 		setUpAppearance();
 		setUpListeners();
@@ -120,7 +121,7 @@ public class JDocTabPanel extends JPanel {
 		buttonPanel.add(sectionUpButton, BorderLayout.NORTH);
 		buttonPanel.add(sectionDownButton, BorderLayout.SOUTH);
 		sectionPanel = new JPanel(new BorderLayout(10, 10));
-		sectionPanel.add(doc, BorderLayout.CENTER);
+		sectionPanel.add(listOfSubSections, BorderLayout.CENTER);
 		sectionPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		JPanel bottomPane = new JPanel(new BorderLayout());
@@ -131,10 +132,10 @@ public class JDocTabPanel extends JPanel {
 		north.add(addSubSection);
 		bottomPane.add(north, BorderLayout.NORTH);
 
-		documentPane.setMinimumSize(new Dimension(0, 0));
-		workPane.setMinimumSize(new Dimension(0, 0));
-		JScrollPane workScroll = new JScrollPane(workPane);
-		JScrollPane docScroll = new JScrollPane(documentPane);
+		topFullDocumentPane.setMinimumSize(new Dimension(0, 0));
+		currentWorkintPane.setMinimumSize(new Dimension(0, 0));
+		JScrollPane workScroll = new JScrollPane(currentWorkintPane);
+		JScrollPane docScroll = new JScrollPane(topFullDocumentPane);
 		bottomPane.add(workScroll, BorderLayout.CENTER);
 		workspace = new JSplitPane(JSplitPane.VERTICAL_SPLIT, docScroll, bottomPane);
 		wholePane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sectionPanel, workspace);
@@ -164,31 +165,31 @@ public class JDocTabPanel extends JPanel {
 		if (!hasPermission()) {
 			return;
 		}
-		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(), name,
-				doc.getSubSectionCount());
+		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), listOfSubSections.getName(), name,
+				listOfSubSections.getSubSectionCount());
 	}
 
 	private void setUpListeners() {
-		doc.addMouseListener(new RightClickListener());
+		listOfSubSections.addMouseListener(new RightClickListener());
 		sectionUpButton.addActionListener(new UpButtonListener());
 		sectionDownButton.addActionListener(new DownButtonListener());
 		aquireLock.addActionListener(new AquireLockListener());
 		updateSection.addActionListener(new UpdateSubSectionListener());
-		doc.addListSelectionListener(new SelectedSubSectionListener());
+		listOfSubSections.addListSelectionListener(new SelectedSubSectionListener());
 		addSubSection.addActionListener(new NewSubSectionListener());
 		unlockSubSection.addActionListener(new ReleaseLockListener());
 	}
 
 	public JList getList() {
-		return doc;
+		return listOfSubSections;
 	}
 
 	public void updateDocumentView() {
-		documentPane.updateDocument(doc);
+		topFullDocumentPane.updateDocument(listOfSubSections);
 	}
 
 	public SectionizedDocument getSectionizedDocument() {
-		return doc;
+		return listOfSubSections;
 	}
 
 	private void updateSubSection(DocumentSubSection ds, String newText) {
@@ -208,11 +209,11 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private DocumentSubSection getCurrentSubSection() {
-		DocumentSubSection sel = (DocumentSubSection) doc.getSelectedValue();
+		DocumentSubSection sel = (DocumentSubSection) listOfSubSections.getSelectedValue();
 		if (sel == null) {
-			if (doc.getModel().getSize() == 0)
+			if (listOfSubSections.getModel().getSize() == 0)
 				return null;
-			return (DocumentSubSection) doc.getModel().getElementAt(0);
+			return (DocumentSubSection) listOfSubSections.getModel().getElementAt(0);
 		}
 		return sel;
 	}
@@ -224,13 +225,13 @@ public class JDocTabPanel extends JPanel {
 			if (!info.getUserName().equals(getCurrentSubSection().lockedByUser())) {
 				return;
 			}
-			if (workPane.getText().trim().equals("")) {
+			if (currentWorkintPane.getText().trim().equals("")) {
 				return;
 			}
-			if (getCurrentSubSection().getText().equals(workPane.getText())) {
+			if (getCurrentSubSection().getText().equals(currentWorkintPane.getText())) {
 				return;
 			}
-			updateSubSection(getCurrentSubSection(), workPane.getText());
+			updateSubSection(getCurrentSubSection(), currentWorkintPane.getText());
 		}
 	}
 
@@ -238,13 +239,13 @@ public class JDocTabPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (!hasPermission())
 				return;
-			if (doc.getSelectedIndex() > 0) {
-				DocumentSubSection moveUp = (DocumentSubSection) doc.getSelectedValue();
-				DocumentSubSection moveDown = (DocumentSubSection) doc.getModel().getElementAt(
-						doc.getSelectedIndex() - 1);
+			if (listOfSubSections.getSelectedIndex() > 0) {
+				DocumentSubSection moveUp = (DocumentSubSection) listOfSubSections.getSelectedValue();
+				DocumentSubSection moveDown = (DocumentSubSection) listOfSubSections.getModel().getElementAt(
+						listOfSubSections.getSelectedIndex() - 1);
 				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), moveUp.getName(), moveDown.getName());
-				doc.setSelectedValue(moveUp, true);
+				listOfSubSections.setSelectedValue(moveUp, true);
 			}
 		}
 	}
@@ -253,14 +254,14 @@ public class JDocTabPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (!hasPermission())
 				return;
-			if (doc.getSelectedIndex() != -1
-					&& doc.getSelectedIndex() < doc.getModel().getSize() - 1) {
-				DocumentSubSection moveDown = (DocumentSubSection) doc.getSelectedValue();
-				DocumentSubSection moveUp = (DocumentSubSection) doc.getModel().getElementAt(
-						doc.getSelectedIndex() + 1);
+			if (listOfSubSections.getSelectedIndex() != -1
+					&& listOfSubSections.getSelectedIndex() < listOfSubSections.getModel().getSize() - 1) {
+				DocumentSubSection moveDown = (DocumentSubSection) listOfSubSections.getSelectedValue();
+				DocumentSubSection moveUp = (DocumentSubSection) listOfSubSections.getModel().getElementAt(
+						listOfSubSections.getSelectedIndex() + 1);
 				info.getServer().subSectionFlopped(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), moveUp.getName(), moveDown.getName());
-				doc.setSelectedValue(moveDown, true);
+				listOfSubSections.setSelectedValue(moveDown, true);
 			}
 		}
 	}
@@ -278,7 +279,7 @@ public class JDocTabPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (!hasPermission())
 				return;
-			updateSubSection(getCurrentSubSection(), workPane.getText());
+			updateSubSection(getCurrentSubSection(), currentWorkintPane.getText());
 		}
 	}
 
@@ -292,20 +293,20 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void updateWorkPane(String secName) {
-		updateWorkPane(doc.getSection(secName));
+		updateWorkPane(listOfSubSections.getSection(secName));
 	}
 
 	public void updateWorkPane(DocumentSubSection ds) {
-		synchronized (workPane) {
-			int carrotPos = workPane.getCaretPosition();
+		synchronized (currentWorkintPane) {
+			int carrotPos = currentWorkintPane.getCaretPosition();
 			if (ds != null) {
-				workPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
-				workPane.setText(ds.getText());
-				int length = workPane.getText().length();
-				workPane.setCaretPosition(carrotPos <= length ? carrotPos : length);
+				currentWorkintPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
+				currentWorkintPane.setText(ds.getText());
+				int length = currentWorkintPane.getText().length();
+				currentWorkintPane.setCaretPosition(carrotPos <= length ? carrotPos : length);
 			} else {
-				workPane.setText("");
-				workPane.setEditable(false);
+				currentWorkintPane.setText("");
+				currentWorkintPane.setEditable(false);
 			}
 		}
 	}
@@ -418,7 +419,7 @@ public class JDocTabPanel extends JPanel {
 			}
 			if (e.isPopupTrigger()) {
 				JPopupMenu menu;
-				if (e.getSource() == workPane) {
+				if (e.getSource() == currentWorkintPane) {
 					menu = new WorkingViewRightClickMenu();
 				} else {
 					menu = new SectionRightClickMenu(getCurrentSubSection());
@@ -450,7 +451,7 @@ public class JDocTabPanel extends JPanel {
 	private class SplitAtCarrotListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int i = workPane.getCaretPosition();
+			int i = currentWorkintPane.getCaretPosition();
 			if (i == -1)
 				return;
 			String name1 = JOptionPane
@@ -462,7 +463,7 @@ public class JDocTabPanel extends JPanel {
 			if (name2 == null)
 				return;
 			DocumentSubSection sec = getCurrentSubSection();
-			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), doc.getName(),
+			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), listOfSubSections.getName(),
 					sec.getName(), name1, name2, i);
 		}
 
@@ -517,23 +518,23 @@ public class JDocTabPanel extends JPanel {
 		int idx = SplitChooser.showSplitChooserDialog(sec);
 		if (idx == -1)
 			return;
-		info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), doc.getName(),
+		info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), listOfSubSections.getName(),
 				sec.getName(), name1, name2, idx);
 	}
 
 	public void mergeSubSection() {
 		if (!hasPermission())
 			return;
-		int count = doc.getSubSectionCount();
+		int count = listOfSubSections.getSubSectionCount();
 		if (count < 2)
 			return;
 		DocumentSubSection top = null, bottom = null;
-		if (doc.getSelectedIndex() == 0) {
-			top = doc.getSectionAt(0);
-			bottom = doc.getSectionAt(1);
-		} else if (doc.getSelectedIndex() == count - 1) {
-			top = doc.getSectionAt(count - 2);
-			bottom = doc.getSectionAt(count - 1);
+		if (listOfSubSections.getSelectedIndex() == 0) {
+			top = listOfSubSections.getSectionAt(0);
+			bottom = listOfSubSections.getSectionAt(1);
+		} else if (listOfSubSections.getSelectedIndex() == count - 1) {
+			top = listOfSubSections.getSectionAt(count - 2);
+			bottom = listOfSubSections.getSectionAt(count - 1);
 		} else {
 			String[] values = { "Above", "Below" };
 			String aboveOrBelow = (String) JOptionPane
@@ -545,18 +546,18 @@ public class JDocTabPanel extends JPanel {
 			if (aboveOrBelow == null)
 				return;
 			if (aboveOrBelow.equals("Above")) {
-				top = doc.getSectionAt(doc.getSelectedIndex() - 1);
-				bottom = doc.getSectionAt(doc.getSelectedIndex());
+				top = listOfSubSections.getSectionAt(listOfSubSections.getSelectedIndex() - 1);
+				bottom = listOfSubSections.getSectionAt(listOfSubSections.getSelectedIndex());
 			} else if (aboveOrBelow.equals("Below")) {
-				top = doc.getSectionAt(doc.getSelectedIndex());
-				bottom = doc.getSectionAt(doc.getSelectedIndex() + 1);
+				top = listOfSubSections.getSectionAt(listOfSubSections.getSelectedIndex());
+				bottom = listOfSubSections.getSectionAt(listOfSubSections.getSelectedIndex() + 1);
 			}
 		}
 		String name = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of merged section:");
 		if (name == null) {
 			return;
 		}
-		info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(), doc.getName(),
+		info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(), listOfSubSections.getName(),
 				top.getName(), bottom.getName(), name);
 	}
 }

@@ -57,7 +57,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	private String userName, roomName;
 
-	private JTabbedPane documentPane;
+	private JTabbedPane tabbedDocumentPane;
 	private Map<String, JDocTabPanel> documentTabs;
 
 	private JRoomListPanel roomMemberListPanel;
@@ -80,13 +80,13 @@ public class WindowClient extends JFrame implements IClient {
 		setListeners();
 
 		roomMemberListPanel = new JRoomListPanel(this, null);
-		documentPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+		tabbedDocumentPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		documentTabs = new HashMap<String, JDocTabPanel>();
 		chatPanel = new JChatPanel();
 
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
 		panel.add(roomMemberListPanel, BorderLayout.WEST);
-		panel.add(documentPane, BorderLayout.CENTER);
+		panel.add(tabbedDocumentPane, BorderLayout.CENTER);
 		panel.add(chatPanel, BorderLayout.EAST);
 		add(panel);
 	}
@@ -279,8 +279,8 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO NOT COMPLETE YET - agee
-				JDocTabPanel doc = (JDocTabPanel) documentPane.getSelectedComponent();
-				documentPane.remove(doc);
+				JDocTabPanel doc = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
+				tabbedDocumentPane.remove(doc);
 				proxy.getServer().documentRemoved(userName, roomName, doc.getName());
 				documentTabs.remove(doc.getName());
 				if (documentTabs.size() == 0) {
@@ -308,7 +308,7 @@ public class WindowClient extends JFrame implements IClient {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
+				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
 				String docName = selectedTab.getName();
 				out.println(documentTabs.get(docName).getSectionizedDocument().getFullText());
 			}
@@ -319,28 +319,28 @@ public class WindowClient extends JFrame implements IClient {
 				String name = JOptionPane.showInputDialog(WindowClient.this, "Enter a name for the new SubSection");
 				if (name == null)
 					return;
-				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
+				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
 				selectedTab.newSubSection(name);
 			}
 		});
 		deleteSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
+				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
 				selectedTab.deleteSubSection();
 			}
 		});
 		splitSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
+				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
 				selectedTab.splitSubSection();
 			}
 		});
 		mergeSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
+				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
 				selectedTab.mergeSubSection();
 			}
 		});
@@ -540,7 +540,7 @@ public class WindowClient extends JFrame implements IClient {
 		doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, documentName,
 				userName), this);
 		documentTabs.put(documentName, doc);
-		documentPane.add(documentName, doc);
+		tabbedDocumentPane.add(documentName, doc);
 		System.out.println("WindowClient New Document: Username: " + username + " DocumentName: "
 				+ documentName);
 		// TODO keep update? documents.get(documentName).updateDocumentView();
@@ -556,7 +556,7 @@ public class WindowClient extends JFrame implements IClient {
 			throw new IllegalStateException("This document does not exist");
 		}
 		documentTabs.remove(documentName);
-		documentPane.remove(doc);
+		tabbedDocumentPane.remove(doc);
 		// documents.get(documentName).updateDocPane();
 		if (documentTabs.size() == 0) {
 			// Sets menus enabled for user in room with no documents
