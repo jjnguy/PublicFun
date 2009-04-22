@@ -35,7 +35,7 @@ public class SectionizedDocListModel extends AbstractListModel implements Sectio
 	@Override
 	public boolean addSubSection(DocumentSubSection ds, int index) {
 		if (doc.addSubSection(ds, index)) {
-			fireIntervalAdded(this, 0, getSize());
+			fireIntervalAdded(this, index, index);
 			return true;
 		}else {
 			if (Util.DEBUG) {
@@ -57,7 +57,7 @@ public class SectionizedDocListModel extends AbstractListModel implements Sectio
 	@Override
 	public boolean flopSubSections(int idx1, int idx2) {
 		if (doc.flopSubSections(idx1, idx2)) {
-			fireContentsChanged(this, 0, getSize());
+			fireContentsChanged(this, idx1, idx2);
 			return true;
 		}
 		return false;
@@ -106,8 +106,9 @@ public class SectionizedDocListModel extends AbstractListModel implements Sectio
 
 	@Override
 	public boolean removeSubSection(String name) {
+		int idx = getSubSectionIndex(name);
 		if (doc.removeSubSection(name)) {
-			fireIntervalRemoved(this, 0, getSize());
+			fireIntervalRemoved(this, idx, idx);
 			return true;
 		}
 		return false;

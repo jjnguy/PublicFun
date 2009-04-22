@@ -92,7 +92,7 @@ public class JDocTabPanel extends JPanel {
 		setUpListeners();
 
 		Timer timer = new Timer(UPDATE_NUM_MS, new AutoUpdateTask());
-		// timer.start();
+		timer.start();
 	}
 
 	private void setUpAppearance() {

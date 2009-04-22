@@ -607,8 +607,6 @@ public class WindowClient extends JFrame implements IClient {
 	public boolean subSectionRemoved(String username, String sectionId, String documentName) {
 		SectionizedDocument doc = documentTabs.get(documentName).getSectionizedDocument();
 		doc.removeSubSection(sectionId);
-		// TODO need method to do this in the tabbed doc pane
-		// documents.get(documentName).updateDocPane();
 		documentTabs.get(documentName).updateTopDocumentPane();
 		return true;
 	}
