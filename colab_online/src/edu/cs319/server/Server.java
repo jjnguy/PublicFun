@@ -420,7 +420,9 @@ public class Server implements IServer {
 				return true;
 			}
 			if (colabrooms.get(roomname).removeDocument(documentName)) {
+				System.out.println("Removed From Server");
 				for (IClient client : room.getAllClients()) {
+					System.out.println("Removing From: " + client.getUserName());
 					client.removeDocument(username, documentName);
 				}
 				return true;

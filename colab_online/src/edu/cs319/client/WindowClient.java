@@ -301,9 +301,7 @@ public class WindowClient extends JFrame implements IClient {
 				if (!JDocTabPanel.hasPermission(WindowClient.this))
 					return;
 				JDocTabPanel doc = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
-				tabbedDocumentPane.remove(doc);
-				proxy.getServer().documentRemoved(userName, roomName, doc.getName());
-				documentTabs.remove(doc.getName());
+				proxy.getServer().documentRemoved(userName, roomName, doc.getSectionizedDocument().getName());
 				if(documentTabs.size() == 0) {
 					if(getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 						setMenusForUserObserver();
@@ -333,7 +331,7 @@ public class WindowClient extends JFrame implements IClient {
 					return;
 				}
 				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
-				String docName = selectedTab.getName();
+				String docName = selectedTab.getSectionizedDocument().getName();
 				out.println(documentTabs.get(docName).getSectionizedDocument().getFullText());
 			}
 		});
@@ -655,6 +653,7 @@ public class WindowClient extends JFrame implements IClient {
 		final String document = documentName;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
+				System.out.println("Removing Document: " + userName);
 				JDocTabPanel doc = documentTabs.get(document);
 				if (doc == null) {
 					throw new IllegalStateException("This document does not exist");
@@ -669,10 +668,7 @@ public class WindowClient extends JFrame implements IClient {
 						setMenusForUserJoinedRoom();
 					}
 				}
-				// TODO make sure this works!
-				// documents.get(((JDocTabPanel) documentPane.getSelectedComponent()).getName())
-				// .updateDocPane();
-				documentTabs.get(document).updateTopDocumentPane();
+				
 			}
 		});
 		return true;
