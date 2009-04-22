@@ -147,7 +147,8 @@ public class Server implements IServer {
 	public boolean joinCoLabRoom(String username, String roomName, byte[] password) {
 		// TODO password protection support
 		CoLabRoom room = colabrooms.get(roomName);
-		if (room == null)return false;
+		if (room == null)
+			return false;
 		synchronized (room) {
 			if (room == null) {
 				if (Util.DEBUG) {
@@ -387,6 +388,7 @@ public class Server implements IServer {
 			SectionizedDocument doc = room.getDocument(documentName);
 			DocumentSubSection sec = doc.getSection(sectionID);
 			// Don't send updates that don't change anything
+			try{
 			if (sec.getName().equals(sectionID) && sec.isLocked() == update.isLocked()
 					&& sec.lockedByUser().equals(update.lockedByUser())
 					&& sec.getText().equals(update.getText())) {
@@ -394,7 +396,7 @@ public class Server implements IServer {
 					System.out.println("Ignoring no change update");
 				}
 				return false;
-			}
+			}}catch (NullPointerException e){return false;}
 			sec.setText(username, update.getText());
 			System.out.println("Updating SubSection->  Name: " + sec.getName() + " LockHolder: "
 					+ sec.lockedByUser() + " Updated By: " + username);
