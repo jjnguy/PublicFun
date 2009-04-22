@@ -47,6 +47,7 @@ import edu.cs319.util.Util;
  * @author Justin Nelson
  * 
  */
+@SuppressWarnings("serial")
 public class JDocTabPanel extends JPanel {
 
 	// Number of milliseconds between automatic updates
@@ -146,20 +147,22 @@ public class JDocTabPanel extends JPanel {
 		add(wholePane, BorderLayout.CENTER);
 	}
 
-	private boolean hasPermission(){
+	private boolean hasPermission() {
 		if (client.getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 			JOptionPane
 					.showMessageDialog(
 							this,
-							"Insufficient Permissions",
 							"You do not have permission to do this action.  Ask your Admin for a promotion",
+							"Insufficient Permissions",
 							JOptionPane.INFORMATION_MESSAGE, null);
 			return false;
-		}return true;
+		}
+		return true;
 	}
-	
+
 	public void newSubSection(String name) {
-		if (!hasPermission())return;
+		if (!hasPermission()){
+			return;}
 		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(), name,
 				doc.getSubSectionCount());
 	}
@@ -188,7 +191,8 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	private void updateSubSection(DocumentSubSection ds, String newText) {
-		if (!hasPermission())return;
+		if (!hasPermission())
+			return;
 		if (ds == null) {
 			if (Util.DEBUG) {
 				System.out.println("JDocTabedPanel.updateSubSection  the section was null...wtf");
@@ -217,21 +221,12 @@ public class JDocTabPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			// if the current subsection is not locked by this user, don't send the updates
 			if (!info.getUserName().equals(getCurrentSubSection().lockedByUser())) {
-				if (Util.DEBUG) {
-					System.out.println("Not sending not locked-by-user update : ClientSide");
-				}
 				return;
 			}
 			if (workPane.getText().trim().equals("")) {
-				if (Util.DEBUG) {
-					// System.out.println("Not sending blank text update : ClientSide");
-				}
 				return;
 			}
 			if (getCurrentSubSection().getText().equals(workPane.getText())) {
-				if (Util.DEBUG) {
-					// System.out.println("Not sending same text update : ClientSide");
-				}
 				return;
 			}
 			updateSubSection(getCurrentSubSection(), workPane.getText());
@@ -240,7 +235,8 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (!hasPermission())return;
+			if (!hasPermission())
+				return;
 			if (doc.getSelectedIndex() > 0) {
 				DocumentSubSection moveUp = (DocumentSubSection) doc.getSelectedValue();
 				DocumentSubSection moveDown = (DocumentSubSection) doc.getModel().getElementAt(
@@ -254,7 +250,8 @@ public class JDocTabPanel extends JPanel {
 
 	private class DownButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (!hasPermission())return;
+			if (!hasPermission())
+				return;
 			if (doc.getSelectedIndex() != -1
 					&& doc.getSelectedIndex() < doc.getModel().getSize() - 1) {
 				DocumentSubSection moveDown = (DocumentSubSection) doc.getSelectedValue();
@@ -269,7 +266,8 @@ public class JDocTabPanel extends JPanel {
 
 	private class AquireLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (!hasPermission())return;
+			if (!hasPermission())
+				return;
 			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentSubSection().getName());
 		}
@@ -277,7 +275,8 @@ public class JDocTabPanel extends JPanel {
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (!hasPermission())return;
+			if (!hasPermission())
+				return;
 			updateSubSection(getCurrentSubSection(), workPane.getText());
 		}
 	}
@@ -312,7 +311,8 @@ public class JDocTabPanel extends JPanel {
 
 	private class NewSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (!hasPermission())return;
+			if (!hasPermission())
+				return;
 			String name = JOptionPane.showInputDialog(JDocTabPanel.this,
 					"Enter a name for the new SubSection");
 			if (name == null)
@@ -331,7 +331,8 @@ public class JDocTabPanel extends JPanel {
 	private class SplitSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!hasPermission())return;
+			if (!hasPermission())
+				return;
 			String name1 = JOptionPane
 					.showInputDialog(JDocTabPanel.this, "Name of the first part:");
 			if (name1 == null)
@@ -353,7 +354,8 @@ public class JDocTabPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			mergeSubSection();
-			if (!hasPermission())return;
+			if (!hasPermission())
+				return;
 			int count = doc.getSubSectionCount();
 			if (count < 2)
 				return;
@@ -383,8 +385,9 @@ public class JDocTabPanel extends JPanel {
 				}
 			}
 			String name = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of merged section:");
-			if (name == null)
+			if (name == null) {
 				return;
+			}
 			info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
 					doc.getName(), top.getName(), bottom.getName(), name);
 		}
@@ -538,16 +541,16 @@ public class JDocTabPanel extends JPanel {
 		}
 
 	}
-	
+
 	public void deleteSubSection() {
-		//TODO make this work
+		// TODO make this work
 	}
-	
+
 	public void splitSubSection() {
-		
+
 	}
-	
+
 	public void mergeSubSection() {
-		
+
 	}
 }
