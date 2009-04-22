@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
@@ -106,16 +107,23 @@ public class JRoomMemberList extends JList {
 				boolean isSelected, boolean hasFocus) {
 			RoomMemberLite mem = (RoomMemberLite) value;
 			setText(mem.toString());
-			if (mem.getPriv() == CoLabPrivilegeLevel.ADMIN) {
-				if (isSelected)
+			if (mem.getPriv() == CoLabPrivilegeLevel.ADMIN
+					|| mem.getPriv() == CoLabPrivilegeLevel.SUPER_ADMIN) {
+				if (isSelected) {
+					setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 					setBackground(Color.RED);
-				else
+				} else {
+					setBorder(BorderFactory.createEmptyBorder());
 					setBackground(Color.PINK);
+				}
 			} else {
-				if (isSelected)
-					setBackground(Color.CYAN);
-				else
+				if (isSelected) {
+					setBorder(BorderFactory.createEmptyBorder());
+					setBackground(new Color(146, 163, 207));
+				} else {
+					setBorder(BorderFactory.createEmptyBorder());
 					setBackground(Color.WHITE);
+				}
 			}
 			return this;
 		}
