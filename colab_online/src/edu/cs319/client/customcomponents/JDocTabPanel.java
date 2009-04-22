@@ -331,22 +331,23 @@ public class JDocTabPanel extends JPanel {
 	private class SplitSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!hasPermission())
-				return;
-			String name1 = JOptionPane
-					.showInputDialog(JDocTabPanel.this, "Name of the first part:");
-			if (name1 == null)
-				return;
-			String name2 = JOptionPane.showInputDialog(JDocTabPanel.this,
-					"Name of the second part:");
-			if (name2 == null)
-				return;
-			DocumentSubSection sec = getCurrentSubSection();
-			int idx = SplitChooser.showSplitChooserDialog(sec);
-			if (idx == -1)
-				return;
-			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), doc.getName(),
-					sec.getName(), name1, name2, idx);
+			splitSubSection();
+//			if (!hasPermission())
+//				return;
+//			String name1 = JOptionPane
+//					.showInputDialog(JDocTabPanel.this, "Name of the first part:");
+//			if (name1 == null)
+//				return;
+//			String name2 = JOptionPane.showInputDialog(JDocTabPanel.this,
+//					"Name of the second part:");
+//			if (name2 == null)
+//				return;
+//			DocumentSubSection sec = getCurrentSubSection();
+//			int idx = SplitChooser.showSplitChooserDialog(sec);
+//			if (idx == -1)
+//				return;
+//			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), doc.getName(),
+//					sec.getName(), name1, name2, idx);
 		}
 	}
 
@@ -354,42 +355,42 @@ public class JDocTabPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			mergeSubSection();
-			if (!hasPermission())
-				return;
-			int count = doc.getSubSectionCount();
-			if (count < 2)
-				return;
-			DocumentSubSection top = null, bottom = null;
-			if (doc.getSelectedIndex() == 0) {
-				top = doc.getSectionAt(0);
-				bottom = doc.getSectionAt(1);
-			} else if (doc.getSelectedIndex() == count - 1) {
-				top = doc.getSectionAt(count - 2);
-				bottom = doc.getSectionAt(count - 1);
-			} else {
-				String[] values = { "Above", "Below" };
-				String aboveOrBelow = (String) JOptionPane
-						.showInputDialog(
-								JDocTabPanel.this,
-								"Would you like to merge the selected section \nwith the section above or below?",
-								"Merge SubSections", JOptionPane.QUESTION_MESSAGE, null, values,
-								values[0]);
-				if (aboveOrBelow == null)
-					return;
-				if (aboveOrBelow.equals("Above")) {
-					top = doc.getSectionAt(doc.getSelectedIndex() - 1);
-					bottom = doc.getSectionAt(doc.getSelectedIndex());
-				} else if (aboveOrBelow.equals("Below")) {
-					top = doc.getSectionAt(doc.getSelectedIndex());
-					bottom = doc.getSectionAt(doc.getSelectedIndex() + 1);
-				}
-			}
-			String name = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of merged section:");
-			if (name == null) {
-				return;
-			}
-			info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
-					doc.getName(), top.getName(), bottom.getName(), name);
+//			if (!hasPermission())
+//				return;
+//			int count = doc.getSubSectionCount();
+//			if (count < 2)
+//				return;
+//			DocumentSubSection top = null, bottom = null;
+//			if (doc.getSelectedIndex() == 0) {
+//				top = doc.getSectionAt(0);
+//				bottom = doc.getSectionAt(1);
+//			} else if (doc.getSelectedIndex() == count - 1) {
+//				top = doc.getSectionAt(count - 2);
+//				bottom = doc.getSectionAt(count - 1);
+//			} else {
+//				String[] values = { "Above", "Below" };
+//				String aboveOrBelow = (String) JOptionPane
+//						.showInputDialog(
+//								JDocTabPanel.this,
+//								"Would you like to merge the selected section \nwith the section above or below?",
+//								"Merge SubSections", JOptionPane.QUESTION_MESSAGE, null, values,
+//								values[0]);
+//				if (aboveOrBelow == null)
+//					return;
+//				if (aboveOrBelow.equals("Above")) {
+//					top = doc.getSectionAt(doc.getSelectedIndex() - 1);
+//					bottom = doc.getSectionAt(doc.getSelectedIndex());
+//				} else if (aboveOrBelow.equals("Below")) {
+//					top = doc.getSectionAt(doc.getSelectedIndex());
+//					bottom = doc.getSectionAt(doc.getSelectedIndex() + 1);
+//				}
+//			}
+//			String name = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of merged section:");
+//			if (name == null) {
+//				return;
+//			}
+//			info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
+//					doc.getName(), top.getName(), bottom.getName(), name);
 		}
 	}
 
@@ -547,10 +548,60 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void splitSubSection() {
-
+		if (!hasPermission())
+			return;
+		String name1 = JOptionPane
+				.showInputDialog(JDocTabPanel.this, "Name of the first part:");
+		if (name1 == null)
+			return;
+		String name2 = JOptionPane.showInputDialog(JDocTabPanel.this,
+				"Name of the second part:");
+		if (name2 == null)
+			return;
+		DocumentSubSection sec = getCurrentSubSection();
+		int idx = SplitChooser.showSplitChooserDialog(sec);
+		if (idx == -1)
+			return;
+		info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(), doc.getName(),
+				sec.getName(), name1, name2, idx);
 	}
 
 	public void mergeSubSection() {
-
+		if (!hasPermission())
+			return;
+		int count = doc.getSubSectionCount();
+		if (count < 2)
+			return;
+		DocumentSubSection top = null, bottom = null;
+		if (doc.getSelectedIndex() == 0) {
+			top = doc.getSectionAt(0);
+			bottom = doc.getSectionAt(1);
+		} else if (doc.getSelectedIndex() == count - 1) {
+			top = doc.getSectionAt(count - 2);
+			bottom = doc.getSectionAt(count - 1);
+		} else {
+			String[] values = { "Above", "Below" };
+			String aboveOrBelow = (String) JOptionPane
+					.showInputDialog(
+							JDocTabPanel.this,
+							"Would you like to merge the selected section \nwith the section above or below?",
+							"Merge SubSections", JOptionPane.QUESTION_MESSAGE, null, values,
+							values[0]);
+			if (aboveOrBelow == null)
+				return;
+			if (aboveOrBelow.equals("Above")) {
+				top = doc.getSectionAt(doc.getSelectedIndex() - 1);
+				bottom = doc.getSectionAt(doc.getSelectedIndex());
+			} else if (aboveOrBelow.equals("Below")) {
+				top = doc.getSectionAt(doc.getSelectedIndex());
+				bottom = doc.getSectionAt(doc.getSelectedIndex() + 1);
+			}
+		}
+		String name = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of merged section:");
+		if (name == null) {
+			return;
+		}
+		info.getServer().subSectionCombined(info.getUserName(), info.getRoomName(),
+				doc.getName(), top.getName(), bottom.getName(), name);
 	}
 }
