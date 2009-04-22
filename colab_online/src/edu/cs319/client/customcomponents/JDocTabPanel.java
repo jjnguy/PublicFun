@@ -158,7 +158,7 @@ public class JDocTabPanel extends JPanel {
 		}return true;
 	}
 	
-	private void newSubSection(String name) {
+	public void newSubSection(String name) {
 		if (!hasPermission())return;
 		info.getServer().newSubSection(info.getUserName(), info.getRoomName(), doc.getName(), name,
 				doc.getSubSectionCount());
@@ -352,6 +352,7 @@ public class JDocTabPanel extends JPanel {
 	private class MergeSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			mergeSubSection();
 			if (!hasPermission())return;
 			int count = doc.getSubSectionCount();
 			if (count < 2)
@@ -539,7 +540,7 @@ public class JDocTabPanel extends JPanel {
 	}
 	
 	public void deleteSubSection() {
-		
+		//TODO make this work
 	}
 	
 	public void splitSubSection() {

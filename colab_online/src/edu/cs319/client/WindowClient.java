@@ -311,13 +311,11 @@ public class WindowClient extends JFrame implements IClient {
 		addSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				String name = JOptionPane.showInputDialog(this, "Enter a name for the new SubSection");
+				String name = JOptionPane.showInputDialog(WindowClient.this, "Enter a name for the new SubSection");
 				if (name == null)
 					return;
 				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
-				//TODO make JDocTabPanel.newSubSection(String) public
-				//selectedTab.newSubSection(name);
+				selectedTab.newSubSection(name);
 			}
 		});
 		deleteSection.addActionListener(new ActionListener() {
