@@ -1,15 +1,19 @@
 package edu.cs319.client.customcomponents;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.ListCellRenderer;
 
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.server.IServer;
@@ -26,6 +30,7 @@ public class JRoomMemberList extends JList {
 		this.server = server;
 		this.username = username;
 		model = new JFlexibleListModel<RoomMemberLite>();
+		setCellRenderer(new RoomMemberCelRenderer());
 		setModel(model);
 		addMouseListener(rightClickListen);
 	}
@@ -90,6 +95,31 @@ public class JRoomMemberList extends JList {
 			menu.show(e.getComponent(), e.getX(), e.getY());
 		}
 	};
+
+	private class RoomMemberCelRenderer extends JLabel implements ListCellRenderer {
+		public RoomMemberCelRenderer() {
+			setOpaque(true);
+		}
+
+		@Override
+		public Component getListCellRendererComponent(JList list, Object value, int idx,
+				boolean isSelected, boolean hasFocus) {
+			RoomMemberLite mem = (RoomMemberLite) value;
+			setText(mem.toString());
+			if (mem.getPriv() == CoLabPrivilegeLevel.ADMIN) {
+				if (isSelected)
+					setBackground(Color.RED);
+				else
+					setBackground(Color.PINK);
+			} else {
+				if (isSelected)
+					setBackground(Color.CYAN);
+				else
+					setBackground(Color.WHITE);
+			}
+			return this;
+		}
+	}
 
 	private class RoomMemberPopupMenu extends JPopupMenu {
 		private JMenuItem kickOutMember;

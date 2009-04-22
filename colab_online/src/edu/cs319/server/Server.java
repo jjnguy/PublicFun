@@ -189,18 +189,18 @@ public class Server implements IServer {
 	@Override
 	public boolean leaveCoLabRoom(String username, String rommname) {
 		CoLabRoom room = colabrooms.get(rommname);
-		if (room == null)
-			return true;
-		synchronized (room) {
-			if (room == null) {
-				if (Util.DEBUG) {
-					System.out.println("Failed to leave colabroom, room id doesn't exist");
-				}
-				return false;
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("Failed to leave colabroom, room id doesn't exist");
 			}
+			return false;
+		}
+		synchronized (room) {
 			if (!room.removeMember(username))
 				return false;
 			CoLabRoomMember c = room.getMemberByName(username);
+			if (c == null)
+				return false;
 			// If an admin leaves, someone else should be promoted to admin
 			if (c.privledges() == CoLabPrivilegeLevel.ADMIN) {
 				for (CoLabRoomMember member : room.getAllMembers()) {
@@ -388,15 +388,18 @@ public class Server implements IServer {
 			SectionizedDocument doc = room.getDocument(documentName);
 			DocumentSubSection sec = doc.getSection(sectionID);
 			// Don't send updates that don't change anything
-			try{
-			if (sec.getName().equals(sectionID) && sec.isLocked() == update.isLocked()
-					&& sec.lockedByUser().equals(update.lockedByUser())
-					&& sec.getText().equals(update.getText())) {
-				if (Util.DEBUG) {
-					System.out.println("Ignoring no change update");
+			try {
+				if (sec.getName().equals(sectionID) && sec.isLocked() == update.isLocked()
+						&& sec.lockedByUser().equals(update.lockedByUser())
+						&& sec.getText().equals(update.getText())) {
+					if (Util.DEBUG) {
+						System.out.println("Ignoring no change update");
+					}
+					return false;
 				}
+			} catch (NullPointerException e) {
 				return false;
-			}}catch (NullPointerException e){return false;}
+			}
 			sec.setText(username, update.getText());
 			System.out.println("Updating SubSection->  Name: " + sec.getName() + " LockHolder: "
 					+ sec.lockedByUser() + " Updated By: " + username);
