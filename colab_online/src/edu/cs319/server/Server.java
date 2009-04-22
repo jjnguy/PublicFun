@@ -187,7 +187,8 @@ public class Server implements IServer {
 	@Override
 	public boolean leaveCoLabRoom(String username, String rommname) {
 		CoLabRoom room = colabrooms.get(rommname);
-		if (room == null) return true;
+		if (room == null)
+			return true;
 		synchronized (room) {
 			if (room == null) {
 				if (Util.DEBUG) {
@@ -251,7 +252,7 @@ public class Server implements IServer {
 			if (clientsInRoom.size() == 1
 					&& clientsInRoom.get(0).getUserName().equals(usernameSender)) {
 				clientsInRoom.get(0).newChatMessage("The Darkness",
-				"You are all alone.  Watch your back!");
+						"You are all alone.  Watch your back!");
 			}
 		}
 		return true;
@@ -280,6 +281,18 @@ public class Server implements IServer {
 	@Override
 	public boolean getAllCoLabRoomNames(String usename) {
 		IClient client = regularClients.get(usename);
+		if (client == null) {
+			if (Util.DEBUG) {
+				System.out.println("Server:  Client was null...what?");
+			}
+			return false;
+		}
+		if (colabrooms == null) {
+			if (Util.DEBUG) {
+				System.out.println("Server:  Colab Rooms were null...what?");
+			}
+			return false;
+		}
 		return client.allCoLabRooms(colabrooms.keySet());
 	}
 
