@@ -565,7 +565,7 @@ public class WindowClient extends JFrame implements IClient {
 		// TODO make sure this works!
 		// documents.get(((JDocTabPanel) documentPane.getSelectedComponent()).getName())
 		// .updateDocPane();
-		documentTabs.get(documentName).updateDocumentView();
+		documentTabs.get(documentName).updateTopDocumentPane();
 		return true;
 	}
 
@@ -599,7 +599,7 @@ public class WindowClient extends JFrame implements IClient {
 		doc.flopSubSections(idx1, idx2);
 		// TODO need method to do this in the tabbed doc pane
 		// documents.get(documentName).updateDocPane();
-		documentTabs.get(documentName).updateDocumentView();
+		documentTabs.get(documentName).updateTopDocumentPane();
 		return true;
 	}
 
@@ -609,7 +609,7 @@ public class WindowClient extends JFrame implements IClient {
 		doc.removeSubSection(sectionId);
 		// TODO need method to do this in the tabbed doc pane
 		// documents.get(documentName).updateDocPane();
-		documentTabs.get(documentName).updateDocumentView();
+		documentTabs.get(documentName).updateTopDocumentPane();
 		return true;
 	}
 
@@ -618,7 +618,7 @@ public class WindowClient extends JFrame implements IClient {
 		SectionizedDocument doc = documentTabs.get(documentId).getSectionizedDocument();
 		doc.removeAllSubSections();
 		doc.addAllSubSections(allSections);
-		documentTabs.get(documentId).updateDocumentView();
+		documentTabs.get(documentId).updateTopDocumentPane();
 		return true;
 	}
 
@@ -628,7 +628,7 @@ public class WindowClient extends JFrame implements IClient {
 		JDocTabPanel docPane = documentTabs.get(documentname);
 		SectionizedDocument doc = documentTabs.get(documentname).getSectionizedDocument();
 		doc.getSection(sectionID).setText(usernameSender, section.getText());
-		documentTabs.get(documentname).updateDocumentView();
+		documentTabs.get(documentname).updateTopDocumentPane();
 		if (!userName.equals(usernameSender)) {
 			docPane.updateWorkPane(section);
 		}
@@ -641,7 +641,7 @@ public class WindowClient extends JFrame implements IClient {
 		JDocTabPanel docPane = documentTabs.get(documentName);
 		docPane.getSectionizedDocument().splitSubSection(oldSecName, newName1, newName2, index,
 				username);
-		docPane.updateDocumentView();
+		docPane.updateTopDocumentPane();
 			((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
 					.getSectionizedDocument().getSection(newName1), true);
 			docPane.updateWorkPane(newName1);
@@ -654,7 +654,7 @@ public class WindowClient extends JFrame implements IClient {
 		JDocTabPanel docPane = documentTabs.get(documentName);
 		documentTabs.get(documentName).getSectionizedDocument().combineSubSections(sectionA, sectionB,
 				newSection);
-		documentTabs.get(documentName).updateDocumentView();
+		documentTabs.get(documentName).updateTopDocumentPane();
 			((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
 					.getSectionizedDocument().getSection(newSection), true);
 			docPane.updateWorkPane(newSection);

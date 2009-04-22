@@ -180,11 +180,11 @@ public class JDocTabPanel extends JPanel {
 		unlockSubSection.addActionListener(new ReleaseLockListener());
 	}
 
-	public JList getList() {
+	public JList getJListOfSubSections() {
 		return listOfSubSections;
 	}
 
-	public void updateDocumentView() {
+	public void updateTopDocumentPane() {
 		topFullDocumentPane.updateDocument(listOfSubSections);
 	}
 
