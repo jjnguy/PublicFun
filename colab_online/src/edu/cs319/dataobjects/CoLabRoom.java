@@ -141,7 +141,6 @@ public class CoLabRoom {
 	}
 
 	public boolean removeDocument(String docName) {
-		System.out.println("Removing Document From Room: " + roomname + " Document: " + docName);
 		int idx = documents.indexOf(new SectionizedDocumentImpl(docName));
 		if (idx == -1)
 			return false;

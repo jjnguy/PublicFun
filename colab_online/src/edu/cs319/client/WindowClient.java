@@ -300,8 +300,9 @@ public class WindowClient extends JFrame implements IClient {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!JDocTabPanel.hasPermission(WindowClient.this))
 					return;
-				JDocTabPanel doc = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
-				proxy.getServer().documentRemoved(userName, roomName, doc.getSectionizedDocument().getName());
+				SectionizedDocument doc = ((JDocTabPanel) tabbedDocumentPane.getSelectedComponent()).getSectionizedDocument();
+				proxy.getServer().documentRemoved(userName, roomName, doc.getName());
+
 				if(documentTabs.size() == 0) {
 					if(getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 						setMenusForUserObserver();
@@ -330,8 +331,8 @@ public class WindowClient extends JFrame implements IClient {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				JDocTabPanel selectedTab = (JDocTabPanel) tabbedDocumentPane.getSelectedComponent();
-				String docName = selectedTab.getSectionizedDocument().getName();
+				SectionizedDocument selectedTab = ((JDocTabPanel) tabbedDocumentPane.getSelectedComponent()).getSectionizedDocument();
+				String docName = selectedTab.getName();
 				out.println(documentTabs.get(docName).getSectionizedDocument().getFullText());
 			}
 		});
@@ -490,7 +491,6 @@ public class WindowClient extends JFrame implements IClient {
 	 * Set menu items enabled/disabled for when documents are open in a CoLab Room.
 	 */
 	private void setMenusForRoomWithDocumentsOpen() {
-		if (this.getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 			logIn.setEnabled(false);
 			joinCoLabRoom.setEnabled(false);
 			disconnect.setEnabled(true);
@@ -502,7 +502,6 @@ public class WindowClient extends JFrame implements IClient {
 			deleteSection.setEnabled(true);
 			splitSection.setEnabled(true);
 			mergeSection.setEnabled(true);
-		}
 	}
 
 	/**
@@ -634,8 +633,6 @@ public class WindowClient extends JFrame implements IClient {
 				System.out.println("WindowClient New Document: Username: " + user + " DocumentName: "
 						+ document);
 				// TODO keep update? documents.get(documentName).updateDocumentView();
-				setMenusForRoomWithDocumentsOpen();
-				// TODO keep update? documents.get(documentName).updateDocumentView();
 				if(getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {
@@ -659,8 +656,8 @@ public class WindowClient extends JFrame implements IClient {
 					throw new IllegalStateException("This document does not exist");
 				}
 				documentTabs.remove(document);
+				System.out.println("Document Removed from client " + user);
 				tabbedDocumentPane.remove(doc);
-				// documents.get(documentName).updateDocPane();
 				if(documentTabs.size() == 0) {
 					if(getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 						setMenusForUserObserver();
@@ -668,7 +665,6 @@ public class WindowClient extends JFrame implements IClient {
 						setMenusForUserJoinedRoom();
 					}
 				}
-				
 			}
 		});
 		return true;
@@ -723,7 +719,6 @@ public class WindowClient extends JFrame implements IClient {
 				int idx2 = doc.getSubSectionIndex(down);
 				doc.flopSubSections(idx1, idx2);
 				// TODO need method to do this in the tabbed doc pane
-				// documents.get(documentName).updateDocPane();
 				documentTabs.get(document).updateTopDocumentPane();
 			}
 		});
