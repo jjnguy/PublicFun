@@ -597,8 +597,6 @@ public class WindowClient extends JFrame implements IClient {
 		int idx1 = doc.getSubSectionIndex(sectionIDMoveUp);
 		int idx2 = doc.getSubSectionIndex(sectionIDMoveDown);
 		doc.flopSubSections(idx1, idx2);
-		// TODO need method to do this in the tabbed doc pane
-		// documents.get(documentName).updateDocPane();
 		documentTabs.get(documentName).updateTopDocumentPane();
 		return true;
 	}

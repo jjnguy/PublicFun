@@ -505,7 +505,14 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void deleteSubSection() {
-		// TODO make this work
+		if(!hasPermission())
+			return;
+		DocumentSubSection sec = getCurrentlySelectedSubSection();
+		if(info.getUserName().equals(sec.lockedByUser())) {
+			int newSelection = listOfSubSections.getSelectedIndex();
+			info.getServer().subSectionRemoved(info.getUserName(), info.getRoomName(), info.getDocumentName(), sec.getName());
+			listOfSubSections.setSelectedIndex(newSelection);
+		}
 	}
 
 	public void splitSubSection() {
