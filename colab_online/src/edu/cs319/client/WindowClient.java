@@ -321,8 +321,8 @@ public class WindowClient extends JFrame implements IClient {
 		deleteSection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				JDocTabPanel selectedTab = (JDocTabPanel) documentPane.getSelectedComponent();
+				selectedTab.deleteSubSection();
 			}
 		});
 		splitSection.addActionListener(new ActionListener() {
