@@ -110,13 +110,17 @@ public class JRoomMemberList extends JList {
 			if (mem.getPriv() == CoLabPrivilegeLevel.ADMIN
 					|| mem.getPriv() == CoLabPrivilegeLevel.SUPER_ADMIN) {
 				if (isSelected) {
+					setForeground(new Color(000, 100, 200));
+
 					setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-					setBackground(Color.RED);
+					setBackground(new Color(146, 163, 207));
 				} else {
+					setForeground(new Color(250, 100, 100));
 					setBorder(BorderFactory.createEmptyBorder());
-					setBackground(Color.PINK);
+					setBackground(Color.WHITE);
 				}
 			} else {
+				setForeground(Color.BLACK);
 				if (isSelected) {
 					setBorder(BorderFactory.createEmptyBorder());
 					setBackground(new Color(146, 163, 207));
