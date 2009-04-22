@@ -26,6 +26,9 @@ public class SubSectionList extends JList implements SectionizedDocument {
 		DocumentSubSection oldSec = (DocumentSubSection) model.getElementAt(idx);
 		oldSec.setText(oldSec.lockedByUser(), sec.getText());
 		model.refreshView();
+		if(sec.getName().equals(getSelectedItem().getName())) {
+			setSelectedIndex(getSelectedIndex());
+		}
 	}
 
 	public void fullyRefreshList(List<DocumentSubSection> newSet){

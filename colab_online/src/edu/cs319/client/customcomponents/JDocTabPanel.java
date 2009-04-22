@@ -206,13 +206,13 @@ public class JDocTabPanel extends JPanel {
 			}
 			if (workPane.getText().trim().equals("")) {
 				if (Util.DEBUG) {
-					System.out.println("Not sending blank text update : ClientSide");
+					//System.out.println("Not sending blank text update : ClientSide");
 				}
 				return;
 			}
 			if (getCurrentSubSection().getText().equals(workPane.getText())) {
 				if (Util.DEBUG) {
-					System.out.println("Not sending same text update : ClientSide");
+					//System.out.println("Not sending same text update : ClientSide");
 				}
 				return;
 			}
