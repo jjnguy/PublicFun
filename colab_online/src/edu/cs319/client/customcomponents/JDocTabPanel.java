@@ -284,6 +284,7 @@ public class JDocTabPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (!hasPermission(client))
 				return;
+			System.out.println("Updating SubSection: " + info);
 			updateSubSection(getCurrentlySelectedSubSection(), currentWorkintPane.getText());
 		}
 	}
@@ -330,6 +331,7 @@ public class JDocTabPanel extends JPanel {
 
 	private class ReleaseLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("Releasing Lock: " + info);
 			info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
 					getCurrentlySelectedSubSection());

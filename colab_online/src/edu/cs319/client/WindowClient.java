@@ -630,7 +630,7 @@ public class WindowClient extends JFrame implements IClient {
 					throw new IllegalStateException("Two documents cannot have the same name");
 				}
 				doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, document,
-						user), WindowClient.this);
+						userName), WindowClient.this);
 				documentTabs.put(document, doc);
 				tabbedDocumentPane.add(document, doc);
 				System.out.println("WindowClient New Document: Username: " + user + " DocumentName: "

@@ -57,4 +57,8 @@ public class DocumentInfoImpl implements DocumentInfo {
 	public IServer getServer() {
 		return server;
 	}
+	
+	public String toString() {
+		return "Room: " + room + " Document: " + doc + " User: " + user;
+	}
 } 
