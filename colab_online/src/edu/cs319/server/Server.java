@@ -187,6 +187,7 @@ public class Server implements IServer {
 	@Override
 	public boolean leaveCoLabRoom(String username, String rommname) {
 		CoLabRoom room = colabrooms.get(rommname);
+		if (room == null) return true;
 		synchronized (room) {
 			if (room == null) {
 				if (Util.DEBUG) {
@@ -240,18 +241,17 @@ public class Server implements IServer {
 				return false;
 			}
 			List<IClient> clientsInRoom = room.getAllClients();
-			// if the user is all alone...have some fun
-			if (clientsInRoom.size() == 1
-					&& clientsInRoom.get(0).getUserName().equals(usernameSender)) {
-				clientsInRoom.get(0).newChatMessage("The Darkness",
-						"You are all alone.  Watch your back!");
-				return true;
-			}
 			for (IClient client : clientsInRoom) {
 				if (Util.DEBUG) {
 					System.out.println("Sending chat message to: " + client.toString());
 				}
 				client.newChatMessage(usernameSender, message);
+			}
+			// if the user is all alone...have some fun
+			if (clientsInRoom.size() == 1
+					&& clientsInRoom.get(0).getUserName().equals(usernameSender)) {
+				clientsInRoom.get(0).newChatMessage("The Darkness",
+				"You are all alone.  Watch your back!");
 			}
 		}
 		return true;

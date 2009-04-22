@@ -6,6 +6,7 @@ import javax.swing.AbstractListModel;
 
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
+import edu.cs319.util.Util;
 
 public class SectionizedDocListModel extends AbstractListModel implements SectionizedDocument {
 	
@@ -36,6 +37,10 @@ public class SectionizedDocListModel extends AbstractListModel implements Sectio
 		if (doc.addSubSection(ds, index)) {
 			fireIntervalAdded(this, 0, getSize());
 			return true;
+		}else {
+			if (Util.DEBUG) {
+				System.out.println("Adding subsection t oa doc failed");
+			}
 		}
 		return false;
 	}

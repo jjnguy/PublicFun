@@ -515,10 +515,10 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean newSubSection(String username, String documentName, String sectionID,
 			DocumentSubSection section, int idx) {
-		if (Util.DEBUG)
+		if (Util.DEBUG){
 			System.out.println("WindowClient New SubSection: Username: " + username + " Document: "
 					+ documentName + " SectionID: " + sectionID + " LockHolder: "
-					+ section.lockedByUser());
+					+ section.lockedByUser());}
 
 		SectionizedDocument doc = documents.get(documentName).getSectionizedDocument();
 		doc.addSubSection(section, idx);
