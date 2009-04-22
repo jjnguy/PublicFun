@@ -33,9 +33,16 @@ public class DocumentDisplayPane extends JTextArea {
 		if (doc != null)
 			for (DocumentSubSection sec : doc.getAllSubSections()) {
 				curOffset += lineCount(sec) * lineHeight - 1;
-				g.drawLine(0, curOffset, this.getWidth(), curOffset);
+				paintDottedLine(g, curOffset);
 				curOffset++; // new line between subsections
 			}
+	}
+
+	private void paintDottedLine(Graphics2D g, int height) {
+		
+		for (int i = 0; i < this.getWidth(); i += 8) {
+			g.drawLine(i, height, i + 4, height);
+		}
 	}
 
 	private static int lineCount(DocumentSubSection sec) {
