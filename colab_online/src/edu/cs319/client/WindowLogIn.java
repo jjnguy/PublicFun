@@ -60,6 +60,9 @@ public class WindowLogIn extends JDialog {
 		JLabel hostNameLabel = new JLabel("Host Name");
 		JLabel usernameLabel = new JLabel("User Name");
 		JLabel passwordLabel = new JLabel("Password");
+		
+		logInButton.setMnemonic(KeyEvent.VK_L);
+		cancelButton.setMnemonic(KeyEvent.VK_N);
 
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();

@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
@@ -84,12 +85,17 @@ public class WindowJoinCoLab extends JDialog {
 		JScrollPane listScrollPane = new JScrollPane(roomList);
 
 		JLabel listLabel = new JLabel("Existing CoLab Rooms:");
-		JLabel createLabel = new JLabel("Create a New CoLab:");
+		JLabel createLabel = new JLabel("Make a New CoLab Room:");
 		JLabel cancelLabel = new JLabel("Join a CoLab Room at another time:");
+		
 		createField.setPreferredSize(new Dimension(200, 25));
-
 		refreshButton.setSize(100, 25);
 
+		joinButton.setMnemonic(KeyEvent.VK_J);
+		createButton.setMnemonic(KeyEvent.VK_C);
+		cancelButton.setMnemonic(KeyEvent.VK_N);
+		refreshButton.setMnemonic(KeyEvent.VK_R);
+		
 		JPanel listLabelPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		Insets labelInsets = new Insets(0, 0, 10, 0);

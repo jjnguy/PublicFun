@@ -119,6 +119,7 @@ public class WindowClient extends JFrame implements IClient {
 		about = new JMenuItem("About CoLab");
 
 		file.setMnemonic(KeyEvent.VK_F);
+		connect.setMnemonic(KeyEvent.VK_C);
 		doc.setMnemonic(KeyEvent.VK_D);
 		view.setMnemonic(KeyEvent.VK_V);
 		help.setMnemonic(KeyEvent.VK_H);
@@ -201,6 +202,7 @@ public class WindowClient extends JFrame implements IClient {
 						io.printStackTrace();
 					}
 				}
+				setDisconnected();
 			}
 		});
 		exitCoLab.addActionListener(new ActionListener() {
