@@ -278,7 +278,6 @@ public class JDocTabPanel extends JPanel {
 				return;
 			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentlySelectedSubSection().getName());
-			// TODO updateWorkPane(getCurrentlySelectedSubSection());
 		}
 	}
 
@@ -305,24 +304,19 @@ public class JDocTabPanel extends JPanel {
 	}
 
 	public void updateWorkPane(DocumentSubSection ds) {
-		updateWorkPane(ds, false, false);
-	}
-
-	private void updateWorkPane(DocumentSubSection ds, boolean force, boolean editable) {
 		synchronized (currentWorkintPane) {
-			int carrotPos = currentWorkintPane.getCaretPosition();
-			if (ds != null) {
-				if (force) {
-					currentWorkintPane.setEditable(editable);
-				} else {
-					currentWorkintPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
+			// TODO this hopefully works!!
+			if (ds.equals(getCurrentlySelectedSubSection())) {
+				int carrotPos = currentWorkintPane.getCaretPosition();
+				if (ds == null) {
+					currentWorkintPane.setText("");
+					currentWorkintPane.setEditable(false);
+					return;
 				}
+				currentWorkintPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
 				currentWorkintPane.setText(ds.getText());
 				int length = currentWorkintPane.getText().length();
 				currentWorkintPane.setCaretPosition(carrotPos <= length ? carrotPos : length);
-			} else {
-				currentWorkintPane.setText("");
-				currentWorkintPane.setEditable(false);
 			}
 		}
 	}
@@ -347,7 +341,6 @@ public class JDocTabPanel extends JPanel {
 					getCurrentlySelectedSubSection());
 			info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
 					info.getDocumentName(), getCurrentlySelectedSubSection().getName());
-			// TODO updateWorkPane(getCurrentlySelectedSubSection());
 		}
 	}
 
