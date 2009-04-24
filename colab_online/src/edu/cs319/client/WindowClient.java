@@ -34,9 +34,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
-import edu.cs319.client.customcomponents.SubSectionList;
-import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
+import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.DocumentInfoImpl;
@@ -58,7 +57,6 @@ public class WindowClient extends JFrame implements IClient {
 
 	private String userName, roomName;
 
-	
 	private JTabbedPane tabbedDocumentPane;
 	private Map<String, JDocTabPanel> documentTabs;
 
@@ -184,7 +182,7 @@ public class WindowClient extends JFrame implements IClient {
 				proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
 						username);
 				setUserName(username);
-				//proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
+				// proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
 				if (proxy != null) {
 					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
 					setMenusForUserLoggedIn();
@@ -198,7 +196,7 @@ public class WindowClient extends JFrame implements IClient {
 				if (result == WindowJoinCoLab.ROOM_JOINED) {
 					setMenusForUserJoinedRoom();
 				}
-				if(getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
+				if (getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForUserObserver();
 				}
 			}
@@ -248,7 +246,7 @@ public class WindowClient extends JFrame implements IClient {
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
-				if(getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
+				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {
 					setMenusForUserObserver();
@@ -289,7 +287,7 @@ public class WindowClient extends JFrame implements IClient {
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
 				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
-				if(getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
+				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {
 					setMenusForUserObserver();
@@ -301,11 +299,12 @@ public class WindowClient extends JFrame implements IClient {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!JDocTabPanel.hasPermission(WindowClient.this))
 					return;
-				SectionizedDocument doc = ((JDocTabPanel) tabbedDocumentPane.getSelectedComponent()).getSectionizedDocument();
+				SectionizedDocument doc = ((JDocTabPanel) tabbedDocumentPane.getSelectedComponent())
+						.getSectionizedDocument();
 				proxy.getServer().documentRemoved(userName, roomName, doc.getName());
 
-				if(documentTabs.size() == 0) {
-					if(getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
+				if (documentTabs.size() == 0) {
+					if (getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 						setMenusForUserObserver();
 					} else {
 						setMenusForUserJoinedRoom();
@@ -332,7 +331,8 @@ public class WindowClient extends JFrame implements IClient {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				SectionizedDocument selectedTab = ((JDocTabPanel) tabbedDocumentPane.getSelectedComponent()).getSectionizedDocument();
+				SectionizedDocument selectedTab = ((JDocTabPanel) tabbedDocumentPane
+						.getSelectedComponent()).getSectionizedDocument();
 				String docName = selectedTab.getName();
 				out.println(documentTabs.get(docName).getSectionizedDocument().getFullText());
 			}
@@ -449,7 +449,7 @@ public class WindowClient extends JFrame implements IClient {
 		newDocument.setEnabled(false);
 		openDocument.setEnabled(false);
 		removeDocument.setEnabled(false);
-		if(documentTabs.size() == 0) {
+		if (documentTabs.size() == 0) {
 			saveDocument.setEnabled(false);
 		} else {
 			saveDocument.setEnabled(true);
@@ -492,17 +492,17 @@ public class WindowClient extends JFrame implements IClient {
 	 * Set menu items enabled/disabled for when documents are open in a CoLab Room.
 	 */
 	private void setMenusForRoomWithDocumentsOpen() {
-			logIn.setEnabled(false);
-			joinCoLabRoom.setEnabled(false);
-			disconnect.setEnabled(true);
-			newDocument.setEnabled(true);
-			openDocument.setEnabled(true);
-			removeDocument.setEnabled(true);
-			saveDocument.setEnabled(true);
-			addSection.setEnabled(true);
-			deleteSection.setEnabled(true);
-			splitSection.setEnabled(true);
-			mergeSection.setEnabled(true);
+		logIn.setEnabled(false);
+		joinCoLabRoom.setEnabled(false);
+		disconnect.setEnabled(true);
+		newDocument.setEnabled(true);
+		openDocument.setEnabled(true);
+		removeDocument.setEnabled(true);
+		saveDocument.setEnabled(true);
+		addSection.setEnabled(true);
+		deleteSection.setEnabled(true);
+		splitSection.setEnabled(true);
+		mergeSection.setEnabled(true);
 	}
 
 	/**
@@ -596,40 +596,31 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean newSubSection(String username, String documentName, String sectionID,
-			DocumentSubSection section, int idx) {
-		final String user = username;
-		final String document = documentName;
-		final String secID = sectionID;
-		final DocumentSubSection sec = section;
-		final int index = idx;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean newSubSection(final String username, final String documentName,
+			String sectionID, final DocumentSubSection section, final int idx) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(document).subSectionCreated(sec,index);
-				
+				documentTabs.get(documentName).subSectionCreated(section, idx);
+
 			}
-		});			
+		});
 		return true;
 	}
 
 	@Override
-	public boolean newDocument(String username, String documentName) {
-		final String user = username;
-		final String document = documentName;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean newDocument(String username, final String documentName) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JDocTabPanel doc = documentTabs.get(document);
+				JDocTabPanel doc = documentTabs.get(documentName);
 				if (doc != null) {
 					throw new IllegalStateException("Two documents cannot have the same name");
 				}
-				doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, document,
+				doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, documentName,
 						userName), WindowClient.this);
-				documentTabs.put(document, doc);
-				tabbedDocumentPane.add(document, doc);
-				System.out.println("WindowClient New Document: Username: " + user + " DocumentName: "
-						+ document);
+				documentTabs.put(documentName, doc);
+				tabbedDocumentPane.add(documentName, doc);
 				// TODO keep update? documents.get(documentName).updateDocumentView();
-				if(getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
+				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {
 					setMenusForUserObserver();
@@ -641,21 +632,18 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean removeDocument(String username, String documentName) {
-		final String user = username;
-		final String document = documentName;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean removeDocument(final String username, final String documentName) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				System.out.println("Removing Document: " + userName);
-				JDocTabPanel doc = documentTabs.get(document);
+				JDocTabPanel doc = documentTabs.get(documentName);
 				if (doc == null) {
 					throw new IllegalStateException("This document does not exist");
 				}
-				documentTabs.remove(document);
-				System.out.println("Document Removed from client " + user);
+				documentTabs.remove(documentName);
+				System.out.println("Document Removed from client " + username);
 				tabbedDocumentPane.remove(doc);
-				if(documentTabs.size() == 0) {
-					if(getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
+				if (documentTabs.size() == 0) {
+					if (getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 						setMenusForUserObserver();
 					} else {
 						setMenusForUserJoinedRoom();
@@ -667,115 +655,92 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean subsectionLocked(String usernameSender, String documentName, String sectionId) {
-		final String user = usernameSender;
-		final String document = documentName;
-		final String section = sectionId;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean subsectionLocked(final String usernameSender, final String documentName,
+			final String sectionId) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(document).subSectionLocked(section, user);
+				documentTabs.get(documentName).subSectionLocked(sectionId, usernameSender);
 			}
 		});
 		return true;
 	}
 
 	@Override
-	public boolean subsectionUnLocked(String usernameSender, String documentName, String sectionId) {
-		final String user = usernameSender;
-		final String document = documentName;
-		final String section = sectionId;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean subsectionUnLocked(final String usernameSender, final String documentName,
+			final String sectionId) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(document).subSectionUnlocked(section, user);
+				documentTabs.get(documentName).subSectionUnlocked(sectionId, usernameSender);
 			}
 		});
 		return true;
 	}
 
 	@Override
-	public boolean subsectionFlopped(String usernameSender, String documentName,
-			String sectionIDMoveUp, String sectionIDMoveDown) {
-		final String user = usernameSender;
-		final String document = documentName;
-		final String up = sectionIDMoveUp;
-		final String down = sectionIDMoveDown;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean subsectionFlopped(final String usernameSender, final String documentName,
+			final String sectionIDMoveUp, final String sectionIDMoveDown) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(document).subSectionFlopped(up,down);
+				documentTabs.get(documentName)
+						.subSectionFlopped(sectionIDMoveUp, sectionIDMoveDown);
 			}
 		});
 		return true;
 	}
 
 	@Override
-	public boolean subSectionRemoved(String username, String sectionId, String documentName) {
-		final String user = username;
-		final String document = documentName;
-		final String section = sectionId;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean subSectionRemoved(String username, final String sectionId,
+			final String documentName) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(document).subSectionRemoved(section);
+				documentTabs.get(documentName).subSectionRemoved(sectionId);
 			}
 		});
 		return true;
 	}
 
 	@Override
-	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections) {
-		final String document = documentId;
-		final List<DocumentSubSection> all = allSections;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean updateAllSubsections(final String documentId,
+			final List<DocumentSubSection> allSections) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(document).subSectionsRefreshed(all);
+				documentTabs.get(documentId).subSectionsRefreshed(allSections);
 			}
 		});
 		return true;
 	}
 
 	@Override
-	public boolean updateSubsection(String usernameSender, String documentname,
-			DocumentSubSection section, String sectionID) {
-		final String user = usernameSender;
-		final String document = documentname;
-		final DocumentSubSection sec = section;
-		final String secId = sectionID;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean updateSubsection(final String usernameSender, final String documentname,
+			final DocumentSubSection section, final String sectionID) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(document).subSectionUpdated(secId, user, sec);
-				
+				documentTabs.get(documentname)
+						.subSectionUpdated(sectionID, usernameSender, section);
+
 			}
 		});
 		return true;
 	}
 
 	@Override
-	public boolean subSectionSplit(String username, String documentName, String oldSecName,
-			String newName1, String newName2, int idx) {
-		final String user = username;
-		final String document = documentName;
-		final String old = oldSecName;
-		final String one = newName1;
-		final String two = newName2;
-		final int index = idx;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean subSectionSplit(final String username, final String documentName,
+			final String oldSecName, final String newName1, final String newName2, final int idx) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(document).subSectionSplit(old,one,two,index,user);
+				documentTabs.get(documentName).subSectionSplit(oldSecName, newName1, newName2, idx,
+						username);
 			}
 		});
 		return true;
 	}
 
 	@Override
-	public boolean subSectionCombined(String username, String documentName, String sectionA,
-			String sectionB, String newSection) {
-		final String user = username;
-		final String document = documentName;
-		final String one = sectionA;
-		final String two = sectionB;
-		final String sec = newSection;
-		SwingUtilities.invokeLater( new Runnable() {
+	public boolean subSectionCombined(String username, final String documentName,
+			final String sectionA, final String sectionB, final String newSection) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(document).subSectionMerged(one,two,sec);
+				documentTabs.get(documentName).subSectionMerged(sectionA, sectionB, newSection);
 			}
 		});
 		return true;
@@ -803,8 +768,8 @@ public class WindowClient extends JFrame implements IClient {
 	/**
 	 * Sets the name of the room this user has joined.
 	 * 
-	 * @param rn -
-	 *            room name
+	 * @param rn
+	 *            - room name
 	 */
 	public void setRoomName(String rn) {
 		roomName = rn;
@@ -831,5 +796,4 @@ public class WindowClient extends JFrame implements IClient {
 			e.printStackTrace();
 		}
 	}
-
 }
