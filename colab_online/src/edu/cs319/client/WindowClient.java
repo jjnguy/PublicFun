@@ -36,6 +36,7 @@ import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
 import edu.cs319.client.customcomponents.SubSectionList;
 import edu.cs319.connectionmanager.clientside.Proxy;
+import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.DocumentInfoImpl;
@@ -179,10 +180,10 @@ public class WindowClient extends JFrame implements IClient {
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
 				String username = r.nextInt(1000) + "";
-				//proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
-				//		username);
-				//setUserName(username);
-				proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
+				proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
+						username);
+				setUserName(username);
+				//proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
 				if (proxy != null) {
 					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
 					setMenusForUserLoggedIn();
@@ -603,13 +604,8 @@ public class WindowClient extends JFrame implements IClient {
 		final int index = idx;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
-				if (Util.DEBUG){
-					System.out.println("WindowClient New SubSection: Username: " + user + " Document: "
-							+ document + " SectionID: " + secID + " LockHolder: "
-							+ sec.lockedByUser());}
-
-				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
-				doc.addSubSection(sec, index);
+				documentTabs.get(document).subSectionCreated(sec,index);
+				
 			}
 		});			
 		return true;
@@ -715,12 +711,7 @@ public class WindowClient extends JFrame implements IClient {
 		final String down = sectionIDMoveDown;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
-				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
-				int idx1 = doc.getSubSectionIndex(up);
-				int idx2 = doc.getSubSectionIndex(down);
-				doc.flopSubSections(idx1, idx2);
-				// TODO need method to do this in the tabbed doc pane
-				documentTabs.get(document).updateTopDocumentPane();
+				documentTabs.get(document).subSectionFlopped(up,down);
 			}
 		});
 		return true;
@@ -769,9 +760,6 @@ public class WindowClient extends JFrame implements IClient {
 				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
 				doc.getSection(secId).setText(user, sec.getText());
 				documentTabs.get(document).updateTopDocumentPane();
-				if (userName.equals(user)) {
-					docPane.updateWorkPane(sec);
-				}
 			}
 		});
 		return true;
