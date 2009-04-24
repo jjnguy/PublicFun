@@ -42,13 +42,13 @@ import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
 /**
+ * A JDocTabPanel represents a SectionizedDocument and all of the means 
+ * Of interacting with an IServer relating to SectionizedDocuments.
  * 
  * @author Amelia Gee
- * @author Wayne Wrowweeclifffe
+ * @author Wayne Rowcliffe
  * @author Justin Nelson
- * 
- */
-@SuppressWarnings("serial")
+ **/
 public class JDocTabPanel extends JPanel {
 
 	// Number of milliseconds between automatic updates
@@ -71,7 +71,13 @@ public class JDocTabPanel extends JPanel {
 	final private DocumentInfo info;
 
 	private WindowClient client;
-
+	
+	/**
+	 * Constructs a JDocTabPanel given a WindowClient and information about the document
+	 * 
+	 * @param info Information relating to the SectionizedDocument and how it should interact with the IServer
+	 * @param client The WindowClient that contains this JDocTabPanel
+	 **/
 	public JDocTabPanel(DocumentInfo info, WindowClient client) {
 		this.info = info;
 		this.client = client;
@@ -95,7 +101,10 @@ public class JDocTabPanel extends JPanel {
 		Timer timer = new Timer(UPDATE_NUM_MS, new AutoUpdateTask());
 		timer.start();
 	}
-
+	
+	/**
+	 * Lays out the Swing components for the pane
+	 **/
 	private void setUpAppearance() {
 		try {
 			sectionUpButton = new JButton(new ImageIcon(ImageIO.read(new File(
@@ -152,6 +161,13 @@ public class JDocTabPanel extends JPanel {
 		add(wholePane, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Checks if the user has the needed permission level to complete an action
+	 * 
+	 * @param client The WindowClient which knows the user's permission level
+	 * 
+	 * @return Whether the user has the proper permission level
+	 **/
 	public static boolean hasPermission(WindowClient client) {
 		if (client.getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 			JOptionPane
@@ -164,15 +180,9 @@ public class JDocTabPanel extends JPanel {
 		return true;
 	}
 
-	public void newSubSection(String name) {
-		if (!hasPermission(client)) {
-			return;
-		}
-		System.out.println("Creating New SubSection: " + info);
-		info.getServer().newSubSection(info.getUserName(), info.getRoomName(),
-				listOfSubSections.getName(), name, listOfSubSections.getSubSectionCount());
-	}
-
+	/**
+	 * Adds all needed listeners to their components
+	 **/
 	private void setUpListeners() {
 		listOfSubSections.addMouseListener(new RightClickListener());
 		listOfSubSections.addMouseListener(new DoubleClickListener());
@@ -185,18 +195,40 @@ public class JDocTabPanel extends JPanel {
 		unlockSubSection.addActionListener(new ReleaseLockListener());
 	}
 
+	/**
+	 * Returns the JList containing this Document's subsections
+	 * 
+	 * @return The JList containing this Document's subsections
+	 **/
 	public JList getJListOfSubSections() {
 		return listOfSubSections;
 	}
 
+	/**
+	 * Updates the Document view of the pane
+	 **/
 	public void updateTopDocumentPane() {
 		topFullDocumentPane.updateDocument(listOfSubSections);
 	}
 
+	/**
+	 * Returns the SectionizedDocument that is backing this JDocTabPanel
+	 * 
+	 * @return The backing SectionizedDocument
+	 **/
 	public SectionizedDocument getSectionizedDocument() {
 		return listOfSubSections;
 	}
 	
+	// These are the methods which respond to messages from the ISever, relayed via the WindowClient
+	// Measures should always be taken to ensure that an item in the JList is always selected after these methods complete
+	
+	/**
+	 * Inserts the given DocumentSubSection at the given index
+	 * 
+	 * @param ds The DocumentSubSection to add to this document
+	 * @param index The index to add the subsection at
+	 **/
 	public void subSectionCreated(DocumentSubSection ds, int index) {
 		System.out.println("Adding new SubSection: " + info + " SectionName: " + ds.getName() + " Currently Selected: " + getCurrentlySelectedSubSection());
 		getSectionizedDocument().addSubSection(ds, index);
@@ -205,6 +237,12 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Swaps the order of appearance of the given subsections
+	 * 
+	 * @param up The name of the subsection to move up
+	 * @param down The name of the subsection to move down
+	 **/
 	public void subSectionFlopped(String up, String down) {
 		System.out.println("Flopping SubSection: " + info + " Section Up: " + up + " Section Down: " + down + " Currently Selected: " + getCurrentlySelectedSubSection());
 		int idx1 = getSectionizedDocument().getSubSectionIndex(up);
@@ -219,6 +257,12 @@ public class JDocTabPanel extends JPanel {
 		updateTopDocumentPane();
 	}
 	
+	/**
+	 * Locks this given subsection for the given user
+	 * 
+	 * @param section The name of the subsection to lock
+	 * @param user The user to give the lock to
+	 **/
 	public void subSectionLocked(String section, String user) {
 		System.out.println("Locking SubSection: " + info + " Locking: " + section + " Currently Selected: " + getCurrentlySelectedSubSection());
 		String current = getCurrentlySelectedSubSection().getName();
@@ -230,6 +274,13 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Merge the given subsections into a single subsection
+	 * 
+	 * @param one The first subsection to merge
+	 * @param two The second subsection to merge
+	 * @param sec The name of the merged subsection
+	 **/
 	public void subSectionMerged(String one, String two, String sec) {
 		System.out.println("Merging Two SubSections: One: " + one + " Two: " + two + " New: " + sec + " " + info + " Currently Selected: " + getCurrentlySelectedSubSection());	
 		String current = getCurrentlySelectedSubSection().getName();
@@ -240,6 +291,15 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Splits the given subsection into two new subsections
+	 * 
+	 * @param old The name of the subsection to split
+	 * @param one The name to give the first half of the split subsection
+	 * @param two The name to give the second half of the split subsection
+	 * @param index The index within the orginal subsection's text at which to split
+	 * @param user The user who must hold the lock on the original subsection for this operation to succeed.
+	 **/
 	public void subSectionSplit(String old, String one, String two, int index, String user) {
 		System.out.println("Splitting SubSection: Old: " + old + " One: " + one + " Two: " + two + " " + info + " Currently Selected: " + getCurrentlySelectedSubSection());
 		String current = getCurrentlySelectedSubSection().getName();
@@ -250,6 +310,11 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Refreshes the entire document using the subsections provided
+	 * 
+	 * @param all The subsections to place within this document
+	 **/
 	public void subSectionsRefreshed(List<DocumentSubSection> all) {
 		System.out.println("Updating All SubSections: " + info + " Currently Selected: " + getCurrentlySelectedSubSection());
 		getSectionizedDocument().removeAllSubSections();
@@ -260,6 +325,11 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Remove the subsection with the given name from this pane
+	 * 
+	 * @param section The name of the subsection to remove
+	 **/
 	public void subSectionRemoved(String section) {
 		System.out.println("Removing SubSection: " + info + " Removing: " + section + " Currently Selected: " + getCurrentlySelectedSubSection());
 		String current = getCurrentlySelectedSubSection().getName();
@@ -270,6 +340,12 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Releases the lock on the given subsection which the given user was holding a lock on
+	 * 
+	 * @param section The name of the subsection to unlock
+	 * @param user The user who was holding the lock on that subsection
+	 **/ 
 	public void subSectionUnlocked(String section, String user) {
 		System.out.println("Unlocking SubSection: " + info + " Unlocking: " + section + " Currently Selected: " + getCurrentlySelectedSubSection());
 		String current = getCurrentlySelectedSubSection().getName();
@@ -281,6 +357,13 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Updates the given section with the text in the given subsection
+	 * 
+	 * @param secId The name of the subsection to update
+	 * @param user The name of the user holding the lock on that subsection
+	 * @param sec The subsection containing the new text
+	 **/
 	public void subSectionUpdated(String secId, String user, DocumentSubSection sec) {
 		System.out.println("Updating SubSection: " + info + " Updating: " + secId + " Currently Selected: " + getCurrentlySelectedSubSection());
 		String current = getCurrentlySelectedSubSection().getName();
@@ -293,6 +376,8 @@ public class JDocTabPanel extends JPanel {
 			}
 		}
 	}
+
+	// End IServer reaction methods
 
 	private void updateSubSection(DocumentSubSection ds, String newText) {
 		if (!hasPermission(client))
@@ -433,6 +518,15 @@ public class JDocTabPanel extends JPanel {
 				return;
 			newSubSection(name);
 		}
+	}
+	
+	public void newSubSection(String name) {
+		if (!hasPermission(client)) {
+			return;
+		}
+		System.out.println("Creating New SubSection: " + info);
+		info.getServer().newSubSection(info.getUserName(), info.getRoomName(),
+				listOfSubSections.getName(), name, listOfSubSections.getSubSectionCount());
 	}
 	
 	private class AquireLockListener implements ActionListener {

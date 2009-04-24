@@ -59,13 +59,8 @@ public class WindowClient extends JFrame implements IClient {
 	private String userName, roomName;
 
 	
-	THis panel should be just like the chat panel
-	we should just have to call methods like subsection updated
-	or 
-	lock/unlock
-	and hte panel shoulkd take care of th rest
-	/*private JTabbedPane tabbedDocumentPane;
-	private Map<String, JDocTabPanel> documentTabs;*/
+	private JTabbedPane tabbedDocumentPane;
+	private Map<String, JDocTabPanel> documentTabs;
 
 	private JRoomListPanel roomMemberListPanel;
 	private JChatPanel chatPanel;
