@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -119,18 +120,19 @@ public class JDocTabPanel extends JPanel {
 
 		JPanel buttonPanel = new JPanel(new BorderLayout(5, 5));
 		buttonPanel.add(sectionUpButton, BorderLayout.NORTH);
+		buttonPanel.add(addSubSection, BorderLayout.CENTER);
 		buttonPanel.add(sectionDownButton, BorderLayout.SOUTH);
 		sectionPanel = new JPanel(new BorderLayout(10, 10));
 		sectionPanel.add(listOfSubSections, BorderLayout.CENTER);
 		sectionPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		JPanel bottomPane = new JPanel(new BorderLayout());
-		JPanel north = new JPanel();
-		north.add(aquireLock);
-		north.add(updateSection);
-		north.add(unlockSubSection);
-		north.add(addSubSection);
-		bottomPane.add(north, BorderLayout.NORTH);
+		//JPanel north = new JPanel();
+		//north.add(aquireLock);
+		//north.add(updateSection);
+		//north.add(unlockSubSection);
+		//north.add(addSubSection);
+		//bottomPane.add(north, BorderLayout.NORTH);
 
 		topFullDocumentPane.setMinimumSize(new Dimension(0, 0));
 		currentWorkingPane.setMinimumSize(new Dimension(0, 0));
@@ -173,6 +175,7 @@ public class JDocTabPanel extends JPanel {
 
 	private void setUpListeners() {
 		listOfSubSections.addMouseListener(new RightClickListener());
+		listOfSubSections.addMouseListener(new DoubleClickListener());
 		sectionUpButton.addActionListener(new UpButtonListener());
 		sectionDownButton.addActionListener(new DownButtonListener());
 		aquireLock.addActionListener(new AquireLockListener());
@@ -197,7 +200,7 @@ public class JDocTabPanel extends JPanel {
 	public void subSectionCreated(DocumentSubSection ds, int index) {
 		System.out.println("Adding new SubSection: " + info + " SectionName: " + ds.getName() + " Currently Selected: " + getCurrentlySelectedSubSection());
 		getSectionizedDocument().addSubSection(ds, index);
-		if(ds.lockedByUser().equals(info.getUserName()) || getSectionizedDocument().getSubSectionCount() == 1) {
+		if(ds.lockedByUser().equals(info.getUserName()) || listOfSubSections.getSelectedIndex() == -1) {
 			listOfSubSections.setSelectedIndex(index);
 		}
 	}
@@ -214,6 +217,81 @@ public class JDocTabPanel extends JPanel {
 		}
 		
 		updateTopDocumentPane();
+	}
+	
+	public void subSectionLocked(String section, String user) {
+		System.out.println("Locking SubSection: " + info + " Locking: " + section + " Currently Selected: " + getCurrentlySelectedSubSection());
+		String current = getCurrentlySelectedSubSection().getName();
+		getSectionizedDocument().getSection(section).setLocked(true, user);
+		listOfSubSections.subSectionUpdated(getSectionizedDocument().getSection(section));
+		if(section.equals(current)) {
+			listOfSubSections.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(current));
+			updateWorkPane(section);
+		}
+	}
+	
+	public void subSectionMerged(String one, String two, String sec) {
+		System.out.println("Merging Two SubSections: One: " + one + " Two: " + two + " New: " + sec + " " + info + " Currently Selected: " + getCurrentlySelectedSubSection());	
+		String current = getCurrentlySelectedSubSection().getName();
+		getSectionizedDocument().combineSubSections(one, two, sec);
+		updateTopDocumentPane();
+		if(one.equals(current) || two.equals(current)) {
+			listOfSubSections.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(sec));
+		}
+	}
+	
+	public void subSectionSplit(String old, String one, String two, int index, String user) {
+		System.out.println("Splitting SubSection: Old: " + old + " One: " + one + " Two: " + two + " " + info + " Currently Selected: " + getCurrentlySelectedSubSection());
+		String current = getCurrentlySelectedSubSection().getName();
+		getSectionizedDocument().splitSubSection(old, one, two, index, user);
+		updateTopDocumentPane();
+		if(old.equals(current)) {
+			listOfSubSections.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(two));
+		}
+	}
+	
+	public void subSectionsRefreshed(List<DocumentSubSection> all) {
+		System.out.println("Updating All SubSections: " + info + " Currently Selected: " + getCurrentlySelectedSubSection());
+		getSectionizedDocument().removeAllSubSections();
+		getSectionizedDocument().addAllSubSections(all);
+		updateTopDocumentPane();
+		if(listOfSubSections.getSelectedIndex() == -1 && all.size() > 0) {
+			listOfSubSections.setSelectedIndex(0);
+		}
+	}
+	
+	public void subSectionRemoved(String section) {
+		System.out.println("Removing SubSection: " + info + " Removing: " + section + " Currently Selected: " + getCurrentlySelectedSubSection());
+		String current = getCurrentlySelectedSubSection().getName();
+		getSectionizedDocument().removeSubSection(section);
+		updateTopDocumentPane();
+		if(section.equals(current) && getSectionizedDocument().getSubSectionCount() > 0) {
+			listOfSubSections.setSelectedIndex(0);
+		}
+	}
+	
+	public void subSectionUnlocked(String section, String user) {
+		System.out.println("Unlocking SubSection: " + info + " Unlocking: " + section + " Currently Selected: " + getCurrentlySelectedSubSection());
+		String current = getCurrentlySelectedSubSection().getName();
+		getSectionizedDocument().getSection(section).setLocked(false, user);
+		listOfSubSections.subSectionUpdated(getSectionizedDocument().getSection(section));
+		if(section.equals(current)) {
+			listOfSubSections.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(current));
+			updateWorkPane(section);
+		}
+	}
+	
+	public void subSectionUpdated(String secId, String user, DocumentSubSection sec) {
+		System.out.println("Updating SubSection: " + info + " Updating: " + secId + " Currently Selected: " + getCurrentlySelectedSubSection());
+		String current = getCurrentlySelectedSubSection().getName();
+		getSectionizedDocument().getSection(secId).setText(user, sec.getText());
+		updateTopDocumentPane();
+		if(secId.equals(current)) {
+			listOfSubSections.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(current));
+			if(!info.getUserName().equals(getSectionizedDocument().getSection(current).lockedByUser())) {
+				updateWorkPane(current);
+			}
+		}
 	}
 
 	private void updateSubSection(DocumentSubSection ds, String newText) {
@@ -301,16 +379,7 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
-	private class AquireLockListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (!hasPermission(client)) {
-				return;
-			}
-			System.out.println("Aquiring Lock: " + info + " Currently Selected: "  + getCurrentlySelectedSubSection());
-			info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
-					info.getDocumentName(), getCurrentlySelectedSubSection().getName());
-		}
-	}
+
 
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -365,16 +434,35 @@ public class JDocTabPanel extends JPanel {
 			newSubSection(name);
 		}
 	}
+	
+	private class AquireLockListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			aquireLockRequest();
+		}
+	}
+	
+	private void aquireLockRequest() {
+		if (!hasPermission(client)) {
+			return;
+		}
+		System.out.println("Aquiring Lock: " + info + " Currently Selected: "  + getCurrentlySelectedSubSection());
+		info.getServer().subSectionLocked(info.getUserName(), info.getRoomName(),
+				info.getDocumentName(), getCurrentlySelectedSubSection().getName());
+	}
 
 	private class ReleaseLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Releasing Lock: " + info + " Currently Selected: " + getCurrentlySelectedSubSection());
-			info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
-					info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
-					getCurrentlySelectedSubSection());
-			info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
-					info.getDocumentName(), getCurrentlySelectedSubSection().getName());
+			releaseLockRequest();
 		}
+	}
+	
+	private void releaseLockRequest() {
+		System.out.println("Releasing Lock: " + info + " Currently Selected: " + getCurrentlySelectedSubSection());
+		info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
+				info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
+				getCurrentlySelectedSubSection());
+		info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
+				info.getDocumentName(), getCurrentlySelectedSubSection().getName());
 	}
 
 	private class DeleteSubSectionListener implements ActionListener {
@@ -552,6 +640,20 @@ public class JDocTabPanel extends JPanel {
 			doPop(e);
 		}
 	}
+	
+	private class DoubleClickListener extends MouseAdapter {
+		
+		public void mouseClicked(MouseEvent e) {
+			if(e.getClickCount() == 2) {
+				if(info.getUserName().equals(getCurrentlySelectedSubSection().lockedByUser())) {
+					releaseLockRequest();
+				} else if(getCurrentlySelectedSubSection().lockedByUser() == null) {
+					aquireLockRequest();
+				}
+			}
+		}
+
+	}
 
 	public class WorkingViewRightClickMenu extends JPopupMenu {
 
@@ -571,16 +673,19 @@ public class JDocTabPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int i = currentWorkingPane.getCaretPosition();
-			if (i == -1)
+			if (i == -1) {
 				return;
+			}
 			String name1 = JOptionPane
 					.showInputDialog(JDocTabPanel.this, "Name of the first part:");
-			if (name1 == null)
+			if (name1 == null) {
 				return;
+			}
 			String name2 = JOptionPane.showInputDialog(JDocTabPanel.this,
 					"Name of the second part:");
-			if (name2 == null)
+			if (name2 == null) {
 				return;
+			}
 			DocumentSubSection sec = getCurrentlySelectedSubSection();
 			info.getServer().subSectionSplit(info.getUserName(), info.getRoomName(),
 					listOfSubSections.getName(), sec.getName(), name1, name2, i);

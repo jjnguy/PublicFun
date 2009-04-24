@@ -678,14 +678,7 @@ public class WindowClient extends JFrame implements IClient {
 		final String section = sectionId;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
-				SubSectionList doc = (SubSectionList) documentTabs.get(document).getSectionizedDocument();
-				DocumentSubSection ds = doc.getSection(section);
-				ds.setLocked(true, user);
-				doc.subSectionUpdated(ds);
-				System.out.println("WindowClient SubSection Locked: Username: " + user
-						+ " Document: " + document + " SectionName: " + section + " LockHolder: "
-						+ ds.lockedByUser());
-				documentTabs.get(document).updateWorkPane(ds);
+				documentTabs.get(document).subSectionLocked(section, user);
 			}
 		});
 		return true;
@@ -698,11 +691,7 @@ public class WindowClient extends JFrame implements IClient {
 		final String section = sectionId;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
-				SubSectionList doc = (SubSectionList) documentTabs.get(document).getSectionizedDocument();
-				DocumentSubSection sec = doc.getSection(section);
-				sec.setLocked(false, user);
-				doc.subSectionUpdated(sec);
-				documentTabs.get(document).updateWorkPane(sec);
+				documentTabs.get(document).subSectionUnlocked(section, user);
 			}
 		});
 		return true;
@@ -730,9 +719,7 @@ public class WindowClient extends JFrame implements IClient {
 		final String section = sectionId;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
-				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
-				doc.removeSubSection(section);
-				documentTabs.get(document).updateTopDocumentPane();
+				documentTabs.get(document).subSectionRemoved(section);
 			}
 		});
 		return true;
@@ -744,10 +731,7 @@ public class WindowClient extends JFrame implements IClient {
 		final List<DocumentSubSection> all = allSections;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
-				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
-				doc.removeAllSubSections();
-				doc.addAllSubSections(all);
-				documentTabs.get(document).updateTopDocumentPane();
+				documentTabs.get(document).subSectionsRefreshed(all);
 			}
 		});
 		return true;
@@ -762,10 +746,8 @@ public class WindowClient extends JFrame implements IClient {
 		final String secId = sectionID;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
-				JDocTabPanel docPane = documentTabs.get(document);
-				SectionizedDocument doc = documentTabs.get(document).getSectionizedDocument();
-				doc.getSection(secId).setText(user, sec.getText());
-				documentTabs.get(document).updateTopDocumentPane();
+				documentTabs.get(document).subSectionUpdated(secId, user, sec);
+				
 			}
 		});
 		return true;
@@ -782,11 +764,7 @@ public class WindowClient extends JFrame implements IClient {
 		final int index = idx;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
-				JDocTabPanel docPane = documentTabs.get(document);
-				docPane.getSectionizedDocument().splitSubSection(old, one, two, index, user);
-				docPane.updateTopDocumentPane();
-				((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane.getSectionizedDocument().getSection(two), true);
-				docPane.updateWorkPane(two);
+				documentTabs.get(document).subSectionSplit(old,one,two,index,user);
 			}
 		});
 		return true;
@@ -802,12 +780,7 @@ public class WindowClient extends JFrame implements IClient {
 		final String sec = newSection;
 		SwingUtilities.invokeLater( new Runnable() {
 			public void run() {
-				JDocTabPanel docPane = documentTabs.get(document);
-				documentTabs.get(document).getSectionizedDocument().combineSubSections(one, two, sec);
-				documentTabs.get(document).updateTopDocumentPane();
-					((SubSectionList) docPane.getSectionizedDocument()).setSelectedValue(docPane
-							.getSectionizedDocument().getSection(sec), true);
-				docPane.updateWorkPane(sec);
+				documentTabs.get(document).subSectionMerged(one,two,sec);
 			}
 		});
 		return true;
