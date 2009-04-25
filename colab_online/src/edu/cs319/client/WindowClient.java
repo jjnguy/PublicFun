@@ -36,11 +36,13 @@ import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
 import edu.cs319.connectionmanager.clientside.Proxy;
+import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.DocumentInfoImpl;
 import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
@@ -240,7 +242,8 @@ public class WindowClient extends JFrame implements IClient {
 				System.out.println("WindowClient New Blank Document: Username: " + userName
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
-				proxy.getServer().subSectionUpdatedAll(userName, roomName, docName, secName, section);
+				proxy.getServer().subSectionUpdatedAll(userName, roomName, docName, secName,
+						section);
 				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {
@@ -258,7 +261,8 @@ public class WindowClient extends JFrame implements IClient {
 				int choice = choose.showOpenDialog(WindowClient.this);
 				if (choice != JFileChooser.APPROVE_OPTION)
 					return;
-				// String docName = JOptionPane.showInputDialog(WindowClient.this, "Enter the name of the document:");
+				// String docName = JOptionPane.showInputDialog(WindowClient.this,
+				// "Enter the name of the document:");
 				File choiceF = choose.getSelectedFile();
 				String docName = choiceF.getName();
 				String secName = JOptionPane.showInputDialog(WindowClient.this,
@@ -281,7 +285,8 @@ public class WindowClient extends JFrame implements IClient {
 				System.out.println("WindowClient Upload Document: Username: " + userName
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
-				proxy.getServer().subSectionUpdatedAll(userName, roomName, docName, secName, section);
+				proxy.getServer().subSectionUpdatedAll(userName, roomName, docName, secName,
+						section);
 				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {
@@ -540,7 +545,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean allUsersInRoom(List<String> usernames, List<CoLabPrivilegeLevel> privs) {
-		
+
 		roomMemberListPanel.updateList(usernames, privs);
 		return true;
 	}
@@ -576,7 +581,7 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean coLabRoomMemberLeft(String username) {
 		chatPanel.newChatMessage("Server", "<Chat Member Left '" + username + "'>");
-		if(username.equals(getUserName())) {
+		if (username.equals(getUserName())) {
 			setMenusForUserDisconnected();
 			chatPanel.clearChatPanel();
 			tabbedDocumentPane.removeAll();
@@ -716,31 +721,37 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean updateSubsectionAll(final String usernameSender, final String documentname, final String sectionID, final DocumentSubSection section) {
+	public boolean updateSubsectionAll(final String usernameSender, final String documentname,
+			final String sectionID, final DocumentSubSection section) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(documentname).subSectionUpdatedAll(usernameSender, sectionID, section);
+				documentTabs.get(documentname).subSectionUpdatedAll(usernameSender, sectionID,
+						section);
 
 			}
 		});
 		return true;
 	}
-	
+
 	@Override
-	public boolean updateSubsectionInsert(final String usernameSender, final String documentname, final String sectionID, final int start, final String update) {
+	public boolean updateSubsectionInsert(final String usernameSender, final String documentname,
+			final String sectionID, final int start, final String update) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(documentname).subSectionUpdatedInsert(usernameSender, sectionID, start, update);
+				documentTabs.get(documentname).subSectionUpdatedInsert(usernameSender, sectionID,
+						start, update);
 			}
 		});
 		return true;
 	}
-	
+
 	@Override
-	public boolean updateSubsectionRemove(final String usernameSender, final String documentname, final String sectionID, final int start, final int end) {
+	public boolean updateSubsectionRemove(final String usernameSender, final String documentname,
+			final String sectionID, final int start, final int end) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(documentname).subSectionUpdatedRemove(usernameSender, sectionID, start, end);
+				documentTabs.get(documentname).subSectionUpdatedRemove(usernameSender, sectionID,
+						start, end);
 			}
 		});
 		return true;
@@ -791,8 +802,8 @@ public class WindowClient extends JFrame implements IClient {
 	/**
 	 * Sets the name of the room this user has joined.
 	 * 
-	 * @param rn -
-	 *            room name
+	 * @param rn
+	 *            - room name
 	 */
 	public void setRoomName(String rn) {
 		roomName = rn;
@@ -817,5 +828,15 @@ public class WindowClient extends JFrame implements IClient {
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public boolean listOfPersistedRooms(Collection<String> romnames) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean persistedCoLabRoom(List<SectionizedDocument> docs) {
+		throw new NotYetImplementedException();
 	}
 }
