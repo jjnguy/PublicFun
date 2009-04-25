@@ -936,6 +936,7 @@ public class JDocTabPanel extends JPanel {
 	private void sendServerUpdate() {
 		String currentText = getCurrentlySelectedSubSection().getText();
 		String proposedText = currentWorkingPane.getText();
+		String update = "";
 		
 		int start = -1;
 		int end = -1;
@@ -943,10 +944,16 @@ public class JDocTabPanel extends JPanel {
 		
 		if(currentText.length() > proposedText.length()) { // Remove
 			while(i < proposedText.length() && currentText.charAt(i) == proposedText.charAt(i)) {
+				System.out.print(currentText.charAt(i));
 				i++;
 			}
+			System.out.println("");
 			start = i;
-			end = currentText.indexOf(proposedText.substring(start,proposedText.length()), start);
+			if(start == proposedText.length()) {
+				end = currentText.length();
+			} else {
+				end = currentText.indexOf(proposedText.substring(start,proposedText.length()), start);
+			}
 			if(end > -1) {
 				System.out.println("Sending Remove: Start: " + start + " End: " + end);
 				info.getServer().subSectionUpdatedRemove(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, end);
@@ -959,19 +966,27 @@ public class JDocTabPanel extends JPanel {
 				i++;
 			}
 			start = i;
-			end = proposedText.indexOf(currentText.substring(start,currentText.length()),start);
-			if(end > -1) {
-				System.out.println("Sending Insert: Start: " + start + " Text: " + proposedText.substring(start,end) + " End: " + end + " Current Text: '" + currentText + "Proposed Text: '" + proposedText);
-				info.getServer().subSectionUpdatedInsert(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, proposedText.substring(start,end));
+			String subString = currentText.substring(start,currentText.length());
+			if(start == currentText.length()) {
+				end = proposedText.length();
 			} else {
-				System.out.println("Failed Insert: Start: " + start + " End: " + end + " Current Text: '" + currentText + "Proposed Text: '" + proposedText);
+				end = proposedText.indexOf(subString,start);
+			}
+			
+			if(end > -1) {
+				update = proposedText.substring(start,end);
+				System.out.println("Sending Insert: Start: " + start + " Text: " + update);
+				info.getServer().subSectionUpdatedInsert(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, update);
+			} else {
+				System.out.println("Failed Insert: Start: " + start + " End: " + end + " Current Text: '" + currentText + "' Proposed Text: '" + proposedText + "'");
 				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());
 			}
 		} else { // They probably haven't changed
 			System.out.println("Updates were the same size");
 			if(!currentText.equals(proposedText)) {
+				System.out.println("Different Contents, Updating");
 				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());
 			}
-		}	
+		}
 	}
 }
