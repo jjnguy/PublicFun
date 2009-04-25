@@ -170,9 +170,15 @@ public class Server implements IServer {
 			if (room.getAllClients().size() == 1) {
 				changeUserPrivledge(username, roomName, CoLabPrivilegeLevel.ADMIN);
 			}
-			for (IClient client2 : room.getAllClients()) {
-				client2.coLabRoomMemberArrived(username);
+			if (Util.isSuperAdmin(username)) {
+				changeUserPrivledge(username, roomName, CoLabPrivilegeLevel.SUPER_ADMIN);
 			}
+			CoLabRoomMember member = room.getMemberByName(username);
+			for (IClient client2 : room.getAllClients()) {
+				client2.coLabRoomMemberArrived(username, member.privledges());
+			}
+			// TODO test
+			client.allUsersInRoom(room.getAllClientNamesInRoom(), room.getAllPrivLevels());
 			for (SectionizedDocument sd : room.getAllDocuments()) {
 				client.newDocument(username, sd.getName());
 				client.updateAllSubsections(sd.getName(), sd.getAllSubSections());
@@ -195,7 +201,8 @@ public class Server implements IServer {
 		}
 		synchronized (room) {
 			CoLabRoomMember c = room.getMemberByName(username);
-			if (c == null)return false;
+			if (c == null)
+				return false;
 			// If an admin leaves, someone else should be promoted to admin
 			if (c.privledges() == CoLabPrivilegeLevel.ADMIN) {
 				for (CoLabRoomMember member : room.getAllMembers()) {
@@ -205,7 +212,7 @@ public class Server implements IServer {
 					}
 				}
 			}
-			
+
 			for (IClient client : room.getAllClients()) {
 				client.coLabRoomMemberLeft(username);
 			}
@@ -217,7 +224,6 @@ public class Server implements IServer {
 				}
 				return false;
 			}
-
 			return true;
 		}
 	}
@@ -485,7 +491,8 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
 			CoLabRoomMember m = room.getMemberByName(username);
-			if (m == null) return false;
+			if (m == null)
+				return false;
 			if (m.privledges() == CoLabPrivilegeLevel.OBSERVER) {
 				if (Util.DEBUG) {
 					System.out.println("Restricting an observer from locking subsection");

@@ -65,9 +65,9 @@ public class JRoomListPanel extends JPanel {
 		return this.roomList.setMemberPriv(id, newPriv);
 	}
 
-	public boolean addUser(String id) {
+	public boolean addUser(String id, CoLabPrivilegeLevel priv) {
 		return roomList.getModel().add(
-				new RoomMemberLite(id, CoLabPrivilegeLevel.OBSERVER));
+				new RoomMemberLite(id, priv));
 	}
 
 	public boolean removeUser(String id) {

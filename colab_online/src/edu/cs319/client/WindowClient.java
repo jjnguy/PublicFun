@@ -538,6 +538,7 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean allUsersInRoom(List<String> usernames, List<CoLabPrivilegeLevel> privs) {
+		
 		roomMemberListPanel.updateList(usernames, privs);
 		return true;
 	}
@@ -560,9 +561,9 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean coLabRoomMemberArrived(String username) {
+	public boolean coLabRoomMemberArrived(String username, CoLabPrivilegeLevel priv) {
 		chatPanel.newChatMessage("Server", "<New Chat Member '" + username + "'>");
-		boolean add = roomMemberListPanel.addUser(username);
+		boolean add = roomMemberListPanel.addUser(username, priv);
 		if (username.equals(this.userName) && add) {
 			setMenusForUserObserver();
 			return true;
@@ -628,7 +629,6 @@ public class WindowClient extends JFrame implements IClient {
 			}
 		});
 		return true;
-
 	}
 
 	@Override

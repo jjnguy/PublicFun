@@ -60,7 +60,7 @@ public class ClientDecoder implements Runnable {
 			actualClient.newChatMessage(username, arg.get(0), arg.get(1));
 			break;
 		case MEMBER_JOIN_ROOM:
-			actualClient.coLabRoomMemberArrived(username);
+			actualClient.coLabRoomMemberArrived(username, CoLabPrivilegeLevel.getPrivilegeLevelFromString(arg.get(0)));
 			break;
 		case UPDATE_ALL_SUBSECTIONS: {
 			List<DocumentSubSection> args = new ArrayList<DocumentSubSection>();

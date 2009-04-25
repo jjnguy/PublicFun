@@ -63,9 +63,13 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public boolean coLabRoomMemberArrived(String username) {
+	public boolean coLabRoomMemberArrived(String username, final CoLabPrivilegeLevel priv) {
 		Message tosend = new Message(MessageType.MEMBER_JOIN_ROOM, username,
-				new ArrayList<String>());
+				new ArrayList<String>() {
+					{
+						add(priv.toString());
+					}
+				});
 		return printMessageToStream(tosend);
 	}
 
@@ -108,7 +112,7 @@ public class ClientEncoder implements IClient {
 	public String getUserName() {
 		return username;
 	}
-	
+
 	@Override
 	public void setUserName(String un) {
 		username = un;
@@ -264,10 +268,10 @@ public class ClientEncoder implements IClient {
 		Message m = new Message(MessageType.SUBSECTION_SPLIT, username, args);
 		return printMessageToStream(m);
 	}
-	
+
 	public boolean subSectionCombined(String username, String documentName, String sectionA,
 			String sectionB, String newSection) {
-				
+
 		List<String> args = new ArrayList<String>();
 		args.add(documentName);
 		args.add(sectionA);

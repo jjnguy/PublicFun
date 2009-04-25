@@ -8,7 +8,7 @@ import edu.cs319.server.CoLabPrivilegeLevel;
 
 public interface IClient {
 
-	public boolean coLabRoomMemberArrived(String username);
+	public boolean coLabRoomMemberArrived(String username, CoLabPrivilegeLevel priv);
 
 	public boolean coLabRoomMemberLeft(String username);
 
