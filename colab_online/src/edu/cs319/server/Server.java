@@ -42,7 +42,6 @@ public class Server implements IServer {
 	 * Creates a new server
 	 */
 	private Server() {
-		// ServerLog.log.log(Level.FINE, "Creating server");
 		// Lets be thread safe about this
 		// Its best to always use protection
 		colabrooms = Collections.synchronizedMap(new HashMap<String, CoLabRoom>());
@@ -188,6 +187,9 @@ public class Server implements IServer {
 
 	@Override
 	public boolean leaveCoLabRoom(String username, String rommname) {
+		if (Util.DEBUG) {
+			System.out.println("Leaving a colab room: " + username + " in room: " + rommname);
+		}
 		CoLabRoom room = colabrooms.get(rommname);
 		if (room == null) {
 			if (Util.DEBUG) {
@@ -461,6 +463,14 @@ public class Server implements IServer {
 
 	@Override
 	public boolean logOut(String username) {
+		for (CoLabRoom room : colabrooms.values()){
+			if (room.containsMemberByName(username)){
+				if (Util.DEBUG) {
+					System.out.println("Leave colabroom based on user die");
+				}
+				leaveCoLabRoom(username, room.roomName());
+			}
+		}
 		return null != regularClients.remove(username);
 	}
 
@@ -545,6 +555,9 @@ public class Server implements IServer {
 	public boolean subSectionSplit(String username, String roomname, String documentName,
 			String oldSection, String newName1, String newName2, int index) {
 		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			return false;
+		}
 		synchronized (room) {
 			CoLabRoomMember m = room.getMemberByName(username);
 			if (m.privledges() == CoLabPrivilegeLevel.OBSERVER) {
@@ -554,6 +567,12 @@ public class Server implements IServer {
 				return true;
 			}
 			SectionizedDocument doc = room.getDocument(documentName);
+			if (doc.getSubSectionIndex(newName2) != -1 && doc.getSubSectionIndex(newName1) != -1) {
+				if (Util.DEBUG) {
+					System.out.println("Ignoring nonunique section name split.");
+				}
+				return false;
+			}
 			doc.splitSubSection(oldSection, newName1, newName2, index, username);
 			for (IClient c : room.getAllClients()) {
 				c.subSectionSplit(username, documentName, oldSection, newName1, newName2, index);
@@ -575,6 +594,14 @@ public class Server implements IServer {
 				return true;
 			}
 			SectionizedDocument doc = room.getDocument(documentname);
+			if (!newName.equals(sectionB) && !newName.equals(sectionA)) {
+				if (doc.getSubSectionIndex(newName) != -1) {
+					if (Util.DEBUG) {
+						System.out.println("Ignoring nonunique section name merge.");
+					}
+					return false;
+				}
+			}
 			doc.combineSubSections(sectionA, sectionB, newName);
 			for (IClient c : room.getAllClients()) {
 				c.subSectionCombined(username, documentname, sectionA, sectionB, newName);

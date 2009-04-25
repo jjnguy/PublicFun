@@ -1,5 +1,7 @@
 package edu.cs319.database;
 
+import java.io.File;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +21,7 @@ public class HibernateUtil {
     static {
         try {
 
-            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            sessionFactory = new AnnotationConfiguration().configure(new File("hibernate.cfg.xml")).buildSessionFactory();
         } catch (Throwable ex) {
             // Log exception!
             throw new ExceptionInInitializerError(ex);
