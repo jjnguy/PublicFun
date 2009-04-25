@@ -1,7 +1,6 @@
 package edu.cs319.dataobjects.impl;
 
 import edu.cs319.dataobjects.DocumentSubSection;
-import edu.cs319.util.Util;
 
 public class DocumentSubSectionImpl extends DocumentSubSection {
        
@@ -74,13 +73,11 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 
 	@Override
 	public boolean setText(String username, String text) {
-		System.out.println("Text: " + text + " Username: " + username);
-		boolean success = false;
 		if (locked && username.equals(lockHolder)) {
 			this.text = (text == null) ? "" : text;
-			success = true;
+			return true;
 		}
-		return success;
+		return false;
 	}
 
 	@Override
@@ -135,9 +132,7 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 
 	@Override
 	public String toString() {
-		if (Util.DEBUG)
-			return getName() + " : " + (locked ? lockHolder : "Not Locked");
-		return getName() + " : " + (locked ? lockHolder : "");
+		return getName() + " : " + (locked ? lockHolder : "Not Locked");
 	}
 	public void setId(Long id) {
 		this.id = id;

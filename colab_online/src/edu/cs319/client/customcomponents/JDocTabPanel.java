@@ -16,7 +16,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
@@ -30,7 +29,6 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.PlainDocument;
 
 import edu.cs319.client.WindowClient;
 import edu.cs319.dataobjects.DocumentInfo;
@@ -461,6 +459,7 @@ public class JDocTabPanel extends JPanel {
 	private class AutoUpdateTask implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (getCurrentlySelectedSubSection() == null)return;
 			// if the current subsection is not locked by this user, don't send the updates
 			if (!info.getUserName().equals(getCurrentlySelectedSubSection().lockedByUser())) {
 				return;

@@ -59,15 +59,11 @@ public class Server implements IServer {
 				if (Util.DEBUG) {
 					System.out.println("Tried to add a colabroom whos name already exists");
 				}
-				// ServerLog.log
-				// .log(Level.WARNING, "Faild adding colabroom because of insitinct name");
-				return false;
+				return joinCoLabRoom(username, roomName, null);
 			}
 		}
 		IClient roomOwner = regularClients.get(username);
 		if (roomOwner == null) {
-			// ServerLog.log.log(Level.WARNING,
-			// "Username that didn't exist tried to add new CoLabRoom");
 			if (Util.DEBUG) {
 				System.out.println("Failed to add colab room");
 			}
@@ -170,7 +166,7 @@ public class Server implements IServer {
 				}
 				return false;
 			}
-			// if the room was empty, the new member should asume admin role
+			// if the room was empty, the new member should assume admin role
 			if (room.getAllClients().size() == 1) {
 				changeUserPrivledge(username, roomName, CoLabPrivilegeLevel.ADMIN);
 			}
@@ -198,11 +194,8 @@ public class Server implements IServer {
 			return false;
 		}
 		synchronized (room) {
-			if (!room.removeMember(username))
-				return false;
 			CoLabRoomMember c = room.getMemberByName(username);
-			if (c == null)
-				return false;
+			if (c == null)return false;
 			// If an admin leaves, someone else should be promoted to admin
 			if (c.privledges() == CoLabPrivilegeLevel.ADMIN) {
 				for (CoLabRoomMember member : room.getAllMembers()) {
@@ -212,9 +205,17 @@ public class Server implements IServer {
 					}
 				}
 			}
-			releaseAllLocksOnAllDocs(username, rommname, room);
+			
 			for (IClient client : room.getAllClients()) {
 				client.coLabRoomMemberLeft(username);
+			}
+
+			releaseAllLocksOnAllDocs(username, rommname, room);
+			if (!room.removeMember(username)) {
+				if (Util.DEBUG) {
+					System.out.println("could not remove roommember from room");
+				}
+				return false;
 			}
 
 			return true;
@@ -463,8 +464,8 @@ public class Server implements IServer {
 
 	@Override
 	public boolean logOut(String username) {
-		for (CoLabRoom room : colabrooms.values()){
-			if (room.containsMemberByName(username)){
+		for (CoLabRoom room : colabrooms.values()) {
+			if (room.containsMemberByName(username)) {
 				if (Util.DEBUG) {
 					System.out.println("Leave colabroom based on user die");
 				}
@@ -484,6 +485,7 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
 			CoLabRoomMember m = room.getMemberByName(username);
+			if (m == null) return false;
 			if (m.privledges() == CoLabPrivilegeLevel.OBSERVER) {
 				if (Util.DEBUG) {
 					System.out.println("Restricting an observer from locking subsection");
