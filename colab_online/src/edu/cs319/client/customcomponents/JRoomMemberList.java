@@ -173,6 +173,9 @@ public class JRoomMemberList extends JList {
 					&& clickeeMem.getPriv() != CoLabPrivilegeLevel.OBSERVER) {
 				return;
 			}
+			if (clickeeMem.getPriv() == CoLabPrivilegeLevel.ADMIN || clickeeMem.getPriv() == CoLabPrivilegeLevel.SUPER_ADMIN){
+				return;
+			}
 			promoteUser = new JMenuItem("Promote Member");
 			promoteUser.addActionListener(promoteAction);
 			add(promoteUser);
