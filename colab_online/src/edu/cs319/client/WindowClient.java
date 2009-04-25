@@ -578,6 +578,7 @@ public class WindowClient extends JFrame implements IClient {
 			chatPanel.clearChatPanel();
 			tabbedDocumentPane.removeAll();
 			roomMemberListPanel.clearList();
+			documentTabs.clear();
 		}
 		return roomMemberListPanel.removeUser(username);
 	}
