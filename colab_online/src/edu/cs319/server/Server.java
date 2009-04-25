@@ -682,6 +682,9 @@ public class Server implements IServer {
 		// TODO Auto-generated method stub
 		CoLabRoom room = colabrooms.get(roomname);
 		DocumentDatabaseUtil.saveCoLab(username, room);
-		return false;
+		for (IClient c : room.getAllClients()) {
+			c.coLabRoomMemberLeft(c.getUserName());
+		}
+		return true;
 	}
 }

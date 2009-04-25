@@ -317,7 +317,10 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean listOfPersistedRooms(Collection<String> romnames) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>(romnames.size());
+		args.addAll(romnames);
+		Message m = new Message(MessageType.ALL_PERSISTED_ROOMS, "admin", args);
+		return printMessageToStream(m);
 	}
 
 	@Override
