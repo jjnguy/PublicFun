@@ -34,7 +34,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
-import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
@@ -179,10 +178,10 @@ public class WindowClient extends JFrame implements IClient {
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
 				String username = r.nextInt(1000) + "";
-				proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
+				/*proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
 						username);
-				setUserName(username);
-				// proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
+				setUserName(username);*/
+				proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
 				if (proxy != null) {
 					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
 					setMenusForUserLoggedIn();
