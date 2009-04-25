@@ -143,4 +143,10 @@ public class SubSectionList extends JList implements SectionizedDocument {
 			return this;
 		}
 	}
+
+	@Override
+	public String toSerializedString() {
+		// TODO Auto-generated method stub
+		return model.toSerializedString();
+	}
 }

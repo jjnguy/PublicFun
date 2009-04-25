@@ -21,45 +21,45 @@ import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 
 @Entity
-@Table(name="sectionizedDocs")
-public class SectionizedDBDocument implements SectionizedDocument{
+@Table(name = "sectionizedDocs")
+public class SectionizedDBDocument implements SectionizedDocument {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", nullable = false)         
+	@Column(name = "id", nullable = false)
 	private Long id;
-	
+
 	@Basic
-	@Column(name="documentName")
+	@Column(name = "documentName")
 	private String name;
-	
-	@OneToMany(fetch=FetchType.EAGER)
-	@Cascade(value=CascadeType.ALL)
-	@IndexColumn(name="listIndex")
+
+	@OneToMany(fetch = FetchType.EAGER)
+	@Cascade(value = CascadeType.ALL)
+	@IndexColumn(name = "listIndex")
 	private List<DBDocumentSubSection> subSections;
-	
-	public SectionizedDBDocument(){
+
+	public SectionizedDBDocument() {
 		subSections = new ArrayList<DBDocumentSubSection>();
 	}
-	
-	public SectionizedDBDocument(String pName){
+
+	public SectionizedDBDocument(String pName) {
 		name = pName;
 		subSections = new ArrayList<DBDocumentSubSection>();
 	}
-	
+
 	@Override
 	public void addAllSubSections(List<? extends DocumentSubSection> ss) {
-		
+
 		DBDocumentSubSection newSection;
-		
-		for(DocumentSubSection section : ss){
+
+		for (DocumentSubSection section : ss) {
 			newSection = new DBDocumentSubSection();
 			newSection.setName(section.getName());
 			newSection.setText(section.getText());
-			
+
 			subSections.add(newSection);
 		}
-		
+
 	}
 
 	@Override
@@ -67,9 +67,9 @@ public class SectionizedDBDocument implements SectionizedDocument{
 		DBDocumentSubSection newSection = new DBDocumentSubSection();
 		newSection.setName(ds.getName());
 		newSection.setText(ds.getText());
-		
+
 		subSections.add(index, newSection);
-		
+
 		return false;
 	}
 
@@ -129,7 +129,7 @@ public class SectionizedDBDocument implements SectionizedDocument{
 	@Override
 	public void removeAllSubSections() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -153,7 +153,8 @@ public class SectionizedDBDocument implements SectionizedDocument{
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -167,17 +168,25 @@ public class SectionizedDBDocument implements SectionizedDocument{
 	}
 
 	/**
-	 * @param subSections the subSections to set
+	 * @param subSections
+	 *            the subSections to set
 	 */
 	public void setSubSections(List<DBDocumentSubSection> subSections) {
 		this.subSections = subSections;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toSerializedString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

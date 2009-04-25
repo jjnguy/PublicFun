@@ -12,7 +12,9 @@ import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageOutputStream;
 import edu.cs319.connectionmanager.messaging.MessageType;
 import edu.cs319.dataobjects.DocumentSubSection;
+import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.server.CoLabPrivilegeLevel;
+import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
@@ -199,7 +201,8 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public boolean updateSubsectionAll(String usernameSender, String documentname, String sectionID, DocumentSubSection section) {
+	public boolean updateSubsectionAll(String usernameSender, String documentname,
+			String sectionID, DocumentSubSection section) {
 		if (Util.DEBUG) {
 			System.out.println("ClientEncoder.updateSubsection: docname: " + documentname
 					+ " sectID: " + sectionID);
@@ -211,9 +214,10 @@ public class ClientEncoder implements IClient {
 		Message m = new Message(MessageType.UPDATE_SUBSECTION, usernameSender, args);
 		return printMessageToStream(m);
 	}
-	
+
 	@Override
-	public boolean updateSubsectionInsert(String usernameSender, String documentname, String sectionID, int start, String update) {
+	public boolean updateSubsectionInsert(String usernameSender, String documentname,
+			String sectionID, int start, String update) {
 		if (Util.DEBUG) {
 			System.out.println("ClientEncoder.updateSubsection: docname: " + documentname
 					+ " sectID: " + sectionID);
@@ -223,12 +227,13 @@ public class ClientEncoder implements IClient {
 		args.add(sectionID);
 		args.add(Integer.toString(start));
 		args.add(update);
-		Message m = new Message(MessageType.UPDATE_SUBSECTION, usernameSender, args);
+		Message m = new Message(MessageType.UPDATE_SUBSECTION_INSERT, usernameSender, args);
 		return printMessageToStream(m);
 	}
-	
+
 	@Override
-	public boolean updateSubsectionRemove(String usernameSender, String documentname, String sectionID, int start, int end) {
+	public boolean updateSubsectionRemove(String usernameSender, String documentname,
+			String sectionID, int start, int end) {
 		if (Util.DEBUG) {
 			System.out.println("ClientEncoder.updateSubsection: docname: " + documentname
 					+ " sectID: " + sectionID);
@@ -238,7 +243,7 @@ public class ClientEncoder implements IClient {
 		args.add(sectionID);
 		args.add(Integer.toString(start));
 		args.add(Integer.toString(end));
-		Message m = new Message(MessageType.UPDATE_SUBSECTION, usernameSender, args);
+		Message m = new Message(MessageType.UPDATE_SUBSECTION_REMOVE, usernameSender, args);
 		return printMessageToStream(m);
 	}
 
@@ -308,6 +313,16 @@ public class ClientEncoder implements IClient {
 		args.add(newSection);
 		Message m = new Message(MessageType.SUBSECTION_COMBINE, username, args);
 		return printMessageToStream(m);
+	}
+
+	@Override
+	public boolean listOfPersistedRooms(Collection<String> romnames) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean persistedCoLabRoom(List<SectionizedDocument> docs) {
+		throw new NotYetImplementedException();
 	}
 
 }

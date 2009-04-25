@@ -13,6 +13,7 @@ import edu.cs319.connectionmanager.messaging.MessageType;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.server.IServer;
+import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
@@ -168,7 +169,7 @@ public class ServerEncoder implements IServer {
 		args.add(sectionId);
 		args.add(Integer.toString(start));
 		args.add(update);
-		Message m = new Message(MessageType.UPDATE_SUBSECTION, username, args);
+		Message m = new Message(MessageType.UPDATE_SUBSECTION_INSERT, username, args);
 		return printMessageToStream(m);
 	}
 	
@@ -181,7 +182,7 @@ public class ServerEncoder implements IServer {
 		args.add(sectionId);
 		args.add(Integer.toString(start));
 		args.add(Integer.toString(end));
-		Message m = new Message(MessageType.UPDATE_SUBSECTION, username, args);
+		Message m = new Message(MessageType.UPDATE_SUBSECTION_REMOVE, username, args);
 		return printMessageToStream(m);
 	}
 
@@ -269,6 +270,21 @@ public class ServerEncoder implements IServer {
 		args.add(newName);
 		Message m = new Message(MessageType.SUBSECTION_COMBINE, username, args);
 		return printMessageToStream(m);
+	}
+
+	@Override
+	public boolean getAllRoomsPersisted(String username) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean openPersistedRoom(String username, String roomname) {
+		throw new NotYetImplementedException();
+	}
+
+	@Override
+	public boolean saveCoLabRoom(String username, String roomname) {
+		throw new NotYetImplementedException();
 	}
 
 }

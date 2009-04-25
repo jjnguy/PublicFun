@@ -128,4 +128,9 @@ public class SectionizedDocListModel extends AbstractListModel implements Sectio
 		fireContentsChanged(this, 0, getSize());
 	}
 
+	@Override
+	public String toSerializedString() {
+		return doc.toSerializedString();
+	}
+
 }

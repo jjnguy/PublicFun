@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.cs319.client.IClient;
+import edu.cs319.database.DocumentDatabaseUtil;
 import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.CoLabRoomMember;
 import edu.cs319.dataobjects.DocumentSubSection;
@@ -657,5 +658,30 @@ public class Server implements IServer {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public boolean getAllRoomsPersisted(String username) {
+		// TODO Auto-generated method stub
+		List<String> roomnames = DocumentDatabaseUtil.getRoomNames(username);
+		CoLabRoom room = colabrooms.get(username);
+		return room.getMemberByName(username).getClient().listOfPersistedRooms(roomnames);
+	}
+
+	@Override
+	public boolean openPersistedRoom(String username, String roomname) {
+		// TODO Auto-generated method stub
+		CoLabRoom room = DocumentDatabaseUtil.getCoLabRoom(roomname);
+		CoLabRoom actualRoom = colabrooms.get(username);
+		CoLabRoomMember mem = actualRoom.getMemberByName(username);
+		return mem.getClient().persistedCoLabRoom(room.getAllDocuments());
+	}
+
+	@Override
+	public boolean saveCoLabRoom(String username, String roomname) {
+		// TODO Auto-generated method stub
+		CoLabRoom room = colabrooms.get(roomname);
+		DocumentDatabaseUtil.saveCoLab(username, room);
+		return false;
 	}
 }

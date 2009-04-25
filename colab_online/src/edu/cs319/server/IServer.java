@@ -162,5 +162,11 @@ public interface IServer {
 	public boolean changeUserPrivledge(String username, String roomname, CoLabPrivilegeLevel newPriv);
 
 	public boolean logOut(String username);
+	
+	public boolean getAllRoomsPersisted(String username);
+	
+	public boolean openPersistedRoom(String username, String roomname);
+	
+	public boolean saveCoLabRoom(String username, String roomname);
 
 }

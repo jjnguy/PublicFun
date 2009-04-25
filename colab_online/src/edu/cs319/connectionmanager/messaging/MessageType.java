@@ -1,6 +1,7 @@
 package edu.cs319.connectionmanager.messaging;
 
 public enum MessageType {
+	
 	UPDATE_ALL_SUBSECTIONS((byte) 0x00, "Update All Subsections"), 
 	UPDATE_SUBSECTION((byte) 0x01, "Update Subsection"), 
 	SUBSECTION_LOCKED((byte) 0x02, "Subsection Locked"), 
@@ -24,7 +25,10 @@ public enum MessageType {
 	SUBSECTION_SPLIT((byte) 0x14, "Split SubSections"),
 	SUBSECTION_COMBINE((byte) 0x15, "Combint SubSections"),
 	UPDATE_SUBSECTION_INSERT((byte) 0x16, "Insert into SubSection"),
-	UPDATE_SUBSECTION_REMOVE((byte) 0x17, "Remove from SubSection");
+	UPDATE_SUBSECTION_REMOVE((byte) 0x17, "Remove from SubSection"),
+	ALL_PERSISTED_ROOMS((byte)0x18, "All persisted rooms"),
+	PERSISTED_ROOM((byte)0x19, "Persisted Room"),
+	SAVE_ROOM((byte)0x1a, "Save Room");
 
 	private byte code;
 	private String name;
@@ -93,6 +97,12 @@ public enum MessageType {
 			return UPDATE_SUBSECTION_INSERT;
 		case 0x17:
 			return UPDATE_SUBSECTION_REMOVE;
+		case 0x18:
+			return ALL_PERSISTED_ROOMS;
+		case 0x19:
+			return PERSISTED_ROOM;
+		case 0x1a:
+			return SAVE_ROOM;
 		default:
 			return null;
 		}

@@ -9,7 +9,7 @@ import edu.cs319.dataobjects.SectionizedDocument;
 public class SectionizedDocumentImpl implements SectionizedDocument {
 
 	private String name;
-	
+
 	private List<DocumentSubSection> subSections;
 
 	public SectionizedDocumentImpl(String name) {
@@ -17,35 +17,43 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		this.subSections = new ArrayList<DocumentSubSection>();
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public List<DocumentSubSection> getAllSubSections() {
 		return new ArrayList<DocumentSubSection>(subSections);
 	}
 
+	@Override
 	public void removeAllSubSections() {
 		subSections.clear();
 	}
 
+	@Override
 	public void addAllSubSections(List<? extends DocumentSubSection> dss) {
 		subSections.addAll(dss);
 	}
 
+	@Override
 	public int getSubSectionCount() {
 		return subSections.size();
 	}
 
+	@Override
 	public DocumentSubSection getSectionAt(int index) {
 		return subSections.get(index);
 	}
 
+	@Override
 	public DocumentSubSection getSection(String id) {
 		int section = getSubSectionIndex(id);
 		return (section >= 0) ? subSections.get(section) : null;
 	}
 
+	@Override
 	public int getSubSectionIndex(String sectionID) {
 		for (int i = 0; i < subSections.size(); i++) {
 			if (subSections.get(i).getName().equals(sectionID)) {
@@ -55,6 +63,7 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return -1;
 	}
 
+	@Override
 	public String getFullText() {
 		StringBuilder out = new StringBuilder();
 		for (DocumentSubSection ds : subSections) {
@@ -64,6 +73,7 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return out.toString();
 	}
 
+	@Override
 	public boolean addSubSection(DocumentSubSection ds, int index) {
 		boolean success = false;
 		if (!subSections.contains(ds) && (index >= 0) && (index <= subSections.size())) {
@@ -73,6 +83,7 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return success;
 	}
 
+	@Override
 	public boolean removeSubSection(String name) {
 		boolean success = false;
 		int idx = getSubSectionIndex(name);
@@ -83,14 +94,16 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return success;
 	}
 
-	public boolean splitSubSection(String name, String partA, String partB, int splitIndex, String userName) {
+	@Override
+	public boolean splitSubSection(String name, String partA, String partB, int splitIndex,
+			String userName) {
 		boolean success = false;
 		int index = getSubSectionIndex(name);
-		if(index >= 0) {
+		if (index >= 0) {
 			DocumentSubSection ds = subSections.get(index);
-			if( !(ds.isLocked()) || ds.lockedByUser().equals(userName)) {
+			if (!(ds.isLocked()) || ds.lockedByUser().equals(userName)) {
 				String text = ds.getText();
-				if((text.length() > splitIndex) && (splitIndex >= 0)) {
+				if ((text.length() > splitIndex) && (splitIndex >= 0)) {
 					subSections.remove(ds);
 					DocumentSubSection first = new DocumentSubSectionImpl(partA);
 					DocumentSubSection second = new DocumentSubSectionImpl(partB);
@@ -102,9 +115,9 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 					second.setLocked(false, "admin");
 					subSections.add(index, first);
 					subSections.add(index + 1, second);
-					if(ds.isLocked()) {
-						//first.setLocked(true,ds.lockedByUser());
-						second.setLocked(true,ds.lockedByUser());
+					if (ds.isLocked()) {
+						// first.setLocked(true,ds.lockedByUser());
+						second.setLocked(true, ds.lockedByUser());
 					}
 					success = true;
 				}
@@ -113,14 +126,15 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return success;
 	}
 
+	@Override
 	public boolean combineSubSections(String partA, String partB, String combinedName) {
 		boolean success = false;
 		int index = getSubSectionIndex(partA);
 		int index2 = getSubSectionIndex(partB);
-		if((index >= 0) && (index2 >= 0)) {
+		if ((index >= 0) && (index2 >= 0)) {
 			DocumentSubSection first = subSections.get(index);
 			DocumentSubSection second = subSections.get(index2);
-			if(!(first.isLocked() || second.isLocked())) {
+			if (!(first.isLocked() || second.isLocked())) {
 				subSections.remove(first);
 				subSections.remove(second);
 				DocumentSubSection combined = new DocumentSubSectionImpl(combinedName);
@@ -135,9 +149,11 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return success;
 	}
 
+	@Override
 	public boolean flopSubSections(int idx1, int idx2) {
 		boolean success = false;
-		if((idx1 >= 0) && (idx1 < subSections.size()) && (idx2 >= 0) && (idx2 < subSections.size())) {
+		if ((idx1 >= 0) && (idx1 < subSections.size()) && (idx2 >= 0)
+				&& (idx2 < subSections.size())) {
 			DocumentSubSection ds1 = subSections.get(idx1);
 			subSections.set(idx1, subSections.get(idx2));
 			subSections.set(idx2, ds1);
@@ -169,11 +185,37 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
+	@Override
+	public String toSerializedString() {
+		String ret = "";
+		ret += getName() + ((char) 31);
+		for (DocumentSubSection sec : subSections) {
+			ret += sec.toDelimmitedString() + ((char) 31);
+		}
+		return ret;
+	}
+	public static SectionizedDocument getFromDelimmitedString(String s) {
+		// TODO probably broken, fix first
+		int delimidxStart = s.indexOf((char) 30);
+		String docname = s.substring(0, delimidxStart);
+		SectionizedDocument ret = new SectionizedDocumentImpl(docname);
+		delimidxStart = s.indexOf((char) 30, delimidxStart) + 1;
+		int deliminxEnd = s.indexOf((char) 30, delimidxStart);
+		int numFound = 0;
+		while (delimidxStart != -1 && deliminxEnd != -1) {
+			ret.addSubSection(DocumentSubSection.getFromDelimmitedString(s.substring(delimidxStart,
+					deliminxEnd)), numFound);
+			numFound++;
+			delimidxStart = deliminxEnd + 1;
+			deliminxEnd = s.indexOf((char) 30, delimidxStart);
+		}
+		return ret;
+	}
 }
