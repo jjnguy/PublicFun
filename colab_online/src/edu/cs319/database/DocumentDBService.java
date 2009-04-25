@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
+import edu.cs319.dataobjects.database.DBCoLabRoom;
 import edu.cs319.dataobjects.database.DBDocumentSubSection;
 import edu.cs319.dataobjects.database.SectionizedDBDocument;
 
@@ -22,16 +23,16 @@ public class DocumentDBService {
 	 * @return CoLabSave objects for a username
 	 */
 	@SuppressWarnings("unchecked")
-	public List<CoLabSave> getAllRoomsForUser(String username){
+	public List<DBCoLabRoom> getAllRoomsForUser(String username){
 		Session session = HibernateUtil.getSession();
-		Criteria criteria = session.createCriteria(CoLabSave.class);
+		Criteria criteria = session.createCriteria(DBCoLabRoom.class);
 		
 		criteria.add(Restrictions.eq("admin", username));
 		
-		List ret = criteria.list();
+		List<DBCoLabRoom> ret = criteria.list();
 		
 		if(ret == null){
-			ret = new ArrayList<CoLabSave>();
+			ret = new ArrayList<DBCoLabRoom>();
 		}
 		
 		return ret;
@@ -92,7 +93,7 @@ public class DocumentDBService {
 		return ret;
 	}
 	
-	public void saveCoLabRoom(CoLabSave room){
+	public void saveCoLabRoom(DBCoLabRoom room){
 		Session session = HibernateUtil.getSession();
 		
 		session.save(room);

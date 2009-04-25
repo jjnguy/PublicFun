@@ -36,7 +36,7 @@ public interface SectionizedDocument {
 	 * 
 	 * @param ss The DocumentSubSections to add to this document
 	 **/
-	public void addAllSubSections(List<DocumentSubSection> ss);
+	public void addAllSubSections(List<? extends DocumentSubSection> ss);
 	
 	/**
 	 * The number of DocumentSubSections in this document

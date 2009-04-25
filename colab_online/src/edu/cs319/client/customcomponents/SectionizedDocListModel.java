@@ -27,7 +27,7 @@ public class SectionizedDocListModel extends AbstractListModel implements Sectio
 	}
 
 	@Override
-	public void addAllSubSections(List<DocumentSubSection> ss) {
+	public void addAllSubSections(List<? extends DocumentSubSection> ss) {
 		doc.addAllSubSections(ss);
 		fireIntervalAdded(this, 0, getSize());
 	}

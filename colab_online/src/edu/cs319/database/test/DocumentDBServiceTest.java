@@ -1,18 +1,17 @@
 package edu.cs319.database.test;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import edu.cs319.database.CoLabSave;
 import edu.cs319.database.DocumentDBService;
+import edu.cs319.dataobjects.database.DBCoLabRoom;
 import edu.cs319.dataobjects.database.DBDocumentSubSection;
 import edu.cs319.dataobjects.database.SectionizedDBDocument;
-import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
-import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 
 public class DocumentDBServiceTest extends TestCase {
 
@@ -58,35 +57,36 @@ public class DocumentDBServiceTest extends TestCase {
 	
 	@Test
 	public void testSaveCoLabRoom(){
-		CoLabSave room = new CoLabSave();
-		room.setAdmin("admin");
-		room.setRoomName("room1");
+		DBCoLabRoom room = new DBCoLabRoom();
+		room.setAdmin("admin4");
+		room.setRoomname("room36");
 		
-		DocumentSubSectionImpl sec1 = new DocumentSubSectionImpl();
-		sec1.setName("sec1");
-		sec1.setText("lkdjcaejflksdjhao;wehgJKhgdaweghaeifvalglkajhwlregvai ae   laejkhflkawhefauoiewn");
+		DBDocumentSubSection sec4 = new DBDocumentSubSection();
+		sec4.setName("sec4");
+		sec4.setText("lkdjcaejflksdjhao;wehgJKhgdaweghaeifvalglkajhwlregvai ae   laejkhflkawhefauoiewn");
 		
-		DocumentSubSectionImpl sec2 = new DocumentSubSectionImpl();
-		sec2.setName("sec2");
-		sec2.setText("ULTRA LONG RANDOM TEXT: aslkfdja;lkvnqoierhga;shrvf;lhawelkrvnbaklwehgrlkabv jknbarek;lgbha;hfvd;alkhgk;lahs;lgdhalkhfvdioa;hreg;vahvdlkhaelkrgalhvdajkhrelvkhbzkdvbajkghadbhvkaljbdvklashijkvdhakdjvbakj6bvlaejkwhrfvlujhagdlkahfkweulfvhakgefaldkcbweluvcahbs8ghajkdhfaklwebfasdvjkawejrvkgawkjevbauebvjkagsjfaejkvbaklwebvajk6dehvfkjawehfkabs8l6ufcablkwevblajkhvklaewhvfkjahsevklahbskvlhakehvawebvjkabewlkvjbablvdajkblkjabvd");
+		DBDocumentSubSection sec5 = new DBDocumentSubSection();
+		sec5.setName("sec5");
+		sec5.setText("ULTRA LONG RANDOM TEXT: aslkfdja;lkvnqoierhga;shrvf;lhawelkrvnbaklwehgrlkabv jknbarek;lgbha;hfvd;alkhgk;lahs;lgdhalkhfvdioa;hreg;vahvdlkhaelkrgalhvdajkhrelvkhbzkdvbajkghadbhvkaljbdvklashijkvdhakdjvbakj6bvlaejkwhrfvlujhagdlkahfkweulfvhakgefaldkcbweluvcahbs8ghajkdhfaklwebfasdvjkawejrvkgawkjevbauebvjkagsjfaejkvbaklwebvajk6dehvfkjawehfkabs8l6ufcablkwevblajkhvklaewhvfkjahsevklahbskvlhakehvawebvjkabewlkvjbablvdajkblkjabvd");
 		
-		DocumentSubSectionImpl sec3 = new DocumentSubSectionImpl();
-		sec3.setName("sec3");
-		sec3.setText("HEllo and cwellcome to the best application in the entire world...way better that anything you could ever create!");
+		DBDocumentSubSection sec6 = new DBDocumentSubSection();
+		sec6.setName("sec6");
+		sec6.setText("HEllo and cwellcome to the best application in the entire world...way better that anything you could ever create!");
 		
-		List<SectionizedDocumentImpl> docs = new ArrayList<SectionizedDocumentImpl>();
+		SectionizedDBDocument doc3 = new SectionizedDBDocument();
+		doc3.setName("hibernateIsAwesomerAndCooler1234");
+		doc3.addSubSection(sec4, 0);
+		doc3.addSubSection(sec5, 1);
+		doc3.addSubSection(sec6, 2);
 		
-		SectionizedDocumentImpl doc1 = new SectionizedDocumentImpl("javaClass1");
-		doc1.addSubSection(sec1, 0);
+		Set<SectionizedDBDocument> docs = new HashSet<SectionizedDBDocument>();
 		
-		SectionizedDocumentImpl doc2 = new SectionizedDocumentImpl("javaClass2");
-		doc2.addSubSection(sec1, 0);
-		doc2.addSubSection(sec2, 1);
+		SectionizedDBDocument doc1 = new SectionizedDBDocument("javaClass199999");
+		doc1.addSubSection(sec4, 0);
 		
-		SectionizedDocumentImpl doc3 = new SectionizedDocumentImpl("javaClass3");
-		doc3.addSubSection(sec1, 0);
-		doc3.addSubSection(sec2, 1);
-		doc3.addSubSection(sec3, 2);
+		SectionizedDBDocument doc2 = new SectionizedDBDocument("javaClass2324");
+		doc2.addSubSection(sec4, 0);
+		doc2.addSubSection(sec5, 1);
 		
 		docs.add(doc1);
 		docs.add(doc2);
@@ -98,7 +98,7 @@ public class DocumentDBServiceTest extends TestCase {
 		
 		serv.saveCoLabRoom(room);
 		
-		List<CoLabSave> rets = serv.getAllRoomsForUser("admin");
+		List<DBCoLabRoom> rets = serv.getAllRoomsForUser("admin4");
 		
 		assertNotNull("", rets);
 	}

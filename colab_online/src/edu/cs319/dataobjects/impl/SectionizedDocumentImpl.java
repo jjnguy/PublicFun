@@ -29,7 +29,7 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		subSections.clear();
 	}
 
-	public void addAllSubSections(List<DocumentSubSection> dss) {
+	public void addAllSubSections(List<? extends DocumentSubSection> dss) {
 		subSections.addAll(dss);
 	}
 

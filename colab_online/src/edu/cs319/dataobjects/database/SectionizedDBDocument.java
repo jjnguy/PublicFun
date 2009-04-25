@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.IndexColumn;
 
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
@@ -31,16 +33,22 @@ public class SectionizedDBDocument implements SectionizedDocument{
 	@Column(name="documentName")
 	private String name;
 	
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	@Cascade(value=CascadeType.ALL)
+	@IndexColumn(name="listIndex")
 	private List<DBDocumentSubSection> subSections;
 	
 	public SectionizedDBDocument(){
 		subSections = new ArrayList<DBDocumentSubSection>();
 	}
 	
+	public SectionizedDBDocument(String pName){
+		name = pName;
+		subSections = new ArrayList<DBDocumentSubSection>();
+	}
+	
 	@Override
-	public void addAllSubSections(List<DocumentSubSection> ss) {
+	public void addAllSubSections(List<? extends DocumentSubSection> ss) {
 		
 		DBDocumentSubSection newSection;
 		

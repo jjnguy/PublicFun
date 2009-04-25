@@ -3,9 +3,7 @@ package edu.cs319.dataobjects.impl;
 import edu.cs319.dataobjects.DocumentSubSection;
 
 public class DocumentSubSectionImpl extends DocumentSubSection {
-       
-	private Long id;
-
+    
 	private String name;
 
 	private String text;
@@ -133,13 +131,6 @@ public class DocumentSubSectionImpl extends DocumentSubSection {
 	@Override
 	public String toString() {
 		return getName() + " : " + (locked ? lockHolder : "Not Locked");
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 }

@@ -45,7 +45,7 @@ public class SubSectionList extends JList implements SectionizedDocument {
 	}
 
 	@Override
-	public void addAllSubSections(List<DocumentSubSection> ss) {
+	public void addAllSubSections(List<? extends DocumentSubSection> ss) {
 		model.addAllSubSections(ss);
 	}
 
