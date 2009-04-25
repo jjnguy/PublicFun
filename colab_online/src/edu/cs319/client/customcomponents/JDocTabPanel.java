@@ -58,7 +58,7 @@ public class JDocTabPanel extends JPanel {
 	private JSplitPane wholePane;
 	private JSplitPane workspace;
 	private DocumentDisplayPane topFullDocumentPane;
-	private JEditorPane currentWorkingPane;
+	private WorkingPane currentWorkingPane;
 	private JButton sectionUpButton;
 	private JButton sectionDownButton;
 	private JButton aquireLock;
@@ -95,7 +95,9 @@ public class JDocTabPanel extends JPanel {
 
 		currentWorkingPane = new WorkingPane();
 		currentWorkingPane.setFont(docFont);
+		currentWorkingPane.setLineWrap(false);
 		currentWorkingPane.addMouseListener(new RightClickListener());
+		
 		PlainDocument doc2 = (PlainDocument) currentWorkingPane.getDocument();
 		doc2.putProperty(PlainDocument.tabSizeAttribute, 4);
 		setUpAppearance();

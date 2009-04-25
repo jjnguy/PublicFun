@@ -3,9 +3,9 @@ package edu.cs319.client.customcomponents;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JEditorPane;
+import javax.swing.JTextArea;
 
-public class WorkingPane extends JEditorPane {
+public class WorkingPane extends JTextArea {
 	
 	@Override
 	public void setEditable(boolean b) {
