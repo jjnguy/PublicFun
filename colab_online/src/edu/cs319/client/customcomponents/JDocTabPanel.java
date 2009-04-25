@@ -309,6 +309,8 @@ public class JDocTabPanel extends JPanel {
 		updateTopDocumentPane();
 		if (one.equals(current) || two.equals(current)) {
 			listOfSubSections.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(sec));
+		} else if(current != null) {
+			listOfSubSections.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(current));
 		}
 	}
 
@@ -335,6 +337,8 @@ public class JDocTabPanel extends JPanel {
 		updateTopDocumentPane();
 		if (old.equals(current)) {
 			listOfSubSections.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(two));
+		} else if(current != null) {
+			listOfSubSections.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(current));
 		}
 	}
 
