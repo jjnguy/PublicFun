@@ -18,7 +18,7 @@ public class JFlexibleListModel<E> extends AbstractListModel {
 		if (contents.contains(e))
 			return false;
 		contents.add(e);
-		fireIntervalAdded(this, 0, getSize());
+		fireIntervalAdded(this, getSize()-1, getSize()-1);
 		System.out.println(contents);
 		return true;
 	}
@@ -29,7 +29,7 @@ public class JFlexibleListModel<E> extends AbstractListModel {
 			return false;
 		;
 		contents.remove(idx);
-		fireIntervalRemoved(this, 0, getSize());
+		fireIntervalRemoved(this, idx, idx);
 		return true;
 	}
 

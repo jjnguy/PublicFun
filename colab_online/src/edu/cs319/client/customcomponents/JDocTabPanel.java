@@ -459,7 +459,9 @@ public class JDocTabPanel extends JPanel {
 	private class AutoUpdateTask implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (getCurrentlySelectedSubSection() == null)return;
+			if (getCurrentlySelectedSubSection() == null) {
+				return;
+			}
 			// if the current subsection is not locked by this user, don't send the updates
 			if (!info.getUserName().equals(getCurrentlySelectedSubSection().lockedByUser())) {
 				return;
