@@ -187,7 +187,7 @@ public class JDocTabPanel extends JPanel {
 			JOptionPane
 					.showMessageDialog(
 							null,
-							"You do not have permission to do this action.  Ask your Admin for a promotion",
+							"You do not have permission to do this action.  Ask your Admin for a promotion.",
 							"Insufficient Permissions", JOptionPane.INFORMATION_MESSAGE, null);
 			return false;
 		}
