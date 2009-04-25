@@ -375,6 +375,8 @@ public class JDocTabPanel extends JPanel {
 		updateTopDocumentPane();
 		if (section.equals(current) && getSectionizedDocument().getSubSectionCount() > 0) {
 			listOfSubSections.setSelectedIndex(0);
+		} else {
+			listOfSubSections.setSelectedIndex(-1);
 		}
 	}
 
@@ -544,13 +546,11 @@ public class JDocTabPanel extends JPanel {
 	public void updateWorkPane(DocumentSubSection ds) {
 		synchronized (currentWorkingPane) {
 			// TODO this hopefully works!!
-			if (ds.equals(getCurrentlySelectedSubSection())) {
+			if (ds == null) {
+				currentWorkingPane.setText("");
+				currentWorkingPane.setEditable(false);
+			} else if (ds.equals(getCurrentlySelectedSubSection())) {
 				int carrotPos = currentWorkingPane.getCaretPosition();
-				if (ds == null) {
-					currentWorkingPane.setText("");
-					currentWorkingPane.setEditable(false);
-					return;
-				}
 				currentWorkingPane.setEditable(info.getUserName().equals(ds.lockedByUser()));
 				currentWorkingPane.setText(ds.getText());
 				int length = currentWorkingPane.getText().length();
