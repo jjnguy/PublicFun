@@ -580,6 +580,9 @@ public class WindowClient extends JFrame implements IClient {
 			tabbedDocumentPane.removeAll();
 			roomMemberListPanel.clearList();
 			documentTabs.clear();
+			userName = null;
+			roomName = null;
+			setTitle("CoLab");
 		}
 		return roomMemberListPanel.removeUser(username);
 	}
