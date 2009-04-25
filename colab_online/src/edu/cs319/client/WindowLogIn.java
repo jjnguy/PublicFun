@@ -45,7 +45,7 @@ public class WindowLogIn extends JDialog {
 		setLocation(parent.getLocation());
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		if (Util.DEBUG) {
-			hostField.setText("localhost");
+			hostField.setText("129.186.150.18");
 			usernameField.setText((int)(Math.random() * 1000) + "");
 		}
 		this.client = client;
