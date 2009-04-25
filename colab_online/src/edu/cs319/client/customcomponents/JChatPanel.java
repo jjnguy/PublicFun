@@ -103,6 +103,10 @@ public class JChatPanel extends JPanel {
 		if (!isVisible())
 			displayBottomPopup(usernameSender, message);
 	}
+	
+	public void clearChatPanel() {
+		topText.setText("");
+	}
 
 	public void shutdownTray() {
 		try {

@@ -573,8 +573,12 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean coLabRoomMemberLeft(String username) {
 		chatPanel.newChatMessage("Server", "<Chat Member Left '" + username + "'>");
-		if(username.equals(getUserName()))
+		if(username.equals(getUserName())) {
 			setMenusForUserDisconnected();
+			chatPanel.clearChatPanel();
+			tabbedDocumentPane.removeAll();
+			roomMemberListPanel.clearList();
+		}
 		return roomMemberListPanel.removeUser(username);
 	}
 

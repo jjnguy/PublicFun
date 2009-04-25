@@ -31,7 +31,7 @@ public class JRoomMemberList extends JList {
 		this.server = server;
 		this.username = username;
 		model = new JFlexibleListModel<RoomMemberLite>();
-		setCellRenderer(new RoomMemberCelRenderer());
+		setCellRenderer(new RoomMemberCellRenderer());
 		setModel(model);
 		addMouseListener(rightClickListen);
 	}
@@ -52,6 +52,10 @@ public class JRoomMemberList extends JList {
 	public boolean removeMember(String userID) {
 		RoomMemberLite dummy = new RoomMemberLite(userID, null);
 		return model.remove(dummy);
+	}
+	
+	public void removeAllMembers() {
+		model.clearList();
 	}
 
 	public boolean setMemberPriv(String id, CoLabPrivilegeLevel priv) {
@@ -97,9 +101,9 @@ public class JRoomMemberList extends JList {
 		}
 	};
 
-	private class RoomMemberCelRenderer extends JLabel implements ListCellRenderer {
+	private class RoomMemberCellRenderer extends JLabel implements ListCellRenderer {
 		
-		public RoomMemberCelRenderer() {
+		public RoomMemberCellRenderer() {
 			setOpaque(true);
 		}
 

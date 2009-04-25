@@ -73,6 +73,10 @@ public class JRoomListPanel extends JPanel {
 	public boolean removeUser(String id) {
 		return roomList.removeMember(id);
 	}
+	
+	public void clearList() {
+		roomList.removeAllMembers();
+	}
 
 	public void updateList(List<String> userNames, List<CoLabPrivilegeLevel> privs) {
 		roomList.getModel().clearList();
