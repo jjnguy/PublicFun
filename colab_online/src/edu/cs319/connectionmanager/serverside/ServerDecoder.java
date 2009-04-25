@@ -45,6 +45,7 @@ public class ServerDecoder implements Runnable {
 			try {
 				decodeMessage(in.readMessage());
 			} catch (IOException e) {
+				System.out.println("Things are broke: Name: " + name);
 				if (name != null) {
 					actualServer.logOut(name);
 				}
