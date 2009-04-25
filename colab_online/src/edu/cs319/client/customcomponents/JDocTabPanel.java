@@ -66,6 +66,8 @@ public class JDocTabPanel extends JPanel {
 
 	private SubSectionList listOfSubSections;
 
+	private String location;
+
 	final private DocumentInfo info;
 
 	private WindowClient client;
@@ -102,6 +104,15 @@ public class JDocTabPanel extends JPanel {
 
 		Timer timer = new Timer(UPDATE_NUM_MS, new AutoUpdateTask());
 		timer.start();
+	}
+
+	public JDocTabPanel(DocumentInfo info, WindowClient client, String path) {
+		this(info, client);
+		location = path;
+	}
+
+	public String getPath() {
+		return location;
 	}
 
 	/**
