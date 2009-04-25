@@ -95,9 +95,11 @@ public class JRoomMemberList extends JList {
 		}
 
 		private void doPop(MouseEvent e) {
-			JPopupMenu menu = new RoomMemberPopupMenu(username,
-					((RoomMemberLite) getSelectedValue()).getName());
-			menu.show(e.getComponent(), e.getX(), e.getY());
+			if(getSelectedValue() != null) {
+				JPopupMenu menu = new RoomMemberPopupMenu(username,
+						((RoomMemberLite) getSelectedValue()).getName());
+				menu.show(e.getComponent(), e.getX(), e.getY());
+			}
 		}
 	};
 
