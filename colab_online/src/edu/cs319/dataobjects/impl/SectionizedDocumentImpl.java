@@ -3,24 +3,13 @@ package edu.cs319.dataobjects.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 
-@Entity
-@Table(name="SECTIONIZED_DOCS")
 public class SectionizedDocumentImpl implements SectionizedDocument {
 
-	@Basic
-	@Column(name="documentName")
 	private String name;
 	
-	@OneToMany
 	private List<DocumentSubSection> subSections;
 
 	public SectionizedDocumentImpl(String name) {

@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import edu.cs319.database.CoLabSave;
 import edu.cs319.database.DocumentDBService;
+import edu.cs319.dataobjects.database.DBDocumentSubSection;
+import edu.cs319.dataobjects.database.SectionizedDBDocument;
 import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 
@@ -17,14 +19,41 @@ public class DocumentDBServiceTest extends TestCase {
 	@Test
 	public void testAddDocumentSubSection(){
 		DocumentDBService dbServ = new DocumentDBService();
-		DocumentSubSectionImpl doc = new DocumentSubSectionImpl("sub4");
-		doc.setLocked(true, "john");
-		doc.setText("john", "hd;eoulvdkhc;laksoyhfdp9-oiue;jkv badfpigkdfjdjkffffffffffffffffffffffffffffffffffffffffffffffffkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkowfieeiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijkcdckkkkkkkkkkkkkkkkkkkkkkkkkkkkkkklddddddddddddddddddd;aaaaaaaaaaaaaaaaaaaaaakdddddddddddddddddddddddddddddddddpukwejg,hdpcfvoi0uqlkwehgvndpwuio");
-		dbServ.addDocumentSubSection(doc);
+		DBDocumentSubSection doc = new DBDocumentSubSection();
+		doc.setName("subSection2");
+		doc.setText("hd;eoulvdkhc;laksoyhfdp9-oiue;jkv badfpigkdfjdjkffffffffffffffffffffffffffffffffffffffffffffffffkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkowfieeiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijkcdckkkkkkkkkkkkkkkkkkkkkkkkkkkkkkklddddddddddddddddddd;aaaaaaaaaaaaaaaaaaaaaakdddddddddddddddddddddddddddddddddpukwejg,hdpcfvoi0uqlkwehgvndpwuio");
+		dbServ.saveDBDocumentSubSection(doc);
 		
-		List<DocumentSubSectionImpl> docs = dbServ.getAllDocumentSubSections();
+		List<DBDocumentSubSection> docs = dbServ.getAllDocumentSubSections();
 		
 		assertNotNull("The retrived sub-sections should not be null", docs);
+	}
+	
+	public void testSaveSectionDocument(){
+		DBDocumentSubSection sec1 = new DBDocumentSubSection();
+		sec1.setName("sec1");
+		sec1.setText("lkdjcaejflksdjhao;wehgJKhgdaweghaeifvalglkajhwlregvai ae   laejkhflkawhefauoiewn");
+		
+		DBDocumentSubSection sec2 = new DBDocumentSubSection();
+		sec2.setName("sec2");
+		sec2.setText("ULTRA LONG RANDOM TEXT: aslkfdja;lkvnqoierhga;shrvf;lhawelkrvnbaklwehgrlkabv jknbarek;lgbha;hfvd;alkhgk;lahs;lgdhalkhfvdioa;hreg;vahvdlkhaelkrgalhvdajkhrelvkhbzkdvbajkghadbhvkaljbdvklashijkvdhakdjvbakj6bvlaejkwhrfvlujhagdlkahfkweulfvhakgefaldkcbweluvcahbs8ghajkdhfaklwebfasdvjkawejrvkgawkjevbauebvjkagsjfaejkvbaklwebvajk6dehvfkjawehfkabs8l6ufcablkwevblajkhvklaewhvfkjahsevklahbskvlhakehvawebvjkabewlkvjbablvdajkblkjabvd");
+		
+		DBDocumentSubSection sec3 = new DBDocumentSubSection();
+		sec3.setName("sec3");
+		sec3.setText("HEllo and cwellcome to the best application in the entire world...way better that anything you could ever create!");
+		
+		SectionizedDBDocument doc3 = new SectionizedDBDocument();
+		doc3.setName("hibernateIsAwesomerAndCooler");
+		doc3.addSubSection(sec1, 0);
+		doc3.addSubSection(sec2, 1);
+		doc3.addSubSection(sec3, 2);
+		
+		DocumentDBService dbService = new DocumentDBService();
+		dbService.saveDBSectionizedDocument(doc3);
+		
+		List<SectionizedDBDocument> ret = dbService.getAllSectionizedDocuments();
+		
+		assertNotNull("", ret);
 	}
 	
 	@Test
