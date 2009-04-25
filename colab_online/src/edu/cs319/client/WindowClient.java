@@ -205,14 +205,6 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				proxy.getServer().leaveCoLabRoom(userName, roomName);
-				try {
-					proxy.close();
-				} catch (IOException io) {
-					if (Util.DEBUG) {
-						io.printStackTrace();
-					}
-				}
-				setMenusForUserDisconnected();
 			}
 		});
 		exitCoLab.addActionListener(new ActionListener() {
@@ -581,6 +573,8 @@ public class WindowClient extends JFrame implements IClient {
 	@Override
 	public boolean coLabRoomMemberLeft(String username) {
 		chatPanel.newChatMessage("Server", "<Chat Member Left '" + username + "'>");
+		if(username.equals(getUserName()))
+			setMenusForUserDisconnected();
 		return roomMemberListPanel.removeUser(username);
 	}
 
