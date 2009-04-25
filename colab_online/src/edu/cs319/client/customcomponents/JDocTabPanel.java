@@ -50,7 +50,7 @@ import edu.cs319.util.Util;
 public class JDocTabPanel extends JPanel {
 
 	// Number of milliseconds between automatic updates
-	private final static int UPDATE_NUM_MS = 500;
+	private final static int UPDATE_NUM_MS = 50;
 
 	private JPanel sectionPanel;
 	private JSplitPane wholePane;
@@ -430,8 +430,9 @@ public class JDocTabPanel extends JPanel {
 		if (secId.equals(current)) {
 			listOfSubSections
 					.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(current));
-			if (!info.getUserName().equals(
-					getSectionizedDocument().getSection(current).lockedByUser())) {
+			if (currentWorkingPane.getText().length() == 0
+					|| !info.getUserName().equals(
+							getSectionizedDocument().getSection(current).lockedByUser())) {
 				updateWorkPane(current);
 			}
 		}

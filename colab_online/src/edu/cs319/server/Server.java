@@ -33,10 +33,6 @@ public class Server implements IServer {
 	 * Maps all active clients to their u-id
 	 */
 	private final Map<String, IClient> regularClients;
-	/**
-	 * The client that is the db
-	 */
-	private IClient dbConnector;
 
 	/**
 	 * Creates a new server
@@ -467,7 +463,7 @@ public class Server implements IServer {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public boolean logOut(String username) {
 		for (CoLabRoom room : colabrooms.values()) {

@@ -257,13 +257,13 @@ public class WindowClient extends JFrame implements IClient {
 				int choice = choose.showOpenDialog(WindowClient.this);
 				if (choice != JFileChooser.APPROVE_OPTION)
 					return;
-				String docName = JOptionPane.showInputDialog(WindowClient.this,
-						"Enter the name of the document:");
+				// String docName = JOptionPane.showInputDialog(WindowClient.this, "Enter the name of the document:");
+				File choiceF = choose.getSelectedFile();
+				String docName = choiceF.getName();
 				String secName = JOptionPane.showInputDialog(WindowClient.this,
 						"Enter the name of the subsection:");
 				if (docName == null || secName == null)
 					return;
-				File choiceF = choose.getSelectedFile();
 				proxy.getServer().newDocument(userName, roomName, docName);
 				DocumentSubSection section = new DocumentSubSectionImpl(secName);
 				section.setLocked(true, userName);
@@ -784,8 +784,7 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	/**
-	 * Sets the look and feel of an application to that of the system it is running on. (Java's
-	 * default looks bad)
+	 * Sets the look and feel of an application to that of the system it is running on.
 	 */
 	private static void setLookAndFeel() {
 		try {

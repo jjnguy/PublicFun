@@ -1,8 +1,8 @@
 package edu.cs319.connectionmanager.messaging;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 /**
  * 
@@ -10,7 +10,7 @@ import java.util.Arrays;
  * 
  */
 public class MessageInputStream {
-	InputStream in;
+	private InputStream in;
 
 	public MessageInputStream(InputStream s) {
 		in = s;
@@ -18,15 +18,12 @@ public class MessageInputStream {
 
 	public Message readMessage() throws IOException {
 		// if we need more that 1KB of data in a message, then we have a problem
-		byte[] buffer = new byte[1024 * 13];
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		int read;
-		int bytesRead = 0;
 		while ((read = in.read()) != Byte.MAX_VALUE) {
 			if(read == -1) {throw new IOException("EOF");}
-			buffer[bytesRead] = (byte) read;
-			bytesRead++;
+			out.write(read);
 		}
-		byte[] ret = Arrays.copyOfRange(buffer, 0, bytesRead);
-		return Message.decode(ret);
+		return Message.decode(out.toByteArray());
 	}
 }
