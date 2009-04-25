@@ -118,12 +118,17 @@ public interface IServer {
 			String sectionID, int idx);
 
 	/**
+	 * Alerts the server that a user wants to remove a subsection
 	 * 
 	 * @param username
+	 *            the name of the user who wants to remove the subsection
 	 * @param roomname
+	 *            the name of the room from which to remove the subsection
 	 * @param documentName
+	 *            the name of the document from which to remove the subsection
 	 * @param sectionID
-	 * @return
+	 *            the name of the subsection to remove
+	 * @return nada
 	 */
 	public boolean subSectionRemoved(String username, String roomname, String documentName,
 			String sectionID);

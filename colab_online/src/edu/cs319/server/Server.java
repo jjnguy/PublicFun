@@ -379,7 +379,7 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean subSectionUpdated(String username, String roomname, String documentName,
+	public boolean subSectionUpdatedAll(String username, String roomname, String documentName,
 			String sectionID, DocumentSubSection update) {
 		CoLabRoom room = colabrooms.get(roomname);
 		synchronized (room) {
@@ -409,7 +409,7 @@ public class Server implements IServer {
 			System.out.println("Updating SubSection->  Name: " + sec.getName() + " LockHolder: "
 					+ sec.lockedByUser() + " Updated By: " + username);
 			for (IClient client : room.getAllClients()) {
-				client.updateSubsection(username, documentName, update, sectionID);
+				client.updateSubsectionAll(username, documentName, sectionID, update);
 			}
 		}
 		return true;
@@ -463,7 +463,7 @@ public class Server implements IServer {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public boolean logOut(String username) {
 		for (CoLabRoom room : colabrooms.values()) {
@@ -613,5 +613,49 @@ public class Server implements IServer {
 			}
 			return true;
 		}
+	}
+
+	@Override
+	public boolean subSectionUpdatedInsert(String username, String roomname, String documentName,
+			String sectionId, int start, String text) {
+		CoLabRoom room = colabrooms.get(roomname);
+		synchronized (room) {
+			CoLabRoomMember m = room.getMemberByName(username);
+			if (m.privledges() == CoLabPrivilegeLevel.OBSERVER) {
+				if (Util.DEBUG) {
+					System.out.println("Restricting an observer from updating subsection");
+				}
+				return true;
+			}
+			SectionizedDocument doc = room.getDocument(documentName);
+			DocumentSubSection update = doc.getSection(sectionId);
+			update.insertText(username, start, text);
+			for (IClient client : room.getAllClients()) {
+				client.updateSubsectionInsert(username, documentName, sectionId, start, text);
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean subSectionUpdatedRemove(String username, String roomname, String documentName,
+			String sectionId, int start, int end) {
+		CoLabRoom room = colabrooms.get(roomname);
+		synchronized (room) {
+			CoLabRoomMember m = room.getMemberByName(username);
+			if (m.privledges() == CoLabPrivilegeLevel.OBSERVER) {
+				if (Util.DEBUG) {
+					System.out.println("Restricting an observer from updating subsection");
+				}
+				return true;
+			}
+			SectionizedDocument doc = room.getDocument(documentName);
+			DocumentSubSection update = doc.getSection(sectionId);
+			update.removeText(username, start, end);
+			for (IClient client : room.getAllClients()) {
+				client.updateSubsectionRemove(username, documentName, sectionId, start, end);
+			}
+		}
+		return true;
 	}
 }

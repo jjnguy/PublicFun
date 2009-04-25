@@ -20,7 +20,7 @@ import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 
 public class DocumentDatabaseUtil {
 
-	public void saveCoLab(String admin, CoLabRoom room) {
+	public static void saveCoLab(String admin, CoLabRoom room) {
 		List<SectionizedDocument> docs = room.getAllDocuments();
 		DBCoLabRoom dbRoom = new DBCoLabRoom();
 		dbRoom.setAdmin(admin);
@@ -46,7 +46,7 @@ public class DocumentDatabaseUtil {
 		session.close();
 	}
 
-	public List<String> getRoomNames(String user) {
+	public static List<String> getRoomNames(String user) {
 		Session session = HibernateUtil.getSession();
 		Criteria criteria = session.createCriteria(DBCoLabRoom.class);
 
@@ -59,7 +59,7 @@ public class DocumentDatabaseUtil {
 		return roomNames;
 	}
 
-	public CoLabRoom getCoLabRoom(String roomName) {
+	public static CoLabRoom getCoLabRoom(String roomName) {
 		Session session = HibernateUtil.getSession();
 		Criteria criteria = session.createCriteria(DBCoLabRoom.class);
 

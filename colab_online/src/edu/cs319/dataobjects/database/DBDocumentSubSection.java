@@ -166,6 +166,18 @@ public class DBDocumentSubSection extends DocumentSubSection{
 		this.text = text;
 	}
 
+	@Override
+	public boolean insertText(String username, int start, String text) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeText(String username, int start, int end) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 //	public boolean getLocked(){
 //		return locked;
 //	}
