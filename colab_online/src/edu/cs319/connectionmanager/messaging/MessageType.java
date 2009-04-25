@@ -22,7 +22,9 @@ public enum MessageType {
 	LOG_OUT((byte)0x12, "Log Out"),
 	SUBSECTION_FLOPPED((byte) 0x13, "Flop subsections"),
 	SUBSECTION_SPLIT((byte) 0x14, "Split SubSections"),
-	SUBSECTION_COMBINE((byte) 0x15, "Combint SubSections");
+	SUBSECTION_COMBINE((byte) 0x15, "Combint SubSections"),
+	UPDATE_SUBSECTION_INSERT((byte) 0x16, "Insert into SubSection"),
+	UPDATE_SUBSECTION_REMOVE((byte) 0x17, "Remove from SubSection");
 
 	private byte code;
 	private String name;
@@ -87,6 +89,10 @@ public enum MessageType {
 			return SUBSECTION_SPLIT;
 		case 0x15:
 			return SUBSECTION_COMBINE;
+		case 0x16:
+			return UPDATE_SUBSECTION_INSERT;
+		case 0x17:
+			return UPDATE_SUBSECTION_REMOVE;
 		default:
 			return null;
 		}

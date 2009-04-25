@@ -14,8 +14,11 @@ public interface IClient {
 
 	public boolean updateAllSubsections(String documentId, List<DocumentSubSection> allSections);
 
-	public boolean updateSubsection(String usernameSender, String documentname,
-			DocumentSubSection section, String sectionID);
+	public boolean updateSubsectionAll(String usernameSender, String documentname, String sectionId, DocumentSubSection section);
+			
+	public boolean updateSubsectionInsert(String usernameSender, String documentname, String sectionId, int start, String update);
+
+	public boolean updateSubsectionRemove(String usernameSender, String documentname, String sectionId, int start, int end);
 
 	public boolean subsectionLocked(String usernameSender, String documentName, String sectionID);
 

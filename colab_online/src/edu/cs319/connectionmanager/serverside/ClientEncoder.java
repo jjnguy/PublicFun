@@ -199,8 +199,7 @@ public class ClientEncoder implements IClient {
 	}
 
 	@Override
-	public boolean updateSubsection(String usernameSender, String documentname,
-			DocumentSubSection section, String sectionID) {
+	public boolean updateSubsectionAll(String usernameSender, String documentname, String sectionID, DocumentSubSection section) {
 		if (Util.DEBUG) {
 			System.out.println("ClientEncoder.updateSubsection: docname: " + documentname
 					+ " sectID: " + sectionID);
@@ -209,6 +208,36 @@ public class ClientEncoder implements IClient {
 		args.add(documentname);
 		args.add(section.toDelimmitedString());
 		args.add(sectionID);
+		Message m = new Message(MessageType.UPDATE_SUBSECTION, usernameSender, args);
+		return printMessageToStream(m);
+	}
+	
+	@Override
+	public boolean updateSubsectionInsert(String usernameSender, String documentname, String sectionID, int start, String update) {
+		if (Util.DEBUG) {
+			System.out.println("ClientEncoder.updateSubsection: docname: " + documentname
+					+ " sectID: " + sectionID);
+		}
+		List<String> args = new ArrayList<String>();
+		args.add(documentname);
+		args.add(sectionID);
+		args.add(Integer.toString(start));
+		args.add(update);
+		Message m = new Message(MessageType.UPDATE_SUBSECTION, usernameSender, args);
+		return printMessageToStream(m);
+	}
+	
+	@Override
+	public boolean updateSubsectionRemove(String usernameSender, String documentname, String sectionID, int start, int end) {
+		if (Util.DEBUG) {
+			System.out.println("ClientEncoder.updateSubsection: docname: " + documentname
+					+ " sectID: " + sectionID);
+		}
+		List<String> args = new ArrayList<String>();
+		args.add(documentname);
+		args.add(sectionID);
+		args.add(Integer.toString(start));
+		args.add(Integer.toString(end));
 		Message m = new Message(MessageType.UPDATE_SUBSECTION, usernameSender, args);
 		return printMessageToStream(m);
 	}

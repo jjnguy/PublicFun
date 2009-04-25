@@ -98,7 +98,7 @@ public class ServerDecoder implements Runnable {
 			actualServer.subSectionRemoved(cln, args.get(0), args.get(1), args.get(2));
 			break;
 		case UPDATE_SUBSECTION:
-			actualServer.subSectionUpdated(cln, args.get(0), args.get(1), args.get(2),
+			actualServer.subSectionUpdatedAll(cln, args.get(0), args.get(1), args.get(2),
 					DocumentSubSection.getFromDelimmitedString(args.get(3)));
 			break;
 		case SUBSECTION_LOCKED:
@@ -131,6 +131,12 @@ public class ServerDecoder implements Runnable {
 			break;
 		case SUBSECTION_COMBINE:
 			actualServer.subSectionCombined(cln, args.get(0), args.get(1), args.get(2), args.get(3), args.get(4));
+			break;
+		case UPDATE_SUBSECTION_INSERT:
+			actualServer.subSectionUpdatedInsert(cln, args.get(0), args.get(1), args.get(2), Integer.parseInt(args.get(3)), args.get(4));
+			break;
+		case UPDATE_SUBSECTION_REMOVE:
+			actualServer.subSectionUpdatedRemove(cln, args.get(0), args.get(1), args.get(2), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)));
 			break;
 		default:
 			throw new NotYetImplementedException();

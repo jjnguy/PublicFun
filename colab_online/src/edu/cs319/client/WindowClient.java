@@ -239,7 +239,7 @@ public class WindowClient extends JFrame implements IClient {
 				System.out.println("WindowClient New Blank Document: Username: " + userName
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
-				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
+				proxy.getServer().subSectionUpdatedAll(userName, roomName, docName, secName, section);
 				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {
@@ -280,7 +280,7 @@ public class WindowClient extends JFrame implements IClient {
 				System.out.println("WindowClient Upload Document: Username: " + userName
 						+ " DocumentName: " + docName + " SectionName: " + secName
 						+ " LockHolder: " + section.lockedByUser());
-				proxy.getServer().subSectionUpdated(userName, roomName, docName, secName, section);
+				proxy.getServer().subSectionUpdatedAll(userName, roomName, docName, secName, section);
 				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {
@@ -715,13 +715,31 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean updateSubsection(final String usernameSender, final String documentname,
-			final DocumentSubSection section, final String sectionID) {
+	public boolean updateSubsectionAll(final String usernameSender, final String documentname, final String sectionID, final DocumentSubSection section) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				documentTabs.get(documentname)
-						.subSectionUpdated(sectionID, usernameSender, section);
+				documentTabs.get(documentname).subSectionUpdatedAll(usernameSender, sectionID, section);
 
+			}
+		});
+		return true;
+	}
+	
+	@Override
+	public boolean updateSubsectionInsert(final String usernameSender, final String documentname, final String sectionID, final int start, final String update) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				documentTabs.get(documentname).subSectionUpdatedInsert(usernameSender, sectionID, start, update);
+			}
+		});
+		return true;
+	}
+	
+	@Override
+	public boolean updateSubsectionRemove(final String usernameSender, final String documentname, final String sectionID, final int start, final int end) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				documentTabs.get(documentname).subSectionUpdatedRemove(usernameSender, sectionID, start, end);
 			}
 		});
 		return true;

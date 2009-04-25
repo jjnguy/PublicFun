@@ -414,14 +414,14 @@ public class JDocTabPanel extends JPanel {
 	/**
 	 * Updates the given section with the text in the given subsection
 	 * 
-	 * @param secId
-	 *            The name of the subsection to update
 	 * @param user
 	 *            The name of the user holding the lock on that subsection
+	 * @param secId
+	 *            The name of the subsection to update
 	 * @param sec
 	 *            The subsection containing the new text
 	 */
-	public void subSectionUpdated(String secId, String user, DocumentSubSection sec) {
+	public void subSectionUpdatedAll(String user, String secId, DocumentSubSection sec) {
 		System.out.println("Updating SubSection: " + info + " Updating: " + secId
 				+ " Currently Selected: " + getCurrentlySelectedSubSection());
 		String current = getCurrentlySelectedSubSection().getName();
@@ -430,9 +430,61 @@ public class JDocTabPanel extends JPanel {
 		if (secId.equals(current)) {
 			listOfSubSections
 					.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(current));
+			if (!info.getUserName().equals(
+					getSectionizedDocument().getSection(current).lockedByUser())) {
+				updateWorkPane(current);
+			}
+		}
+	}
+	
+	/**
+	 * Updates the given section with the text in the given subsection
+	 * 
+	 * @param user
+	 *            The name of the user holding the lock on that subsection
+	 * @param secId
+	 *            The name of the subsection to update
+	 * @param sec
+	 *            The subsection containing the new text
+	 */
+	public void subSectionUpdatedInsert(String user, String secId, int start, String update) {
+		System.out.println("Updating SubSection: " + info + " Updating: " + secId
+				+ " Currently Selected: " + getCurrentlySelectedSubSection());
+		String current = getCurrentlySelectedSubSection().getName();
+		getSectionizedDocument().getSection(secId).insertText(user, start, update);
+		updateTopDocumentPane();
+		if (secId.equals(current)) {
+			listOfSubSections
+					.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(current));
 			if (currentWorkingPane.getText().length() == 0
 					|| !info.getUserName().equals(
 							getSectionizedDocument().getSection(current).lockedByUser())) {
+				updateWorkPane(current);
+			}
+		}
+	}
+	
+	/**
+	 * Updates the given section with the text in the given subsection
+	 * 
+	 * @param user
+	 *            The name of the user holding the lock on that subsection
+	 * @param secId
+	 *            The name of the subsection to update
+	 * @param sec
+	 *            The subsection containing the new text
+	 */
+	public void subSectionUpdatedRemove(String user, String secId, int start, int end) {
+		System.out.println("Updating SubSection: " + info + " Updating: " + secId
+				+ " Currently Selected: " + getCurrentlySelectedSubSection());
+		String current = getCurrentlySelectedSubSection().getName();
+		getSectionizedDocument().getSection(secId).removeText(user, start, end);
+		updateTopDocumentPane();
+		if (secId.equals(current)) {
+			listOfSubSections
+					.setSelectedIndex(getSectionizedDocument().getSubSectionIndex(current));
+			if (!info.getUserName().equals(
+					getSectionizedDocument().getSection(current).lockedByUser())) {
 				updateWorkPane(current);
 			}
 		}
@@ -449,13 +501,14 @@ public class JDocTabPanel extends JPanel {
 			}
 			return;
 		}
-		System.out.println("");
-		System.out.println("AutoUpdating!!!");
-		DocumentSubSection temp = new DocumentSubSectionImpl(ds.getName());
-		temp.setLocked(ds.isLocked(), ds.lockedByUser());
-		temp.setText(info.getUserName(), newText);
-		info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
-				info.getDocumentName(), ds.getName(), temp);
+		//System.out.println("");
+		//System.out.println("AutoUpdating!!!");
+		//DocumentSubSection temp = new DocumentSubSectionImpl(ds.getName());
+		//temp.setLocked(ds.isLocked(), ds.lockedByUser());
+		//temp.setText(info.getUserName(), newText);
+		sendServerUpdate();
+		//info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
+		//		info.getDocumentName(), ds.getName(), temp);
 	}
 
 	private DocumentSubSection getCurrentlySelectedSubSection() {
@@ -619,9 +672,7 @@ public class JDocTabPanel extends JPanel {
 	private void releaseLockRequest() {
 		System.out.println("Releasing Lock: " + info + " Currently Selected: "
 				+ getCurrentlySelectedSubSection());
-		info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
-				info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
-				getCurrentlySelectedSubSection());
+		
 		info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
 				info.getDocumentName(), getCurrentlySelectedSubSection().getName());
 	}
@@ -879,5 +930,27 @@ public class JDocTabPanel extends JPanel {
 			deleteSubSectionItem.addActionListener(new DeleteSubSectionListener());
 			add(deleteSubSectionItem);
 		}
+	}
+	
+	
+	private void sendServerUpdate() {
+		String currentText = getCurrentlySelectedSubSection().getText();
+		String proposedText = currentWorkingPane.getText();
+		
+		if(currentText.length() > proposedText.length()) { // Remove
+			int start = -1;
+			int end = -1;
+			int i = 0;
+			while(currentText.charAt(i) == proposedText.charAt(i)) {
+				i++;
+			}
+			start = i;
+			end = currentText.indexOf(0);
+		} else if(currentText.length() < proposedText.length()) { // Insert
+		
+		} else { // They probably haven't changed
+		
+		}
+		info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());	
 	}
 }

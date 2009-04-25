@@ -37,6 +37,32 @@ public abstract class DocumentSubSection {
 	public abstract boolean setText(String username, String text);
 
 	/**
+	 * Attempts to insert text into this subsection at the given start index.
+	 * In order to insert text, the username must match the lockholder,
+	 * and the subsection must be locked
+	 * 
+	 * @param username The user attempting to set this subsection's text
+	 * @param start The index at which to insert text (inclusive)
+	 * @param text The text to place in this subsection
+	 * 
+	 * @return Whether the text was inserted successfully
+	 **/
+	public abstract boolean insertText(String username, int start, String text);
+	
+	/**
+	 * Attempts to remove text from this subsection.
+	 * In order to remove the text, the username must match the lockholder,
+	 * and the subsection must be locked
+	 * 
+	 * @param username The user attempting to set this subsection's text
+	 * @param start The index at which to start removing text (inclusive)
+	 * @param end The index at which to stop removing text (exclusive)
+	 * 
+	 * @return Whether the text was removed successfully
+	 **/
+	public abstract boolean removeText(String username, int start, int end);
+
+	/**
 	 * Whether this subsection is locked
 	 * 
 	 * @return Whether this subsection is locked

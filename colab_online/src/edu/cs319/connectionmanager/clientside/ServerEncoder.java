@@ -148,13 +148,39 @@ public class ServerEncoder implements IServer {
 	}
 
 	@Override
-	public boolean subSectionUpdated(String username, String roomname, String documentName,
+	public boolean subSectionUpdatedAll(String username, String roomname, String documentName,
 			String sectionId, DocumentSubSection update) {
 		List<String> args = new ArrayList<String>();
 		args.add(roomname);
 		args.add(documentName);
 		args.add(sectionId);
 		args.add(update.toDelimmitedString());
+		Message m = new Message(MessageType.UPDATE_SUBSECTION, username, args);
+		return printMessageToStream(m);
+	}
+	
+	@Override
+	public boolean subSectionUpdatedInsert(String username, String roomname, String documentName,
+			String sectionId, int start, String update) {
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(documentName);
+		args.add(sectionId);
+		args.add(Integer.toString(start));
+		args.add(update);
+		Message m = new Message(MessageType.UPDATE_SUBSECTION, username, args);
+		return printMessageToStream(m);
+	}
+	
+	@Override
+	public boolean subSectionUpdatedRemove(String username, String roomname, String documentName,
+			String sectionId, int start, int end) {
+		List<String> args = new ArrayList<String>();
+		args.add(roomname);
+		args.add(documentName);
+		args.add(sectionId);
+		args.add(Integer.toString(start));
+		args.add(Integer.toString(end));
 		Message m = new Message(MessageType.UPDATE_SUBSECTION, username, args);
 		return printMessageToStream(m);
 	}

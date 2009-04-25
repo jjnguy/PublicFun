@@ -71,8 +71,14 @@ public class ClientDecoder implements Runnable {
 			break;
 		}
 		case UPDATE_SUBSECTION:
-			actualClient.updateSubsection(username, arg.get(0), DocumentSubSection
-					.getFromDelimmitedString(arg.get(1)), arg.get(2));
+			actualClient.updateSubsectionAll(username, arg.get(0), arg.get(1), DocumentSubSection
+					.getFromDelimmitedString(arg.get(2)));
+			break;
+		case UPDATE_SUBSECTION_INSERT:
+			actualClient.updateSubsectionInsert(username, arg.get(0), arg.get(1), Integer.parseInt(arg.get(2)), arg.get(3));
+			break;
+		case UPDATE_SUBSECTION_REMOVE:
+			actualClient.updateSubsectionRemove(username, arg.get(0), arg.get(1), Integer.parseInt(arg.get(2)), Integer.parseInt(arg.get(3)));
 			break;
 		case SUBSECTION_LOCKED:
 			actualClient.subsectionLocked(username, arg.get(0), arg.get(1));

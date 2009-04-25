@@ -128,8 +128,11 @@ public interface IServer {
 	public boolean subSectionRemoved(String username, String roomname, String documentName,
 			String sectionID);
 
-	public boolean subSectionUpdated(String username, String roomname, String documentName,
-			String sectionID, DocumentSubSection update);
+	public boolean subSectionUpdatedAll(String username, String roomname, String documentName, String sectionID, DocumentSubSection update);
+
+	public boolean subSectionUpdatedInsert(String username, String roomname, String documentName, String sectionId, int start, String update);
+	
+	public boolean subSectionUpdatedRemove(String username, String roomname, String documentName, String sectionId, int start, int end);
 
 	public boolean subSectionLocked(String username, String roomname, String documentName,
 			String sectionId);
