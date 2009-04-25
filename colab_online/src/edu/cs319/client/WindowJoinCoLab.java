@@ -30,6 +30,8 @@ import edu.cs319.server.IServer;
 import edu.cs319.util.Util;
 
 /**
+ * The window where the user chooses to create their own CoLab Room or to join an already existing
+ * CoLab Room.
  * 
  * @author Amelia Gee
  * @author Justin Nelson
@@ -57,7 +59,7 @@ public class WindowJoinCoLab extends JDialog {
 		setLocation(parent.getLocation());
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		if (Util.DEBUG){
+		if (Util.DEBUG) {
 			createField.setText("New Room");
 		}
 		if (server == null) {
@@ -76,6 +78,9 @@ public class WindowJoinCoLab extends JDialog {
 		this.repaint();
 	}
 
+	/**
+	 * Sets up the appearance of the window by initializing/placing the window components.
+	 */
 	private void setUpAppearance() {
 		Insets borderInsets = new Insets(0, 0, 20, 0);
 		roomList = new JList();
@@ -87,7 +92,7 @@ public class WindowJoinCoLab extends JDialog {
 		JLabel listLabel = new JLabel("Existing CoLab Rooms:");
 		JLabel createLabel = new JLabel("Make a New CoLab Room:");
 		JLabel cancelLabel = new JLabel("Join a CoLab Room at another time:");
-		
+
 		createField.setPreferredSize(new Dimension(200, 25));
 		refreshButton.setSize(100, 25);
 
@@ -95,7 +100,7 @@ public class WindowJoinCoLab extends JDialog {
 		createButton.setMnemonic(KeyEvent.VK_C);
 		cancelButton.setMnemonic(KeyEvent.VK_N);
 		refreshButton.setMnemonic(KeyEvent.VK_R);
-		
+
 		JPanel listLabelPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		Insets labelInsets = new Insets(0, 0, 10, 0);
@@ -134,7 +139,7 @@ public class WindowJoinCoLab extends JDialog {
 		mainPanel.add(southPanel, BorderLayout.SOUTH);
 		mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.add(mainPanel);
-		
+
 		Vector<Component> order = new Vector<Component>(6);
 		order.add(createField);
 		order.add(createButton);
@@ -143,7 +148,6 @@ public class WindowJoinCoLab extends JDialog {
 		order.add(roomList);
 		order.add(joinButton);
 		setFocusTraversalPolicy(new JoinCoLabFocusTraversalPolicy(order));
-		//fillCoLabRoomList();
 	}
 
 	public int showRoomDialogue() {
@@ -162,6 +166,9 @@ public class WindowJoinCoLab extends JDialog {
 		server.getAllCoLabRoomNames(parent.getUserName());
 	}
 
+	/**
+	 * Sets up window component listeners.
+	 */
 	private void setUpListeners() {
 		joinButton.addActionListener(new ActionListener() {
 			@Override
@@ -206,11 +213,17 @@ public class WindowJoinCoLab extends JDialog {
 			}
 		});
 	}
-	
-	public static class JoinCoLabFocusTraversalPolicy extends FocusTraversalPolicy {
-		
+
+	/**
+	 * The FocusTraversalPolicy for the WindowJoinCoLab class.
+	 * 
+	 * @author Amelia Gee
+	 * 
+	 */
+	private static class JoinCoLabFocusTraversalPolicy extends FocusTraversalPolicy {
+
 		Vector<Component> order;
-		
+
 		public JoinCoLabFocusTraversalPolicy(Vector<Component> ord) {
 			order = new Vector<Component>(ord.size());
 			order.addAll(ord);
@@ -242,6 +255,6 @@ public class WindowJoinCoLab extends JDialog {
 		public Component getLastComponent(Container arg0) {
 			return order.lastElement();
 		}
-		
+
 	}
 }

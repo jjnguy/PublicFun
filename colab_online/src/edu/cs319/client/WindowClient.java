@@ -178,9 +178,10 @@ public class WindowClient extends JFrame implements IClient {
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
 				String username = r.nextInt(1000) + "";
-				/*proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
-						username);
-				setUserName(username);*/
+				/*
+				 * proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
+				 * username); setUserName(username);
+				 */
 				proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
 				if (proxy != null) {
 					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
@@ -432,10 +433,9 @@ public class WindowClient extends JFrame implements IClient {
 		deleteSection.setEnabled(false);
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
-		String title = getTitle();
 		this.roomMemberListPanel.setUser(userName);
 		if (userName != null)
-			setTitle(title + " - " + getUserName());
+			setTitle("CoLab - " + getUserName());
 	}
 
 	/**
@@ -457,11 +457,10 @@ public class WindowClient extends JFrame implements IClient {
 		deleteSection.setEnabled(false);
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
-		String title = getTitle();
 		this.roomMemberListPanel.setRoom(roomName);
 		this.roomMemberListPanel.setServer(proxy.getServer());
 		if (roomName != null)
-			setTitle(title + " - " + getRoomName());
+			setTitle("CoLab - " + getUserName() + " - " + getRoomName());
 	}
 
 	/**
@@ -480,11 +479,10 @@ public class WindowClient extends JFrame implements IClient {
 		deleteSection.setEnabled(false);
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
-		String title = getTitle();
 		this.roomMemberListPanel.setRoom(roomName);
 		this.roomMemberListPanel.setServer(proxy.getServer());
 		if (roomName != null)
-			setTitle(title + " - " + getRoomName());
+			setTitle("CoLab - " + getUserName() + " - " + getRoomName());
 	}
 
 	/**
@@ -502,6 +500,8 @@ public class WindowClient extends JFrame implements IClient {
 		deleteSection.setEnabled(true);
 		splitSection.setEnabled(true);
 		mergeSection.setEnabled(true);
+		if (roomName != null)
+			setTitle("CoLab - " + getUserName() + " - " + getRoomName());
 	}
 
 	/**
@@ -519,6 +519,8 @@ public class WindowClient extends JFrame implements IClient {
 		deleteSection.setEnabled(false);
 		splitSection.setEnabled(false);
 		mergeSection.setEnabled(false);
+		if (userName != null)
+			setTitle("CoLab - " + getUserName());
 	}
 
 	/**
@@ -614,8 +616,8 @@ public class WindowClient extends JFrame implements IClient {
 				if (doc != null) {
 					throw new IllegalStateException("Two documents cannot have the same name");
 				}
-				doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, documentName,
-						userName), WindowClient.this);
+				doc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName,
+						documentName, userName), WindowClient.this);
 				documentTabs.put(documentName, doc);
 				tabbedDocumentPane.add(documentName, doc);
 				// TODO keep update? documents.get(documentName).updateDocumentView();
@@ -767,8 +769,8 @@ public class WindowClient extends JFrame implements IClient {
 	/**
 	 * Sets the name of the room this user has joined.
 	 * 
-	 * @param rn
-	 *            - room name
+	 * @param rn -
+	 *            room name
 	 */
 	public void setRoomName(String rn) {
 		roomName = rn;

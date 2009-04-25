@@ -23,6 +23,7 @@ import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.util.Util;
 
 /**
+ * The window where the user logs in
  * 
  * @author Amelia Gee
  * @author Justin Nelson
