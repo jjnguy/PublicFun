@@ -196,10 +196,11 @@ public class WindowClient extends JFrame implements IClient {
 			public void actionPerformed(ActionEvent e) {
 				int result = colabRoomFrame.showRoomDialogue();
 				if (result == WindowJoinCoLab.ROOM_JOINED) {
-					setMenusForUserJoinedRoom();
-				}
-				if (getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
-					setMenusForUserObserver();
+					if (getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
+						setMenusForUserObserver();
+					} else {
+						setMenusForUserJoinedRoom();
+					}
 				}
 			}
 		});

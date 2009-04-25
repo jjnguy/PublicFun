@@ -43,11 +43,13 @@ public class WindowJoinCoLab extends JDialog {
 	public static final int NO_ROOM = 32142;
 	public static final int ROOM_JOINED = -234;
 	private JList roomList;
+	private JList persistingRoomList;
 	private JTextField createField = new JTextField();
 	private JButton joinButton = new JButton("Join");
 	private JButton createButton = new JButton("Create");
 	private JButton cancelButton = new JButton("Cancel");
 	private JButton refreshButton = new JButton("Refresh");
+	private JButton openButton = new JButton("Open");
 	private JLabel refreshTimeStamp = new JLabel("Click Refresh for a List of Available Rooms");
 
 	private WindowClient parent;
@@ -71,8 +73,8 @@ public class WindowJoinCoLab extends JDialog {
 		}
 		this.parent = parent;
 		this.server = server;
-		this.setSize(500, 400);
-		this.setMinimumSize(new Dimension(500, 400));
+		this.setSize(600, 450);
+		this.setResizable(false);
 		setUpAppearance();
 		setUpListeners();
 		fillCoLabRoomList();
@@ -83,23 +85,36 @@ public class WindowJoinCoLab extends JDialog {
 	 * Sets up the appearance of the window by initializing/placing the window components.
 	 */
 	private void setUpAppearance() {
-		Insets borderInsets = new Insets(0, 0, 20, 0);
 		roomList = new JList();
 		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		roomList.setSelectedIndex(0);
 		roomList.setVisibleRowCount(8);
-		JScrollPane listScrollPane = new JScrollPane(roomList);
+		JScrollPane roomListScroll = new JScrollPane(roomList);
+		
+		persistingRoomList = new JList();
+		persistingRoomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		persistingRoomList.setSelectedIndex(0);
+		persistingRoomList.setVisibleRowCount(4);
+		JScrollPane persistingRoomListScroll = new JScrollPane(persistingRoomList);
 
 		JLabel listLabel = new JLabel("Existing CoLab Rooms:");
 		JLabel createLabel = new JLabel("Make a New CoLab Room:");
+		JLabel openLabel = new JLabel("Open a persisting CoLab Room:");
 		JLabel cancelLabel = new JLabel("Join a CoLab Room at another time:");
 
-		createField.setPreferredSize(new Dimension(200, 25));
-		refreshButton.setSize(100, 25);
+		createField.setPreferredSize(new Dimension(260, 25));
+		
+		Dimension buttonSize = new Dimension(80, 25);
+		joinButton.setPreferredSize(buttonSize);
+		createButton.setPreferredSize(buttonSize);
+		cancelButton.setPreferredSize(buttonSize);
+		openButton.setPreferredSize(buttonSize);
+		refreshButton.setPreferredSize(buttonSize);
 
 		joinButton.setMnemonic(KeyEvent.VK_J);
 		createButton.setMnemonic(KeyEvent.VK_C);
 		cancelButton.setMnemonic(KeyEvent.VK_N);
+		openButton.setMnemonic(KeyEvent.VK_O);
 		refreshButton.setMnemonic(KeyEvent.VK_R);
 
 		JPanel listLabelPanel = new JPanel(new GridBagLayout());
@@ -116,38 +131,70 @@ public class WindowJoinCoLab extends JDialog {
 		c.anchor = GridBagConstraints.CENTER;
 		listLabelPanel.add(refreshButton, c);
 
-		JPanel westPanel = new JPanel(new BorderLayout(10, 10));
-		westPanel.add(listLabelPanel, BorderLayout.NORTH);
-		westPanel.add(createLabel, BorderLayout.SOUTH);
-		JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
-		centerPanel.add(listScrollPane, BorderLayout.CENTER);
-		centerPanel.add(createField, BorderLayout.SOUTH);
-		JPanel eastPanel = new JPanel(new BorderLayout(10, 10));
-		eastPanel.add(joinButton, BorderLayout.NORTH);
-		eastPanel.add(createButton, BorderLayout.SOUTH);
-		JPanel southPanel = new JPanel(new BorderLayout(10, 10));
-		southPanel.add(cancelLabel, BorderLayout.WEST);
-		southPanel.add(cancelButton, BorderLayout.EAST);
-
-		JLabel topLabel = new JLabel("Please choose an "
-				+ "existing CoLab to join or create a new CoLab.");
-		topLabel.setBorder(new EmptyBorder(borderInsets));
-		JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
-		mainPanel.add(topLabel, BorderLayout.NORTH);
-		mainPanel.add(westPanel, BorderLayout.WEST);
-		mainPanel.add(centerPanel, BorderLayout.CENTER);
-		mainPanel.add(eastPanel, BorderLayout.EAST);
-		mainPanel.add(southPanel, BorderLayout.SOUTH);
-		mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		JPanel stuffPanel = new JPanel(new GridBagLayout());
+		stuffPanel.setBorder(new EmptyBorder(5, 5, 15, 5));
+		Insets gridInsets = new Insets(5, 10, 5, 10);
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = gridInsets;
+		c.anchor = GridBagConstraints.LINE_START;
+		stuffPanel.add(createLabel, c);
+		c.gridx = 1;
+		stuffPanel.add(createField, c);
+		c.gridx = 2;
+		stuffPanel.add(createButton, c);
+		c.gridx = 0;
+		c.gridy = 1;
+		stuffPanel.add(listLabelPanel, c);
+		c.gridx = 1;
+		stuffPanel.add(roomListScroll, c);
+		c.gridx = 2;
+		stuffPanel.add(joinButton, c);
+		c.gridx = 0;
+		c.gridy = 2;
+		stuffPanel.add(openLabel, c);
+		c.gridx = 1;
+		stuffPanel.add(persistingRoomListScroll, c);
+		c.gridx = 2;
+		stuffPanel.add(openButton, c);
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 2;
+		stuffPanel.add(cancelLabel, c);
+		c.gridx = 2;
+		c.gridwidth = 1;
+		stuffPanel.add(cancelButton, c);
+		
+		JLabel topLabel = new JLabel("Please create a new CoLab Room,");
+		JLabel middleLabel = new JLabel("choose an existing CoLab Room to join, or");
+		JLabel bottomLabel = new JLabel("choose a CoLab Room to reopen.");
+		Insets borderInsets = new Insets(10, 10, 0, 10);
+		JPanel labelPanel = new JPanel(new GridBagLayout());
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = borderInsets;
+		labelPanel.add(topLabel, c);
+		c.gridy = 1;
+		c.anchor = GridBagConstraints.CENTER;
+		labelPanel.add(middleLabel, c);
+		c.gridy = 2;
+		c.anchor = GridBagConstraints.LINE_END;
+		labelPanel.add(bottomLabel, c);
+		
+		JPanel mainPanel = new JPanel(new BorderLayout(10, 10));;
+		mainPanel.add(labelPanel, BorderLayout.WEST);
+		mainPanel.add(stuffPanel, BorderLayout.SOUTH);
 		this.add(mainPanel);
 
-		Vector<Component> order = new Vector<Component>(6);
+		Vector<Component> order = new Vector<Component>(8);
 		order.add(createField);
 		order.add(createButton);
-		order.add(cancelButton);
 		order.add(refreshButton);
-		order.add(roomList);
+		order.add(roomListScroll);
 		order.add(joinButton);
+		order.add(persistingRoomListScroll);
+		order.add(openButton);
+		order.add(cancelButton);
 		setFocusTraversalPolicy(new JoinCoLabFocusTraversalPolicy(order));
 	}
 
@@ -171,19 +218,6 @@ public class WindowJoinCoLab extends JDialog {
 	 * Sets up window component listeners.
 	 */
 	private void setUpListeners() {
-		joinButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String joinName = (String) roomList.getSelectedValue();
-				server.joinCoLabRoom(parent.getUserName(), joinName, null);
-				parent.setRoomName(joinName);
-				parent.chatLogin();
-				server.getClientsCurrentlyInRoom(parent.getUserName(), joinName);
-				closeStatus = ROOM_JOINED;
-				dispose();
-			}
-		});
-
 		createButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -203,6 +237,27 @@ public class WindowJoinCoLab extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				fillCoLabRoomList();
+			}
+		});
+
+		joinButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String joinName = (String) roomList.getSelectedValue();
+				server.joinCoLabRoom(parent.getUserName(), joinName, null);
+				parent.setRoomName(joinName);
+				parent.chatLogin();
+				server.getClientsCurrentlyInRoom(parent.getUserName(), joinName);
+				closeStatus = ROOM_JOINED;
+				dispose();
+			}
+		});
+		
+		openButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO implement persisting room list
+				
 			}
 		});
 
