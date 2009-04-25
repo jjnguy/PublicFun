@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -42,7 +43,7 @@ public class WindowLogIn extends JDialog {
 
 	private WindowLogIn(JFrame parent, IClient client) {
 		super(parent, "CoLab Log In");
-		setLocation(parent.getLocation());
+		setLocation(new Point(parent.getLocation().x + 50, parent.getLocation().y + 50));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		if (Util.DEBUG) {
 			hostField.setText("129.186.150.18");

@@ -2,6 +2,7 @@ package edu.cs319.client;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -75,6 +76,7 @@ public class WindowClient extends JFrame implements IClient {
 		// setLookAndFeel();
 		setTitle("CoLab");
 		setSize(new Dimension(1000, 500));
+		setLocation(new Point(50, 50));
 		setJMenuBar(createMenuBar());
 		setListeners();
 
@@ -388,8 +390,7 @@ public class WindowClient extends JFrame implements IClient {
 		about.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO make info window
-
+				WindowAbout.showAboutWindow(WindowClient.this);
 			}
 		});
 
