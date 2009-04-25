@@ -937,20 +937,41 @@ public class JDocTabPanel extends JPanel {
 		String currentText = getCurrentlySelectedSubSection().getText();
 		String proposedText = currentWorkingPane.getText();
 		
+		int start = -1;
+		int end = -1;
+		int i = 0;
+		
 		if(currentText.length() > proposedText.length()) { // Remove
-			int start = -1;
-			int end = -1;
-			int i = 0;
-			while(currentText.charAt(i) == proposedText.charAt(i)) {
+			while(i < proposedText.length() && currentText.charAt(i) == proposedText.charAt(i)) {
 				i++;
 			}
 			start = i;
-			end = currentText.indexOf(0);
+			end = currentText.indexOf(proposedText.substring(start,proposedText.length()), start);
+			if(end > -1) {
+				System.out.println("Sending Remove: Start: " + start + " End: " + end);
+				info.getServer().subSectionUpdatedRemove(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, end);
+			} else {
+				System.out.println("Failed Remove: Start: " + start + " End: " + end);
+				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());
+			}
 		} else if(currentText.length() < proposedText.length()) { // Insert
-		
+			while(i < currentText.length() && currentText.charAt(i) == proposedText.charAt(i)) {
+				i++;
+			}
+			start = i;
+			end = proposedText.indexOf(currentText.substring(start,currentText.length()),start);
+			if(end > -1) {
+				System.out.println("Sending Insert: Start: " + start + " Text: " + proposedText.substring(start,end));
+				info.getServer().subSectionUpdatedInsert(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, proposedText.substring(start,end));
+			} else {
+				System.out.println("Failed Insert: Start: " + start + " End: " + end);
+				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());
+			}
 		} else { // They probably haven't changed
-		
-		}
-		info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());	
+			System.out.println("Updates were the same size");
+			if(!currentText.equals(proposedText)) {
+				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());
+			}
+		}	
 	}
 }
