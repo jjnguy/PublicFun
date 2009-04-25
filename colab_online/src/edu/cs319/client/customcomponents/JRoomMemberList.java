@@ -53,7 +53,7 @@ public class JRoomMemberList extends JList {
 		RoomMemberLite dummy = new RoomMemberLite(userID, null);
 		return model.remove(dummy);
 	}
-	
+
 	public void removeAllMembers() {
 		model.clearList();
 	}
@@ -84,7 +84,7 @@ public class JRoomMemberList extends JList {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if (e.isPopupTrigger())
+			if (e.isPopupTrigger() && getSelectedValue() != null)
 				doPop(e);
 		}
 
@@ -95,16 +95,14 @@ public class JRoomMemberList extends JList {
 		}
 
 		private void doPop(MouseEvent e) {
-			if(getSelectedValue() != null) {
-				JPopupMenu menu = new RoomMemberPopupMenu(username,
-						((RoomMemberLite) getSelectedValue()).getName());
-				menu.show(e.getComponent(), e.getX(), e.getY());
-			}
+			JPopupMenu menu = new RoomMemberPopupMenu(username,
+					((RoomMemberLite) getSelectedValue()).getName());
+			menu.show(e.getComponent(), e.getX(), e.getY());
 		}
 	};
 
 	private class RoomMemberCellRenderer extends JLabel implements ListCellRenderer {
-		
+
 		public RoomMemberCellRenderer() {
 			setOpaque(true);
 		}
