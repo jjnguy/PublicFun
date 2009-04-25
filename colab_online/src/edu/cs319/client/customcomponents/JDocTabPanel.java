@@ -961,10 +961,10 @@ public class JDocTabPanel extends JPanel {
 			start = i;
 			end = proposedText.indexOf(currentText.substring(start,currentText.length()),start);
 			if(end > -1) {
-				System.out.println("Sending Insert: Start: " + start + " Text: " + proposedText.substring(start,end));
+				System.out.println("Sending Insert: Start: " + start + " Text: " + proposedText.substring(start,end) + " End: " + end + " Current Text: '" + currentText + "Proposed Text: '" + proposedText);
 				info.getServer().subSectionUpdatedInsert(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, proposedText.substring(start,end));
 			} else {
-				System.out.println("Failed Insert: Start: " + start + " End: " + end);
+				System.out.println("Failed Insert: Start: " + start + " End: " + end + " Current Text: '" + currentText + "Proposed Text: '" + proposedText);
 				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());
 			}
 		} else { // They probably haven't changed
