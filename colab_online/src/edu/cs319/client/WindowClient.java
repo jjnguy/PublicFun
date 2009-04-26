@@ -212,12 +212,26 @@ public class WindowClient extends JFrame implements IClient {
 							"This CoLab Room will be saved.");
 					proxy.getServer().saveCoLabRoom(userName, roomName);
 				}
-				proxy.getServer().leaveCoLabRoom(userName, roomName);
+				//proxy.getServer().leaveCoLabRoom(userName, roomName);
 			}
 		});
 		exitCoLab.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (disconnect.isEnabled()) {
+					if (roomMemberListPanel.getMemberCount() == 1) {
+						JOptionPane.showMessageDialog(WindowClient.this,
+								"This CoLab Room will be saved.");
+						proxy.getServer().saveCoLabRoom(userName, roomName);
+					}
+					//proxy.getServer().leaveCoLabRoom(userName, roomName);
+					proxy.getServer().logOut(userName);
+					try {
+						proxy.close();
+					} catch (IOException io) {
+						io.printStackTrace();
+					}
+				}
 				WindowClient.this.processWindowEvent(new WindowEvent(WindowClient.this,
 						WindowEvent.WINDOW_CLOSING));
 			}
@@ -407,7 +421,12 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				if (disconnect.isEnabled()) {
-					proxy.getServer().leaveCoLabRoom(userName, roomName);
+					if (roomMemberListPanel.getMemberCount() == 1) {
+						JOptionPane.showMessageDialog(WindowClient.this,
+								"This CoLab Room will be saved.");
+						proxy.getServer().saveCoLabRoom(userName, roomName);
+					}
+					//proxy.getServer().leaveCoLabRoom(userName, roomName);
 					proxy.getServer().logOut(userName);
 					try {
 						proxy.close();
