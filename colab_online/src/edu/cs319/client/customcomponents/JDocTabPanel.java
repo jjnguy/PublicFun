@@ -532,12 +532,6 @@ public class JDocTabPanel extends JPanel {
 			if (!info.getUserName().equals(getCurrentlySelectedSubSection().lockedByUser())) {
 				return;
 			}
-			if (currentWorkingPane.getText().trim().equals("")) {
-				return;
-			}
-			if (getCurrentlySelectedSubSection().getText().equals(currentWorkingPane.getText())) {
-				return;
-			}
 			System.out.println("AutoUpdating SubSection: " + info + " Currently Selected: "
 					+ getCurrentlySelectedSubSection());
 			updateSubSection(getCurrentlySelectedSubSection(), currentWorkingPane.getText());
@@ -955,7 +949,7 @@ public class JDocTabPanel extends JPanel {
 				end = currentText.indexOf(proposedText.substring(start,proposedText.length()), start);
 			}
 			if(end > -1) {
-				System.out.println("Sending Remove: Start: " + start + " End: " + end);
+				//System.out.println("Sending Remove: Start: " + start + " End: " + end);
 				info.getServer().subSectionUpdatedRemove(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, end);
 			} else {
 				System.out.println("Failed Remove: Start: " + start + " End: " + end);
@@ -975,7 +969,7 @@ public class JDocTabPanel extends JPanel {
 			
 			if(end > -1) {
 				update = proposedText.substring(start,end);
-				System.out.println("Sending Insert: Start: " + start + " Text: " + update);
+				//System.out.println("Sending Insert: Start: " + start + " Text: " + update);
 				info.getServer().subSectionUpdatedInsert(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, update);
 			} else {
 				System.out.println("Failed Insert: Start: " + start + " End: " + end + " Current Text: '" + currentText + "' Proposed Text: '" + proposedText + "'");
