@@ -68,4 +68,6 @@ public interface IClient {
 	 * @param username - String to change userName to
 	 */
 	public void setUserName(String username);
+	
+	public boolean userAuthenticated(String username, boolean success);
 }

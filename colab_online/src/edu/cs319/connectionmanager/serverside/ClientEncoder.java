@@ -331,5 +331,13 @@ public class ClientEncoder implements IClient {
 		Message m = new Message(MessageType.PERSISTED_ROOM, "admin", args);
 		return printMessageToStream(m);
 	}
+	
+	@Override
+	public boolean userAuthenticated(String username, boolean success) {
+		List<String> args = new ArrayList<String>();
+		args.add(Boolean.toString(success));
+		Message m = new Message(MessageType.USER_AUTHENTICATE, username, args);
+		return printMessageToStream(m);
+	}
 
 }

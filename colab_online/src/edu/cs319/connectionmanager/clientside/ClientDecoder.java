@@ -147,6 +147,9 @@ public class ClientDecoder implements Runnable {
 			}
 			actualClient.persistedCoLabRoom(docs);
 			break;
+		case USER_AUTHENTICATE:
+			actualClient.userAuthenticated(username, Boolean.parseBoolean(arg.get(0)));
+			break;
 		default:
 			throw new NotYetImplementedException();
 		}

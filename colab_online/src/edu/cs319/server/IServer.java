@@ -168,5 +168,11 @@ public interface IServer {
 	public boolean openPersistedRoom(String username, String roomname);
 	
 	public boolean saveCoLabRoom(String username, String roomname);
+	
+	public boolean createUser(String username, byte[] password);
+	
+	public boolean authenticateUser(String username, byte[] password);
+	
+	public boolean deleteUser(String username);
 
 }

@@ -28,7 +28,10 @@ public enum MessageType {
 	UPDATE_SUBSECTION_REMOVE((byte) 0x17, "Remove from SubSection"),
 	ALL_PERSISTED_ROOMS((byte)0x18, "All persisted rooms"),
 	PERSISTED_ROOM((byte)0x19, "Persisted Room"),
-	SAVE_ROOM((byte)0x1a, "Save Room");
+	SAVE_ROOM((byte)0x1a, "Save Room"),
+	USER_AUTHENTICATE((byte) 0x1b, "Authenticate User"),
+	USER_CREATE((byte) 0x1c, "Create User"),
+	USER_DELETE((byte) 0x1d, "Delete User");
 
 	private byte code;
 	private String name;
@@ -103,6 +106,12 @@ public enum MessageType {
 			return PERSISTED_ROOM;
 		case 0x1a:
 			return SAVE_ROOM;
+		case 0x1b:
+			return USER_AUTHENTICATE;
+		case 0x1c:
+			return USER_CREATE;
+		case 0x1d:
+			return USER_DELETE;
 		default:
 			return null;
 		}
