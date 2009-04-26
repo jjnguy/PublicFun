@@ -51,7 +51,7 @@ public class DocumentDatabaseUtil {
 		Criteria criteria = session.createCriteria(DBCoLabRoom.class);
 
 		criteria.add(Restrictions.eq("admin", user));
-		
+
 		List<DBCoLabRoom> rooms = criteria.list();
 		List<String> roomNames = new ArrayList<String>();
 		for (DBCoLabRoom room : rooms) {
@@ -77,7 +77,6 @@ public class DocumentDatabaseUtil {
 			SectionizedDocument doc;
 			List<DocumentSubSectionImpl> subDocs;
 			DocumentSubSectionImpl subDoc;
-
 			newRoom = new CoLabRoom(dbRoom.getRoomname(), new CoLabRoomMember(dbRoom.getAdmin(),
 					null));
 			dbDocs = dbRoom.getDocuments();
@@ -100,12 +99,13 @@ public class DocumentDatabaseUtil {
 
 				newRoom.addDocument(doc);
 			}
+			// Add the list of document sub sections to the new Sectionized document
 
 			session.delete(dbRoom);
 			session.flush();
 			session.close();
 		}
-		
+
 		return newRoom;
 
 	}

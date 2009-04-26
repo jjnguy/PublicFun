@@ -57,6 +57,7 @@ public interface IClient {
 	
 	public boolean persistedCoLabRoom(List<SectionizedDocument> documentsInRoom);
 	
+	
 	/**
 	 * Returns the userName used on this client.
 	 * @return the userName used on this client.

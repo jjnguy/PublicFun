@@ -13,6 +13,7 @@ import edu.cs319.dataobjects.CoLabRoomMember;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
+import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 import edu.cs319.util.Util;
 
 // TODO listen to boolean return types of client code
@@ -681,11 +682,19 @@ public class Server implements IServer {
 		CoLabRoom actualRoom = new CoLabRoom(fakeRoom.roomName(), new CoLabRoomMember(username,
 				regularClients.get(username)));
 		for (SectionizedDocument doc : fakeRoom.getAllDocuments()) {
-			actualRoom.addDocument(doc);
+			SectionizedDocument docToAdd = new SectionizedDocumentImpl(doc.getName());
+			for (DocumentSubSection sec: doc.getAllSubSections()){
+				DocumentSubSectionImpl secToAdd = new DocumentSubSectionImpl(sec.getName());
+				secToAdd.setLocked(true, "admin");
+				secToAdd.setText("admin", sec.getText());
+				secToAdd.setLocked(false, "admin");
+				System.out.println("Section is Locked: Name: " + secToAdd.getName() + " Locked: " + ((secToAdd.lockedByUser() == null) ? "nl" : secToAdd.lockedByUser()) + " " + secToAdd.isLocked());
+				docToAdd.addSubSection(secToAdd, docToAdd.getSubSectionCount());
+			}
+			actualRoom.addDocument(docToAdd);
 		}
 		colabrooms.put(roomname, actualRoom);
-		joinCoLabRoom(username, roomname, null);
-		return regularClients.get(username).persistedCoLabRoom(actualRoom.getAllDocuments());
+		return joinCoLabRoom(username, roomname, null);
 	}
 
 	@Override
@@ -696,9 +705,9 @@ public class Server implements IServer {
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		DocumentDatabaseUtil.saveCoLab(username, room);
-//		for (IClient c : room.getAllClients()) {
-//			c.coLabRoomMemberLeft(c.getUserName());
-//		}
+		for (IClient c : room.getAllClients()) {
+			c.coLabRoomMemberLeft(c.getUserName());
+		}
 		colabrooms.remove(roomname);
 		return true;
 	}
