@@ -129,9 +129,15 @@ public class WindowLogIn extends JDialog {
 		return win.serverConnection;
 	}
 
-	private void login(String host, String username) {
+	private void login(String host, String username, byte[] password) {
 		serverConnection = ConnectionFactory.getNetworkedInstance().connect(host, 4444, client,
-				username, Util.getHashedBytes(passwordField.getText().getBytes()));
+				username, password);
+	}
+	
+	private void createPlusLogin(String host, String username, byte[] password){
+		ConnectionFactory cf = ConnectionFactory.getNetworkedInstance();
+		cf.createUser(host, 4444, client, username, password);
+		serverConnection = cf.connect(host, 4444, client, username, password);
 	}
 
 	public static boolean isValidUserName(String usernme) {
@@ -161,7 +167,7 @@ public class WindowLogIn extends JDialog {
 									+ "It must also be at least one character long.");
 					return;
 				}
-				login(hostField.getText(), usernameField.getText());
+				login(hostField.getText(), usernameField.getText(), Util.getHashedBytes(passwordField.getText().getBytes()));
 				dispose();
 			}
 		});
@@ -194,7 +200,8 @@ public class WindowLogIn extends JDialog {
 							"Your password must be at least one character long.");
 					return;
 				}
-				// TODO figure this out
+				createPlusLogin(hostField.getText(), username, Util.getHashedBytes(password.getBytes()));
+				dispose();
 			}
 		});
 	}

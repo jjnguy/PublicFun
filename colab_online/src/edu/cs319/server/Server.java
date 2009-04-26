@@ -683,7 +683,6 @@ public class Server implements IServer {
 
 	@Override
 	public boolean getAllRoomsPersisted(String username) {
-		// TODO Auto-generated method stub
 		List<String> roomnames = DocumentDatabaseUtil.getRoomNames(username);
 		IClient client = regularClients.get(username);
 		return client.listOfPersistedRooms(roomnames);
