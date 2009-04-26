@@ -314,11 +314,10 @@ public class ServerEncoder implements IServer {
 	}
 
 	@Override
-	public boolean createUser(String username, byte[] password) {
+	public boolean createUser(IClient client, String username, byte[] password) {
 		List<String> args = new ArrayList<String>();
 		args.add(new String(password));
 		Message m = new Message(MessageType.USER_CREATE, username, args);
 		return printMessageToStream(m);
 	}
-
 }

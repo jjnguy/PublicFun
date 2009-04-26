@@ -155,7 +155,7 @@ public class ServerDecoder implements Runnable {
 			actualServer.authenticateUser(cln, args.get(0).getBytes());
 			break;
 		case USER_CREATE:
-			actualServer.createUser(cln, args.get(0).getBytes());
+			actualServer.createUser(new ClientEncoder(cln, socket), cln, args.get(0).getBytes());
 			break;
 		case USER_DELETE:
 			actualServer.deleteUser(cln);

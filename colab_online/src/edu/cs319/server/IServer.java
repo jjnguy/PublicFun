@@ -169,7 +169,7 @@ public interface IServer {
 	
 	public boolean saveCoLabRoom(String username, String roomname);
 	
-	public boolean createUser(String username, byte[] password);
+	public boolean createUser(IClient c, String username, byte[] password);
 	
 	public boolean authenticateUser(String username, byte[] password);
 	

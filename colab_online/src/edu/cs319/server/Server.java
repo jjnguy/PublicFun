@@ -9,6 +9,7 @@ import java.util.Set;
 
 import edu.cs319.client.IClient;
 import edu.cs319.database.DocumentDatabaseUtil;
+import edu.cs319.database.UsersUtil;
 import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.CoLabRoomMember;
 import edu.cs319.dataobjects.DocumentSubSection;
@@ -261,14 +262,15 @@ public class Server implements IServer {
 			// if the user is all alone...have some fun
 			if (clientsInRoom.size() == 1
 					&& clientsInRoom.get(0).getUserName().equals(usernameSender)) {
-				String[] awesome = {"No one can hear you, try using CAPS LOCK!", 
-						"Where'd everybody go? It's so lonely in here...", 
-						"You are all alone. Watch your back!", 
-						"What part of COLLABORATIVE editing don't you understand?", 
+				String[] awesome = {
+						"No one can hear you, try using CAPS LOCK!",
+						"Where'd everybody go? It's so lonely in here...",
+						"You are all alone. Watch your back!",
+						"What part of COLLABORATIVE editing don't you understand?",
 						"It's kind of hard to work on a group project without a group, retard.",
-						"Watch out for ninjas!", 
-						"Watch out for code monkeys!", 
-						"We should probably be fixing bugs instead of writing interesting messages to send you when you're all alone in the dark..."};
+						"Watch out for ninjas!",
+						"Watch out for code monkeys!",
+						"We should probably be fixing bugs instead of writing interesting messages to send you when you're all alone in the dark..." };
 				Random r = new Random();
 				clientsInRoom.get(0).newChatMessage("The Darkness",
 						awesome[r.nextInt(awesome.length)]);
@@ -320,7 +322,9 @@ public class Server implements IServer {
 		CoLabRoom room = colabrooms.get(roomname);
 		if (room == null) {
 			if (Util.DEBUG) {
-				System.out.println("...................66666666666666.....Room was null, roomname: " + roomname + " username: " + username);
+				System.out
+						.println("...................66666666666666.....Room was null, roomname: "
+								+ roomname + " username: " + username);
 			}
 			return false;
 		}
@@ -693,12 +697,14 @@ public class Server implements IServer {
 				regularClients.get(username)));
 		for (SectionizedDocument doc : fakeRoom.getAllDocuments()) {
 			SectionizedDocument docToAdd = new SectionizedDocumentImpl(doc.getName());
-			for (DocumentSubSection sec: doc.getAllSubSections()){
+			for (DocumentSubSection sec : doc.getAllSubSections()) {
 				DocumentSubSectionImpl secToAdd = new DocumentSubSectionImpl(sec.getName());
 				secToAdd.setLocked(true, "admin");
 				secToAdd.setText("admin", sec.getText());
 				secToAdd.setLocked(false, "admin");
-				System.out.println("Section is Locked: Name: " + secToAdd.getName() + " Locked: " + ((secToAdd.lockedByUser() == null) ? "nl" : secToAdd.lockedByUser()) + " " + secToAdd.isLocked());
+				System.out.println("Section is Locked: Name: " + secToAdd.getName() + " Locked: "
+						+ ((secToAdd.lockedByUser() == null) ? "nl" : secToAdd.lockedByUser())
+						+ " " + secToAdd.isLocked());
 				docToAdd.addSubSection(secToAdd, docToAdd.getSubSectionCount());
 			}
 			actualRoom.addDocument(docToAdd);
@@ -724,19 +730,22 @@ public class Server implements IServer {
 
 	@Override
 	public boolean authenticateUser(String username, byte[] password) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean authResult = UsersUtil.authenticateUser(username, password);
+		IClient client = regularClients.get(username);
+		return client.userAuthenticated(username, authResult);
 	}
 
 	@Override
-	public boolean createUser(String username, byte[] password) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean createUser(IClient client, String username, byte[] password) {
+		boolean createUserResult = UsersUtil.createUser(username, password);
+		if (createUserResult) {
+			regularClients.put(username, client);
+		}
+		return client.userAuthenticated(username, createUserResult);
 	}
 
 	@Override
 	public boolean deleteUser(String username) {
-		// TODO Auto-generated method stub
-		return false;
+		return UsersUtil.deleteUser(username);
 	}
 }

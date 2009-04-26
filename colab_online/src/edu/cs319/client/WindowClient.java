@@ -876,13 +876,15 @@ public class WindowClient extends JFrame implements IClient {
 
 	@Override
 	public boolean userAuthenticated(String username, boolean success) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!success) {
+			JOptionPane.showMessageDialog(this, "Oh no " + username + " could not be validated!",
+					"Login Failed", JOptionPane.WARNING_MESSAGE, null);
+		}
+		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "UN:" + getUserName() + ";RN:" + getRoomName() + ";";
 	}
-
 }

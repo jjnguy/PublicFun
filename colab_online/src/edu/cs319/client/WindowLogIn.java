@@ -113,7 +113,7 @@ public class WindowLogIn extends JDialog {
 
 		c.gridy = 4;
 		mainPanel.add(createNewUserButton, c);
-		
+
 		c.gridy = 5;
 		mainPanel.add(cancelButton, c);
 
@@ -151,7 +151,7 @@ public class WindowLogIn extends JDialog {
 		usernameField.addKeyListener(enterKey);
 		passwordField.addKeyListener(enterKey);
 		logInButton.addKeyListener(enterKey);
-		
+
 		logInButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -189,12 +189,12 @@ public class WindowLogIn extends JDialog {
 				String password = JOptionPane.showInputDialog(WindowLogIn.this,
 						"Please enter your new password:", "Enter Password",
 						JOptionPane.QUESTION_MESSAGE);
-				if(!isValidPassword(password)) {
-					JOptionPane.showMessageDialog(WindowLogIn.this, 
+				if (!isValidPassword(password)) {
+					JOptionPane.showMessageDialog(WindowLogIn.this,
 							"Your password must be at least one character long.");
 					return;
 				}
-				//TODO once createNewUser method(s) written finish this
+				// TODO figure this out
 			}
 		});
 	}
