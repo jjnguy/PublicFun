@@ -987,7 +987,7 @@ public class JDocTabPanel extends JPanel {
 						getCurrentlySelectedSubSection());
 			}
 		} else { // They probably haven't changed
-			System.out.println("Updates were the same size");
+			//System.out.println("Updates were the same size");
 			if (!currentText.equals(proposedText)) {
 				System.out.println("Different Contents, Updating");
 				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(),
