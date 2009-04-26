@@ -307,6 +307,12 @@ public class Server implements IServer {
 	@Override
 	public boolean getClientsCurrentlyInRoom(String username, String roomname) {
 		CoLabRoom room = colabrooms.get(roomname);
+		if (room == null) {
+			if (Util.DEBUG) {
+				System.out.println("...................66666666666666.....Room was null, roomname: " + roomname + " username: " + username);
+			}
+			return false;
+		}
 		synchronized (room) {
 			IClient toSendTo = regularClients.get(username);
 			return toSendTo.allUsersInRoom(room.getAllClientNamesInRoom(), room.getAllPrivLevels());
@@ -671,20 +677,29 @@ public class Server implements IServer {
 	@Override
 	public boolean openPersistedRoom(String username, String roomname) {
 		// TODO Auto-generated method stub
-		CoLabRoom room = DocumentDatabaseUtil.getCoLabRoom(roomname);
-		CoLabRoom actualRoom = colabrooms.get(username);
-		CoLabRoomMember mem = actualRoom.getMemberByName(username);
-		return mem.getClient().persistedCoLabRoom(room.getAllDocuments());
+		CoLabRoom fakeRoom = DocumentDatabaseUtil.getCoLabRoom(roomname);
+		CoLabRoom actualRoom = new CoLabRoom(fakeRoom.roomName(), new CoLabRoomMember(username,
+				regularClients.get(username)));
+		for (SectionizedDocument doc : fakeRoom.getAllDocuments()) {
+			actualRoom.addDocument(doc);
+		}
+		colabrooms.put(roomname, actualRoom);
+		joinCoLabRoom(username, roomname, null);
+		return regularClients.get(username).persistedCoLabRoom(fakeRoom.getAllDocuments());
 	}
 
 	@Override
 	public boolean saveCoLabRoom(String username, String roomname) {
 		// TODO Auto-generated method stub
+		if (Util.DEBUG) {
+			System.out.println("-------------------Saving colab room: " + roomname);
+		}
 		CoLabRoom room = colabrooms.get(roomname);
 		DocumentDatabaseUtil.saveCoLab(username, room);
 		for (IClient c : room.getAllClients()) {
 			c.coLabRoomMemberLeft(c.getUserName());
 		}
+		colabrooms.remove(roomname);
 		return true;
 	}
 
