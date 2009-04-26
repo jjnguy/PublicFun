@@ -685,7 +685,7 @@ public class Server implements IServer {
 		}
 		colabrooms.put(roomname, actualRoom);
 		joinCoLabRoom(username, roomname, null);
-		return regularClients.get(username).persistedCoLabRoom(fakeRoom.getAllDocuments());
+		return regularClients.get(username).persistedCoLabRoom(actualRoom.getAllDocuments());
 	}
 
 	@Override
@@ -696,9 +696,9 @@ public class Server implements IServer {
 		}
 		CoLabRoom room = colabrooms.get(roomname);
 		DocumentDatabaseUtil.saveCoLab(username, room);
-		for (IClient c : room.getAllClients()) {
-			c.coLabRoomMemberLeft(c.getUserName());
-		}
+//		for (IClient c : room.getAllClients()) {
+//			c.coLabRoomMemberLeft(c.getUserName());
+//		}
 		colabrooms.remove(roomname);
 		return true;
 	}

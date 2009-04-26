@@ -35,6 +35,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
+import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
@@ -179,12 +180,13 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
-				String username = r.nextInt(1000) + "";
-				/*
-				 * proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
-				 * username); setUserName(username);
-				 */
-				proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
+				String username ="90";
+
+				proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
+						username);
+				setUserName(username);
+
+				// proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
 				if (proxy != null) {
 					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
 					setMenusForUserLoggedIn();
@@ -822,8 +824,8 @@ public class WindowClient extends JFrame implements IClient {
 	/**
 	 * Sets the name of the room this user has joined.
 	 * 
-	 * @param rn -
-	 *            room name
+	 * @param rn
+	 *            - room name
 	 */
 	public void setRoomName(String rn) {
 		roomName = rn;
