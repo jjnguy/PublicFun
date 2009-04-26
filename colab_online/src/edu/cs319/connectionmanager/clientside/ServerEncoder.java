@@ -13,7 +13,6 @@ import edu.cs319.connectionmanager.messaging.MessageType;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.server.IServer;
-import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
@@ -274,17 +273,20 @@ public class ServerEncoder implements IServer {
 
 	@Override
 	public boolean getAllRoomsPersisted(String username) {
-		throw new NotYetImplementedException();
+		Message m = new Message(MessageType.ALL_PERSISTED_ROOMS, username, new ArrayList<String>());
+		return printMessageToStream(m);
 	}
 
 	@Override
-	public boolean openPersistedRoom(String username, String roomname) {
-		throw new NotYetImplementedException();
+	public boolean openPersistedRoom(String username, final String roomname) {
+		Message m = new Message(MessageType.PERSISTED_ROOM, username, new ArrayList<String>(){{add(roomname);}});
+		return printMessageToStream(m);
 	}
 
 	@Override
-	public boolean saveCoLabRoom(String username, String roomname) {
-		throw new NotYetImplementedException();
+	public boolean saveCoLabRoom(String username, final String roomname) {
+		Message m = new Message(MessageType.SAVE_ROOM, username, new ArrayList<String>(){{add(roomname);}});
+		return printMessageToStream(m);
 	}
 
 }

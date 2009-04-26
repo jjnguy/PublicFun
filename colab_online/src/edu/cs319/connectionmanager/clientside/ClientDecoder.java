@@ -9,6 +9,8 @@ import edu.cs319.client.IClient;
 import edu.cs319.connectionmanager.messaging.Message;
 import edu.cs319.connectionmanager.messaging.MessageInputStream;
 import edu.cs319.dataobjects.DocumentSubSection;
+import edu.cs319.dataobjects.SectionizedDocument;
+import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
@@ -134,6 +136,16 @@ public class ClientDecoder implements Runnable {
 			break;
 		case SUBSECTION_COMBINE:
 			actualClient.subSectionCombined(username, arg.get(0), arg.get(1), arg.get(2), arg.get(3));
+			break;
+		case ALL_PERSISTED_ROOMS:
+			actualClient.listOfPersistedRooms(arg);
+			break;
+		case PERSISTED_ROOM:
+			List<SectionizedDocument> docs = new ArrayList<SectionizedDocument>(arg.size());
+			for (String s : arg){
+				docs.add(SectionizedDocumentImpl.getFromDelimmitedString(s));
+			}
+			actualClient.persistedCoLabRoom(docs);
 			break;
 		default:
 			throw new NotYetImplementedException();

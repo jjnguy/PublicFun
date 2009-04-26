@@ -14,7 +14,6 @@ import edu.cs319.connectionmanager.messaging.MessageType;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.server.CoLabPrivilegeLevel;
-import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
@@ -325,7 +324,12 @@ public class ClientEncoder implements IClient {
 
 	@Override
 	public boolean persistedCoLabRoom(List<SectionizedDocument> docs) {
-		throw new NotYetImplementedException();
+		List<String> args = new ArrayList<String>(docs.size());
+		for (SectionizedDocument doc : docs) {
+			args.add(doc.toSerializedString());
+		}
+		Message m = new Message(MessageType.PERSISTED_ROOM, "admin", args);
+		return printMessageToStream(m);
 	}
 
 }
