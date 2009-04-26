@@ -35,13 +35,18 @@ public class UsersUtil {
 			System.out.println("``````````````````````````````````````````````````VALID PASSWORD = " + passEqual);
 
 			if (passEqual) {
+				session.flush();
+				session.close();
 				System.out.println("User: + " + username + " is VALID");
 				return true;
 			}
 		}
 		
+		session.flush();
 		session.close();
+		
 		System.out.println("//////////////////////////Password is INVALIDe");
+
 		return false;
 	}
 

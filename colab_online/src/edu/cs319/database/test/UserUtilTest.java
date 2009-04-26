@@ -3,6 +3,7 @@ package edu.cs319.database.test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.cs319.database.UsersUtil;
@@ -10,6 +11,7 @@ import edu.cs319.util.Util;
 
 public class UserUtilTest {
 
+	@Ignore
 	@Test
 	public void testAuthenticateUser() {
 		String password = "pass";
@@ -35,6 +37,7 @@ public class UserUtilTest {
 		UsersUtil.createUser(username, hashedPass);
 	}
 	
+	@Ignore
 	@Test
 	public void testDeleteUser(){
 		String password = "pass";
