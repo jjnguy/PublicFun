@@ -92,6 +92,7 @@ public class WindowJoinCoLab extends JDialog {
 		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		roomList.setSelectedIndex(0);
 		roomList.setVisibleRowCount(8);
+		roomList.setPreferredSize(new Dimension(200, 100));
 		JScrollPane roomListScroll = new JScrollPane(roomList);
 		
 		persistingRoomList = new JList();

@@ -182,8 +182,6 @@ public class JDocTabPanel extends JPanel {
 	 * @return Whether the user has the proper permission level
 	 */
 	public static boolean hasPermission(WindowClient client) {
-		if (client.getPrivLevel() == null)
-			return false;
 		if (client.getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 			JOptionPane
 					.showMessageDialog(

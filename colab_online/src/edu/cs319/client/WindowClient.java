@@ -196,11 +196,7 @@ public class WindowClient extends JFrame implements IClient {
 			public void actionPerformed(ActionEvent e) {
 				int result = colabRoomFrame.showRoomDialogue();
 				if (result == WindowJoinCoLab.ROOM_JOINED) {
-					if (getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
-						setMenusForUserObserver();
-					} else {
-						setMenusForUserJoinedRoom();
-					}
+					setMenusForUserJoinedRoom();
 				}
 			}
 		});
@@ -550,6 +546,8 @@ public class WindowClient extends JFrame implements IClient {
 	 * @return the privilege level of the user signed into this client.
 	 */
 	public CoLabPrivilegeLevel getPrivLevel() {
+		if(roomMemberListPanel.getMember(userName) == null)
+			return null;
 		return roomMemberListPanel.getMember(userName).getPriv();
 	}
 
