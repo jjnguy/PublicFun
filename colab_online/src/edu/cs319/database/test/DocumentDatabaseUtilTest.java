@@ -2,6 +2,9 @@ package edu.cs319.database.test;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.cs319.database.DocumentDatabaseUtil;
@@ -11,7 +14,7 @@ import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 
 public class DocumentDatabaseUtilTest {
-
+	
 	@Test
 	public void testSaveCoLab() {
 		CoLabRoom nr = new CoLabRoom("testCoLabRoom^^^6667", new CoLabRoomMember("wayne", null));
@@ -65,9 +68,14 @@ public class DocumentDatabaseUtilTest {
 
 	@Test
 	public void testGetRoomNames() {
+		String username = "wayne";
 		
+		List<String> rooms =  DocumentDatabaseUtil.getRoomNames(username);
+		
+		assertNotNull("Rooms should not be null", rooms);
 	}
 
+	@Ignore
 	@Test
 	public void testGetCoLabRoom() {
 		

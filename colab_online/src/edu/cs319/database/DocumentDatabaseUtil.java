@@ -8,6 +8,7 @@ import java.util.Set;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 
 import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.CoLabRoomMember;
@@ -40,10 +41,14 @@ public class DocumentDatabaseUtil {
 
 		Session session = HibernateUtil.getSession();
 
-		session.save(dbRoom);
-
-		session.flush();
-		session.close();
+		try{
+			session.save(dbRoom);
+			session.flush();
+			session.close();
+		}
+		catch(ConstraintViolationException e){
+			System.err.println("Roomname is already persisted in the Database");
+		}
 	}
 
 	public static List<String> getRoomNames(String user) {
@@ -51,9 +56,13 @@ public class DocumentDatabaseUtil {
 		Criteria criteria = session.createCriteria(DBCoLabRoom.class);
 
 		criteria.add(Restrictions.eq("admin", user));
-
-		List<DBCoLabRoom> rooms = criteria.list();
+		
+		List<DBCoLabRoom> shittyRooms = criteria.list();
+		
+		Set<DBCoLabRoom> rooms = new HashSet<DBCoLabRoom>(shittyRooms);
+		
 		List<String> roomNames = new ArrayList<String>();
+		
 		for (DBCoLabRoom room : rooms) {
 			roomNames.add(room.getRoomname());
 		}
@@ -66,7 +75,7 @@ public class DocumentDatabaseUtil {
 		Criteria criteria = session.createCriteria(DBCoLabRoom.class);
 
 		criteria.add(Restrictions.eq("roomname", roomName));
-
+		
 		CoLabRoom newRoom = null;
 		List<CoLabRoom> retRooms;
 
