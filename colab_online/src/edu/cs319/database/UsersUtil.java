@@ -1,5 +1,7 @@
 package edu.cs319.database;
 
+import java.util.Arrays;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -21,15 +23,17 @@ public class UsersUtil {
 		Criteria criteria = session.createCriteria(CS319User.class);
 		
 		criteria.add(Restrictions.eq("username", username));
-		criteria.add(Restrictions.eq("password", password));
 		
 		CS319User dbUser = (CS319User) criteria.uniqueResult();
 		
-		if(dbUser == null){
-			return false;
+		boolean passEqual = (Arrays.equals(password,dbUser.getPassword()));
+		System.out.println("VALID PASSWORD = " + passEqual);
+		
+		if(passEqual){
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 	/**
