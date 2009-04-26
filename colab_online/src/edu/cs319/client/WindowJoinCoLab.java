@@ -288,7 +288,7 @@ public class WindowJoinCoLab extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String joinName = (String) persistingRoomList.getSelectedValue();
-				server.joinCoLabRoom(parent.getUserName(), joinName, null);
+				server.openPersistedRoom(parent.getUserName(), joinName);
 				parent.setRoomName(joinName);
 				parent.chatLogin();
 				server.getClientsCurrentlyInRoom(parent.getUserName(), joinName);

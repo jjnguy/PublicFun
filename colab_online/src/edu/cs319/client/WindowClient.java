@@ -219,20 +219,6 @@ public class WindowClient extends JFrame implements IClient {
 		exitCoLab.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (disconnect.isEnabled()) {
-					if (roomMemberListPanel.getMemberCount() == 1) {
-						JOptionPane.showMessageDialog(WindowClient.this,
-								"This CoLab Room will be saved.");
-						proxy.getServer().saveCoLabRoom(userName, roomName);
-					}
-					// proxy.getServer().leaveCoLabRoom(userName, roomName);
-					proxy.getServer().logOut(userName);
-					try {
-						proxy.close();
-					} catch (IOException io) {
-						io.printStackTrace();
-					}
-				}
 				WindowClient.this.processWindowEvent(new WindowEvent(WindowClient.this,
 						WindowEvent.WINDOW_CLOSING));
 			}
