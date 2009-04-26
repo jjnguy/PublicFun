@@ -208,7 +208,7 @@ public class WindowClient extends JFrame implements IClient {
 							"This CoLab Room will be saved.");
 					proxy.getServer().saveCoLabRoom(userName, roomName);
 				}
-				//proxy.getServer().leaveCoLabRoom(userName, roomName);
+				// proxy.getServer().leaveCoLabRoom(userName, roomName);
 			}
 		});
 		exitCoLab.addActionListener(new ActionListener() {
@@ -220,7 +220,7 @@ public class WindowClient extends JFrame implements IClient {
 								"This CoLab Room will be saved.");
 						proxy.getServer().saveCoLabRoom(userName, roomName);
 					}
-					//proxy.getServer().leaveCoLabRoom(userName, roomName);
+					// proxy.getServer().leaveCoLabRoom(userName, roomName);
 					proxy.getServer().logOut(userName);
 					try {
 						proxy.close();
@@ -422,7 +422,7 @@ public class WindowClient extends JFrame implements IClient {
 								"This CoLab Room will be saved.");
 						proxy.getServer().saveCoLabRoom(userName, roomName);
 					}
-					//proxy.getServer().leaveCoLabRoom(userName, roomName);
+					// proxy.getServer().leaveCoLabRoom(userName, roomName);
 					proxy.getServer().logOut(userName);
 					try {
 						proxy.close();
@@ -546,7 +546,7 @@ public class WindowClient extends JFrame implements IClient {
 	 * @return the privilege level of the user signed into this client.
 	 */
 	public CoLabPrivilegeLevel getPrivLevel() {
-		if(roomMemberListPanel.getMember(userName) == null)
+		if (roomMemberListPanel.getMember(userName) == null)
 			return null;
 		return roomMemberListPanel.getMember(userName).getPriv();
 	}
@@ -887,4 +887,10 @@ public class WindowClient extends JFrame implements IClient {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "UN:" + getUserName() + ";RN:" + getRoomName() + ";";
+	}
+
 }
