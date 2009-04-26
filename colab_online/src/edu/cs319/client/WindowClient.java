@@ -862,6 +862,7 @@ public class WindowClient extends JFrame implements IClient {
 					JDocTabPanel nextDoc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(),
 							roomName, doc.getName(), userName), WindowClient.this);
 					documentTabs.put(doc.getName(), nextDoc);
+					documentTabs.get(doc.getName()).getJListOfSubSections().setSelectedIndex(0);
 				}
 				if (docs.size() == 0) {
 					setMenusForUserJoinedRoom();

@@ -360,8 +360,6 @@ public class JDocTabPanel extends JPanel {
 	 *            The subsections to place within this document
 	 */
 	public void subSectionsRefreshed(List<DocumentSubSection> all) {
-		System.out.println("Updating All SubSections: " + info + " Currently Selected: "
-				+ getCurrentlySelectedSubSection());
 		getSectionizedDocument().removeAllSubSections();
 		getSectionizedDocument().addAllSubSections(all);
 		updateTopDocumentPane();
