@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import edu.cs319.client.IClient;
@@ -260,8 +261,17 @@ public class Server implements IServer {
 			// if the user is all alone...have some fun
 			if (clientsInRoom.size() == 1
 					&& clientsInRoom.get(0).getUserName().equals(usernameSender)) {
+				String[] awesome = {"No one can hear you, try using CAPS LOCK!", 
+						"Where'd everybody go? It's so lonely in here...", 
+						"You are all alone. Watch your back!", 
+						"What part of COLLABORATIVE editing don't you understand?", 
+						"It's kind of hard to work on a group project without a group, retard.",
+						"Watch out for ninjas!", 
+						"Watch out for code monkeys!", 
+						"We should probably be fixing bugs instead of writing interesting messages to send you when you're all alone in the dark..."};
+				Random r = new Random();
 				clientsInRoom.get(0).newChatMessage("The Darkness",
-						"You are all alone.  Watch your back!");
+						awesome[r.nextInt(awesome.length)]);
 			}
 		}
 		return true;
