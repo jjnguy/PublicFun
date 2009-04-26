@@ -47,6 +47,7 @@ public class DocumentDatabaseUtil {
 			session.close();
 		}
 		catch(ConstraintViolationException e){
+			session.close();
 			System.err.println("Roomname is already persisted in the Database");
 		}
 	}
@@ -66,6 +67,8 @@ public class DocumentDatabaseUtil {
 		for (DBCoLabRoom room : rooms) {
 			roomNames.add(room.getRoomname());
 		}
+		
+		session.close();
 
 		return roomNames;
 	}

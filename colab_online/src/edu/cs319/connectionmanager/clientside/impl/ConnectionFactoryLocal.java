@@ -43,7 +43,7 @@ public class ConnectionFactoryLocal extends ConnectionFactory {
 	}
 
 	@Override
-	public void createUser(String host, int port, IClient actualClient, String clientName,
+	public Proxy createUser(String host, int port, IClient actualClient, String clientName,
 			byte[] password) {
 		throw new NotYetImplementedException();
 	}

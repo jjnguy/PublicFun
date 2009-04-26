@@ -685,6 +685,12 @@ public class Server implements IServer {
 	public boolean getAllRoomsPersisted(String username) {
 		List<String> roomnames = DocumentDatabaseUtil.getRoomNames(username);
 		IClient client = regularClients.get(username);
+		if (client == null) {
+			if (Util.DEBUG) {
+				System.out.println("Client was null, bad");
+				return false;
+			}
+		}
 		return client.listOfPersistedRooms(roomnames);
 	}
 
@@ -731,13 +737,17 @@ public class Server implements IServer {
 		if (authResult) {
 			regularClients.put(username, client);
 		}
-		return client.userAuthenticated(username, authResult);
+		return client.userAuthenticatedResult(username, authResult);
 	}
 
 	@Override
 	public boolean createUser(IClient client, String username, byte[] password) {
 		boolean createUserResult = UsersUtil.createUser(username, password);
-		return client.userAuthenticated(username, createUserResult);
+		if (Util.DEBUG) {
+			System.out.println(")))))))))))))))))))))))))))))))))))According to the return type the creation of " + username + " was "
+					+ (createUserResult ? "" : " not ") + "successful.");
+		}
+		return client.userCreateResult(username, createUserResult);
 	}
 
 	@Override

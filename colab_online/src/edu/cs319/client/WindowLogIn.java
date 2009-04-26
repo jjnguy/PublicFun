@@ -12,7 +12,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -42,8 +41,11 @@ public class WindowLogIn extends JDialog {
 	private IClient client;
 	private Proxy serverConnection;
 
-	private WindowLogIn(JFrame parent, IClient client) {
+	private WindowClient parent;
+	
+	private WindowLogIn(WindowClient parent, IClient client) {
 		super(parent, "CoLab Log In");
+		this.parent = parent;
 		setLocation(new Point(parent.getLocation().x + 50, parent.getLocation().y + 50));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		if (Util.DEBUG) {

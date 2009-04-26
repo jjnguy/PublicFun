@@ -2,6 +2,8 @@ package edu.cs319.connectionmanager.clientside;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class ServerEncoder implements IServer {
 		this.host = outputStream;
 	}
 
+	@Deprecated
 	@Override
 	public boolean addNewClient(IClient newClient, String username) {
 		Message toSend = new Message(MessageType.NEW_CLIENT, username, new ArrayList<String>());
@@ -301,7 +304,12 @@ public class ServerEncoder implements IServer {
 	@Override
 	public boolean authenticateUser(IClient client,String username, byte[] password) {
 		List<String> args = new ArrayList<String>();
-		args.add(new String(password));
+		try {
+			args.add(URLEncoder.encode(new String(password),"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Message m = new Message(MessageType.USER_AUTHENTICATE, username, args);
 		return printMessageToStream(m);
 	}
@@ -316,7 +324,12 @@ public class ServerEncoder implements IServer {
 	@Override
 	public boolean createUser(IClient client, String username, byte[] password) {
 		List<String> args = new ArrayList<String>();
-		args.add(new String(password));
+		try {
+			args.add(URLEncoder.encode(new String(password),"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Message m = new Message(MessageType.USER_CREATE, username, args);
 		return printMessageToStream(m);
 	}

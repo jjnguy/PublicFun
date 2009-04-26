@@ -47,6 +47,8 @@ public class ClientDecoder implements Runnable {
 					eof.printStackTrace();
 				}
 				break;
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 		}
 	}
@@ -73,6 +75,10 @@ public class ClientDecoder implements Runnable {
 			break;
 		}
 		case UPDATE_SUBSECTION:
+			if (Util.DEBUG) {
+				System.out.println("_________________________________________________Delimmitde doc, check it out below");
+				System.out.println(arg.get(2));
+			}
 			actualClient.updateSubsectionAll(username, arg.get(0), arg.get(1), DocumentSubSection
 					.getFromDelimmitedString(arg.get(2)));
 			break;
@@ -148,7 +154,13 @@ public class ClientDecoder implements Runnable {
 			actualClient.persistedCoLabRoom(docs);
 			break;
 		case USER_AUTHENTICATE:
-			actualClient.userAuthenticated(username, Boolean.parseBoolean(arg.get(0)));
+			if (Util.DEBUG) {
+				System.out.println("....................Client Decoder: Success here was " + arg.get(0));
+			}
+			actualClient.userAuthenticatedResult(username, Boolean.parseBoolean(arg.get(0)));
+			break;
+		case USER_CREATE:
+			actualClient.userCreateResult(username, Boolean.parseBoolean(arg.get(0)));
 			break;
 		default:
 			throw new NotYetImplementedException();

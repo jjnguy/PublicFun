@@ -27,16 +27,21 @@ public class UsersUtil {
 		CS319User dbUser = (CS319User) criteria.uniqueResult();
 
 		if (dbUser == null) {
+			System.out.println("````````````````````````User Does NOt Exist in DB: " + username);
 			return false;
 		}else {
 
 			boolean passEqual = (Arrays.equals(password, dbUser.getPassword()));
-			System.out.println("VALID PASSWORD = " + passEqual);
+			System.out.println("``````````````````````````````````````````````````VALID PASSWORD = " + passEqual);
 
 			if (passEqual) {
+				System.out.println("User: + " + username + " is VALID");
 				return true;
 			}
 		}
+		
+		session.close();
+		System.out.println("//////////////////////////Password is INVALIDe");
 		return false;
 	}
 
@@ -58,12 +63,15 @@ public class UsersUtil {
 		try {
 			session.save(newUser);
 		} catch (ConstraintViolationException e) {
+			System.out.println("``````````````````````````USER COULD NOT BE CREATED...USER ALREADY EXISTS: " + username);
+			session.close();
 			return false;
 		}
 
 		session.flush();
 		session.close();
 
+		System.out.println("```````````````USER SUCCESFULLY CREATED: " + username);
 		return true;
 	}
 

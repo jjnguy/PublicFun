@@ -18,6 +18,6 @@ public abstract class ConnectionFactory {
 
 	public abstract Proxy connect(String host, int port, IClient actualClient, String clientName, byte[] password);
 
-	public abstract void createUser(String host, int port, IClient actualClient, String clientName, byte[] password);
+	public abstract Proxy createUser(String host, int port, IClient actualClient, String clientName, byte[] password);
 
 }

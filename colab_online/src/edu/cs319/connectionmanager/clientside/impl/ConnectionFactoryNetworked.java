@@ -14,31 +14,37 @@ import edu.cs319.util.Util;
 
 public class ConnectionFactoryNetworked extends ConnectionFactory {
 
+	
+	
 	@Override
 	public Proxy connect(String host, int port, IClient actualClient, String clientName,
 			byte[] password) {
+		Proxy p = null;
 		try {
-			return new ProxyImpl(new Socket(host, port), actualClient, clientName, password);
+			p = new ProxyImpl(new Socket(host, port), actualClient, clientName);
+			p.getServer().authenticateUser(null, clientName, password);
 		} catch (IOException e) {
 			if (Util.DEBUG) {
 				System.out.println("Error connecting to server");
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return p;
 	}
 
 	@Override
-	public void createUser(String host, int port, IClient actualClient, String clientName,
+	public Proxy createUser(String host, int port, IClient actualClient, String clientName,
 			byte[] password) {
+		Proxy p = null;
 		try {
-			Proxy p = new ProxyImpl(new Socket(host, port), actualClient, clientName, password);
+			p = new ProxyImpl(new Socket(host, port), actualClient, clientName);
 			p.getServer().createUser(null, clientName, password);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return p;
 	}
 
 	static private class ProxyImpl implements Proxy {
@@ -47,11 +53,10 @@ public class ConnectionFactoryNetworked extends ConnectionFactory {
 		private ClientDecoder client;
 		private Socket socket;
 
-		public ProxyImpl(Socket socket, IClient actualClient, String clientName, byte[] password)
+		public ProxyImpl(Socket socket, IClient actualClient, String clientName)
 				throws IOException {
 			this.socket = socket;
 			this.server = new ServerEncoder(socket.getOutputStream());
-			this.server.authenticateUser(null,clientName, password);
 			this.client = new ClientDecoder(actualClient, socket.getInputStream());
 			new Thread(client).start();
 		}

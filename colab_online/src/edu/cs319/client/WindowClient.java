@@ -53,6 +53,8 @@ import edu.cs319.util.Util;
 public class WindowClient extends JFrame implements IClient {
 
 	private Proxy proxy;
+	
+	private Proxy createProxy;
 
 	private WindowJoinCoLab colabRoomFrame;
 
@@ -185,14 +187,13 @@ public class WindowClient extends JFrame implements IClient {
 				boolean singesSided = false;
 				if (singesSided) {
 					proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
-							username,null);
+							username, null);
 					setUserName(username);
 				} else {
 					proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
 				}
 				if (proxy != null) {
 					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
-					setMenusForUserLoggedIn();
 				}
 			}
 		});
@@ -875,10 +876,14 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean userAuthenticated(String username, boolean success) {
+	public boolean userAuthenticatedResult(String username, boolean success) {
 		if (!success) {
 			JOptionPane.showMessageDialog(this, "Oh no " + username + " could not be validated!",
 					"Login Failed", JOptionPane.WARNING_MESSAGE, null);
+		} else {
+			JOptionPane.showMessageDialog(this, "" + username + " successfully logged in.",
+					"Login GOOD", JOptionPane.WARNING_MESSAGE, null);
+			setMenusForUserLoggedIn();
 		}
 		return true;
 	}
@@ -887,4 +892,30 @@ public class WindowClient extends JFrame implements IClient {
 	public String toString() {
 		return "UN:" + getUserName() + ";RN:" + getRoomName() + ";";
 	}
+
+	@Override
+	public boolean userCreateResult(String username, boolean success) {
+		if (!success) {
+			JOptionPane.showMessageDialog(this, "Oh no " + username
+					+ " was not created successfully!", "Login Failed",
+					JOptionPane.WARNING_MESSAGE, null);
+		} else {
+			JOptionPane.showMessageDialog(this, "" + username + " was created", "User Create Pass",
+					JOptionPane.WARNING_MESSAGE, null);
+		}
+		if(createProxy != null) {
+			try {
+				createProxy.close();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			createProxy = null;
+		}
+		return true;
+	}
+	
+	public void setCreateProxy(Proxy createProxy) {
+		this.createProxy = createProxy;
+	}
+	
 }

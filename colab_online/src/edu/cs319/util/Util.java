@@ -3,6 +3,7 @@ package edu.cs319.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -60,6 +61,10 @@ public class Util {
 		}
 		msg.update(in);
 		return msg.digest();
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(Arrays.toString(getHashedBytes("kkk".getBytes())));
 	}
 
 }

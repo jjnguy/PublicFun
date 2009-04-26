@@ -49,7 +49,7 @@ import edu.cs319.util.Util;
 public class JDocTabPanel extends JPanel {
 
 	// Number of milliseconds between automatic updates
-	private final static int UPDATE_NUM_MS = 1000;
+	private final static int UPDATE_NUM_MS = 100;
 
 	private JPanel sectionPanel;
 	private JSplitPane wholePane;

@@ -202,14 +202,14 @@ public class ClientEncoder implements IClient {
 	@Override
 	public boolean updateSubsectionAll(String usernameSender, String documentname,
 			String sectionID, DocumentSubSection section) {
-		if (Util.DEBUG) {
-			System.out.println("ClientEncoder.updateSubsection: docname: " + documentname
-					+ " sectID: " + sectionID);
-		}
 		List<String> args = new ArrayList<String>();
 		args.add(documentname);
-		args.add(section.toDelimmitedString());
 		args.add(sectionID);
+		args.add(section.toDelimmitedString());
+		if (Util.DEBUG) {
+			System.out.println("_________________________________________________Delimmitde doc, check it out below");
+			System.out.println(args.get(2));
+		}
 		Message m = new Message(MessageType.UPDATE_SUBSECTION, usernameSender, args);
 		return printMessageToStream(m);
 	}
@@ -333,10 +333,21 @@ public class ClientEncoder implements IClient {
 	}
 	
 	@Override
-	public boolean userAuthenticated(String username, boolean success) {
+	public boolean userAuthenticatedResult(String username, boolean success) {
 		List<String> args = new ArrayList<String>();
 		args.add(Boolean.toString(success));
+		if (Util.DEBUG) {
+			System.out.println("~~~~~~~~~~~~~Client Encoder:  Success here was " + args.get(0));
+		}
 		Message m = new Message(MessageType.USER_AUTHENTICATE, username, args);
+		return printMessageToStream(m);
+	}
+
+	@Override
+	public boolean userCreateResult(String username, boolean success) {
+		List<String> args = new ArrayList<String>();
+		args.add(Boolean.toString(success));
+		Message m = new Message(MessageType.USER_CREATE, username, args);
 		return printMessageToStream(m);
 	}
 

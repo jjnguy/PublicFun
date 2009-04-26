@@ -32,7 +32,9 @@ public class Message {
 	public byte[] encode() {
 		byte messageCode = messageType.getCode();
 		byte[] clietNameBytes = clientName.getBytes();
-		byte[] args = this.argsToByteArr();
+		byte[] args = null;
+		args = this.argsToByteArr();
+
 		// message type byte + clinet name bytes + delimmiter + args bytes + end byte
 		int lenghtNeeded = 1 + clietNameBytes.length + 1 + args.length + 1;
 		byte[] ret = new byte[lenghtNeeded];
@@ -63,14 +65,25 @@ public class Message {
 				break;
 			}
 		}
-		if (indexOfFirstDelim == 0)
+		if (indexOfFirstDelim == 0) {
 			throw new IllegalMessageFormatException();
+		}
 		byte[] clientBytes = Arrays.copyOfRange(info, 1, indexOfFirstDelim);
 		String clientName = new String(clientBytes);
 		// skip delimiters
 		byte[] argBytes = Arrays.copyOfRange(info, clientBytes.length + 2, info.length);
-		List<String> args = Message.getArgsFromBytes(argBytes);
+		List<String> args = null;
+		if (mtype == MessageType.USER_AUTHENTICATE || mtype == MessageType.USER_CREATE) {
+			args = Message.getArgsFromBytes(argBytes);
+		} else {
+			args = Message.getArgsFromBytes(argBytes);
+		}
 		return new Message(mtype, clientName, args);
+	}
+
+	private static List<String> getArgsFromBytesSpecialCase(byte[] argBytes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private byte[] argsToByteArr() {
