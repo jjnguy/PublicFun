@@ -138,6 +138,15 @@ public class ServerDecoder implements Runnable {
 		case UPDATE_SUBSECTION_REMOVE:
 			actualServer.subSectionUpdatedRemove(cln, args.get(0), args.get(1), args.get(2), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)));
 			break;
+		case ALL_PERSISTED_ROOMS:
+			actualServer.getAllRoomsPersisted(cln);
+			break;
+		case PERSISTED_ROOM:
+			actualServer.openPersistedRoom(cln, args.get(0));
+			break;
+		case SAVE_ROOM:
+			actualServer.saveCoLabRoom(cln, args.get(0));
+			break;
 		default:
 			throw new NotYetImplementedException();
 		}
