@@ -50,6 +50,8 @@ public class DocumentDatabaseUtil {
 		Session session = HibernateUtil.getSession();
 		Criteria criteria = session.createCriteria(DBCoLabRoom.class);
 
+		criteria.add(Restrictions.eq("admin", user));
+		
 		List<DBCoLabRoom> rooms = criteria.list();
 		List<String> roomNames = new ArrayList<String>();
 		for (DBCoLabRoom room : rooms) {
@@ -65,38 +67,45 @@ public class DocumentDatabaseUtil {
 
 		criteria.add(Restrictions.eq("roomname", roomName));
 
-		CoLabRoom newRoom;
+		CoLabRoom newRoom = null;
 		List<CoLabRoom> retRooms;
 
 		DBCoLabRoom dbRoom = (DBCoLabRoom) criteria.uniqueResult();
 
-		Set<SectionizedDBDocument> dbDocs;
-		SectionizedDocument doc;
-		List<DocumentSubSectionImpl> subDocs;
-		DocumentSubSectionImpl subDoc;
+		if (dbRoom != null) {
+			Set<SectionizedDBDocument> dbDocs;
+			SectionizedDocument doc;
+			List<DocumentSubSectionImpl> subDocs;
+			DocumentSubSectionImpl subDoc;
 
-		newRoom = new CoLabRoom(dbRoom.getRoomname(), new CoLabRoomMember(dbRoom.getAdmin(), null));
-		dbDocs = dbRoom.getDocuments();
+			newRoom = new CoLabRoom(dbRoom.getRoomname(), new CoLabRoomMember(dbRoom.getAdmin(),
+					null));
+			dbDocs = dbRoom.getDocuments();
 
-		// For each document in the room, rebuild it
-		for (SectionizedDBDocument d : dbDocs) {
-			doc = new SectionizedDocumentImpl(d.getName());
+			// For each document in the room, rebuild it
+			for (SectionizedDBDocument d : dbDocs) {
+				doc = new SectionizedDocumentImpl(d.getName());
 
-			// Add all the sub documents to the sectionized document
-			subDocs = new ArrayList<DocumentSubSectionImpl>();
-			for (DBDocumentSubSection dss : d.getSubSections()) {
-				subDoc = new DocumentSubSectionImpl();
-				subDoc.setName(dss.getName());
-				subDoc.setText(dss.getText());
-				subDocs.add(subDoc);
+				// Add all the sub documents to the sectionized document
+				subDocs = new ArrayList<DocumentSubSectionImpl>();
+				for (DBDocumentSubSection dss : d.getSubSections()) {
+					subDoc = new DocumentSubSectionImpl();
+					subDoc.setName(dss.getName());
+					subDoc.setText(dss.getText());
+					subDocs.add(subDoc);
+				}
+
+				// Add the list of document sub sections to the new Sectionized document
+				doc.addAllSubSections(subDocs);
+
+				newRoom.addDocument(doc);
 			}
-			
-			//Add the list of document sub sections to the new Sectionized document
-			doc.addAllSubSections(subDocs);
-			
-			newRoom.addDocument(doc);
-		}
 
+			session.delete(dbRoom);
+			session.flush();
+			session.close();
+		}
+		
 		return newRoom;
 
 	}

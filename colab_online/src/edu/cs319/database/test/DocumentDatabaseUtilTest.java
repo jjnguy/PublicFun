@@ -14,7 +14,7 @@ public class DocumentDatabaseUtilTest {
 
 	@Test
 	public void testSaveCoLab() {
-		CoLabRoom nr = new CoLabRoom("testCoLabRoom", new CoLabRoomMember("ian", null));
+		CoLabRoom nr = new CoLabRoom("testCoLabRoom^^^6667", new CoLabRoomMember("wayne", null));
 		
 		//Set up sub sections
 		DocumentSubSectionImpl s1 = new DocumentSubSectionImpl(),
@@ -56,7 +56,7 @@ public class DocumentDatabaseUtilTest {
 		nr.addDocument(d3);
 		nr.addDocument(d4);
 		
-		DocumentDatabaseUtil.saveCoLab("ian", nr);
+		DocumentDatabaseUtil.saveCoLab("wayne", nr);
 		
 		CoLabRoom ret = DocumentDatabaseUtil.getCoLabRoom("testCoLabRoom");
 		
@@ -73,7 +73,7 @@ public class DocumentDatabaseUtilTest {
 		
 		DocumentDatabaseUtil dbUtil = new DocumentDatabaseUtil();
 		
-		String roomName = "room36";
+		String roomName = "testCoLabRoom^^^6667";
 		
 		CoLabRoom newRoom = dbUtil.getCoLabRoom(roomName);
 		
