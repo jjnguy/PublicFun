@@ -6,6 +6,7 @@ import edu.cs319.client.IClient;
 import edu.cs319.connectionmanager.clientside.ConnectionFactory;
 import edu.cs319.connectionmanager.clientside.Proxy;
 import edu.cs319.server.IServer;
+import edu.cs319.util.NotYetImplementedException;
 
 public class ConnectionFactoryLocal extends ConnectionFactory {
 
@@ -39,6 +40,12 @@ public class ConnectionFactoryLocal extends ConnectionFactory {
 			// Nothing to close
 		}
 
+	}
+
+	@Override
+	public void createUser(String host, int port, IClient actualClient, String clientName,
+			byte[] password) {
+		throw new NotYetImplementedException();
 	}
 
 }

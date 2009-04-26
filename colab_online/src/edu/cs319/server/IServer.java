@@ -59,7 +59,9 @@ public interface IServer {
 	 * @param username
 	 *            the name of the new client
 	 * @return nothing important
+	 * @deprecated since when I told you so!!  Use create user and authenticate user
 	 */
+	@Deprecated
 	public boolean addNewClient(IClient newClient, String username);
 
 	/**
@@ -169,9 +171,23 @@ public interface IServer {
 	
 	public boolean saveCoLabRoom(String username, String roomname);
 	
-	public boolean createUser(IClient c, String username, byte[] password);
+	/**
+	 * Only adds the user to the database.  After creating an account the user mus then sign on
+	 * @param client
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public boolean createUser(IClient client, String username, byte[] password);
 	
-	public boolean authenticateUser(String username, byte[] password);
+	/**
+	 * Basically Log on
+	 * @param client the Client connection to send messages to
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public boolean authenticateUser(IClient client, String username, byte[] password);
 	
 	public boolean deleteUser(String username);
 

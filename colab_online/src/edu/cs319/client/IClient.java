@@ -57,6 +57,8 @@ public interface IClient {
 	
 	public boolean persistedCoLabRoom(List<SectionizedDocument> documentsInRoom);
 	
+	public boolean userAuthenticated(String username, boolean success);
+
 	/**
 	 * Returns the userName used on this client.
 	 * @return the userName used on this client.
@@ -69,5 +71,4 @@ public interface IClient {
 	 */
 	public void setUserName(String username);
 	
-	public boolean userAuthenticated(String username, boolean success);
 }

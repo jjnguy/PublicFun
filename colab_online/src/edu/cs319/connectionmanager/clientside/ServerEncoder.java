@@ -299,7 +299,7 @@ public class ServerEncoder implements IServer {
 	}
 
 	@Override
-	public boolean authenticateUser(String username, byte[] password) {
+	public boolean authenticateUser(IClient client,String username, byte[] password) {
 		List<String> args = new ArrayList<String>();
 		args.add(new String(password));
 		Message m = new Message(MessageType.USER_AUTHENTICATE, username, args);

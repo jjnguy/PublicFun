@@ -691,7 +691,6 @@ public class Server implements IServer {
 
 	@Override
 	public boolean openPersistedRoom(String username, String roomname) {
-		// TODO Auto-generated method stub
 		CoLabRoom fakeRoom = DocumentDatabaseUtil.getCoLabRoom(roomname);
 		CoLabRoom actualRoom = new CoLabRoom(fakeRoom.roomName(), new CoLabRoomMember(username,
 				regularClients.get(username)));
@@ -715,7 +714,6 @@ public class Server implements IServer {
 
 	@Override
 	public boolean saveCoLabRoom(String username, String roomname) {
-		// TODO Auto-generated method stub
 		if (Util.DEBUG) {
 			System.out.println("-------------------Saving colab room: " + roomname);
 		}
@@ -729,18 +727,17 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public boolean authenticateUser(String username, byte[] password) {
+	public boolean authenticateUser(IClient client, String username, byte[] password) {
 		boolean authResult = UsersUtil.authenticateUser(username, password);
-		IClient client = regularClients.get(username);
+		if (authResult) {
+			regularClients.put(username, client);
+		}
 		return client.userAuthenticated(username, authResult);
 	}
 
 	@Override
 	public boolean createUser(IClient client, String username, byte[] password) {
 		boolean createUserResult = UsersUtil.createUser(username, password);
-		if (createUserResult) {
-			regularClients.put(username, client);
-		}
 		return client.userAuthenticated(username, createUserResult);
 	}
 

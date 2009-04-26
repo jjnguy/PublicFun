@@ -152,7 +152,7 @@ public class ServerDecoder implements Runnable {
 			actualServer.saveCoLabRoom(cln, args.get(0));
 			break;
 		case USER_AUTHENTICATE:
-			actualServer.authenticateUser(cln, args.get(0).getBytes());
+			actualServer.authenticateUser(new ClientEncoder(cln, socket), cln, args.get(0).getBytes());
 			break;
 		case USER_CREATE:
 			actualServer.createUser(new ClientEncoder(cln, socket), cln, args.get(0).getBytes());
