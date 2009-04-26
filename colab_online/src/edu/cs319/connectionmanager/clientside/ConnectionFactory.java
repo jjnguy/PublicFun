@@ -16,7 +16,7 @@ public abstract class ConnectionFactory {
 		return new ConnectionFactoryNetworked();
 	}
 
-	public abstract Proxy connect(String host, int port, IClient actualClient, String clientName);
+	public abstract Proxy connect(String host, int port, IClient actualClient, String clientName, byte[] password);
 
 
 }

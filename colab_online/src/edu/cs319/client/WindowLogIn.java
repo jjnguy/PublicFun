@@ -131,7 +131,7 @@ public class WindowLogIn extends JDialog {
 
 	private void login(String host, String username) {
 		serverConnection = ConnectionFactory.getNetworkedInstance().connect(host, 4444, client,
-				username);
+				username, Util.getHashedBytes(passwordField.getText().getBytes()));
 	}
 
 	public static boolean isValidUserName(String usernme) {

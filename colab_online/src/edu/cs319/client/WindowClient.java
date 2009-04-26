@@ -185,7 +185,7 @@ public class WindowClient extends JFrame implements IClient {
 				boolean singesSided = false;
 				if (singesSided) {
 					proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
-							username);
+							username,null);
 					setUserName(username);
 				} else {
 					proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);

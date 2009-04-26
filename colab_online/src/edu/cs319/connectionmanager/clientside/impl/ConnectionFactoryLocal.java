@@ -16,7 +16,7 @@ public class ConnectionFactoryLocal extends ConnectionFactory {
 	}
 
 	@Override
-	public Proxy connect(String host, int port, IClient actualClient, String clientName) {
+	public Proxy connect(String host, int port, IClient actualClient, String clientName, byte[] password) {
 		return new ProxyImpl(actualServer, actualClient, clientName);
 	}
 

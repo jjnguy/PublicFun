@@ -14,9 +14,9 @@ import edu.cs319.util.Util;
 public class ConnectionFactoryNetworked extends ConnectionFactory {
 
 	@Override
-	public Proxy connect(String host, int port, IClient actualClient, String clientName) {
+	public Proxy connect(String host, int port, IClient actualClient, String clientName, byte[] password) {
 		try {
-			return new ProxyImpl(new Socket(host, port), actualClient, clientName);
+			return new ProxyImpl(new Socket(host, port), actualClient, clientName, password);
 		} catch (IOException e) {
 			if (Util.DEBUG) {
 				System.out.println("Error connecting to server");
@@ -32,12 +32,12 @@ public class ConnectionFactoryNetworked extends ConnectionFactory {
 		private ClientDecoder client;
 		private Socket socket;
 
-		public ProxyImpl(Socket socket, IClient actualClient, String clientName) throws IOException {
+		public ProxyImpl(Socket socket, IClient actualClient, String clientName, byte[] password) throws IOException {
 			this.socket = socket;
 			this.server = new ServerEncoder(socket.getOutputStream());
-			this.server.addNewClient(null, clientName);
+			this.server.authenticateUser(clientName, password);
+			// this.server.addNewClient(null, clientName);
 			this.client = new ClientDecoder(actualClient, socket.getInputStream());
-			// TODO make sure we don't need reference
 			new Thread(client).start();
 		}
 
