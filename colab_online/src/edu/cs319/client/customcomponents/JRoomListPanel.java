@@ -77,6 +77,10 @@ public class JRoomListPanel extends JPanel {
 	public void clearList() {
 		roomList.removeAllMembers();
 	}
+	
+	public int getMemberCount() {
+		return roomList.getModel().getSize();
+	}
 
 	public void updateList(List<String> userNames, List<CoLabPrivilegeLevel> privs) {
 		roomList.getModel().clearList();

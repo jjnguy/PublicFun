@@ -34,7 +34,6 @@ import edu.cs319.client.WindowClient;
 import edu.cs319.dataobjects.DocumentInfo;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
-import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
@@ -183,6 +182,8 @@ public class JDocTabPanel extends JPanel {
 	 * @return Whether the user has the proper permission level
 	 */
 	public static boolean hasPermission(WindowClient client) {
+		if (client.getPrivLevel() == null)
+			return false;
 		if (client.getPrivLevel() == CoLabPrivilegeLevel.OBSERVER) {
 			JOptionPane
 					.showMessageDialog(
@@ -436,7 +437,7 @@ public class JDocTabPanel extends JPanel {
 			}
 		}
 	}
-	
+
 	/**
 	 * Updates the given section with the text in the given subsection
 	 * 
@@ -463,7 +464,7 @@ public class JDocTabPanel extends JPanel {
 			}
 		}
 	}
-	
+
 	/**
 	 * Updates the given section with the text in the given subsection
 	 * 
@@ -501,14 +502,14 @@ public class JDocTabPanel extends JPanel {
 			}
 			return;
 		}
-		//System.out.println("");
-		//System.out.println("AutoUpdating!!!");
-		//DocumentSubSection temp = new DocumentSubSectionImpl(ds.getName());
-		//temp.setLocked(ds.isLocked(), ds.lockedByUser());
-		//temp.setText(info.getUserName(), newText);
+		// System.out.println("");
+		// System.out.println("AutoUpdating!!!");
+		// DocumentSubSection temp = new DocumentSubSectionImpl(ds.getName());
+		// temp.setLocked(ds.isLocked(), ds.lockedByUser());
+		// temp.setText(info.getUserName(), newText);
 		sendServerUpdate();
-		//info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
-		//		info.getDocumentName(), ds.getName(), temp);
+		// info.getServer().subSectionUpdated(info.getUserName(), info.getRoomName(),
+		// info.getDocumentName(), ds.getName(), temp);
 	}
 
 	private DocumentSubSection getCurrentlySelectedSubSection() {
@@ -666,7 +667,7 @@ public class JDocTabPanel extends JPanel {
 	private void releaseLockRequest() {
 		System.out.println("Releasing Lock: " + info + " Currently Selected: "
 				+ getCurrentlySelectedSubSection());
-		
+
 		info.getServer().subSectionUnLocked(info.getUserName(), info.getRoomName(),
 				info.getDocumentName(), getCurrentlySelectedSubSection().getName());
 	}
@@ -925,61 +926,73 @@ public class JDocTabPanel extends JPanel {
 			add(deleteSubSectionItem);
 		}
 	}
-	
-	
+
 	private void sendServerUpdate() {
 		String currentText = getCurrentlySelectedSubSection().getText();
 		String proposedText = currentWorkingPane.getText();
 		String update = "";
-		
+
 		int start = -1;
 		int end = -1;
 		int i = 0;
-		
-		if(currentText.length() > proposedText.length()) { // Remove
-			while(i < proposedText.length() && currentText.charAt(i) == proposedText.charAt(i)) {
+
+		if (currentText.length() > proposedText.length()) { // Remove
+			while (i < proposedText.length() && currentText.charAt(i) == proposedText.charAt(i)) {
 				System.out.print(currentText.charAt(i));
 				i++;
 			}
 			System.out.println("");
 			start = i;
-			if(start == proposedText.length()) {
+			if (start == proposedText.length()) {
 				end = currentText.length();
 			} else {
-				end = currentText.indexOf(proposedText.substring(start,proposedText.length()), start);
+				end = currentText.indexOf(proposedText.substring(start, proposedText.length()),
+						start);
 			}
-			if(end > -1) {
-				//System.out.println("Sending Remove: Start: " + start + " End: " + end);
-				info.getServer().subSectionUpdatedRemove(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, end);
+			if (end > -1) {
+				// System.out.println("Sending Remove: Start: " + start + " End: " + end);
+				info.getServer().subSectionUpdatedRemove(info.getUserName(), info.getRoomName(),
+						info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start,
+						end);
 			} else {
 				System.out.println("Failed Remove: Start: " + start + " End: " + end);
-				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());
+				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(),
+						info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
+						getCurrentlySelectedSubSection());
 			}
-		} else if(currentText.length() < proposedText.length()) { // Insert
-			while(i < currentText.length() && currentText.charAt(i) == proposedText.charAt(i)) {
+		} else if (currentText.length() < proposedText.length()) { // Insert
+			while (i < currentText.length() && currentText.charAt(i) == proposedText.charAt(i)) {
 				i++;
 			}
 			start = i;
-			String subString = currentText.substring(start,currentText.length());
-			if(start == currentText.length()) {
+			String subString = currentText.substring(start, currentText.length());
+			if (start == currentText.length()) {
 				end = proposedText.length();
 			} else {
-				end = proposedText.indexOf(subString,start);
+				end = proposedText.indexOf(subString, start);
 			}
-			
-			if(end > -1) {
-				update = proposedText.substring(start,end);
-				//System.out.println("Sending Insert: Start: " + start + " Text: " + update);
-				info.getServer().subSectionUpdatedInsert(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start, update);
+
+			if (end > -1) {
+				update = proposedText.substring(start, end);
+				// System.out.println("Sending Insert: Start: " + start + " Text: " + update);
+				info.getServer().subSectionUpdatedInsert(info.getUserName(), info.getRoomName(),
+						info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start,
+						update);
 			} else {
-				System.out.println("Failed Insert: Start: " + start + " End: " + end + " Current Text: '" + currentText + "' Proposed Text: '" + proposedText + "'");
-				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());
+				System.out.println("Failed Insert: Start: " + start + " End: " + end
+						+ " Current Text: '" + currentText + "' Proposed Text: '" + proposedText
+						+ "'");
+				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(),
+						info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
+						getCurrentlySelectedSubSection());
 			}
 		} else { // They probably haven't changed
 			System.out.println("Updates were the same size");
-			if(!currentText.equals(proposedText)) {
+			if (!currentText.equals(proposedText)) {
 				System.out.println("Different Contents, Updating");
-				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(), info.getDocumentName(), getCurrentlySelectedSubSection().getName(), getCurrentlySelectedSubSection());
+				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(),
+						info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
+						getCurrentlySelectedSubSection());
 			}
 		}
 	}

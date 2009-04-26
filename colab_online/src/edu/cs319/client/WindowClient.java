@@ -207,6 +207,11 @@ public class WindowClient extends JFrame implements IClient {
 		disconnect.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (roomMemberListPanel.getMemberCount() == 1) {
+					JOptionPane.showMessageDialog(WindowClient.this,
+							"This CoLab Room will be saved.");
+					proxy.getServer().saveCoLabRoom(userName, roomName);
+				}
 				proxy.getServer().leaveCoLabRoom(userName, roomName);
 			}
 		});
@@ -800,8 +805,8 @@ public class WindowClient extends JFrame implements IClient {
 	/**
 	 * Sets the name of the room this user has joined.
 	 * 
-	 * @param rn
-	 *            - room name
+	 * @param rn -
+	 *            room name
 	 */
 	public void setRoomName(String rn) {
 		roomName = rn;
@@ -832,7 +837,8 @@ public class WindowClient extends JFrame implements IClient {
 	public boolean listOfPersistedRooms(Collection<String> roomNames) {
 		if (colabRoomFrame == null) {
 			if (Util.DEBUG) {
-				System.out.println("Client was sent list of persisting rooms before frame was created");
+				System.out
+						.println("Client was sent list of persisting rooms before frame was created");
 			}
 			return false;
 		}
@@ -844,15 +850,15 @@ public class WindowClient extends JFrame implements IClient {
 	public boolean persistedCoLabRoom(final List<SectionizedDocument> docs) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				for (SectionizedDocument doc : docs){
-					JDocTabPanel nextDoc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, 
-							doc.getName(), userName), WindowClient.this);
+				for (SectionizedDocument doc : docs) {
+					JDocTabPanel nextDoc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(),
+							roomName, doc.getName(), userName), WindowClient.this);
 					documentTabs.put(doc.getName(), nextDoc);
 				}
 				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {
-					if(docs.size() == 0) {
+					if (docs.size() == 0) {
 						setMenusForUserJoinedRoom();
 					} else {
 						setMenusForUserObserver();
