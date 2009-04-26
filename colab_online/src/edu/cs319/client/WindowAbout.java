@@ -39,16 +39,16 @@ public class WindowAbout extends JDialog {
 		}
 		JLabel logoLabel = new JLabel(logo);
 		logoLabel.setToolTipText("<html><font face=\"monospaced\">" +
-				"    _.-\"\"\"-,<br>" +
-				"  .'  ..::. `\\<br>" +
-				" /  .::' `'` /<br>" +
-				"/ .::' .--.=;<br>" +
-				"| ::' /  C ..\\<br>" +
-				"| :: |   \\  _.)<br>" +
-				" \\ ':|   /  \\<br>" +
-				"  '-, \\./ \\)\\)<br>" +
-				"     `-|   );/<br>" +
-				"        '--'-'</html>");
+				"````_.-\"\"\"-,````<br>" +
+				"``.'  ..::. `\\```<br>" +
+				"`/  .::' `'` /```<br>" +
+				"/ .::' .--.=;```<br>" +
+				"| ::' /``C ..\\``<br>" +
+				"| :: |````\\ _.)`<br>" +
+				"`\\ ':|```/  \\````<br>" +
+				"``'-, \\./ \\)\\)``<br>" +
+				"``````-|   );/````<br>" +
+				"````````'--'-'``</html>");
 		//TODO logoLabel ToolTip
 		JTextArea text = new JTextArea();
 		text.setSize(280, 210);
