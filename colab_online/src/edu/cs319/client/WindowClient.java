@@ -180,13 +180,16 @@ public class WindowClient extends JFrame implements IClient {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
-				String username ="90";
+				String username = "90";
 
-				proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
-						username);
-				setUserName(username);
-
-				// proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
+				boolean singesSided = false;
+				if (singesSided) {
+					proxy = ConnectionFactory.getLocalInstance().connect("", 0, WindowClient.this,
+							username);
+					setUserName(username);
+				} else {
+					proxy = WindowLogIn.showLoginWindow(WindowClient.this, WindowClient.this);
+				}
 				if (proxy != null) {
 					colabRoomFrame = new WindowJoinCoLab(WindowClient.this, proxy.getServer());
 					setMenusForUserLoggedIn();
