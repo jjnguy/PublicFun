@@ -80,7 +80,7 @@ public class WindowJoinCoLab extends JDialog {
 		setUpAppearance();
 		setUpListeners();
 		fillCoLabRoomList();
-//		fillPersistingRoomList();
+		fillPersistingRoomList();
 		this.repaint();
 	}
 

@@ -41,7 +41,6 @@ import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.DocumentInfoImpl;
 import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.server.CoLabPrivilegeLevel;
-import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
@@ -842,7 +841,25 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean persistedCoLabRoom(List<SectionizedDocument> docs) {
-		throw new NotYetImplementedException();
+	public boolean persistedCoLabRoom(final List<SectionizedDocument> docs) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				for (SectionizedDocument doc : docs){
+					JDocTabPanel nextDoc = new JDocTabPanel(new DocumentInfoImpl(proxy.getServer(), roomName, 
+							doc.getName(), userName), WindowClient.this);
+					documentTabs.put(doc.getName(), nextDoc);
+				}
+				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
+					setMenusForRoomWithDocumentsOpen();
+				} else {
+					if(docs.size() == 0) {
+						setMenusForUserJoinedRoom();
+					} else {
+						setMenusForUserObserver();
+					}
+				}
+			}
+		});
+		return true;
 	}
 }
