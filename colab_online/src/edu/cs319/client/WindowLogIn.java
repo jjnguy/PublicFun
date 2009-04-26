@@ -151,6 +151,7 @@ public class WindowLogIn extends JDialog {
 		usernameField.addKeyListener(enterKey);
 		passwordField.addKeyListener(enterKey);
 		logInButton.addKeyListener(enterKey);
+		
 		logInButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

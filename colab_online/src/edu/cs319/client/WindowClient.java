@@ -36,7 +36,6 @@ import edu.cs319.client.customcomponents.JChatPanel;
 import edu.cs319.client.customcomponents.JDocTabPanel;
 import edu.cs319.client.customcomponents.JRoomListPanel;
 import edu.cs319.connectionmanager.clientside.Proxy;
-import edu.cs319.dataobjects.CoLabRoom;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
 import edu.cs319.dataobjects.impl.DocumentInfoImpl;
@@ -831,8 +830,15 @@ public class WindowClient extends JFrame implements IClient {
 	}
 
 	@Override
-	public boolean listOfPersistedRooms(Collection<String> romnames) {
-		throw new NotYetImplementedException();
+	public boolean listOfPersistedRooms(Collection<String> roomNames) {
+		if (colabRoomFrame == null) {
+			if (Util.DEBUG) {
+				System.out.println("Client was sent list of persisting rooms before frame was created");
+			}
+			return false;
+		}
+		colabRoomFrame.persistingRoomsUpdated(roomNames);
+		return true;
 	}
 
 	@Override

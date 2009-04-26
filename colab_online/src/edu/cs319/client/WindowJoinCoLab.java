@@ -48,9 +48,11 @@ public class WindowJoinCoLab extends JDialog {
 	private JButton joinButton = new JButton("Join");
 	private JButton createButton = new JButton("Create");
 	private JButton cancelButton = new JButton("Cancel");
-	private JButton refreshButton = new JButton("Refresh");
+	private JButton refreshRoomsButton = new JButton("Refresh");
 	private JButton openButton = new JButton("Open");
-	private JLabel refreshTimeStamp = new JLabel("Click Refresh for a List of Available Rooms");
+	private JButton refreshPersistingRoomsButton = new JButton("Refresh");
+	private JLabel refreshRoomsTimeStamp = new JLabel("Click Refresh for a List of Available Rooms");
+	private JLabel refreshPersistingRoomsTimeStamp = new JLabel("Click Refresh for a List of Persisting Rooms");
 
 	private WindowClient parent;
 	private IServer server;
@@ -73,11 +75,12 @@ public class WindowJoinCoLab extends JDialog {
 		}
 		this.parent = parent;
 		this.server = server;
-		this.setSize(600, 450);
+		this.setSize(800, 520);
 		this.setResizable(false);
 		setUpAppearance();
 		setUpListeners();
 		fillCoLabRoomList();
+//		fillPersistingRoomList();
 		this.repaint();
 	}
 
@@ -109,13 +112,13 @@ public class WindowJoinCoLab extends JDialog {
 		createButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
 		openButton.setPreferredSize(buttonSize);
-		refreshButton.setPreferredSize(buttonSize);
+		refreshRoomsButton.setPreferredSize(buttonSize);
 
 		joinButton.setMnemonic(KeyEvent.VK_J);
 		createButton.setMnemonic(KeyEvent.VK_C);
 		cancelButton.setMnemonic(KeyEvent.VK_N);
 		openButton.setMnemonic(KeyEvent.VK_O);
-		refreshButton.setMnemonic(KeyEvent.VK_R);
+		refreshRoomsButton.setMnemonic(KeyEvent.VK_R);
 
 		JPanel listLabelPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -126,10 +129,22 @@ public class WindowJoinCoLab extends JDialog {
 		c.anchor = GridBagConstraints.LINE_START;
 		listLabelPanel.add(listLabel, c);
 		c.gridy = 1;
-		listLabelPanel.add(refreshTimeStamp, c);
+		listLabelPanel.add(refreshRoomsTimeStamp, c);
 		c.gridy = 2;
 		c.anchor = GridBagConstraints.CENTER;
-		listLabelPanel.add(refreshButton, c);
+		listLabelPanel.add(refreshRoomsButton, c);
+		
+		JPanel persistingListLabelPanel = new JPanel(new GridBagLayout());
+		c.gridx = 0;
+		c.gridy = 0;
+		c.anchor = GridBagConstraints.LINE_START;
+		persistingListLabelPanel.add(openLabel, c);
+		c.gridy = 1;
+		persistingListLabelPanel.add(refreshPersistingRoomsTimeStamp, c);
+		c.gridy = 2;
+		c.anchor = GridBagConstraints.CENTER;
+		persistingListLabelPanel.add(refreshPersistingRoomsButton, c);
+		
 
 		JPanel stuffPanel = new JPanel(new GridBagLayout());
 		stuffPanel.setBorder(new EmptyBorder(5, 5, 15, 5));
@@ -152,7 +167,7 @@ public class WindowJoinCoLab extends JDialog {
 		stuffPanel.add(joinButton, c);
 		c.gridx = 0;
 		c.gridy = 2;
-		stuffPanel.add(openLabel, c);
+		stuffPanel.add(persistingListLabelPanel, c);
 		c.gridx = 1;
 		stuffPanel.add(persistingRoomListScroll, c);
 		c.gridx = 2;
@@ -189,10 +204,10 @@ public class WindowJoinCoLab extends JDialog {
 		Vector<Component> order = new Vector<Component>(8);
 		order.add(createField);
 		order.add(createButton);
-		order.add(refreshButton);
-		order.add(roomListScroll);
+		order.add(refreshRoomsButton);
+		order.add(roomList);
 		order.add(joinButton);
-		order.add(persistingRoomListScroll);
+		order.add(persistingRoomList);
 		order.add(openButton);
 		order.add(cancelButton);
 		setFocusTraversalPolicy(new JoinCoLabFocusTraversalPolicy(order));
@@ -206,12 +221,23 @@ public class WindowJoinCoLab extends JDialog {
 	public void roomsUpdated(Collection<String> roomNames) {
 		roomList.setListData(roomNames.toArray());
 		Calendar c = GregorianCalendar.getInstance();
-		refreshTimeStamp.setText(c.getTime().toString());
+		refreshRoomsTimeStamp.setText(c.getTime().toString());
+	}
+	
+	public void persistingRoomsUpdated(Collection<String> roomNames) {
+		persistingRoomList.setListData(roomNames.toArray());
+		Calendar c = GregorianCalendar.getInstance();
+		refreshPersistingRoomsTimeStamp.setText(c.getTime().toString());
 	}
 
 	private void fillCoLabRoomList() {
 		// ask for all room members
 		server.getAllCoLabRoomNames(parent.getUserName());
+	}
+	
+	private void fillPersistingRoomList() {
+		// ask for all persisting rooms for this user
+		server.getAllRoomsPersisted(parent.getUserName());
 	}
 
 	/**
@@ -233,7 +259,7 @@ public class WindowJoinCoLab extends JDialog {
 			}
 		});
 
-		refreshButton.addActionListener(new ActionListener() {
+		refreshRoomsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				fillCoLabRoomList();
@@ -256,8 +282,20 @@ public class WindowJoinCoLab extends JDialog {
 		openButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO implement persisting room list
-				
+				String joinName = (String) persistingRoomList.getSelectedValue();
+				server.joinCoLabRoom(parent.getUserName(), joinName, null);
+				parent.setRoomName(joinName);
+				parent.chatLogin();
+				server.getClientsCurrentlyInRoom(parent.getUserName(), joinName);
+				closeStatus = ROOM_JOINED;
+				dispose();
+			}
+		});
+		
+		refreshPersistingRoomsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fillPersistingRoomList();
 			}
 		});
 
