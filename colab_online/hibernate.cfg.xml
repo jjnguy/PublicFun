@@ -26,7 +26,7 @@
       <mapping class="edu.cs319.dataobjects.database.DBDocumentSubSection"/>
       <mapping class="edu.cs319.dataobjects.database.SectionizedDBDocument"/>
       <mapping class="edu.cs319.dataobjects.database.DBCoLabRoom"/>
-      
+      <mapping class="edu.cs319.dataobjects.database.CS319User"/>
       
    </session-factory>
 </hibernate-configuration>
