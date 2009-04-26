@@ -48,7 +48,7 @@ public class WindowAbout extends JDialog {
 				"`\\ ':|```/  \\````<br>" +
 				"``'-, \\./ \\)\\)``<br>" +
 				"``````-|   );/````<br>" +
-				"````````'--'-'``</html>");
+				"```````'--'-'``</html>");
 		//TODO logoLabel ToolTip
 		JTextArea text = new JTextArea();
 		text.setSize(280, 210);
