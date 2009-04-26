@@ -147,6 +147,10 @@ public class WindowJoinCoLab extends JDialog {
 		persistingListLabelPanel.add(refreshPersistingRoomsButton, c);
 		
 
+		JPanel roomScroll = new JPanel(new BorderLayout());
+		roomScroll.add(roomListScroll, BorderLayout.CENTER);
+		JPanel persistingScroll = new JPanel(new BorderLayout());
+		persistingScroll.add(persistingRoomListScroll, BorderLayout.CENTER);
 		JPanel stuffPanel = new JPanel(new GridBagLayout());
 		stuffPanel.setBorder(new EmptyBorder(5, 5, 15, 5));
 		Insets gridInsets = new Insets(5, 10, 5, 10);
@@ -163,14 +167,14 @@ public class WindowJoinCoLab extends JDialog {
 		c.gridy = 1;
 		stuffPanel.add(listLabelPanel, c);
 		c.gridx = 1;
-		stuffPanel.add(roomListScroll, c);
+		stuffPanel.add(roomScroll, c);
 		c.gridx = 2;
 		stuffPanel.add(joinButton, c);
 		c.gridx = 0;
 		c.gridy = 2;
 		stuffPanel.add(persistingListLabelPanel, c);
 		c.gridx = 1;
-		stuffPanel.add(persistingRoomListScroll, c);
+		stuffPanel.add(persistingScroll, c);
 		c.gridx = 2;
 		stuffPanel.add(openButton, c);
 		c.gridx = 0;

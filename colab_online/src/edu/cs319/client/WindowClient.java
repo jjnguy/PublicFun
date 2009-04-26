@@ -872,14 +872,10 @@ public class WindowClient extends JFrame implements IClient {
 							roomName, doc.getName(), userName), WindowClient.this);
 					documentTabs.put(doc.getName(), nextDoc);
 				}
-				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
-					setMenusForRoomWithDocumentsOpen();
+				if (docs.size() == 0) {
+					setMenusForUserJoinedRoom();
 				} else {
-					if (docs.size() == 0) {
-						setMenusForUserJoinedRoom();
-					} else {
-						setMenusForUserObserver();
-					}
+					setMenusForUserObserver();
 				}
 			}
 		});
