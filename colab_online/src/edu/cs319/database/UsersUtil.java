@@ -60,11 +60,20 @@ public class UsersUtil {
 		return true;		
 	}
 	
-	public boolean deleteUser(String username){
+	public static boolean deleteUser(String username){
 		Session session = HibernateUtil.getSession();
 		Criteria criteria = session.createCriteria(CS319User.class);
 		
 		criteria.add(Restrictions.eq("username", username));
+		
+		CS319User user = (CS319User) criteria.uniqueResult();
+		
+		if(user != null){
+			session.delete(user);
+		}
+		
+		session.flush();
+		session.close();
 		
 		return true;
 	}

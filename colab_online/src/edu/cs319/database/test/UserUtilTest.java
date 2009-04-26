@@ -1,5 +1,6 @@
 package edu.cs319.database.test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -32,6 +33,21 @@ public class UserUtilTest {
 		byte[] hashedPass = Util.getHashedBytes(passbytes);
 		
 		UsersUtil.createUser(username, hashedPass);
+	}
+	
+	@Test
+	public void testDeleteUser(){
+		String password = "pass";
+		String username = "deletedSoon";
+		
+		byte[] passbytes = password.getBytes();
+		byte[] hashedPass = Util.getHashedBytes(passbytes);
+		
+		UsersUtil.createUser(username, hashedPass);
+		
+		UsersUtil.deleteUser("deletedSoon");
+		
+		assertFalse("User should not be authenticate...does not exist" , UsersUtil.authenticateUser("deletedSoon", hashedPass));
 	}
 
 }
