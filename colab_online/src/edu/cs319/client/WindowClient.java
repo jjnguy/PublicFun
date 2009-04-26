@@ -868,4 +868,10 @@ public class WindowClient extends JFrame implements IClient {
 		});
 		return true;
 	}
+
+	@Override
+	public boolean userAuthenticated(String username, boolean success) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

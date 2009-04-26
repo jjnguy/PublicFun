@@ -127,16 +127,20 @@ public class ServerDecoder implements Runnable {
 			actualServer.subSectionFlopped(cln, args.get(0), args.get(1), args.get(2), args.get(3));
 			break;
 		case SUBSECTION_SPLIT:
-			actualServer.subSectionSplit(cln, args.get(0), args.get(1), args.get(2), args.get(3), args.get(4), Integer.parseInt(args.get(5)));
+			actualServer.subSectionSplit(cln, args.get(0), args.get(1), args.get(2), args.get(3),
+					args.get(4), Integer.parseInt(args.get(5)));
 			break;
 		case SUBSECTION_COMBINE:
-			actualServer.subSectionCombined(cln, args.get(0), args.get(1), args.get(2), args.get(3), args.get(4));
+			actualServer.subSectionCombined(cln, args.get(0), args.get(1), args.get(2),
+					args.get(3), args.get(4));
 			break;
 		case UPDATE_SUBSECTION_INSERT:
-			actualServer.subSectionUpdatedInsert(cln, args.get(0), args.get(1), args.get(2), Integer.parseInt(args.get(3)), args.get(4));
+			actualServer.subSectionUpdatedInsert(cln, args.get(0), args.get(1), args.get(2),
+					Integer.parseInt(args.get(3)), args.get(4));
 			break;
 		case UPDATE_SUBSECTION_REMOVE:
-			actualServer.subSectionUpdatedRemove(cln, args.get(0), args.get(1), args.get(2), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)));
+			actualServer.subSectionUpdatedRemove(cln, args.get(0), args.get(1), args.get(2),
+					Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)));
 			break;
 		case USER_AUTHENTICATE:
 			actualServer.authenticateUser(cln, args.get(0).getBytes());

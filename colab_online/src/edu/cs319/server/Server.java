@@ -664,8 +664,8 @@ public class Server implements IServer {
 	public boolean getAllRoomsPersisted(String username) {
 		// TODO Auto-generated method stub
 		List<String> roomnames = DocumentDatabaseUtil.getRoomNames(username);
-		CoLabRoom room = colabrooms.get(username);
-		return room.getMemberByName(username).getClient().listOfPersistedRooms(roomnames);
+		IClient client = regularClients.get(username);
+		return client.listOfPersistedRooms(roomnames);
 	}
 
 	@Override
@@ -686,5 +686,23 @@ public class Server implements IServer {
 			c.coLabRoomMemberLeft(c.getUserName());
 		}
 		return true;
+	}
+
+	@Override
+	public boolean authenticateUser(String username, byte[] password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean createUser(String username, byte[] password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteUser(String username) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
