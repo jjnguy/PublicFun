@@ -195,9 +195,9 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 	@Override
 	public String toSerializedString() {
 		String ret = "";
-		ret += getName() + ((char) 31);
+		ret += getName() + ((char) 30);
 		for (DocumentSubSection sec : subSections) {
-			ret += sec.toDelimmitedString() + ((char) 31);
+			ret += sec.toDelimmitedString() + ((char) 30);
 		}
 		return ret;
 	}
