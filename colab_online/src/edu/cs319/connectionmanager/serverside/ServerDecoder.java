@@ -51,6 +51,8 @@ public class ServerDecoder implements Runnable {
 					actualServer.logOut(name);
 				}
 				return;
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 		}
 	}
@@ -156,10 +158,12 @@ public class ServerDecoder implements Runnable {
 			if (Util.DEBUG) {
 				System.out.println(args);
 			}
-			actualServer.authenticateUser(new ClientEncoder(cln, socket), cln, URLDecoder.decode(args.get(0), "UTF-8").getBytes());
+			actualServer.authenticateUser(new ClientEncoder(cln, socket), cln, URLDecoder.decode(
+					args.get(0), "UTF-8").getBytes());
 			break;
 		case USER_CREATE:
-			actualServer.createUser(new ClientEncoder(cln, socket), cln, URLDecoder.decode(args.get(0), "UTF-8").getBytes());
+			actualServer.createUser(new ClientEncoder(cln, socket), cln, URLDecoder.decode(
+					args.get(0), "UTF-8").getBytes());
 			break;
 		case USER_DELETE:
 			System.err.println("98q4hpoiu3qhf9824343434343434343-yth98f)432htg-	98432	 [23yt4325");

@@ -62,6 +62,8 @@ public class JChatPanel extends JPanel {
 		this.clientID = clientID;
 		this.roomName = roomName;
 		// TODO get icons
+		if (!SystemTray.isSupported())
+			return;
 		try {
 			this.trayI = new TrayIcon(ImageIO.read(new File("images/tempIcon.bmp")));
 		} catch (IOException e) {
@@ -90,7 +92,8 @@ public class JChatPanel extends JPanel {
 	public void newChatMessage(String usernameSender, String message) {
 		String fullTExt = usernameSender + ": " + message + "\n";
 		topText.append(fullTExt);
-		topText.scrollRectToVisible(new Rectangle(0, topText.getHeight() - topText.getVisibleRect().height, topText.getWidth(), topText.getHeight()));
+		topText.scrollRectToVisible(new Rectangle(0, topText.getHeight()
+				- topText.getVisibleRect().height, topText.getWidth(), topText.getHeight()));
 		if (!isVisible())
 			displayBottomPopup(usernameSender, message);
 	}
@@ -103,7 +106,7 @@ public class JChatPanel extends JPanel {
 		if (!isVisible())
 			displayBottomPopup(usernameSender, message);
 	}
-	
+
 	public void clearChatPanel() {
 		topText.setText("");
 	}
