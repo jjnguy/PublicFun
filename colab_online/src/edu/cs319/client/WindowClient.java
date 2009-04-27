@@ -292,6 +292,8 @@ public class WindowClient extends JFrame implements IClient {
 						+ " LockHolder: " + section.lockedByUser());
 				proxy.getServer().subSectionUpdatedAll(userName, roomName, docName, secName,
 						section);
+				proxy.getServer().subSectionUnLocked(userName, roomName, docName, secName);
+				
 				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {

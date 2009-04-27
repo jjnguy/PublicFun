@@ -34,6 +34,7 @@ import edu.cs319.client.WindowClient;
 import edu.cs319.dataobjects.DocumentInfo;
 import edu.cs319.dataobjects.DocumentSubSection;
 import edu.cs319.dataobjects.SectionizedDocument;
+import edu.cs319.dataobjects.impl.DocumentSubSectionImpl;
 import edu.cs319.dataobjects.impl.SectionizedDocumentImpl;
 import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
@@ -159,6 +160,7 @@ public class JDocTabPanel extends JPanel {
 		currentWorkingPane.setMinimumSize(new Dimension(0, 0));
 		JScrollPane workScroll = new JScrollPane(currentWorkingPane);
 		JScrollPane docScroll = new JScrollPane(topFullDocumentPane);
+		docScroll.setAutoscrolls(false);
 		bottomPane.add(workScroll, BorderLayout.CENTER);
 		workspace = new JSplitPane(JSplitPane.VERTICAL_SPLIT, docScroll, bottomPane);
 		wholePane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sectionPanel, workspace);
@@ -925,6 +927,11 @@ public class JDocTabPanel extends JPanel {
 		String currentText = getCurrentlySelectedSubSection().getText();
 		String proposedText = currentWorkingPane.getText();
 		String update = "";
+		
+		DocumentSubSection ds = new DocumentSubSectionImpl(getCurrentlySelectedSubSection().getName());
+		ds.setLocked(true, info.getUserName());
+		ds.setText(info.getUserName(), proposedText);
+		
 
 		int start = -1;
 		int end = -1;
@@ -944,7 +951,6 @@ public class JDocTabPanel extends JPanel {
 						start);
 			}
 			if (end > -1) {
-				// System.out.println("Sending Remove: Start: " + start + " End: " + end);
 				info.getServer().subSectionUpdatedRemove(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start,
 						end);
@@ -952,7 +958,7 @@ public class JDocTabPanel extends JPanel {
 				System.out.println("Failed Remove: Start: " + start + " End: " + end);
 				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
-						getCurrentlySelectedSubSection());
+						ds);
 			}
 		} else if (currentText.length() < proposedText.length()) { // Insert
 			while (i < currentText.length() && currentText.charAt(i) == proposedText.charAt(i)) {
@@ -968,7 +974,6 @@ public class JDocTabPanel extends JPanel {
 
 			if (end > -1) {
 				update = proposedText.substring(start, end);
-				// System.out.println("Sending Insert: Start: " + start + " Text: " + update);
 				info.getServer().subSectionUpdatedInsert(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), getCurrentlySelectedSubSection().getName(), start,
 						update);
@@ -978,15 +983,14 @@ public class JDocTabPanel extends JPanel {
 						+ "'");
 				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
-						getCurrentlySelectedSubSection());
+						ds);
 			}
 		} else { // They probably haven't changed
-			//System.out.println("Updates were the same size");
 			if (!currentText.equals(proposedText)) {
 				System.out.println("Different Contents, Updating");
 				info.getServer().subSectionUpdatedAll(info.getUserName(), info.getRoomName(),
 						info.getDocumentName(), getCurrentlySelectedSubSection().getName(),
-						getCurrentlySelectedSubSection());
+						ds);
 			}
 		}
 	}

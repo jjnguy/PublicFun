@@ -3,6 +3,7 @@ package edu.cs319.client.customcomponents;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.JTextArea;
 
@@ -20,7 +21,9 @@ public class DocumentDisplayPane extends JTextArea {
 
 	public void updateDocument(SectionizedDocument doc) {
 		this.doc = doc;
+		Rectangle r = getVisibleRect();
 		this.setText(doc.getFullText());
+		scrollRectToVisible(r);
 	}
 
 	@Override
