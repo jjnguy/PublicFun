@@ -29,6 +29,7 @@ public class Util {
 		privledgedUsers.add("agee");
 		privledgedUsers.add("idallas");
 		privledgedUsers.add("wrowcliffe");
+		privledgedUsers.add("kmae");
 	}
 
 	/**
@@ -66,5 +67,4 @@ public class Util {
 	public static void main(String[] args) {
 		System.out.println(Arrays.toString(getHashedBytes("kkk".getBytes())));
 	}
-
 }
