@@ -644,7 +644,6 @@ public class WindowClient extends JFrame implements IClient {
 						documentName, userName), WindowClient.this);
 				documentTabs.put(documentName, doc);
 				tabbedDocumentPane.add(documentName, doc);
-				// TODO keep update? documents.get(documentName).updateDocumentView();
 				if (getPrivLevel() != CoLabPrivilegeLevel.OBSERVER) {
 					setMenusForRoomWithDocumentsOpen();
 				} else {

@@ -202,7 +202,6 @@ public class SectionizedDocumentImpl implements SectionizedDocument {
 		return ret;
 	}
 	public static SectionizedDocument getFromDelimmitedString(String s) {
-		// TODO probably broken, fix first
 		int delimidxStart = s.indexOf((char) 30);
 		String docname = s.substring(0, delimidxStart);
 		SectionizedDocument ret = new SectionizedDocumentImpl(docname);

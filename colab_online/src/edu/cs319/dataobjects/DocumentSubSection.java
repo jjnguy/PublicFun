@@ -101,7 +101,6 @@ public abstract class DocumentSubSection {
 	 * @return A DocumentSubSection containing the same data as the original
 	 **/
 	public static DocumentSubSection getFromDelimmitedString(String string) {
-		// TODO probably broken, look here first
 		int idxFirstDelim = string.indexOf((char) 31);
 		int idxSecondDelim = string.indexOf((char) 31, idxFirstDelim + 1);
 		String name = string.substring(0, idxFirstDelim);

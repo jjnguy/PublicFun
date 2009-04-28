@@ -61,7 +61,6 @@ public class JChatPanel extends JPanel {
 		server = serverP;
 		this.clientID = clientID;
 		this.roomName = roomName;
-		// TODO get icons
 		if (!SystemTray.isSupported())
 			return;
 		try {

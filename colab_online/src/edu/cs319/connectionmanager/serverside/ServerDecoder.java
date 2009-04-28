@@ -52,7 +52,6 @@ public class ServerDecoder implements Runnable {
 				}
 				return;
 			} catch (Exception e) {
-				// TODO: handle exception
 			}
 		}
 	}

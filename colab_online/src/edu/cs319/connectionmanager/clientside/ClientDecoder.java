@@ -48,7 +48,6 @@ public class ClientDecoder implements Runnable {
 				}
 				break;
 			} catch (Exception e) {
-				// TODO: handle exception
 			}
 		}
 	}

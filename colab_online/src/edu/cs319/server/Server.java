@@ -177,7 +177,6 @@ public class Server implements IServer {
 			for (IClient client2 : room.getAllClients()) {
 				client2.coLabRoomMemberArrived(username, member.privledges());
 			}
-			// TODO test
 			client.allUsersInRoom(room.getAllClientNamesInRoom(), room.getAllPrivLevels());
 			for (SectionizedDocument sd : room.getAllDocuments()) {
 				client.newDocument(username, sd.getName());

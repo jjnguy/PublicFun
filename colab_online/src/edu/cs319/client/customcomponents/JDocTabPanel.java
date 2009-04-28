@@ -603,7 +603,6 @@ public class JDocTabPanel extends JPanel {
 
 	public void updateWorkPane(DocumentSubSection ds) {
 		synchronized (currentWorkingPane) {
-			// TODO this hopefully works!!
 			if (ds == null) {
 				currentWorkingPane.setText("");
 				currentWorkingPane.setEditable(false);
