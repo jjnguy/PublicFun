@@ -21,6 +21,7 @@ import edu.cs319.util.Util;
  * When a client calls methods on this class it then transforms those messages to serialized byte
  * strings, and then passes them down to the Server over the network.
  * 
+ * For information on the methods in this class, see the IServer interface documentation
  * 
  * @author Justin Nelson
  * 

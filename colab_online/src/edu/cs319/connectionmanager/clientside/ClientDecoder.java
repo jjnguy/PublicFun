@@ -16,8 +16,7 @@ import edu.cs319.util.NotYetImplementedException;
 import edu.cs319.util.Util;
 
 /**
- * This class needs to be instantiated with some implementation of IClient. It listens on port 3333
- * for messages from the server.
+ * This class needs to be instantiated with some implementation of IClient.
  * 
  * It calls the proper methods on the Client passed into the constructor which will properly display
  * the changes in some way to the user.
@@ -27,16 +26,25 @@ import edu.cs319.util.Util;
  * 
  */
 public class ClientDecoder implements Runnable {
-	public static final int DEFAULT_PORT = 3333;
-
+	
 	private IClient actualClient;
 	private MessageInputStream mIn;
 
+	/**
+	 * Creates a ClientDecoder which can decode messages coming from the given InputStream and call them on the given IClient
+	 * 
+	 * @param actualClient The IClient this Decoder represents
+	 * @param in The stream messages are being sent over
+	 **/
 	public ClientDecoder(IClient actualClient, InputStream in) {
 		this.actualClient = actualClient;
 		this.mIn = new MessageInputStream(in);
 	}
 
+	/**
+	 * Continuous loop to read Messages from the stream.
+	 * Returns if the Stream is closed
+	 **/
 	@Override
 	public void run() {
 		while (true) {
@@ -52,6 +60,11 @@ public class ClientDecoder implements Runnable {
 		}
 	}
 
+	/**
+	 * Interprets the received Message and calls the appropiate method on the actualClient
+	 * 
+	 * @param Message The message received from the stream.
+	 **/
 	private void decodeMessage(Message message) throws IOException {
 		String username = message.getSentByClientName();
 		List<String> arg = message.getArgumentList();
