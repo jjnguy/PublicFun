@@ -16,7 +16,7 @@ import edu.cs319.util.Util;
 
 /**
  * Listens on the server side for changes from the connected clients. Passes events from the network
- * connection on the an implementation of the Server for keeping track of all of the clients.
+ * connection on to an implementation of the Server for keeping track of all of the clients.
  * 
  * @author Justin Nelson
  * @author Wayne Rowcliffe
@@ -28,6 +28,12 @@ public class ServerDecoder implements Runnable {
 	private MessageInputStream in;
 	private String name;
 
+	/**
+	 * Creates a new ServerDecoder which will listen to the given Socket and call methods on the given IServer based on the Messages it receives.
+	 * 
+	 * @param actualServer The IServer this ServerDecoder will call methods on.
+	 * @param socket The Socket this ServerDecoder should read Messages from
+	 **/
 	public ServerDecoder(IServer actualServer, Socket socket) {
 		this.actualServer = actualServer;
 		this.socket = socket;
@@ -40,6 +46,10 @@ public class ServerDecoder implements Runnable {
 		}
 	}
 
+	/**
+	 * Continuous loop to read Messages from the stream.
+	 * Returns if the Stream is closed
+	 **/
 	@Override
 	public void run() {
 		while (true) {
@@ -55,7 +65,12 @@ public class ServerDecoder implements Runnable {
 			}
 		}
 	}
-
+	
+	/**
+	 * Interprets the received Message and calls the appropiate method on the actualServer
+	 * 
+	 * @param Message The message received from the stream.
+	 **/
 	public void decodeMessage(Message message) throws IOException {
 		String cln = message.getSentByClientName();
 		if (name == null) {
