@@ -6,29 +6,60 @@ import java.util.List;
 
 import edu.cs319.util.Util;
 
+/**
+ * The wrapper object for sending data to and from the Encoder/Decoders
+ **/
 public class Message {
+	
 	private MessageType messageType;
 	private String clientName;
 	private List<String> arguments;
 
+	/**
+	 * Creates a new Message 
+	 * 
+	 * @param m The type of message this is.
+	 * @param clientName The name of the sending client
+	 * @param args Any additional arguments for this Message
+	 **/
 	public Message(MessageType m, String clientName, List<String> args) {
 		this.messageType = m;
 		this.arguments = args;
 		this.clientName = clientName;
 	}
 
+	/**
+	 * The client who sent the message
+	 * 
+	 * @return The client who sent this message
+	 **/
 	public String getSentByClientName() {
 		return clientName;
 	}
 
+	/**
+	 * The MessageType for this Message
+	 * 
+	 * @return This Message's MessageType
+	 **/
 	public MessageType getMessageType() {
 		return messageType;
 	}
 
+	/**
+	 * The arguments in this Message
+	 * 
+	 * @return The arguments in this Message
+	 **/
 	public List<String> getArgumentList() {
 		return arguments;
 	}
 
+	/**
+	 * Byte encodes this Message
+	 * 
+	 * @return This message encoded in bytes
+	 **/
 	public byte[] encode() {
 		byte messageCode = messageType.getCode();
 		byte[] clietNameBytes = clientName.getBytes();
@@ -50,6 +81,13 @@ public class Message {
 		return ret;
 	}
 
+	/**
+	 * Creates a message from a byte encoded array
+	 * 
+	 * @param info The byte array representing the Message
+	 * 
+	 * @return The Message contained in the byte array.
+	 **/
 	public static Message decode(byte[] info) {
 		MessageType mtype = MessageType.getMessageTypeByCode(info[0]);
 		if (mtype == null) {
