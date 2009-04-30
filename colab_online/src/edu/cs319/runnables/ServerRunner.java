@@ -6,6 +6,9 @@ import java.io.IOException;
 import edu.cs319.connectionmanager.serverside.ConnectionListener;
 import edu.cs319.server.Server;
 
+/**
+ * Starts the CoLab server.
+ **/
 public class ServerRunner {
 
 	public static void main(String[] args) throws IOException {

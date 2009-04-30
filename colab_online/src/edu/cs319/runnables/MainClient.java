@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 
 import edu.cs319.client.WindowClient;
 
+/**
+ * Runs the WindowClient GUI for CoLab.
+ **/
 public class MainClient {
 
 	/**
