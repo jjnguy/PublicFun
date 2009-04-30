@@ -1,5 +1,8 @@
 package edu.cs319.connectionmanager.messaging;
 
+/**
+ * The different message types the CoLab Encoder/Decoders support
+ **/
 public enum MessageType {
 	
 	UPDATE_ALL_SUBSECTIONS((byte) 0x00, "Update All Subsections"), 
@@ -45,11 +48,22 @@ public enum MessageType {
 	public String toString() {
 		return name;
 	}
-
+	/**
+	 * Gets the byte code for this message type
+	 * 
+	 * @return The byte code for this message
+	 **/
 	public byte getCode() {
 		return code;
 	}
 
+	/**
+	 * Given a byte code, returns the MessageType associated with that code
+	 * 
+	 * @param code The byte code
+	 * 
+	 * @return MessageType The MessageType corresponding to that byte code
+	 **/
 	public static MessageType getMessageTypeByCode(byte code) {
 		switch (code) {
 		case 0x0:

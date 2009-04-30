@@ -5,17 +5,30 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * A wrapper class around an InputStream which allows for Messages to be read directly from the stream.
  * 
  * @author Justin Nelson
- * 
- */
+ **/
 public class MessageInputStream {
+	
 	private InputStream in;
 
+	/**
+	 * Creates a MessageInputStream for the given InputStream
+	 * 
+	 * @param s The InputStream Messages are being received from
+	 **/
 	public MessageInputStream(InputStream s) {
 		in = s;
 	}
 
+	/**
+	 * Reads a Message from this stream
+	 * 
+	 * @return The next message in the stream.
+	 * 
+	 * @throws IOException If anything goes wrong in the reading process
+	 **/
 	public Message readMessage() throws IOException {
 		// if we need more that 1KB of data in a message, then we have a problem
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
