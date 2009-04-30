@@ -64,7 +64,7 @@ public class JChatPanel extends JPanel {
 		if (!SystemTray.isSupported())
 			return;
 		try {
-			this.trayI = new TrayIcon(ImageIO.read(new File("images/tempIcon.bmp")));
+			this.trayI = new TrayIcon(ImageIO.read(JChatPanel.class.getResourceAsStream("/images/tempIcon.bmp")));
 		} catch (IOException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();

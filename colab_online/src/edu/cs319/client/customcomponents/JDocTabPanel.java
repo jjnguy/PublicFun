@@ -120,10 +120,8 @@ public class JDocTabPanel extends JPanel {
 	 */
 	private void setUpAppearance() {
 		try {
-			sectionUpButton = new JButton(new ImageIcon(ImageIO.read(new File(
-					"images/green_up_arrow_small.png"))));
-			sectionDownButton = new JButton(new ImageIcon(ImageIO.read(new File(
-					"images/green_down_arrow_small.png"))));
+			sectionUpButton = new JButton(new ImageIcon(ImageIO.read(JDocTabPanel.class.getResourceAsStream("/images/green_up_arrow_small.png"))));
+			sectionDownButton = new JButton(new ImageIcon(ImageIO.read(JDocTabPanel.class.getResourceAsStream("/images/green_down_arrow_small.png"))));
 		} catch (IOException e) {
 			if (Util.DEBUG) {
 				e.printStackTrace();

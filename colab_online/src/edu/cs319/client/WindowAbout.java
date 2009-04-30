@@ -33,7 +33,7 @@ public class WindowAbout extends JDialog {
 	private void setUpAppearance() {
 		ImageIcon logo = null;
 		try {
-			logo = new ImageIcon(ImageIO.read(new File("images/logo_1.png")));
+			logo = new ImageIcon(ImageIO.read(WindowAbout.class.getResourceAsStream("/images/logo_1.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
