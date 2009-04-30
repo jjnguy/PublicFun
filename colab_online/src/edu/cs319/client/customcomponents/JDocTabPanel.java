@@ -105,7 +105,13 @@ public class JDocTabPanel extends JPanel {
 		Timer timer = new Timer(UPDATE_NUM_MS, new AutoUpdateTask());
 		timer.start();
 	}
-
+	
+	/**
+	 * Creates a new JDocTabPanel within the given WindowClient representing the document described by the given DocumentInfo
+	 * 
+	 * @param info Information relevant to this document
+	 * @param client The WindowClient containing this panel
+	 **/
 	public JDocTabPanel(DocumentInfo info, WindowClient client, String path) {
 		this(info, client);
 		location = path;
@@ -489,6 +495,12 @@ public class JDocTabPanel extends JPanel {
 
 	// End IServer reaction methods
 
+	/**
+	 * Given a DocumentSubSection and a proposed update to the SubSection, sends the server an appropriate update request
+	 * 
+	 * @param ds The DocumentSubSection as it appears on the server
+	 * @param newText The proposed update to the SubSection
+	 **/
 	private void updateSubSection(DocumentSubSection ds, String newText) {
 		if (!hasPermission(client))
 			return;
@@ -508,6 +520,11 @@ public class JDocTabPanel extends JPanel {
 		// info.getDocumentName(), ds.getName(), temp);
 	}
 
+	/**
+	 * Returns the SubSection currently selected in the pane's SubSection list
+	 * 
+	 * @return The DocumentSubSection currently selected in the pane's SubSection list
+	 **/
 	private DocumentSubSection getCurrentlySelectedSubSection() {
 		DocumentSubSection sel = (DocumentSubSection) listOfSubSections.getSelectedValue();
 		if (sel == null) {
@@ -519,6 +536,9 @@ public class JDocTabPanel extends JPanel {
 		return sel;
 	}
 
+	/**
+	 * Timer action to periodically sync the contents of the Working Pane and the Server
+	 **/
 	private class AutoUpdateTask implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -532,7 +552,11 @@ public class JDocTabPanel extends JPanel {
 			updateSubSection(getCurrentlySelectedSubSection(), currentWorkingPane.getText());
 		}
 	}
-
+	
+	/**
+	 * Listens for presses of the UpButton on the SubSection List and requests that the Server move the selected
+	 * SubSection one section up in the SubSection list.
+	 **/
 	private class UpButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (!hasPermission(client)) {
@@ -551,7 +575,11 @@ public class JDocTabPanel extends JPanel {
 			}
 		}
 	}
-
+	
+	/**
+	 * Listens for presses of the DownButton on the SubSection List and requests that the Server move the selected
+	 * SubSection one section down in the SubSection list.
+	 **/
 	private class DownButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (!hasPermission(client)) {
@@ -573,6 +601,9 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Attempts to sync the WorkingPane of the locked SubSection with the Server
+	 **/
 	private class UpdateSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (!hasPermission(client)) {
@@ -584,6 +615,10 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Listens for changes in the selected SubSection within the SubSection list and updates
+	 * the WorkingPane accordingly
+	 **/
 	private class SelectedSubSectionListener implements ListSelectionListener {
 		public void valueChanged(ListSelectionEvent e) {
 			if (e.getValueIsAdjusting() == false) {
@@ -593,12 +628,22 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Switches the WorkingPane to display the contents of the SubSection with the given name
+	 * 
+	 * @param secName The name of the SubSection to display in the WorkingPane
+	 **/
 	public void updateWorkPane(String secName) {
 		System.out.println("Updating Working Pane: " + info + " Currently Selected: "
 				+ getCurrentlySelectedSubSection() + " Updating with Section: " + secName);
 		updateWorkPane(listOfSubSections.getSection(secName));
 	}
 
+	/**
+	 * Switches the WorkingPane to display the contents of the given SubSection
+	 * 
+	 * @param ds The SubSection to display in the WorkingPane
+	 **/
 	public void updateWorkPane(DocumentSubSection ds) {
 		synchronized (currentWorkingPane) {
 			if (ds == null) {
@@ -614,6 +659,9 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Requests that the Server create a new SubSection
+	 **/
 	private class NewSubSectionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (!hasPermission(client))
@@ -626,6 +674,11 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Requests that the Server create a new SubSection with the given name
+	 * 
+	 * @param name The name to give the new SubSection
+	 **/
 	public void newSubSection(String name) {
 		if (!hasPermission(client)) {
 			return;
@@ -635,12 +688,18 @@ public class JDocTabPanel extends JPanel {
 				listOfSubSections.getName(), name, listOfSubSections.getSubSectionCount());
 	}
 
+	/**
+	 * Requests that the Server give the lock for a SubSection to this user
+	 **/
 	private class AquireLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			aquireLockRequest();
 		}
 	}
-
+	
+	/**
+	 * Requests that the Server give the lock for a SubSection to this user
+	 **/
 	private void aquireLockRequest() {
 		if (!hasPermission(client)) {
 			return;
@@ -651,12 +710,18 @@ public class JDocTabPanel extends JPanel {
 				info.getDocumentName(), getCurrentlySelectedSubSection().getName());
 	}
 
+	/**
+	 * Requests that the Server release this user's lock on a SubSection
+	 **/
 	private class ReleaseLockListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			releaseLockRequest();
 		}
 	}
-
+	
+	/**
+	 * Requests that the Server release this user's lock on a SubSection
+	 **/
 	private void releaseLockRequest() {
 		System.out.println("Releasing Lock: " + info + " Currently Selected: "
 				+ getCurrentlySelectedSubSection());
@@ -665,6 +730,9 @@ public class JDocTabPanel extends JPanel {
 				info.getDocumentName(), getCurrentlySelectedSubSection().getName());
 	}
 
+	/**
+	 * Requests that the Server delete a SubSection
+	 **/
 	private class DeleteSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -673,7 +741,10 @@ public class JDocTabPanel extends JPanel {
 			deleteSubSection();
 		}
 	}
-
+	
+	/**
+	 * Requests that the Server delete a SubSection
+	 **/
 	public void deleteSubSection() {
 		DocumentSubSection sec = getCurrentlySelectedSubSection();
 		if (info.getUserName().equals(sec.lockedByUser())) {
@@ -684,6 +755,9 @@ public class JDocTabPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Requests that the Server split a SubSection
+	 **/
 	private class SplitSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -692,7 +766,10 @@ public class JDocTabPanel extends JPanel {
 			splitSubSection();
 		}
 	}
-
+	
+	/**
+	 * Requests that the Server split a SubSection
+	 **/
 	public void splitSubSection() {
 		String name1 = JOptionPane.showInputDialog(JDocTabPanel.this, "Name of the first part:");
 		if (name1 == null)
@@ -708,13 +785,19 @@ public class JDocTabPanel extends JPanel {
 				listOfSubSections.getName(), sec.getName(), name1, name2, idx);
 	}
 
+	/**
+	 * Requests that the server merge two SubSections.
+	 **/
 	private class MergeSubSectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			mergeSubSection();
 		}
 	}
-
+	
+	/**
+	 * Requests that the server merge two SubSections.
+	 **/
 	public void mergeSubSection() {
 		int count = listOfSubSections.getSubSectionCount();
 		if (count < 2)

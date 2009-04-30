@@ -45,9 +45,12 @@ import edu.cs319.server.CoLabPrivilegeLevel;
 import edu.cs319.util.Util;
 
 /**
+ * WindowClient is a Swing implementation of IClient. 
+ * It allows for complete interaction with the CoLab server.
  * 
  * @author Amelia Gee
  * @author Justin Nelson
+ * @author Wayne Rowcliffe
  * 
  */
 public class WindowClient extends JFrame implements IClient {
@@ -75,6 +78,9 @@ public class WindowClient extends JFrame implements IClient {
 	private final JCheckBox showChat = new JCheckBox("Display Chat Window");
 	private JMenuItem about;
 
+	/**
+	 * Creates a new WindowClient
+	 **/
 	public WindowClient() {
 		// setLookAndFeel();
 		setTitle("CoLab");
@@ -915,6 +921,11 @@ public class WindowClient extends JFrame implements IClient {
 		return true;
 	}
 	
+	/**
+	 * Mostly a workaround to allow WindowClient to close the Proxy for a Create user message once a response has been received from the server.
+	 * 
+	 * @param createProxy The proxy used to send the CreateUser message
+	 **/
 	public void setCreateProxy(Proxy createProxy) {
 		this.createProxy = createProxy;
 	}
