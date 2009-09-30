@@ -72,8 +72,6 @@ public class TurtleFrame extends JFrame {
 		return ret;
 	}
 
-	Dog dog = new Shoe();
-
 	private ActionListener runAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
