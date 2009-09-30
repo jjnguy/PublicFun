@@ -1,0 +1,16 @@
+start;
+	move 454;
+	rotateclockwise 90;
+	move 430;
+	rotateclockwise 180;
+	repeat 900;
+		move 900;
+		rotatecounterclockwise 90;
+		move 1;
+		rotatecounterclockwise 90;
+		move 900;
+		rotateclockwise 90;
+		move 1;
+		rotateclockwise 90;
+	end;
+end;

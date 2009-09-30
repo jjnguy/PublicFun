@@ -5,6 +5,7 @@ start;
 			rotateclockwise 90;
 		end;
 	end;
+
 	repeat 8;
 		draw square;
 		rotateclockwise 45;
