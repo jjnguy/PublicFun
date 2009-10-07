@@ -1,0 +1,8 @@
+variable m;
+variable n;
+m=56; n=92;
+while (m!=n) { 		// execute loop until m==n
+	if (m>n) m=m-n; // large-small , store the results in large variable
+	if (m<n) n=n-m;
+};
+println m;
