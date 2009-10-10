@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class GravityPane extends JPanel {
-	private long INTERVAL = 100;
+	private long INTERVAL = 10;
 	private final Color BGROUND_COLOR = Color.WHITE;
 
 	private List<GravityObject> objects;
