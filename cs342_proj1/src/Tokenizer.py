@@ -34,13 +34,12 @@ def tokenize(file_loc):
     
     '''
     file = open(file_loc, "r")
-    file_string = file.read()
     tokens = list()
 
     line_number = 1 #keep track of current line number for better error reporting
     #read each character in the program one-by-one
     token = ""
-    for char in file_string:
+    for char in file.read():
         if not legal_chars.match(char):
             raise Exception(str.format("Error while tokenizing. Character '{}' was an illegal character on line {}.", char, line_number))
         if whitespace_re.match(char): #we found a whitespace character
@@ -88,7 +87,6 @@ def _add_token(token, tokens, line_number):
             _add_token(token[loc: len(token)], tokens, line_number)
         else:
             raise Exception(str.format("Error while tokenizing. String '{}' was an illegal sequence of characters on line {}.", token, line_number))
-
 
 
 tokens = tokenize("programs/program")
