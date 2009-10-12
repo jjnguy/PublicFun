@@ -20,13 +20,13 @@ constant_re = re.compile("-?\\d+$")
 keyword_re = re.compile("(variable|if|while|println)$")
 #matches a letter and 0-31 letters or numbers
 identifier_re = re.compile("[A-Za-z]([A-Za-z0-9]{0,31})$")
-comment_re = re.compile("//.*(\\n|$)")
+comment_re = re.compile("//(.*|.*\\n)$")
 operator_re = re.compile("(\\+|-|\\*|/|&&|\\|\\||==|!=|<|<=|>|>=)$")
 whitespace_re = re.compile("\\s+$")
 structure_elm_re = re.compile("[\\(\\){};]$")
-assignment_re = re.compile("=")
-autotokenizer_re = re.compile(operator_re.pattern + "|" + structure_elm_re.pattern + "|" + assignment_re.pattern)
-legal_chars = re.compile("([0-9A-Za-z]|\\+|-|\\*|/|&|\\||=|!|>|<|\\n|\\(|\\)|;|{|}|\\s)$");
+assignment_re = re.compile("=$")
+anytoken_re = re.compile("(" + constant_re.pattern + "|" + keyword_re.pattern + "|" + identifier_re.pattern + "|" + comment_re.pattern + "|" + operator_re.pattern + "|" + structure_elm_re.pattern + "|" + assignment_re.pattern +")")
+legal_chars = re.compile("([0-9A-Za-z]|\\+|-|\\*|/|&|\\||=|!|>|<|\\n|\\(|\\)|;|{|}|,|\\s)$");
 
 def tokenize(file_loc):
     '''
@@ -42,30 +42,22 @@ def tokenize(file_loc):
     for char in file.read():
         if not legal_chars.match(char):
             raise Exception(str.format("Error while tokenizing. Character '{}' was an illegal character on line {}.", char, line_number))
-        if whitespace_re.match(char): #we found a whitespace character
-            if token == "": #if the token is empty then we just keep reading whitespace until we actually find something
-                if char == "\n":
-                    line_number += 1
-                continue
-            else: #otherwise we need to add a new token to the list
-                _add_token(token, tokens, line_number)
-                if char == "\n":
-                    line_number += 1
-                token = "" #clear out token and begin looking for more tokens
-                continue 
-        if autotokenizer_re.match(char) and token.find("//") != 0: #in this case we have an auto tokenizer character unless we are in a comment
-            if token != "":
-                _add_token(token, tokens, line_number)
-            _add_token(char, tokens, line_number)
-            token = ""
-            continue
-        #if we are here we need to be building up a token from the current character
+        if char == "\n": 
+            line_number += 1
         token += char
+        if anytoken_re.match(token): #if we have a valid token match, we keep reading chars to see if the token continues
+            continue
+        #If we got here, that means we currently have a token that was made invalid by the most recent char
+        #we now need to add the valid part of the token and continue building up more tokens
+        _add_token(token[0: len(token) - 1], tokens, line_number);
+        token = token[len(token) - 1]
     if token != "": #if there is still a token in the buffer, we add it
         _add_token(token, tokens, line_number)
     return tokens
 
 def _add_token(token, tokens, line_number):
+    if whitespace_re.match(token):
+        return
     if keyword_re.match(token):
         tokens.append((token, KEYWORD))
     elif constant_re.match(token):
@@ -88,9 +80,9 @@ def _add_token(token, tokens, line_number):
         else:
             raise Exception(str.format("Error while tokenizing. String '{}' was an illegal sequence of characters on line {}.", token, line_number))
 
-
-tokens = tokenize("programs/program")
-print(tokens)
+if __name__ == "__main__":
+    tokens = tokenize("programs/program")
+    print(tokens)
 
 
 

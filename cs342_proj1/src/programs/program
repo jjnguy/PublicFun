@@ -1,4 +1,4 @@
-variable m;
+variable m; // comment
 variable n;
 m=56; n=92;
 while (m != n) { 			// execute loop until m==n
