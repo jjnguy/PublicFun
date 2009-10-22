@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image Manipulation", "Image Manipulation\Image Manipulation.csproj", "{CF57519F-1DF2-480B-8C0D-4FCADE76EA8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageTransformGUI", "ImageTransformGUI\ImageTransformGUI.csproj", "{3BCC6889-36E4-4952-BC83-A3DE01198C0D}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF57519F-1DF2-480B-8C0D-4FCADE76EA8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF57519F-1DF2-480B-8C0D-4FCADE76EA8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF57519F-1DF2-480B-8C0D-4FCADE76EA8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF57519F-1DF2-480B-8C0D-4FCADE76EA8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BCC6889-36E4-4952-BC83-A3DE01198C0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BCC6889-36E4-4952-BC83-A3DE01198C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BCC6889-36E4-4952-BC83-A3DE01198C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BCC6889-36E4-4952-BC83-A3DE01198C0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

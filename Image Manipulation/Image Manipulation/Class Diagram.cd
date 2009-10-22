@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Makes callbacks for progress and completion">
+    <Position X="9.833" Y="1.052" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="Image_Manipulation.UI" Collapsed="true">
+    <Position X="1.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACCAAAAAAAAACAAAAAIAEIQAAgABRAAAEAA=</HashCode>
+      <FileName>UI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Image_Manipulation.ManipulatableBitmap">
+    <Position X="4.5" Y="3.75" Width="1.75" />
+    <NestedTypes>
+      <Enum Name="Image_Manipulation.ManipulatableBitmap.NormalizationMethod" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ManipulatableBitmap.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>IAACgAAEQAAAAAAAAAACAAQAgAAAwAAAAAAAAoAAEAA=</HashCode>
+      <FileName>ManipulatableBitmap.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.252" />
+  </Class>
+  <Class Name="Image_Manipulation.ManipulationResult">
+    <Position X="8" Y="4" Width="2" />
+    <NestedTypes>
+      <Delegate Name="Image_Manipulation.ManipulationResult.Normalizer" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ManipulationResult.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Struct Name="Image_Manipulation.ManipulationResult.PixelStruct" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ManipulationResult.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEAABAAABACAAAAAAAAAAABBAAAAEAAAEAAEgwCAAAI=</HashCode>
+      <FileName>ManipulationResult.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OriginalBitmap" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="Image_Manipulation.IManipulatableBitmap">
+    <Position X="4.5" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAQAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IManipulatableBitmap.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
