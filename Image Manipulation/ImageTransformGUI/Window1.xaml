@@ -20,6 +20,6 @@
 		</Menu>
 		<ListBox Margin="10,12,8,213" Name="listOfConvls" Grid.Row="1" />
 		<TabControl Grid.Column="1" Margin="10,12,8,16" Name="tabControl1" Grid.Row="1" />
-		<Button Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="10,0,0,171" Name="runConvloButton" VerticalAlignment="Bottom" Width="112" Click="runConvloButton_Click">Run Convolution</Button>
+		<Button Grid.Row="1" Height="23" Margin="10,0,0,164" Name="runConvloButton" VerticalAlignment="Bottom" Click="runConvloButton_Click" HorizontalAlignment="Left" Width="112">Run Convolution</Button>
 	</Grid>
 </Window>

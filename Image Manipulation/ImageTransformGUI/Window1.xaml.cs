@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Win32;
-using Image_Manipulation;
-using System.Xml.Linq;
 using System.Drawing;
+using System.Linq;
+using System.Windows;
+using System.Xml.Linq;
+using Image_Manipulation;
+using Microsoft.Win32;
 
 namespace ImageTransformGUI
 {
@@ -88,7 +79,7 @@ namespace ImageTransformGUI
 			ImageTransformTab selectedTab = (ImageTransformTab) tabControl1.SelectedItem;
 			foreach(Convolution c in convols)
 			{
-				if (c.Name == listOfConvls.SelectedItem)
+				if (c.Name == (string)listOfConvls.SelectedItem)
 					selectedTab.TransformTab(c);
 			}
 			
@@ -98,7 +89,8 @@ namespace ImageTransformGUI
 		{
 			OpenFileDialog f = new OpenFileDialog();
 			bool? result = f.ShowDialog();
-			if (result != true) return;
+			if (result != true) 
+                return;
 			ImageTransformTab newTab = new ImageTransformTab(new ManipulatableBitmap(new Bitmap(f.FileName)));
 			newTab.Name = "tab" + tabControl1.Items.Count;
 			tabControl1.Items.Add(newTab);
