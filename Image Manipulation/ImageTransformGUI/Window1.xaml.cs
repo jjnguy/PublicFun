@@ -24,7 +24,6 @@ namespace ImageTransformGUI
 	public partial class Window1 : Window
 	{
 		private Convolution[] convols;
-		private IManipulatableBitmap image;
 
 		public Window1()
 		{
@@ -45,6 +44,7 @@ namespace ImageTransformGUI
 
 		private static IEnumerable<Convolution> ReadTransformFile(string loc)
 		{
+			// Prepare yourself for a horriffic use of LINQ to XML
 			System.Xml.Linq.XDocument doc = XDocument.Load(loc);
 			var data = from Transformations in doc.Descendants("Convolution")
 					   select new XElement(Transformations);
@@ -73,13 +73,12 @@ namespace ImageTransformGUI
 
 		private void runConvloButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (convols == null || image == null)
+			if (convols == null)
 			{
 				MessageBox.Show("Make sure you have loaded both at least one Kernel and an image to transform.",
 					"Could Not Transform", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
-
 		}
 
 		private void OpenImageFile_Click(object sender, RoutedEventArgs e)
@@ -87,7 +86,9 @@ namespace ImageTransformGUI
 			OpenFileDialog f = new OpenFileDialog();
 			bool? result = f.ShowDialog();
 			if (result != true) return;
-			image = new ManipulatableBitmap(new Bitmap(f.FileName));
+			ImageTransformTab newTab = new ImageTransformTab(new ManipulatableBitmap(new Bitmap(f.FileName)));
+			tabControl1.Items.Add(newTab);
+			
 		}
 	}
 }
