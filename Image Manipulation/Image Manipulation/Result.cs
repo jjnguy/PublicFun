@@ -50,7 +50,8 @@ namespace Image_Manipulation
                     if (_Exception is CancellationException)
                         throw _Exception;
                     _Progress = value;
-                    ProgressUpdate(value);
+					if (ProgressUpdate != null)
+						ProgressUpdate(value);
                 }
             }
         }
@@ -118,7 +119,8 @@ namespace Image_Manipulation
                 _Bitmap = bitmap;
                 _Complete = true;
                 Monitor.PulseAll(this);
-                CompletionNotification(this);
+				if (CompletionNotification != null)
+					CompletionNotification(this);
             }
         }
 

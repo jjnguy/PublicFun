@@ -73,12 +73,25 @@ namespace ImageTransformGUI
 
 		private void runConvloButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (convols == null)
+			if (convols == null || tabControl1.Items.Count == 0)
 			{
 				MessageBox.Show("Make sure you have loaded both at least one Kernel and an image to transform.",
 					"Could Not Transform", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
+			if (listOfConvls.SelectedIndex == -1)
+			{
+				MessageBox.Show("Make sure you have selected a transform to apply.",
+					"Could Not Transform", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
+			ImageTransformTab selectedTab = (ImageTransformTab) tabControl1.SelectedItem;
+			foreach(Convolution c in convols)
+			{
+				if (c.Name == listOfConvls.SelectedItem)
+					selectedTab.TransformTab(c);
+			}
+			
 		}
 
 		private void OpenImageFile_Click(object sender, RoutedEventArgs e)
@@ -87,8 +100,9 @@ namespace ImageTransformGUI
 			bool? result = f.ShowDialog();
 			if (result != true) return;
 			ImageTransformTab newTab = new ImageTransformTab(new ManipulatableBitmap(new Bitmap(f.FileName)));
+			newTab.Name = "tab" + tabControl1.Items.Count;
 			tabControl1.Items.Add(newTab);
-			
+			tabControl1.SelectedItem = newTab;
 		}
 	}
 }

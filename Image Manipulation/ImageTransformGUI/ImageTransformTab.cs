@@ -50,6 +50,7 @@ namespace ImageTransformGUI
 	{
 		private ManipulatableBitmap originalImage;
 		private BitmapSource displayImage;
+		private System.Windows.Controls.Image display;
 
 		static ImageTransformTab()
 		{
@@ -62,7 +63,10 @@ namespace ImageTransformGUI
 			displayImage = Imaging.CreateBitmapSourceFromHBitmap(originalImage.InnerBitmap.GetHbitmap(), 
 				IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
 			Header = "Header";
-			Content = displayImage;
+			display = new System.Windows.Controls.Image();
+			display.Source = displayImage;
+			display.Stretch = Stretch.None;
+			Content = display;
 		}
 
 		public override void OnApplyTemplate()
@@ -70,14 +74,16 @@ namespace ImageTransformGUI
 			base.OnApplyTemplate();
 		}
 
-		void TransformTab(ITransformation t)
+		public void TransformTab(ITransformation t)
 		{
-			
-			/*Imaging.CreateBitmapSourceFromHBitmap(
+			Bitmap bitmap = originalImage.Transform(t);
+			BitmapSource bSrc = Imaging.CreateBitmapSourceFromHBitmap(
 					bitmap.GetHbitmap(),
 					IntPtr.Zero,
 					Int32Rect.Empty,
-					System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());*/
+					System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+			displayImage = bSrc;
+			display.Source = bSrc;
 		}
 	}
 }
