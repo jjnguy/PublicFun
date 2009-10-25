@@ -5,10 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.Win32;
-using Image_Manipulation;
-using System.IO;
 using System.Windows.Threading;
+using Image_Manipulation;
+using Microsoft.Win32;
 
 namespace ImageTransformGUI
 {
@@ -46,8 +45,9 @@ namespace ImageTransformGUI
 		private ManipulatableBitmap originalImage;
 		private BitmapSource displayImage;
 		private Bitmap saveImage;
-		private System.Windows.Controls.Image display;
 
+		private StackPanel thePane;
+		private System.Windows.Controls.Image display;
 		private ProgressBar progress;
 
 		static ImageTransformTab()
@@ -58,6 +58,8 @@ namespace ImageTransformGUI
 		public ImageTransformTab(IManipulatableBitmap image)
 			: base()
 		{
+			thePane = new StackPanel();
+
 			this.originalImage = (ManipulatableBitmap)image;
 			displayImage = Imaging.CreateBitmapSourceFromHBitmap(originalImage.InnerBitmap.GetHbitmap(),
 				IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
@@ -65,7 +67,15 @@ namespace ImageTransformGUI
 			display = new System.Windows.Controls.Image();
 			display.Source = displayImage;
 			display.Stretch = Stretch.None;
-			Content = display;
+			progress = new ProgressBar();
+			progress.Visibility = Visibility.Collapsed;
+			progress.Height = 50;
+			progress.Maximum = 100;
+			progress.Minimum = 0;
+
+			thePane.Children.Add(progress);
+			thePane.Children.Add(display);
+			Content = thePane;
 			ContextMenu picMenu = new ContextMenu();
 			MenuItem item = new MenuItem();
 			item.Click += Save_Clicked;
@@ -73,10 +83,6 @@ namespace ImageTransformGUI
 			item.Header = "Save";
 			picMenu.Items.Add(item);
 			display.ContextMenu = picMenu;
-
-			progress = new ProgressBar();
-			progress.Maximum = 100;
-			progress.Minimum = 0;
 		}
 
 		private void Save_Clicked(object sender, RoutedEventArgs s)
@@ -90,6 +96,7 @@ namespace ImageTransformGUI
 
 		public void TransformTab(ITransformation t)
 		{
+			progress.Visibility = Visibility.Visible;
 			originalImage.BeginTransform(t, ProgressCallback, DoneCallback);
 		}
 
@@ -98,14 +105,7 @@ namespace ImageTransformGUI
 			#region Code found on internet: http://thispointer.spaces.live.com/blog/cns!74930F9313F0A720!252.entry?_c11_blogpart_blogpart=blogview&_c=blogpart#permalink
 			this.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
 			{
-				if (progress < 100)
-					this.progress.Visibility = Visibility.Visible;
-				else
-				{
-					this.progress.Visibility = Visibility.Collapsed;
-					return;
-				}
-				this.progress.Value = progress; //this is my code
+				this.progress.Value = progress * 100; //this is my code
 			}));
 			#endregion
 		}
@@ -124,6 +124,7 @@ namespace ImageTransformGUI
 				displayImage = bSrc;
 
 				display.Source = bSrc; //This is my code
+				progress.Visibility = Visibility.Collapsed;
 			}));
 			#endregion
 		}
