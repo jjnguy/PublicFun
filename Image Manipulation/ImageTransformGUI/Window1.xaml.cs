@@ -81,8 +81,7 @@ namespace ImageTransformGUI
 			{
 				if (c.Name == (string)listOfConvls.SelectedItem)
 					selectedTab.TransformTab(c);
-			}
-			
+			}	
 		}
 
 		private void OpenImageFile_Click(object sender, RoutedEventArgs e)

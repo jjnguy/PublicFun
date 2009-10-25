@@ -43,91 +43,47 @@ namespace ImageTransformGUI
 	/// </summary>
 	public class ImageTransformTab : TabItem
 	{
-		private ManipulatableBitmap originalImage;
-		private BitmapSource displayImage;
-		private Bitmap saveImage;
-
-		private StackPanel thePane;
-		private System.Windows.Controls.Image display;
-		private ProgressBar progress;
-
 		static ImageTransformTab()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(ImageTransformTab), new FrameworkPropertyMetadata(typeof(TabItem)));
 		}
 
+		private TabControl transformations;
+
+		private ManipulatableBitmap image;
+
 		public ImageTransformTab(IManipulatableBitmap image, string fileName)
 			: base()
 		{
-			thePane = new StackPanel();
-
-			this.originalImage = (ManipulatableBitmap)image;
-			displayImage = Imaging.CreateBitmapSourceFromHBitmap(originalImage.InnerBitmap.GetHbitmap(),
-				IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+			this.image = (ManipulatableBitmap) image;
+			transformations = new TabControl();
+			transformations.TabStripPlacement = Dock.Left;
 			Header = Path.GetFileName(fileName);
-			display = new System.Windows.Controls.Image();
-			display.Source = displayImage;
-			display.Stretch = Stretch.None;
-			progress = new ProgressBar();
-			progress.Visibility = Visibility.Collapsed;
-			progress.Height = 50;
-			progress.Maximum = 100;
-			progress.Minimum = 0;
-
-			thePane.Children.Add(progress);
-			thePane.Children.Add(display);
-			Content = thePane;
-			ContextMenu picMenu = new ContextMenu();
-			MenuItem item = new MenuItem();
-			item.Click += Save_Clicked;
-			item.Name = "Save";
-			item.Header = "Save";
-			picMenu.Items.Add(item);
-			display.ContextMenu = picMenu;
+			this.Content = transformations;
+			// Add a tab that is un-transformed
+			SingleTransformTab newTab = new SingleTransformTab(this.image, null);
+			transformations.Items.Add(newTab);
+			transformations.SelectedItem = newTab;
 		}
 
-		private void Save_Clicked(object sender, RoutedEventArgs s)
+		internal void TransformTab(Convolution c)
 		{
-			SaveFileDialog saveDia = new SaveFileDialog();
-			bool? result = saveDia.ShowDialog();
-			if (result != true)
-				return;
-			saveImage.Save(saveDia.FileName);
-		}
-
-		public void TransformTab(ITransformation t)
-		{
-			progress.Visibility = Visibility.Visible;
-			originalImage.BeginTransform(t, ProgressCallback, DoneCallback);
-		}
-
-		private void ProgressCallback(double progress)
-		{
-			#region Code found on internet: http://thispointer.spaces.live.com/blog/cns!74930F9313F0A720!252.entry?_c11_blogpart_blogpart=blogview&_c=blogpart#permalink
-			this.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+			// if the tab pane already contains the transformation, we will just show that
+			foreach (Control tabC in transformations.Items)
 			{
-				this.progress.Value = progress * 100; //this is my code
-			}));
-			#endregion
-		}
+				SingleTransformTab tab = (SingleTransformTab)tabC;
+				if (tab.Header.Equals(c.Name))
+				{
+					transformations.SelectedItem = tab;
+					return;
+				}
+			}
 
-		private void DoneCallback(IResult result)
-		{
-			saveImage = result.Get();
-			#region Code found on internet: http://thispointer.spaces.live.com/blog/cns!74930F9313F0A720!252.entry?_c11_blogpart_blogpart=blogview&_c=blogpart#permalink
-			this.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-			{
-				BitmapSource bSrc = Imaging.CreateBitmapSourceFromHBitmap(
-						saveImage.GetHbitmap(),
-						IntPtr.Zero,
-						Int32Rect.Empty,
-						System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
-				displayImage = bSrc;
-
-				display.Source = bSrc; //This is my code
-				progress.Visibility = Visibility.Collapsed;
-			}));
-			#endregion
+			// Otherwise we just add new tab
+			SingleTransformTab newTab = new SingleTransformTab(image, c);
+			newTab.TransformTab();
+			transformations.Items.Add(newTab);
+			transformations.SelectedItem = newTab;
 		}
 	}
 }
