@@ -9,8 +9,8 @@
 			<RowDefinition Height="436*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="250*" />
-			<ColumnDefinition Width="628*" />
+			<ColumnDefinition Width="152*" />
+			<ColumnDefinition Width="726*" />
 		</Grid.ColumnDefinitions>
 		<Menu Grid.ColumnSpan="2">
 			<MenuItem Header="File">
@@ -18,8 +18,15 @@
 				<MenuItem Header="Open Image File" Click="OpenImageFile_Click" />
 			</MenuItem>
 		</Menu>
-		<ListBox Margin="10,12,8,213" Name="listOfConvls" Grid.Row="1" />
+		<ListBox Margin="10,12,10,213" Name="listOfConvls" Grid.Row="1" />
 		<TabControl Grid.Column="1" Margin="10,12,8,16" Name="tabControl1" Grid.Row="1" />
-		<Button Grid.Row="1" Height="23" Margin="10,0,0,164" Name="runConvloButton" VerticalAlignment="Bottom" Click="runConvloButton_Click" HorizontalAlignment="Left" Width="112">Run Convolution</Button>
-	</Grid>
+		<Button Grid.Row="1" Height="23" Margin="19,0,22,186" Name="runConvloButton" VerticalAlignment="Bottom" Click="runConvloButton_Click">Run Convolution</Button>
+        <GroupBox Grid.Row="1" Header="Image Sizing Options" Height="150" Margin="0,0,10,28" Name="groupBox1" VerticalAlignment="Bottom" Visibility="Collapsed">
+            <StackPanel Height="109" Name="stackPanel1" Width="128">
+                <RadioButton Height="16" Name="Keep_Original_Size" Width="120" Checked="Keep_Original_Size_Checked">Keep Original Size</RadioButton>
+                <RadioButton Height="16" Name="Scale_To_Fit" Width="120">Scale To Fit</RadioButton>
+                <RadioButton Height="16" Name="Scale_Prerportionatly" Width="120">Scale Prerportionatly</RadioButton>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
 </Window>

@@ -91,10 +91,15 @@ namespace ImageTransformGUI
 			bool? result = f.ShowDialog();
 			if (result != true) 
                 return;
-			ImageTransformTab newTab = new ImageTransformTab(new ManipulatableBitmap(new Bitmap(f.FileName)));
+			ImageTransformTab newTab = new ImageTransformTab(new ManipulatableBitmap(new Bitmap(f.FileName)), f.FileName);
 			newTab.Name = "tab" + tabControl1.Items.Count;
 			tabControl1.Items.Add(newTab);
 			tabControl1.SelectedItem = newTab;
+		}
+
+		private void Keep_Original_Size_Checked(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

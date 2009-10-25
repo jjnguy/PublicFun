@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Image_Manipulation;
 using Microsoft.Win32;
+using System.IO;
 
 namespace ImageTransformGUI
 {
@@ -55,7 +56,7 @@ namespace ImageTransformGUI
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(ImageTransformTab), new FrameworkPropertyMetadata(typeof(TabItem)));
 		}
 
-		public ImageTransformTab(IManipulatableBitmap image)
+		public ImageTransformTab(IManipulatableBitmap image, string fileName)
 			: base()
 		{
 			thePane = new StackPanel();
@@ -63,7 +64,7 @@ namespace ImageTransformGUI
 			this.originalImage = (ManipulatableBitmap)image;
 			displayImage = Imaging.CreateBitmapSourceFromHBitmap(originalImage.InnerBitmap.GetHbitmap(),
 				IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
-			Header = "Header";
+			Header = Path.GetFileName(fileName);
 			display = new System.Windows.Controls.Image();
 			display.Source = displayImage;
 			display.Stretch = Stretch.None;
