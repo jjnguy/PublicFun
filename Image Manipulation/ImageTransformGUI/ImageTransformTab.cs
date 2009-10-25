@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Image_Manipulation;
 using System.IO;
+using System.Windows.Threading;
 
 namespace ImageTransformGUI
 {
@@ -47,6 +48,8 @@ namespace ImageTransformGUI
 		private Bitmap saveImage;
 		private System.Windows.Controls.Image display;
 
+		private ProgressBar progress;
+
 		static ImageTransformTab()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(ImageTransformTab), new FrameworkPropertyMetadata(typeof(TabItem)));
@@ -70,6 +73,10 @@ namespace ImageTransformGUI
 			item.Header = "Save";
 			picMenu.Items.Add(item);
 			display.ContextMenu = picMenu;
+
+			progress = new ProgressBar();
+			progress.Maximum = 100;
+			progress.Minimum = 0;
 		}
 
 		private void Save_Clicked(object sender, RoutedEventArgs s)
@@ -83,14 +90,42 @@ namespace ImageTransformGUI
 
 		public void TransformTab(ITransformation t)
 		{
-			saveImage = originalImage.Transform(t);
-			BitmapSource bSrc = Imaging.CreateBitmapSourceFromHBitmap(
-					saveImage.GetHbitmap(),
-					IntPtr.Zero,
-					Int32Rect.Empty,
-					System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
-			displayImage = bSrc;
-			display.Source = bSrc;
+			originalImage.BeginTransform(t, ProgressCallback, DoneCallback);
+		}
+
+		private void ProgressCallback(double progress)
+		{
+			#region Code found on internet: http://thispointer.spaces.live.com/blog/cns!74930F9313F0A720!252.entry?_c11_blogpart_blogpart=blogview&_c=blogpart#permalink
+			this.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+			{
+				if (progress < 100)
+					this.progress.Visibility = Visibility.Visible;
+				else
+				{
+					this.progress.Visibility = Visibility.Collapsed;
+					return;
+				}
+				this.progress.Value = progress; //this is my code
+			}));
+			#endregion
+		}
+
+		private void DoneCallback(IResult result)
+		{
+			saveImage = result.Get();
+			#region Code found on internet: http://thispointer.spaces.live.com/blog/cns!74930F9313F0A720!252.entry?_c11_blogpart_blogpart=blogview&_c=blogpart#permalink
+			this.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+			{
+				BitmapSource bSrc = Imaging.CreateBitmapSourceFromHBitmap(
+						saveImage.GetHbitmap(),
+						IntPtr.Zero,
+						Int32Rect.Empty,
+						System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+				displayImage = bSrc;
+
+				display.Source = bSrc; //This is my code
+			}));
+			#endregion
 		}
 	}
 }
