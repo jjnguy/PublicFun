@@ -72,6 +72,7 @@ namespace ImageTransformGUI
 			theProgressBar.Minimum = 0;
 			theProgressBar.Maximum = 100;
 			theProgressBar.Height = 25;
+			theProgressBar.Visibility = Visibility.Collapsed;
 			saveImage = pic.InnerBitmap;
 			theImage = new Image();
 			theImage.Source = Imaging.CreateBitmapSourceFromHBitmap(originalImage.InnerBitmap.GetHbitmap(),
