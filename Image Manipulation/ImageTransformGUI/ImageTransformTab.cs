@@ -13,33 +13,9 @@ using System.IO;
 namespace ImageTransformGUI
 {
 	/// <summary>
-	/// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
-	///
-	/// Step 1a) Using this custom control in a XAML file that exists in the current project.
-	/// Add this XmlNamespace attribute to the root element of the markup file where it is 
-	/// to be used:
-	///
-	///     xmlns:MyNamespace="clr-namespace:ImageTransformGUI"
-	///
-	///
-	/// Step 1b) Using this custom control in a XAML file that exists in a different project.
-	/// Add this XmlNamespace attribute to the root element of the markup file where it is 
-	/// to be used:
-	///
-	///     xmlns:MyNamespace="clr-namespace:ImageTransformGUI;assembly=ImageTransformGUI"
-	///
-	/// You will also need to add a project reference from the project where the XAML file lives
-	/// to this project and Rebuild to avoid compilation errors:
-	///
-	///     Right click on the target project in the Solution Explorer and
-	///     "Add Reference"->"Projects"->[Browse to and select this project]
-	///
-	///
-	/// Step 2)
-	/// Go ahead and use your control in the XAML file.
-	///
-	///     <MyNamespace:ImageTransformTab/>
-	///
+	/// A tab that is responsible for all of hte transformations of a single image.
+	/// 
+	/// Contains sub tabs for each transformation, and one for the original image.
 	/// </summary>
 	public class ImageTransformTab : TabItem
 	{
@@ -52,6 +28,11 @@ namespace ImageTransformGUI
 
 		private ManipulatableBitmap image;
 
+		/// <summary>
+		/// Constructs a tab responsible for the given Image.
+		/// </summary>
+		/// <param name="image">The image to be transformed</param>
+		/// <param name="fileName">The filename of the image, used simple for naming the tab.</param>
 		public ImageTransformTab(IManipulatableBitmap image, string fileName)
 			: base()
 		{
@@ -66,6 +47,12 @@ namespace ImageTransformGUI
 			transformations.SelectedItem = newTab;
 		}
 
+		/// <summary>
+		/// This method first checks to see if a tab has already been aded with the given transform.  If one does exist, is selects that.
+		/// 
+		/// Otherwise it creates a new tab with the image and then calls TransformTab on it to begin the transform.
+		/// </summary>
+		/// <param name="c">The transform to invoke</param>
 		internal void TransformTab(Convolution c)
 		{
 			// if the tab pane already contains the transformation, we will just show that

@@ -16,11 +16,21 @@ namespace ImageTransformGUI
 	{
 		private Convolution[] convols;
 
+		/// <summary>
+		/// Default constructor.
+		/// 
+		/// Most of the heavy lifting is done in the XAML
+		/// </summary>
 		public Window1()
 		{
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// Code called when a user chooses to open a Transform File
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OpenFile_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog f = new OpenFileDialog();
@@ -33,6 +43,13 @@ namespace ImageTransformGUI
 			}
 		}
 
+		/// <summary>
+		/// Reads in an XML transform file.
+		/// 
+		/// Uses LINQ to XML very poorly.
+		/// </summary>
+		/// <param name="loc">The location of the XML file.</param>
+		/// <returns>List of convolutions defined in the file.</returns>
 		private static IEnumerable<Convolution> ReadTransformFile(string loc)
 		{
 			// Prepare yourself for a horriffic use of LINQ to XML
@@ -65,6 +82,13 @@ namespace ImageTransformGUI
 			}
 		}
 
+		/// <summary>
+		/// Code ran when a user chooses to run a Transformation on an image.
+		/// 
+		/// Passes off any heavy lifting to the currently selected tab.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void runConvloButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (convols == null || tabControl1.Items.Count == 0)
@@ -83,10 +107,20 @@ namespace ImageTransformGUI
 			foreach(Convolution c in convols)
 			{
 				if (c.Name == (string)listOfConvls.SelectedItem)
+				{
 					selectedTab.TransformTab(c);
-			}	
+					return;
+				}
+			}
 		}
 
+		/// <summary>
+		/// Code ran when a user chooses to open a new image.
+		/// 
+		/// Adds a new tab to the interface.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OpenImageFile_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog f = new OpenFileDialog();
@@ -101,7 +135,7 @@ namespace ImageTransformGUI
 
 		private void Keep_Original_Size_Checked(object sender, RoutedEventArgs e)
 		{
-
+			// Not used.
 		}
 	}
 }

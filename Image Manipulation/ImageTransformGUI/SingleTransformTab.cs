@@ -19,36 +19,16 @@ using Microsoft.Win32;
 namespace ImageTransformGUI
 {
 	/// <summary>
-	/// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
-	///
-	/// Step 1a) Using this custom control in a XAML file that exists in the current project.
-	/// Add this XmlNamespace attribute to the root element of the markup file where it is 
-	/// to be used:
-	///
-	///     xmlns:MyNamespace="clr-namespace:ImageTransformGUI"
-	///
-	///
-	/// Step 1b) Using this custom control in a XAML file that exists in a different project.
-	/// Add this XmlNamespace attribute to the root element of the markup file where it is 
-	/// to be used:
-	///
-	///     xmlns:MyNamespace="clr-namespace:ImageTransformGUI;assembly=ImageTransformGUI"
-	///
-	/// You will also need to add a project reference from the project where the XAML file lives
-	/// to this project and Rebuild to avoid compilation errors:
-	///
-	///     Right click on the target project in the Solution Explorer and
-	///     "Add Reference"->"Projects"->[Browse to and select this project]
-	///
-	///
-	/// Step 2)
-	/// Go ahead and use your control in the XAML file.
-	///
-	///     <MyNamespace:SingleTransformTab/>
-	///
+	/// This tab controll contains one transformed Image.  When it is created it will display the original image until TransFormTab() is called.
+	/// 
+	/// It will then display a progress bar and perform the transformation in a background thread.  When the computation is complete, 
+	/// the new image will be displayed, and the progressbar will disappear.
 	/// </summary>
 	public class SingleTransformTab : TabItem
 	{
+		/// <summary>
+		/// Dunno exactly what this does besides teh fact that the second thing had to have 'TabItem' or else the tabs would not display.
+		/// </summary>
 		static SingleTransformTab()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(SingleTransformTab), new FrameworkPropertyMetadata(typeof(TabItem)));
@@ -63,10 +43,15 @@ namespace ImageTransformGUI
 		private StackPanel thePane;
 		private System.Windows.Controls.Image theImage;
 
-		public SingleTransformTab(ManipulatableBitmap pic, ITransformation transform)
+		/// <summary>
+		/// Creates a new tab with the image to be transformed and the transform to perform on it.
+		/// </summary>
+		/// <param name="pic">The Image to transform</param>
+		/// <param name="transform">The transform to perform</param>
+		public SingleTransformTab(IManipulatableBitmap pic, ITransformation transform)
 			: base()
 		{
-			this.originalImage = pic;
+			this.originalImage = (ManipulatableBitmap) pic;
 			this.convol = transform;
 			thePane = new StackPanel();
 			theProgressBar = new ProgressBar();
@@ -74,7 +59,7 @@ namespace ImageTransformGUI
 			theProgressBar.Maximum = 100;
 			theProgressBar.Height = 25;
 			theProgressBar.Visibility = Visibility.Collapsed;
-			saveImage = pic.InnerBitmap;
+			saveImage = originalImage.InnerBitmap;
 			theImage = new Image();
 			theImage.Source = Imaging.CreateBitmapSourceFromHBitmap(originalImage.InnerBitmap.GetHbitmap(),
 				IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
@@ -91,16 +76,19 @@ namespace ImageTransformGUI
 			item.Header = "Save";
 			picMenu.Items.Add(item);
 			theImage.ContextMenu = picMenu;
-			
-			thePane.Children.Add(theProgressBar);
-			thePane.Children.Add(theImage);
 			scroll = new ScrollViewer();
+			scroll.Content = theImage;
+			thePane.Children.Add(theProgressBar);
+			thePane.Children.Add(scroll);
+			scroll.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 			scroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-			scroll.Content = thePane;
-			// needs to be fixed.  The scroll bar should be moved out of the scroll area.
-			this.Content = scroll;
+			
+			this.Content = thePane;
 		}
 
+		/// <summary>
+		/// Performs the transformation on the image in the tab.  The task is run on a different thread.
+		/// </summary>
 		public void TransformTab()
 		{
 			if (this.convol != null)
@@ -110,6 +98,10 @@ namespace ImageTransformGUI
 			}
 		}
 
+		/// <summary>
+		/// The code that is called when the progress of a Transform is updated.
+		/// </summary>
+		/// <param name="progress">The progress percentage of the Transformation</param>
 		private void ProgressCallback(double progress)
 		{
 			#region Code found on internet: http://thispointer.spaces.live.com/blog/cns!74930F9313F0A720!252.entry?_c11_blogpart_blogpart=blogview&_c=blogpart#permalink
@@ -120,6 +112,10 @@ namespace ImageTransformGUI
 			#endregion
 		}
 
+		/// <summary>
+		/// The code to be executed when an image is finished transforming.
+		/// </summary>
+		/// <param name="result">The result of the transformation.  Contains the resulting bitmap.</param>
 		private void DoneCallback(IResult result)
 		{
 			saveImage = result.Get();
@@ -137,6 +133,13 @@ namespace ImageTransformGUI
 			#endregion
 		}
 
+		/// <summary>
+		/// Method called when save is choosen from an images context menu.
+		/// 
+		/// Pops up a save dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="s"></param>
 		private void Save_Clicked(object sender, RoutedEventArgs s)
 		{
 			SaveFileDialog saveDia = new SaveFileDialog();
@@ -145,6 +148,5 @@ namespace ImageTransformGUI
 				return;
 			saveImage.Save(saveDia.FileName);
 		}
-
 	}
 }
