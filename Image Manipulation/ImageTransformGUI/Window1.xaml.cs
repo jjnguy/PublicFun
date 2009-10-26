@@ -58,7 +58,10 @@ namespace ImageTransformGUI
 					}
 					rowNum++;
 				}
-				yield return new Convolution(Convolution.NormalizationMethod.Clamp, new Kernel(name.Value, arr));
+				if (name.Value == "Smooth")
+					yield return new Convolution(Convolution.NormalizationMethod.SignedScale, new Kernel(name.Value, arr));
+				else
+					yield return new Convolution(Convolution.NormalizationMethod.Clamp, new Kernel(name.Value, arr));
 			}
 		}
 
