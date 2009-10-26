@@ -58,6 +58,7 @@ namespace ImageTransformGUI
 		private System.Drawing.Bitmap saveImage;
 		private ITransformation convol;
 
+		private ScrollViewer scroll;
 		private ProgressBar theProgressBar;
 		private StackPanel thePane;
 		private System.Windows.Controls.Image theImage;
@@ -93,8 +94,11 @@ namespace ImageTransformGUI
 			
 			thePane.Children.Add(theProgressBar);
 			thePane.Children.Add(theImage);
-
-			this.Content = thePane;
+			scroll = new ScrollViewer();
+			scroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+			scroll.Content = thePane;
+			// needs to be fixed.  The scroll bar should be moved out of the scroll area.
+			this.Content = scroll;
 		}
 
 		public void TransformTab()
