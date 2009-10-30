@@ -34,6 +34,7 @@ namespace ImageTransformGUI
 		private void OpenFile_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog f = new OpenFileDialog();
+			f.Filter = "XML File|*.xml";
 			bool? result = f.ShowDialog();
 			if (result != true) return;
 			convols = ReadTransformFile(f.FileName).ToArray();
@@ -124,6 +125,7 @@ namespace ImageTransformGUI
 		private void OpenImageFile_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog f = new OpenFileDialog();
+			f.Filter = "Image File|*.JPG; *.JPEG; *.BMP; *.PNG; *.GIF";
 			bool? result = f.ShowDialog();
 			if (result != true) 
                 return;

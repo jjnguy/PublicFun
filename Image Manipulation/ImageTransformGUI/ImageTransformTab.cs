@@ -1,14 +1,7 @@
-﻿using System;
-using System.Drawing;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using Image_Manipulation;
-using Microsoft.Win32;
-using System.IO;
 
 namespace ImageTransformGUI
 {
@@ -25,7 +18,6 @@ namespace ImageTransformGUI
 		}
 
 		private TabControl transformations;
-
 		private ManipulatableBitmap image;
 
 		/// <summary>
