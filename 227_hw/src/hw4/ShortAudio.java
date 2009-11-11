@@ -47,7 +47,7 @@ public class ShortAudio {
 			throw new IllegalArgumentException("WTF");
 		short bitsPerSample = rdr.readShort();
 		if (bitsPerSample != 16)
-			throw new IllegalArgumentException("Fuck this");
+			throw new IllegalArgumentException("F- this");
 		rdr.read(fourByteBuffer);
 		String data = new String(fourByteBuffer);
 		int numSamplesAgain = rdr.readInt() / 2;
