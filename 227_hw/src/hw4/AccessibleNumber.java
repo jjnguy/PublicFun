@@ -16,7 +16,6 @@ public class AccessibleNumber {
 
 	private int num;
 	private String wrdRep;
-	private ShortAudio soundRep;
 
 	public AccessibleNumber(int num) {
 		this.num = num;
@@ -27,6 +26,11 @@ public class AccessibleNumber {
 			return wrdRep;
 		int numRemaining = num;
 		String bildr = "";
+		boolean addNeg = false;
+		if (numRemaining < 0){
+			addNeg = true;
+			numRemaining = -1 * numRemaining;
+		}
 		int magCount = -1;
 		while (numRemaining > 0) {
 			int lastThree = numRemaining % 1000;
@@ -36,7 +40,10 @@ public class AccessibleNumber {
 					+ bildr;
 			magCount++;
 		}
-
+		
+		if (addNeg)
+			bildr = "negative " + bildr;
+		
 		wrdRep = bildr.replaceAll("\\s+", " ");
 		return wrdRep;
 	}
