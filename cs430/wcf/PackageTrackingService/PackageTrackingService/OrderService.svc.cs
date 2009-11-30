@@ -9,19 +9,6 @@ namespace PackageTrackingService
 {
 	public class OrderService : IOrderService
 	{
-		public string GetData(int value)
-		{
-			return string.Format("You entered: {0}", value);
-		}
-
-		public CompositeType GetDataUsingDataContract(CompositeType composite)
-		{
-			if (composite.BoolValue)
-			{
-				composite.StringValue += "Suffix";
-			}
-			return composite;
-		}
 
 		#region IOrderService Members
 

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageTrackingService", "PackageTrackingService\PackageTrackingService.csproj", "{68E681BF-7EC6-4D7D-88A8-150A100D3AE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFTestApp", "WCFTestApp\WCFTestApp.csproj", "{2E9EDFCF-ED7F-4FF9-8A6B-8DE6207C31EF}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -17,6 +19,10 @@ Global
 		{68E681BF-7EC6-4D7D-88A8-150A100D3AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68E681BF-7EC6-4D7D-88A8-150A100D3AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68E681BF-7EC6-4D7D-88A8-150A100D3AE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E9EDFCF-ED7F-4FF9-8A6B-8DE6207C31EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E9EDFCF-ED7F-4FF9-8A6B-8DE6207C31EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E9EDFCF-ED7F-4FF9-8A6B-8DE6207C31EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E9EDFCF-ED7F-4FF9-8A6B-8DE6207C31EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
