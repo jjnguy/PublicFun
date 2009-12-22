@@ -33,11 +33,24 @@ public class MainFrame extends JFrame {
 	public void changeTurn() {
 		X_O winner = checkForWin();
 		if (winner == X_O.NONE) {
+			if (isCatsGame()){
+				JOptionPane.showMessageDialog(this, "Cats game, no winner.", "Cats Game", JOptionPane.INFORMATION_MESSAGE);
+				resetBoard();
+			}
 			turn = turn == X_O.X ? X_O.O : X_O.X;
 			return;
 		} 
 		JOptionPane.showMessageDialog(this, "Yay, good job " + winner.toString() + ", you won!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
 		resetBoard();
+	}
+
+	private boolean isCatsGame() {
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 3; j++){
+				if (squares[i][j].getOwner() == X_O.NONE) return false;
+			}
+		}
+		return true;
 	}
 
 	public void resetBoard(){

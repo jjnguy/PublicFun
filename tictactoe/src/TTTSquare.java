@@ -59,7 +59,7 @@ public class TTTSquare extends JPanel {
 		g.setColor(Color.RED);
 		g.setStroke(new BasicStroke(2));
 
-		g.drawOval(4, 4, 92, 92);
+		g.drawOval(4, 4, getWidth() - 8, getHeight() - 8);
 
 		g.setColor(color);
 		g.setStroke(stroke);
@@ -70,8 +70,9 @@ public class TTTSquare extends JPanel {
 		Stroke stroke = g.getStroke();
 		g.setColor(Color.BLUE);
 		g.setStroke(new BasicStroke(2));
-		g.drawLine(0, 0, 100, 100);
-		g.drawLine(0, 100, 100, 0);
+		
+		g.drawLine(0, 0, getWidth(), getHeight());
+		g.drawLine(0, getHeight(), getWidth(), 0);
 
 		g.setColor(color);
 		g.setStroke(stroke);
@@ -83,7 +84,7 @@ public class TTTSquare extends JPanel {
 		g.setColor(new Color(255, 157, 157));
 		g.setStroke(new BasicStroke(2));
 
-		g.drawOval(4, 4, 92, 92);
+		g.drawOval(4, 4, getWidth() - 8, getHeight() - 8);
 
 		g.setColor(color);
 		g.setStroke(stroke);
@@ -94,8 +95,9 @@ public class TTTSquare extends JPanel {
 		Stroke stroke = g.getStroke();
 		g.setColor(new Color(157, 157, 255));
 		g.setStroke(new BasicStroke(2));
-		g.drawLine(0, 0, 100, 100);
-		g.drawLine(0, 100, 100, 0);
+		
+		g.drawLine(0, 0, getWidth(), getHeight());
+		g.drawLine(0, getHeight(), getWidth(), 0);
 
 		g.setColor(color);
 		g.setStroke(stroke);
