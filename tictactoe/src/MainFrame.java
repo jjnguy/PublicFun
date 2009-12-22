@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ public class MainFrame extends JFrame {
 		super("JTicTacToe");
 		turn = X_O.X;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(30, 30));
 		setLayout(new GridLayout(3, 3));
 		squares = new TTTSquare[3][3];
 		for (int i = 0; i < 3; i++) {
@@ -64,24 +66,24 @@ public class MainFrame extends JFrame {
 	
 	public X_O checkForWin() {
 		// Horizontal
-		if (squares[0][0].getOwner() == squares[0][1].getOwner()
+		if (squares[0][0].getOwner() != X_O.NONE && squares[0][0].getOwner() == squares[0][1].getOwner()
 				&& squares[0][0].getOwner() == squares[0][2].getOwner())
 			return squares[0][0].getOwner();
-		if (squares[1][0].getOwner() == squares[1][1].getOwner()
+		if (squares[1][0].getOwner() != X_O.NONE && squares[1][0].getOwner() == squares[1][1].getOwner()
 				&& squares[1][0].getOwner() == squares[1][2].getOwner())
 			return squares[1][0].getOwner();
-		if (squares[2][0].getOwner() == squares[2][1].getOwner()
+		if (squares[2][0].getOwner() != X_O.NONE && squares[2][0].getOwner() == squares[2][1].getOwner()
 				&& squares[2][0].getOwner() == squares[2][2].getOwner())
 			return squares[2][0].getOwner();
 
 		// Vertical
-		if (squares[0][0].getOwner() == squares[1][0].getOwner()
+		if (squares[0][0].getOwner() != X_O.NONE && squares[0][0].getOwner() == squares[1][0].getOwner()
 				&& squares[0][0].getOwner() == squares[2][0].getOwner())
 			return squares[0][0].getOwner();
-		if (squares[0][1].getOwner() == squares[1][1].getOwner()
+		if (squares[0][1].getOwner() != X_O.NONE && squares[0][1].getOwner() == squares[1][1].getOwner()
 				&& squares[0][1].getOwner() == squares[2][1].getOwner())
 			return squares[0][1].getOwner();
-		if (squares[0][2].getOwner() == squares[1][2].getOwner()
+		if (squares[0][2].getOwner() != X_O.NONE && squares[0][2].getOwner() == squares[1][2].getOwner()
 				&& squares[0][2].getOwner() == squares[2][2].getOwner())
 			return squares[0][2].getOwner();
 

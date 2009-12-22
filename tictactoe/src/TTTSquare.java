@@ -22,6 +22,7 @@ public class TTTSquare extends JPanel {
 	public TTTSquare(MainFrame parent) {
 		addMouseListener(mouseListen);
 		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		setMinimumSize(new Dimension(10, 10));
 		setPreferredSize(new Dimension(100, 100));
 		this.parent = parent;
 		owner = X_O.NONE;
