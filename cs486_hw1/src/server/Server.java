@@ -61,7 +61,7 @@ public class Server implements Runnable {
 		Scanner fileReader = new Scanner(fileToWrite);
 		while (fileReader.hasNextLine())
 			clientWriter.println(fileReader.nextLine());
-		clientWriter.println();
+		clientWriter.println("\\Z");
 		
 		String quitReq = clientReader.nextLine();
 		if (quitReq.equalsIgnoreCase("QUIT"))

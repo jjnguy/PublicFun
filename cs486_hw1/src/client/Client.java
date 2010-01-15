@@ -56,8 +56,10 @@ public class Client implements Runnable {
 		String requestedFile = stdin.nextLine();
 		serverWriter.println("GET " + requestedFile);
 		
-		while(serverReader.hasNextLine()){
-			System.out.println(serverReader.nextLine());
+		while(true){
+			String nextLine = serverReader.nextLine();
+			if (nextLine.equals("\\Z")) break;
+			System.out.println(nextLine);
 		}
 		
 		System.out.print("Do you want to quit?(Y/N): ");
