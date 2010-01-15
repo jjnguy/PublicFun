@@ -12,10 +12,10 @@ public class Client implements Runnable {
 	private String host;
 	private int port;
 
-	public Client(){
+	public Client() {
 		this("localhost", 4860);
 	}
-	
+
 	public Client(String host, int port) {
 		this.port = port;
 		this.host = host;
@@ -49,29 +49,36 @@ public class Client implements Runnable {
 		String directory = stdin.nextLine();
 		serverWriter.println(directory);
 		serverWriter.flush();
-		
-		byte[] buffer = new byte[64];
-		while (serverReader.read(buffer) > 0)
-			System.out.print(new String(buffer));
+
+		byte[] buffer = new byte[32];
+		int cols = 0;
+		while (serverReader.read(buffer) > 0) {
+			System.out.print(new String(buffer).trim());
+			cols += buffer.length;
+			if (cols > 100) {
+				System.out.println();
+				cols = 0;
+			}
+		}
 		System.out.println();
 
 		System.out.println("Select file to download:");
 		String requestedFile = stdin.nextLine();
 		serverWriter.println("GET " + requestedFile);
 		serverWriter.flush();
-		
-		while(serverReader.read(buffer) > 0){
+
+		while (serverReader.read(buffer) > 0) {
 			System.out.print(new String(buffer));
 		}
 		System.out.println();
-		
+
 		System.out.print("Do you want to quit?(Y/N): ");
 		String response = stdin.nextLine();
 		if (response.trim().equalsIgnoreCase("y"))
 			serverWriter.println("QUIT");
 		serverWriter.flush();
 	}
-	
+
 	public static void main(String[] args) {
 		Client c = new Client();
 		c.run();

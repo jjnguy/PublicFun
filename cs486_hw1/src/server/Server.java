@@ -65,7 +65,7 @@ public class Server implements Runnable {
 		String requestedFile = requestedDir + twoHalves[1];
 		File fileToWrite = new File(requestedFile);
 		BufferedInputStream fileReader = new BufferedInputStream(new FileInputStream(fileToWrite));
-		byte[] buffer = new byte[64];
+		byte[] buffer = new byte[32];
 		while (fileReader.read(buffer) > 0)
 			clientWriter.write(buffer);
 		clientWriter.flush();
