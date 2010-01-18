@@ -1,10 +1,11 @@
 package server;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -44,19 +45,24 @@ public class Server implements Runnable {
 
 	private void handleConnection(Socket s) throws IOException {
 		Scanner clientReader = new Scanner(s.getInputStream());
-		BufferedOutputStream clientWriter = new BufferedOutputStream(s.getOutputStream());
+		OutputStream clientWriter = s.getOutputStream();
 
 		String requestedDir = clientReader.nextLine();
 		System.out.println("Requested directory: " + requestedDir);
 		File dir = new File(requestedDir);
 		if (!dir.isDirectory())
 			throw new IllegalArgumentException("The requested directory needs to be a directory.");
-		String listOfDirs = combineArr(dir.list(), ' ');
+		String listOfDirs = combineArr(dir.listFiles(new FileFilter() {
+			@Override
+			public boolean accept(File pathname) {
+				return !pathname.isDirectory();
+			}
+		}), ' ');
 		clientWriter.write(listOfDirs.getBytes());
 		clientWriter.flush();
-		
+
 		String getReq = clientReader.nextLine();
-		System.out.println("File request: " + getReq);
+		System.err.println("File requested: " + getReq);
 		String[] twoHalves = getReq.split(" ");
 		if (twoHalves.length != 2)
 			throw new IllegalArgumentException("The command needs to be in the form: GET FileName");
@@ -65,27 +71,33 @@ public class Server implements Runnable {
 		String requestedFile = requestedDir + twoHalves[1];
 		File fileToWrite = new File(requestedFile);
 		BufferedInputStream fileReader = new BufferedInputStream(new FileInputStream(fileToWrite));
-		byte[] buffer = new byte[32];
-		while (fileReader.read(buffer) > 0)
-			clientWriter.write(buffer);
+		byte[] buffer = new byte[64 * 1024];
+		int bytesRead;
+		if ((bytesRead = fileReader.read(buffer, 0, buffer.length)) > 0)
+			clientWriter.write(buffer, 0, bytesRead);
 		clientWriter.flush();
-		
-		String quitReq = clientReader.nextLine();
+		s.close();
+
+		while (!clientReader.hasNext())
+			;
+		String quitReq = clientReader.next();
 		if (quitReq.equalsIgnoreCase("QUIT"))
+			s.close();
+		else
 			s.close();
 	}
 
-	private static String combineArr(String[] arr, char separator) {
+	private static String combineArr(File[] arr, char separator) {
 		StringBuilder ret = new StringBuilder();
-		for (String s : arr) {
-			if (s.contains(" "))
-				ret.append("\"" + s + "\"").append(separator);
+		for (File s : arr) {
+			if (s.getName().contains(" "))
+				ret.append("\"" + s.getName() + "\"").append(separator);
 			else
-				ret.append(s).append(separator);
+				ret.append(s.getName()).append(separator);
 		}
 		return ret.substring(0, ret.length() - 1);
 	}
-	
+
 	public static void main(String[] args) {
 		Server s = new Server();
 		s.run();

@@ -1,7 +1,9 @@
 package client;
 
-import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -42,7 +44,7 @@ public class Client implements Runnable {
 
 	private void handleConnection(Socket s) throws IOException {
 		PrintStream serverWriter = new PrintStream(s.getOutputStream());
-		BufferedInputStream serverReader = new BufferedInputStream(s.getInputStream());
+		InputStream serverReader = s.getInputStream();
 
 		System.out.println("Enter the directory that you would like to search:");
 		Scanner stdin = new Scanner(System.in);
@@ -50,10 +52,11 @@ public class Client implements Runnable {
 		serverWriter.println(directory);
 		serverWriter.flush();
 
-		byte[] buffer = new byte[32];
+		byte[] buffer = new byte[32 * 1024];
 		int cols = 0;
-		while (serverReader.read(buffer) > 0) {
-			System.out.print(new String(buffer).trim());
+		int bytesRead;
+		if((bytesRead = serverReader.read(buffer, 0 , buffer.length)) > 0) {
+			System.out.print(new String(buffer, 0, bytesRead).trim());
 			cols += buffer.length;
 			if (cols > 100) {
 				System.out.println();
@@ -66,17 +69,24 @@ public class Client implements Runnable {
 		String requestedFile = stdin.nextLine();
 		serverWriter.println("GET " + requestedFile);
 		serverWriter.flush();
-
-		while (serverReader.read(buffer) > 0) {
-			System.out.print(new String(buffer));
+		System.err.println("Sent file request: GET " + requestedFile);
+		
+		FileOutputStream fout = new FileOutputStream(new File("C:\\outputloc.txt"));
+		
+		bytesRead = 0;
+		if ((bytesRead = serverReader.read(buffer, 0, buffer.length)) > 0) {
+			fout.write(buffer, 0 , bytesRead);
 		}
-		System.out.println();
+		
+		fout.flush();
+		fout.close();
 
 		System.out.print("Do you want to quit?(Y/N): ");
 		String response = stdin.nextLine();
 		if (response.trim().equalsIgnoreCase("y"))
 			serverWriter.println("QUIT");
 		serverWriter.flush();
+		s.close();
 	}
 
 	public static void main(String[] args) {
