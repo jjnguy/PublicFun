@@ -1,9 +1,6 @@
 package client;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -44,7 +41,7 @@ public class Client implements Runnable {
 
 	private void handleConnection(Socket s) throws IOException {
 		PrintStream serverWriter = new PrintStream(s.getOutputStream());
-		InputStream serverReader = s.getInputStream();
+		Scanner serverReader = new Scanner(s.getInputStream());
 
 		System.out.println("Enter the directory that you would like to search:");
 		Scanner stdin = new Scanner(System.in);
@@ -52,17 +49,7 @@ public class Client implements Runnable {
 		serverWriter.println(directory);
 		serverWriter.flush();
 
-		byte[] buffer = new byte[32 * 1024];
-		int cols = 0;
-		int bytesRead;
-		if((bytesRead = serverReader.read(buffer, 0 , buffer.length)) > 0) {
-			System.out.print(new String(buffer, 0, bytesRead).trim());
-			cols += buffer.length;
-			if (cols > 100) {
-				System.out.println();
-				cols = 0;
-			}
-		}
+		System.out.println(serverReader.nextLine());
 		System.out.println();
 
 		System.out.println("Select file to download:");
@@ -70,23 +57,18 @@ public class Client implements Runnable {
 		serverWriter.println("GET " + requestedFile);
 		serverWriter.flush();
 		System.err.println("Sent file request: GET " + requestedFile);
-		
-		FileOutputStream fout = new FileOutputStream(new File("C:\\outputloc.txt"));
-		
-		bytesRead = 0;
-		if ((bytesRead = serverReader.read(buffer, 0, buffer.length)) > 0) {
-			fout.write(buffer, 0 , bytesRead);
-		}
-		
-		fout.flush();
-		fout.close();
 
-		System.out.print("Do you want to quit?(Y/N): ");
-		String response = stdin.nextLine();
-		if (response.trim().equalsIgnoreCase("y"))
-			serverWriter.println("QUIT");
-		serverWriter.flush();
-		s.close();
+		System.out.println("Contents of the requested file:");
+		System.out.println(serverReader.nextLine());
+
+		while (true) {
+			System.out.print("Do you want to quit?(Y/N): ");
+			String response = stdin.nextLine();
+			if (response.trim().equalsIgnoreCase("y")) {
+				serverWriter.println("QUIT\n");
+				break;
+			}
+		}
 	}
 
 	public static void main(String[] args) {

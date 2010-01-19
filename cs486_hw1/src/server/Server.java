@@ -1,11 +1,9 @@
 package server;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -45,7 +43,7 @@ public class Server implements Runnable {
 
 	private void handleConnection(Socket s) throws IOException {
 		Scanner clientReader = new Scanner(s.getInputStream());
-		OutputStream clientWriter = s.getOutputStream();
+		PrintStream clientWriter = new PrintStream(s.getOutputStream());
 
 		String requestedDir = clientReader.nextLine();
 		System.out.println("Requested directory: " + requestedDir);
@@ -58,7 +56,7 @@ public class Server implements Runnable {
 				return !pathname.isDirectory();
 			}
 		}), ' ');
-		clientWriter.write(listOfDirs.getBytes());
+		clientWriter.println(listOfDirs);
 		clientWriter.flush();
 
 		String getReq = clientReader.nextLine();
@@ -70,21 +68,19 @@ public class Server implements Runnable {
 			throw new IllegalArgumentException("The command needs to be in the form: GET FileName");
 		String requestedFile = requestedDir + twoHalves[1];
 		File fileToWrite = new File(requestedFile);
-		BufferedInputStream fileReader = new BufferedInputStream(new FileInputStream(fileToWrite));
-		byte[] buffer = new byte[64 * 1024];
-		int bytesRead;
-		if ((bytesRead = fileReader.read(buffer, 0, buffer.length)) > 0)
-			clientWriter.write(buffer, 0, bytesRead);
+		Scanner fileReader = new Scanner(fileToWrite);
+		String entireFile = fileReader.useDelimiter("\\Z").next();
+		clientWriter.println(entireFile);
 		clientWriter.flush();
-		s.close();
 
-		while (!clientReader.hasNext())
-			;
-		String quitReq = clientReader.next();
-		if (quitReq.equalsIgnoreCase("QUIT"))
-			s.close();
-		else
-			s.close();
+		while (true) {
+			String quitReq = clientReader.nextLine();
+			if (quitReq.equalsIgnoreCase("QUIT")) {
+				s.close();
+				break;
+			} else
+				continue;
+		}
 	}
 
 	private static String combineArr(File[] arr, char separator) {
