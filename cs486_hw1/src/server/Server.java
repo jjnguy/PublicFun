@@ -22,11 +22,18 @@ public class Server implements Runnable {
 
 	@Override
 	public void run() {
+		ServerSocket serverSock = null;
+		try {
+			serverSock = new ServerSocket(port);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		System.out.println("Server is now listening on port " + port);
 		while (true) {
 			Socket connection = null;
+
 			try {
-				ServerSocket serverSock = new ServerSocket(port);
 				connection = serverSock.accept();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -81,6 +88,7 @@ public class Server implements Runnable {
 			} else
 				continue;
 		}
+		s.close();
 	}
 
 	private static String combineArr(File[] arr, char separator) {
