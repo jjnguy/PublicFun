@@ -6,6 +6,13 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+/**
+ * Class that, when ran, connects to a special server and sends various requests and reacts to the
+ * responses.
+ * 
+ * @author Justin Nelson
+ * 
+ */
 public class Client implements Runnable {
 
 	// Host to connect to
@@ -109,7 +116,9 @@ public class Client implements Runnable {
 
 	/**
 	 * Main entry point for the Client
-	 * @param args Not used
+	 * 
+	 * @param args
+	 *            Not used
 	 */
 	public static void main(String[] args) {
 		Client c = new Client();
