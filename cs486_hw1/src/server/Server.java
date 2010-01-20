@@ -110,6 +110,7 @@ public class Server implements Runnable {
 				handleGet(clientInput, clientWriter, currentDirectory);
 			} else if (clientInput.trim().equalsIgnoreCase("QUIT")) {
 				handleQuit(s);
+				break;
 			} else {
 				currentDirectory = handleDirReq(clientInput, clientReader, clientWriter);
 			}

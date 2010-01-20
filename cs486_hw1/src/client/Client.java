@@ -7,8 +7,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 /**
- * Class that, when ran, connects to a special server and sends various requests and reacts to the
- * responses.
+ * Class that, when ran, connects to a special server and sends various requests and reacts to the responses.
  * 
  * @author Justin Nelson
  * 
@@ -81,35 +80,28 @@ public class Client implements Runnable {
 			return;
 		}
 
-		// Send the directory message
-		System.out.println("Enter the directory that you would like to search:");
 		Scanner stdin = new Scanner(System.in);
-		String directory = stdin.nextLine();
-		serverWriter.println(directory);
-		serverWriter.flush();
-
-		// read directory listing
-		System.out.println(serverReader.nextLine());
-		System.out.println();
-
-		// Send the get request
-		System.out.println("Select file to download:");
-		String requestedFile = stdin.nextLine();
-		serverWriter.println("GET " + requestedFile);
-		serverWriter.flush();
-		System.err.println("Sent file request: GET " + requestedFile);
-
-		// Read the contents of the file
-		System.out.println("Contents of the requested file:");
-		System.out.println(serverReader.nextLine());
-
-		// don't quit until the user says yes...
+		
 		while (true) {
-			System.out.print("Do you want to quit?(Y/N): ");
-			String response = stdin.nextLine();
-			if (response.trim().equalsIgnoreCase("y")) {
-				serverWriter.println("QUIT\n");
+			System.out.print("$ ");
+			String input = stdin.nextLine();
+			
+			if (input.trim().equalsIgnoreCase("QUIT")) {
+				serverWriter.println("QUIT");
+				System.out.println("Good bye!");
 				break;
+			}else if (input.startsWith("GET")){
+				serverWriter.println(input);
+				// Read the contents of the file
+				System.out.println("Contents of the requested file:");
+				System.out.println(serverReader.nextLine());
+			}else{
+				serverWriter.println(input);
+				serverWriter.flush();
+
+				// read directory listing
+				System.out.println(serverReader.nextLine());
+				System.out.println();
 			}
 		}
 	}
