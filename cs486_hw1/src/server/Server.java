@@ -82,7 +82,7 @@ public class Server implements Runnable {
 	}
 
 	// handle requests from the client
-	private void handleConnection(Socket s) throws IOException {
+	private static synchronized void handleConnection(Socket s) throws IOException {
 		Scanner clientReader = null;
 		try {
 			clientReader = new Scanner(s.getInputStream());
@@ -100,13 +100,29 @@ public class Server implements Runnable {
 			return;
 		}
 
+		String currentDirectory = null;
+
+		while (true) {
+			String clientInput = clientReader.nextLine();
+			if (clientInput.startsWith("GET")) {
+				if (currentDirectory == null)
+					throw new IllegalArgumentException("Cannot get file, directory has not been specified.");
+				handleGet(clientInput, clientWriter, currentDirectory);
+			} else if (clientInput.trim().equalsIgnoreCase("QUIT")) {
+				handleQuit(s);
+			} else {
+				currentDirectory = handleDirReq(clientInput, clientReader, clientWriter);
+			}
+		}
+	}
+
+	private static String handleDirReq(String requestedDir, Scanner clientReader, PrintStream clientWriter) {
 		// get the directory request
-		String requestedDir = clientReader.nextLine();
 		System.out.println("Requested directory: " + requestedDir);
 		File dir = new File(requestedDir);
 		if (!dir.isDirectory())
 			throw new IllegalArgumentException("The requested directory needs to be a directory.");
-		
+
 		// send the list of directories to the client
 		String listOfDirs = combineArr(dir.listFiles(new FileFilter() {
 			@Override
@@ -116,17 +132,28 @@ public class Server implements Runnable {
 		}), ' ');
 		clientWriter.println(listOfDirs);
 		clientWriter.flush();
+		return requestedDir.trim();
+	}
 
+	private static void handleQuit(Socket s) {
+		try {
+			s.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void handleGet(String getReq, PrintStream clientWriter, String currentDirectory) {
 		// get the file that the client wants
-		String getReq = clientReader.nextLine();
 		System.err.println("File requested: " + getReq);
 		String[] twoHalves = getReq.split(" ");
 		if (twoHalves.length != 2)
 			throw new IllegalArgumentException("The command needs to be in the form: GET FileName");
 		if (!twoHalves[0].equalsIgnoreCase("GET"))
 			throw new IllegalArgumentException("The command needs to be in the form: GET FileName");
-		String requestedFile = requestedDir + twoHalves[1];
-		
+		String requestedFile = currentDirectory + twoHalves[1];
+
 		// send the file to the client
 		String entireFile = null;
 		try {
@@ -137,16 +164,6 @@ public class Server implements Runnable {
 		}
 		clientWriter.println(entireFile);
 		clientWriter.flush();
-
-		// wait until the client wants to be done
-		while (true) {
-			String quitReq = clientReader.nextLine();
-			if (quitReq.equalsIgnoreCase("QUIT")) {
-				s.close();
-				break;
-			} else
-				continue;
-		}
 	}
 
 	// simple method that creates a space delimited string of the file names
@@ -163,7 +180,9 @@ public class Server implements Runnable {
 
 	/**
 	 * Main entry point for the server
-	 * @param args not used
+	 * 
+	 * @param args
+	 *            not used
 	 */
 	public static void main(String[] args) {
 		Server s = new Server();
