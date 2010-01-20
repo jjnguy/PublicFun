@@ -38,7 +38,7 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Starts th eserver listening for new connections.
+	 * Starts the server listening for new connections.
 	 * 
 	 * Can only deal with one at a time.
 	 */
