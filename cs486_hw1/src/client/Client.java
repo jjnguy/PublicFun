@@ -81,21 +81,21 @@ public class Client implements Runnable {
 		}
 
 		Scanner stdin = new Scanner(System.in);
-		
+
 		while (true) {
 			System.out.print("$ ");
 			String input = stdin.nextLine();
-			
+
 			if (input.trim().equalsIgnoreCase("QUIT")) {
 				serverWriter.println("QUIT");
 				System.out.println("Good bye!");
 				break;
-			}else if (input.startsWith("GET")){
+			} else if (input.startsWith("GET")) {
 				serverWriter.println(input);
 				// Read the contents of the file
 				System.out.println("Contents of the requested file:");
 				System.out.println(serverReader.nextLine());
-			}else{
+			} else {
 				serverWriter.println(input);
 				serverWriter.flush();
 

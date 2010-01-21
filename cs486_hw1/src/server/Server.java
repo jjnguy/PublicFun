@@ -128,7 +128,7 @@ public class Server implements Runnable {
 		String listOfDirs = combineArr(dir.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
-				return !pathname.isDirectory();
+				return !pathname.isDirectory() || true;
 			}
 		}), ' ');
 		clientWriter.println(listOfDirs);
@@ -153,12 +153,13 @@ public class Server implements Runnable {
 			throw new IllegalArgumentException("The command needs to be in the form: GET FileName");
 		if (!twoHalves[0].equalsIgnoreCase("GET"))
 			throw new IllegalArgumentException("The command needs to be in the form: GET FileName");
-		String requestedFile = currentDirectory + twoHalves[1];
+		String requestedFile = currentDirectory.endsWith(File.separator) ? currentDirectory + twoHalves[1]
+				: currentDirectory + File.separator + twoHalves[1];
 
 		// send the file to the client
 		String entireFile = null;
 		try {
-			entireFile = new Scanner(new File(requestedFile)).useDelimiter("\\Z").next();
+			entireFile = new Scanner(new File(requestedFile)).useDelimiter("\\z").next();
 		} catch (FileNotFoundException e) {
 			System.out.println("Could not open the specified file...Exiting...");
 			return;
