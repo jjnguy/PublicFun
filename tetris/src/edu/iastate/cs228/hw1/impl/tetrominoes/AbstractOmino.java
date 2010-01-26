@@ -51,7 +51,7 @@ public abstract class AbstractOmino implements IPolyomino {
 	protected void transformCells(Point[] cellPos, Point current) {
 		cells = new Point[cellPos.length];
 		for (int i = 0; i < cells.length; i++) {
-			cells[i] = new Point(current.x + cellPos[i].x, current.y - cellPos[i].y);
+			cells[i] = new Point(current.x + cellPos[i].x, current.y + cellPos[i].y);
 		}
 	}
 
@@ -117,5 +117,5 @@ public abstract class AbstractOmino implements IPolyomino {
 	}
 
 	@Override
-	public abstract Object clone();
+	public abstract AbstractOmino clone();
 }

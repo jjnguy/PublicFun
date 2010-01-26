@@ -10,7 +10,7 @@ public class TetrominoI extends AbstractOmino {
 	}
 
 	@Override
-	public Object clone() {
+	public AbstractOmino clone() {
 		TetrominoI ret = new TetrominoI(getPosition());
 		if (isFrozen())
 			ret.freeze();

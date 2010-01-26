@@ -12,7 +12,7 @@ public class Sampleomino extends AbstractOmino {
 	}
 
 	@Override
-	public Object clone() {
+	public AbstractOmino clone() {
 		AbstractOmino ret = new Sampleomino(new Point(getPosition()));
 		if (isFrozen()) ret.freeze();
 		ret.cells = new Point[cells.length];

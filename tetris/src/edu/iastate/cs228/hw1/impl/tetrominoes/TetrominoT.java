@@ -10,7 +10,7 @@ public class TetrominoT extends AbstractOmino {
 	}
 
 	@Override
-	public Object clone() {
+	public AbstractOmino clone() {
 		AbstractOmino ret = new TetrominoT(new Point(getPosition()));
 		if (isFrozen())
 			ret.freeze();
