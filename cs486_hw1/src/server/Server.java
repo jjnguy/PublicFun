@@ -17,6 +17,8 @@ import java.util.Scanner;
  */
 public class Server implements Runnable {
 
+
+	
 	// The port to connect to
 	private int port;
 
