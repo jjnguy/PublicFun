@@ -12,17 +12,6 @@ public class Sampleomino extends AbstractOmino {
 	}
 
 	@Override
-	public AbstractOmino clone() {
-		AbstractOmino ret = new Sampleomino(new Point(getPosition()));
-		if (isFrozen()) ret.freeze();
-		ret.cells = new Point[cells.length];
-		for (int i = 0; i < cells.length; i++) {
-			ret.cells[i] = new Point(cells[i]);
-		}
-		return ret;
-	}
-
-	@Override
 	public Color getColorHint() {
 		return Color.RED;
 	}

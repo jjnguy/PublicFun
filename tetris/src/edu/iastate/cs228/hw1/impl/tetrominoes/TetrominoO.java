@@ -9,18 +9,6 @@ public class TetrominoO extends AbstractOmino {
 		super(initial);
 	}
 
-	@Override
-	public AbstractOmino clone() {
-		AbstractOmino ret = new TetrominoO(new Point(getPosition()));
-		if (isFrozen())
-			ret.freeze();
-		ret.cells = new Point[cells.length];
-		for (int i = 0; i < cells.length; i++) {
-			ret.cells[i] = new Point(cells[i]);
-		}
-		return ret;
-	}
-
 	private static final Point[] cellPos = { new Point(0, 0), new Point(1, 0), new Point(0, 1),
 			new Point(1, 1) };
 

@@ -24,16 +24,16 @@ public abstract class AbstractOmino implements IPolyomino {
 		frozen = true;
 	}
 
-	protected boolean isFrozen(){
+	protected boolean isFrozen() {
 		return frozen;
 	}
-	
+
 	@Override
 	public Point[] getCells() {
 		return cells;
 	}
-	
-	protected Point getPosition(){
+
+	protected Point getPosition() {
 		return new Point(position);
 	}
 
@@ -51,7 +51,8 @@ public abstract class AbstractOmino implements IPolyomino {
 	protected void transformCells(Point[] cellPos, Point current) {
 		cells = new Point[cellPos.length];
 		for (int i = 0; i < cells.length; i++) {
-			cells[i] = new Point(current.x + cellPos[i].x, current.y + cellPos[i].y);
+			cells[i] = new Point(current.x + cellPos[i].x, current.y
+					+ cellPos[i].y);
 		}
 	}
 
@@ -117,5 +118,18 @@ public abstract class AbstractOmino implements IPolyomino {
 	}
 
 	@Override
-	public abstract AbstractOmino clone();
+	public AbstractOmino clone() {
+		AbstractOmino ret = null;
+		try {
+			ret = (AbstractOmino) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		ret.position = new Point(this.position);
+		ret.frozen = this.frozen;
+		ret.cells = new Point[this.cells.length];
+		for (int i = 0; i < cells.length; i++)
+			ret.cells[i] = new Point(this.cells[i]);
+		return ret;
+	}
 }
