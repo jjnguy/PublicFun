@@ -1,7 +1,9 @@
 package server;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,13 +14,15 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * Specialized server for sending text files to special clients
+ * Specialized server for sending files to special clients
  * 
  * @author Justin Nelson
  * 
  */
 public class Server implements Runnable {
 
+	public static final byte EOF = 4;
+	
 	// The port to connect to
 	private int port;
 
@@ -42,7 +46,7 @@ public class Server implements Runnable {
 	/**
 	 * Starts the server listening for new connections.
 	 * 
-	 * Can only deal with one at a time.
+	 * Can only deal with one at a time. (For now)
 	 */
 	@Override
 	public void run() {
@@ -85,22 +89,8 @@ public class Server implements Runnable {
 
 	// handle requests from the client
 	private static synchronized void handleConnection(Socket s) throws IOException {
-		InputStream clientReader = null;
-		try {
-			clientReader = s.getInputStream();
-		} catch (IOException e) {
-			System.out.println("Could not open stream to read messages from the client.");
-			System.out.println("Exiting...");
-			return;
-		}
-		OutputStream clientWriter = null;
-		try {
-			clientWriter = s.getOutputStream();
-		} catch (IOException e) {
-			System.out.println("Could not open stream to send messages to the client.");
-			System.out.println("Exiting...");
-			return;
-		}
+		InputStream clientReader = s.getInputStream();
+		BufferedOutputStream clientWriter = new BufferedOutputStream(s.getOutputStream());
 
 		String currentDirectory = null;
 		byte[] buffer = new byte[1024];
@@ -120,12 +110,13 @@ public class Server implements Runnable {
 		}
 	}
 
-	private static String handleDirReq(String requestedDir, InputStream clientReader, OutputStream clientWriter) {
+	private static String handleDirReq(String requestedDir, InputStream clientReader, OutputStream clientWriter)
+			throws IOException {
 		// get the directory request
 		System.out.println("Requested directory: " + requestedDir);
 		File dir = new File(requestedDir);
 		if (!dir.isDirectory())
-			throw new IllegalArgumentException("The requested directory needs to be a directory.");
+			throw new IllegalArgumentException("The requested file needs to be a directory.");
 
 		// send the list of directories to the client
 		String listOfDirs = combineArr(dir.listFiles(new FileFilter() {
@@ -134,13 +125,10 @@ public class Server implements Runnable {
 				return !pathname.isDirectory() || true;
 			}
 		}), ' ');
-		try {
-			clientWriter.write(listOfDirs.getBytes());
-			clientWriter.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		clientWriter.write(listOfDirs.getBytes());
+		clientWriter.write(EOF);
+		clientWriter.flush();
+		System.out.println("Done sending directory listing.");
 		return requestedDir.trim();
 	}
 
@@ -153,9 +141,9 @@ public class Server implements Runnable {
 		}
 	}
 
-	private static void handleGet(String getReq, OutputStream clientWriter, String currentDirectory) {
+	private static void handleGet(String getReq, OutputStream clientWriter, String currentDirectory) throws IOException {
 		// get the file that the client wants
-		System.err.println("File requested: " + getReq);
+		System.out.println("File requested: " + getReq);
 		String[] twoHalves = getReq.split(" ");
 		if (twoHalves.length != 2)
 			throw new IllegalArgumentException("The command needs to be in the form: GET FileName");
@@ -164,21 +152,19 @@ public class Server implements Runnable {
 		String requestedFile = currentDirectory.endsWith(File.separator) ? currentDirectory + twoHalves[1]
 				: currentDirectory + File.separator + twoHalves[1];
 
-		// send the file to the client
-		String entireFile = null;
-		try {
-			entireFile = new Scanner(new File(requestedFile)).useDelimiter("\\z").next();
-		} catch (FileNotFoundException e) {
-			System.out.println("Could not open the specified file...Exiting...");
-			return;
+		System.out.println("Requested file: " + requestedFile);
+		File file = new File(requestedFile);
+		if (file.isDirectory())
+			throw new IllegalArgumentException("Cannot download an entire directory!");
+		FileInputStream fin = new FileInputStream(file);
+		byte[] buffer = new byte[1024];
+		int bytesRead;
+		while ((bytesRead = fin.read(buffer)) > 0) {
+			clientWriter.write(buffer, 0, bytesRead);
 		}
-		try {
-			clientWriter.write(entireFile.getBytes());
-			clientWriter.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		clientWriter.write(EOF);
+		clientWriter.flush();
+		System.out.println("Done sending file!!");
 	}
 
 	// simple method that creates a space delimited string of the file names
