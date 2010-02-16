@@ -14,9 +14,6 @@ public class Client {
 
 	public static final byte EOF = 4;
 
-	private int port;
-	private String host;
-
 	private Socket connection;
 
 	private OutputStream serverOut;
@@ -30,8 +27,6 @@ public class Client {
 		connection = new Socket(host, port);
 		serverOut = connection.getOutputStream();
 		serverIn = connection.getInputStream();
-		this.port = port;
-		this.host = host;
 	}
 
 	public void changeDirectory(String newDirectory) throws IOException {
@@ -89,6 +84,7 @@ public class Client {
 	}
 
 	public void disconnect() throws IOException {
+		serverOut.write(("QUIT" + (char) EOF).getBytes());
 		connection.close();
 		connection = null;
 	}

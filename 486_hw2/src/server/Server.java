@@ -4,14 +4,11 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 /**
  * Specialized server for sending files to special clients
@@ -22,7 +19,7 @@ import java.util.Scanner;
 public class Server implements Runnable {
 
 	public static final byte EOF = 4;
-	
+
 	// The port to connect to
 	private int port;
 
@@ -59,36 +56,33 @@ public class Server implements Runnable {
 			System.out.println("Exiting...");
 			return;
 		}
-		System.out.println("Server is now listening on port " + port);
 		// forever loop
-		int failCount = 0;
 		while (true) {
-			Socket connection = null;
+			final Socket connection;
 			try {
+				System.out.println("Server is now listening on port " + port);
 				// wait for new connection
 				connection = serverSock.accept();
 			} catch (IOException e) {
 				// try a few times
-				failCount++;
-				if (failCount > 10) {
-					System.out.println("Failed " + failCount + " times.  Exiting...");
-					break;
-				}
-				System.out.println("Something went wrong...Trying again...");
+				System.out.println("Something went wrong...Try again...");
 				continue;
 			}
 			// once we have a connection, talk with the client
-			try {
-				handleConnection(connection);
-			} catch (IOException e) {
-				System.out.println("There was an error while trying to close the connection.");
-				System.out.println("Continuing");
-			}
+			new Thread() {
+				public void run() {
+					try {
+						handleConnection(connection);
+					} catch (IOException e) {
+						throw new RuntimeException("Something went worng while dealing with a connection.");
+					}
+				}
+			}.start();
 		}
 	}
 
 	// handle requests from the client
-	private static synchronized void handleConnection(Socket s) throws IOException {
+	private static void handleConnection(Socket s) throws IOException {
 		InputStream clientReader = s.getInputStream();
 		BufferedOutputStream clientWriter = new BufferedOutputStream(s.getOutputStream());
 
@@ -133,6 +127,7 @@ public class Server implements Runnable {
 	}
 
 	private static void handleQuit(Socket s) {
+		System.out.println("Handling a QUIT command.");
 		try {
 			s.close();
 		} catch (IOException e) {
