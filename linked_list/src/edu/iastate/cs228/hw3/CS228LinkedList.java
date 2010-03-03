@@ -1,6 +1,5 @@
 package edu.iastate.cs228.hw3;
 
-import java.awt.font.TextLayout.CaretPolicy;
 import java.util.AbstractSequentialList;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -40,11 +39,9 @@ public class CS228LinkedList<E> extends AbstractSequentialList<E> {
 
 	@Override
 	public void add(int index, E item) {
-		System.out.println("Index: " + index);
 		int idxCount = 0;
 		for (Node n = head.next; n != tail; n = n.next) {
 			for (int i = 0; i < n.data.length; i++) {
-				System.out.println("IdxCount: " + idxCount + " i: " + i);
 				if (idxCount == index) {
 					n.add(item, i);
 					return;
@@ -130,8 +127,8 @@ public class CS228LinkedList<E> extends AbstractSequentialList<E> {
 		}
 
 		/**
-		 * Adds element e into the specified index in the data array If there is no more room, a new
-		 * node will be inserted after this node.
+		 * Adds element e into the specified index in the data array If there is no more room, a new node will be
+		 * inserted after this node.
 		 * 
 		 * @param e
 		 * @param index
