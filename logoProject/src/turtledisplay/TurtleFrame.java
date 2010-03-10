@@ -159,7 +159,6 @@ public class TurtleFrame extends JFrame {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
 			int modifiers = e.getModifiersEx();
 			if (modifiers == KeyEvent.CTRL_DOWN_MASK && e.getKeyCode() == KeyEvent.VK_S) {
 				saveAction.actionPerformed(null);
@@ -172,14 +171,10 @@ public class TurtleFrame extends JFrame {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 	};
