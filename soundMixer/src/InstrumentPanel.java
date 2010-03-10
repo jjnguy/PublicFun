@@ -11,8 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
-import quicktime.app.actions.MouseController;
-
 public class InstrumentPanel extends JPanel {
 
 	protected JSlider slide;
