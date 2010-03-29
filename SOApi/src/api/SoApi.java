@@ -89,6 +89,7 @@ public class SoApi {
 		recently
 		http://api.stackoverflow.com/users/{id}/favorites/added - questions marked as favorite in the order they were marked by user: id 
 */	
+	
 	public User getUserById(int id) {
 		// TODO
 		return null;
