@@ -11,8 +11,6 @@ public class Post {
 	protected long lastActivityDate;
 	protected boolean isCommunityWiki;
 	protected String body;
-	protected Tag[] tags;
 	protected Comment[] comments;
 
-	
 }

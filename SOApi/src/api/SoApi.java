@@ -1,11 +1,8 @@
 package api;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import org.json.JSONException;
@@ -22,22 +19,22 @@ public class SoApi {
 		SoApi.key = key;
 	}
 
-	public Question getQuestionById(long id) throws JSONException, IOException{
+	public Question getQuestionById(long id) throws JSONException, IOException {
 		String urlS = baseUrls;
 		urlS += "questions/" + id + "?body=true&key=" + key;
 		Question q = JSONParser.parseQuestion(jsonRequest(urlS));
 		return q;
 	}
 
-	public static String key(){
+	public static String key() {
 		return key;
 	}
-	
-	public User getUserById(int id){
+
+	public User getUserById(int id) {
 		// TODO
 		return null;
 	}
-	
+
 	private String jsonRequest(String urlS) throws IOException {
 		URL url = new URL(urlS);
 		BufferedInputStream stream = new BufferedInputStream(url.openStream());

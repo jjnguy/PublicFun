@@ -1,4 +1,5 @@
 package api;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import entities.Answer;
+import entities.Comment;
 import entities.Question;
 
 public class JSONParser {
@@ -17,9 +19,11 @@ public class JSONParser {
 	}
 
 	public static Question questionFromJSONObject(JSONObject jQ) throws JSONException {
+		Comment[] comments = parseListOfComments(jQ.getJSONArray("Comments"));
+		Answer[] answers = parseListOfAnswers(jQ.getJSONArray("Answers"));
 		Question ret = new Question(jQ.getLong("PostId"), jQ.getInt("TotalAnswers"), jQ.getInt("OwnerUserId"), jQ
 				.getString("Title"), jQ.getInt("UpVoteCount"), jQ.getInt("DownVoteCount"), jQ.getInt("ViewCount"), jQ
-				.getLong("CreationDate"), jQ.getString("Tags"), jQ.optString("Body"), null, null); //TODO
+				.getLong("CreationDate"), jQ.getString("Tags"), jQ.optString("Body"), answers, comments);
 		return ret;
 	}
 
@@ -33,9 +37,31 @@ public class JSONParser {
 		return ret;
 	}
 
-	public static Answer answerFromJSONObject(JSONObject jA){
-		Answer ret = new Answer();
-		return null;
+	public static Answer answerFromJSONObject(JSONObject jA) throws JSONException {
+		Answer ret = new Answer(jA.getLong("PostId"), jA.getLong("QuestionId"), jA.getInt("OwnerUserId"), jA
+				.getInt("UpVoteCount"), jA.getInt("DownVoteCount"), jA.getLong("CreationDate"));
+		return ret;
 	}
-	
+
+	public static Answer[] parseListOfAnswers(JSONArray answerArr) throws JSONException {
+		Answer[] answers = new Answer[answerArr.length()];
+		for (int i = 0; i < answerArr.length(); i++) {
+			answers[i] = answerFromJSONObject(answerArr.getJSONObject(i));
+		}
+		return answers;
+	}
+
+	public static Comment[] parseListOfComments(JSONArray commentsArr) throws JSONException {
+		Comment[] comments = new Comment[commentsArr.length()];
+		for (int i = 0; i < commentsArr.length(); i++) {
+			comments[i] = commentFromJSONObject(commentsArr.getJSONObject(i));
+		}
+		return comments;
+	}
+
+	public static Comment commentFromJSONObject(JSONObject jC) throws JSONException {
+		Comment ret = new Comment(jC.getInt("UserId"), jC.getLong("PostId"), jC.getInt("VoteCount"), jC
+				.getBoolean("OnQuestion"), jC.getLong("CreationDate"), jC.getString("Body"));
+		return ret;
+	}
 }

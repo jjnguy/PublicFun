@@ -2,10 +2,10 @@ package entities;
 
 import api.SoApi;
 
-
 public class Question extends Post {
 
 	private String title;
+	protected Tag[] tags;
 	private int answerCount;
 	private Answer[] answers;
 	private int views;
