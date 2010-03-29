@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,7 +14,13 @@ public class JSONParser {
 		Question ret = new Question(jQ.getLong("PostId"), jQ.getInt("TotalAnswers"), jQ.getInt("OwnerUserId"), jQ
 				.getString("Title"), jQ.getInt("UpVoteCount"), jQ.getInt("DownVoteCount"), jQ.getInt("ViewCount"), jQ
 				.getLong("CreationDate"), jQ.getString("Tags"));
-		return null;
+		return ret;
 	}
 
+	public static List<Question> parseListOfQuestions(String questionsJSON){
+		List<Question> ret = new ArrayList<Question>();
+		
+		return ret;
+	}
+	
 }
