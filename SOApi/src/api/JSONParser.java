@@ -38,7 +38,7 @@ public class JSONParser {
 	}
 
 	public static Answer answerFromJSONObject(JSONObject jA) throws JSONException {
-		Answer ret = new Answer(jA.getLong("PostId"), jA.getLong("QuestionId"), jA.getInt("OwnerUserId"), jA
+		Answer ret = new Answer(jA.getLong("PostId"), jA.getLong("QuestionId"), jA.getInt("UserId"), jA
 				.getInt("UpVoteCount"), jA.getInt("DownVoteCount"), jA.getLong("CreationDate"));
 		return ret;
 	}

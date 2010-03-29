@@ -3,7 +3,6 @@ import java.io.IOException;
 import org.json.JSONException;
 
 import api.SoApi;
-
 import entities.Question;
 
 public class Test {
