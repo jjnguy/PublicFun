@@ -13,6 +13,38 @@ public class Comment {
 	private long creationDate;
 	private String body;
 
+	public long getCommnentId() {
+		return commnentId;
+	}
+
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public long getPostId() {
+		return postId;
+	}
+
+	public int getVotes() {
+		return votes;
+	}
+
+	public boolean isOnQuestion() {
+		return onQuestion;
+	}
+
+	public long getCreationDate() {
+		return creationDate;
+	}
+
+	public String getBody() {
+		return body;
+	}
+
 	public Comment(long commentId, int ownerId, long postId, int votes, boolean onQuestion, long creationDate, String body) {
 		this.commnentId = commentId;
 		this.ownerId = ownerId;

@@ -10,11 +10,11 @@ public class Tag {
 		this.count = count;
 	}
 
-	public String name() {
+	public String getName() {
 		return name;
 	}
 
-	public int count() {
+	public int getCount() {
 		return count;
 	}
 

@@ -12,21 +12,21 @@ public class Badge {
 		this.description = description;
 	}
 
-	public int id() {
+
+	public int getAwardCount() {
 		return awardCount;
 	}
 
-	public int awardCount() {
-		return awardCount;
-	}
 
-	public String name() {
+	public String getName() {
 		return name;
 	}
 
-	public String description() {
+
+	public String getDescription() {
 		return description;
 	}
+
 
 	@Override
 	public String toString() {

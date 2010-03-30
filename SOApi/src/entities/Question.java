@@ -31,11 +31,28 @@ public class Question extends Post {
 		this.views = viewCount;
 	}
 
-	public String title() {
+	public String getTitle() {
 		return title;
 	}
 
-	public String body() {
-		return body;
+	public Tag[] getTags() {
+		return tags;
 	}
+
+	public int getAnswerCount() {
+		return answerCount;
+	}
+
+	public Answer[] getAnswers() {
+		return answers;
+	}
+
+	public int getViews() {
+		return views;
+	}
+
+	public long getAcceptedAnswer() {
+		return acceptedAnswer;
+	}
+
 }

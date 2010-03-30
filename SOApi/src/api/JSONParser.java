@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import entities.Answer;
 import entities.Comment;
 import entities.Question;
+import entities.User;
 
 public class JSONParser {
 
@@ -58,10 +59,29 @@ public class JSONParser {
 		}
 		return comments;
 	}
-
+	
 	public static Comment commentFromJSONObject(JSONObject jC) throws JSONException {
 		Comment ret = new Comment(jC.getLong("CommentId"), jC.getInt("UserId"), jC.getLong("PostId"), jC
 				.getInt("VoteCount"), jC.getBoolean("OnQuestion"), jC.getLong("CreationDate"), jC.getString("Body"));
+		return ret;
+	}
+
+	public static User[] parseListOfUsers(String usersJSON) throws JSONException{
+		return parseListOfUsers(new JSONArray(usersJSON));
+	}
+	
+	public static User[] parseListOfUsers(JSONArray userArr) throws JSONException{
+		User[] users = new User[userArr.length()];
+		for (int i = 0; i < userArr.length(); i++){
+			users[i] = userFromJSONObject(userArr.getJSONObject(i));
+		}
+		return users;
+	}
+	
+	public static User userFromJSONObject(JSONObject jU) throws JSONException {
+		User ret = new User(jU.getInt("UserId"), jU.getInt("Reputation"), jU.getLong("CreationDate"), jU
+				.getString("DisplayName"), jU.getString("EmailHash"), jU.getInt("Age"), jU.getString("WebsiteUrl"), jU
+				.getString("Location"));
 		return ret;
 	}
 }

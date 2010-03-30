@@ -13,8 +13,8 @@ import entities.User;
 
 public class SoApi {
 
-	private static int DEFAULT_PAGE = 1;
-	private static int DEFAULT_PAGESIZE = 100;
+	public static final int DEFAULT_PAGE = 1;
+	public static final int DEFAULT_PAGESIZE = 100;
 
 	private static final String baseUrls = "http://api.stackoverflow.com/";
 	private static String key;
