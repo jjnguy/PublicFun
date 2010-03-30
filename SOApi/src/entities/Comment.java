@@ -45,7 +45,8 @@ public class Comment {
 		return body;
 	}
 
-	public Comment(long commentId, int ownerId, long postId, int votes, boolean onQuestion, long creationDate, String body) {
+	public Comment(long commentId, int ownerId, long postId, int votes, boolean onQuestion, long creationDate,
+			String body) {
 		this.commnentId = commentId;
 		this.ownerId = ownerId;
 		SoApi api = new SoApi(SoApi.key());

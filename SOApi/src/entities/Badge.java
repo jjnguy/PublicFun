@@ -7,26 +7,22 @@ public class Badge {
 	private String description;
 
 	public Badge(int badgeId, String name, String description, int awardCount) {
-		this.badgeId= badgeId;
+		this.badgeId = badgeId;
 		this.name = name;
 		this.description = description;
 	}
-
 
 	public int getAwardCount() {
 		return awardCount;
 	}
 
-
 	public String getName() {
 		return name;
 	}
 
-
 	public String getDescription() {
 		return description;
 	}
-
 
 	@Override
 	public String toString() {

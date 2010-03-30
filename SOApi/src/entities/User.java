@@ -27,7 +27,7 @@ public class User {
 		this.websiteUrl = websiteUrl;
 		this.location = location;
 	}
-	
+
 	public int getUserId() {
 		return userId;
 	}
@@ -56,17 +56,22 @@ public class User {
 		return location;
 	}
 
-	public List<Question> getAllQuestions(Sort sort, int page, int pageSize){
+	public List<Question> getAllQuestions(Sort sort, int page, int pageSize) {
 		SoApi api = new SoApi(SoApi.key());
 		return api.getListOfQuestionsFromUser(userId, sort, page, pageSize);
 	}
-	
-	public List<Question> getAllQuestions(Sort sort){
+
+	public List<Question> getAllQuestions(Sort sort) {
 		return getAllQuestions(sort, SoApi.DEFAULT_PAGE, SoApi.DEFAULT_PAGESIZE);
 	}
-	
-	public List<Question> getAllQuestions(){
+
+	public List<Question> getAllQuestions() {
 		return getAllQuestions(Sort.VOTES, SoApi.DEFAULT_PAGE, SoApi.DEFAULT_PAGESIZE);
 	}
 	
+	public List<Badge> getAllBadgesEarned(){
+		SoApi api = new SoApi(SoApi.key());
+		return api.getListOfBadgesForUser(userId);
+	}
+
 }

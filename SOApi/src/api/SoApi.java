@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import org.json.JSONException;
 
+import entities.Badge;
 import entities.Question;
 import entities.User;
 
@@ -99,10 +100,38 @@ public class SoApi {
 	}
 
 	public User getUserById(int id) {
-		// TODO
-		return null;
+		// http://api.stackoverflow.com/users/{id} - pull only the user passed in by id
+		return null; // TODO
+	}
+	
+	public List<User> getListOfUsers(){
+		return getListOfUsers(Sort.REPUTATION, SoApi.DEFAULT_PAGE, SoApi.DEFAULT_PAGESIZE, "");
+	}
+	
+	public List<User> getListOfUsers(Sort sort, int page, int pageSize, String filter){
+		// http://api.stackoverflow.com/users/reputation - users by reputation score
+		// http://api.stackoverflow.com/users/newest - newest users
+		// http://api.stackoverflow.com/users/oldest - oldest users
+		// http://api.stackoverflow.com/users/name - users by name 
+		return null; // TODO
+	}
+	
+	public List<Badge> getListOfAllBadges(){
+		// http://api.stackoverflow.com/badges/name  - default is name
+		return null; // TODO
+	}
+	
+	public List<Badge> getListOfTagBadges(){
+		// http://api.stackoverflow.com/badges/tags - tag based badges earned
+		return null; // TODO
+		
 	}
 
+	public List<Badge> getListOfBadgesForUser(int userId){
+		// http://api.stackoverflow.com/users/{id}/badges - badges awarded to user {id}
+		return null; // TODO
+	}
+	
 	public static String key() {
 		return key;
 	}
@@ -123,6 +152,6 @@ public class SoApi {
 	}
 
 	public static enum Sort {
-		ACTIVE, NEWEST, VOTES, VIEWS, ADDED;
+		ACTIVE, NEWEST, VOTES, VIEWS, ADDED, OLDEST, NAME, REPUTATION;
 	}
 }

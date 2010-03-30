@@ -18,15 +18,15 @@ public class Tag {
 		return count;
 	}
 
-	public static Tag[] fromTagString(String tags){
+	public static Tag[] fromTagString(String tags) {
 		String[] split = tags.split("\\s+");
 		Tag[] ret = new Tag[split.length];
-		for (int i = 0; i < ret.length; i++){
+		for (int i = 0; i < ret.length; i++) {
 			ret[i] = new Tag(split[i], -1);
 		}
 		return ret;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;
