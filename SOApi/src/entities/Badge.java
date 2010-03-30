@@ -1,19 +1,19 @@
 package entities;
 
 public class Badge {
-	private int id;
+	private int badgeId;
 	private int awardCount;
 	private String name;
 	private String description;
 
-	public Badge(int id, String name, String description, int awardCount) {
-		this.id = id;
+	public Badge(int badgeId, String name, String description, int awardCount) {
+		this.badgeId= badgeId;
 		this.name = name;
 		this.description = description;
 	}
 
 	public int id() {
-		return id;
+		return awardCount;
 	}
 
 	public int awardCount() {

@@ -4,19 +4,21 @@ import api.SoApi;
 
 public class Comment {
 
+	private long commnentId;
 	private int ownerId;
 	private User owner;
-	private long postOwner;
+	private long postId;
 	private int votes;
 	private boolean onQuestion;
 	private long creationDate;
 	private String body;
 
-	public Comment(int ownerId, long postOwner, int votes, boolean onQuestion, long creationDate, String body) {
+	public Comment(long commentId, int ownerId, long postId, int votes, boolean onQuestion, long creationDate, String body) {
+		this.commnentId = commentId;
 		this.ownerId = ownerId;
 		SoApi api = new SoApi(SoApi.key());
 		this.owner = api.getUserById(ownerId);
-		this.postOwner = postOwner;
+		this.postId = postId;
 		this.votes = votes;
 		this.onQuestion = onQuestion;
 		this.creationDate = creationDate;
