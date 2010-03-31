@@ -25,6 +25,10 @@ public class SoApi {
 		SoApi.key = key;
 	}
 
+	public SoApi(){
+		this(SoApi.key());
+	}
+	
 	public Question getQuestionById(long id) throws JSONException, IOException {
 		String urlS = baseUrlS + versionS;
 		urlS += "questions/" + id + "?body=true";

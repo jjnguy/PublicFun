@@ -56,7 +56,7 @@ public class User {
 	}
 
 	public List<Question> getAllQuestions(Question.Sort sort, int page, int pageSize) {
-		SoApi api = new SoApi(SoApi.key());
+		SoApi api = new SoApi();
 		return api.getListOfQuestionsFromUser(userId, sort, page, pageSize);
 	}
 
@@ -69,7 +69,7 @@ public class User {
 	}
 
 	public List<Badge> getAllBadgesEarned() {
-		SoApi api = new SoApi(SoApi.key());
+		SoApi api = new SoApi();
 		return api.getListOfBadgesForUser(userId);
 	}
 
