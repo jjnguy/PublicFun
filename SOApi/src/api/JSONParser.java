@@ -16,15 +16,15 @@ public class JSONParser {
 
 	public static Question parseQuestion(String questionJSON) throws JSONException {
 		JSONObject jQ = new JSONObject(questionJSON);
-		return questionFromJSONObject(jQ.getJSONObject("Question"));
+		return questionFromJSONObject(jQ.getJSONObject("question"));
 	}
 
 	public static Question questionFromJSONObject(JSONObject jQ) throws JSONException {
-		Comment[] comments = parseListOfComments(jQ.getJSONArray("Comments"));
-		Answer[] answers = parseListOfAnswers(jQ.getJSONArray("Answers"));
-		Question ret = new Question(jQ.getLong("QuestionId"), jQ.getInt("TotalAnswers"), jQ.getInt("OwnerUserId"), jQ
-				.getString("Title"), jQ.getInt("UpVoteCount"), jQ.getInt("DownVoteCount"), jQ.getInt("ViewCount"), jQ
-				.getLong("CreationDate"), jQ.getString("Tags"), jQ.optString("Body"), answers, comments);
+		Comment[] comments = parseListOfComments(jQ.getJSONArray("comments"));
+		Answer[] answers = parseListOfAnswers(jQ.getJSONArray("answers"));
+		Question ret = new Question(jQ.getLong("question_id"), jQ.getInt("total_answers"), jQ.getInt("owner_user_id"), jQ
+				.getString("title"), jQ.getInt("up_vote_count"), jQ.getInt("down_vote_count"), jQ.getInt("view_count"), jQ
+				.getLong("creation_date"), jQ.getString("tags"), jQ.optString("body"), answers, comments);
 		return ret;
 	}
 
@@ -39,8 +39,8 @@ public class JSONParser {
 	}
 
 	public static Answer answerFromJSONObject(JSONObject jA) throws JSONException {
-		Answer ret = new Answer(jA.getLong("AnswerId"), jA.getLong("QuestionId"), jA.getInt("UserId"), jA
-				.getInt("UpVoteCount"), jA.getInt("DownVoteCount"), jA.getLong("CreationDate"));
+		Answer ret = new Answer(jA.getLong("answer_id"), jA.getLong("question_id"), jA.getInt("user_id"), jA
+				.getInt("up_vote_count"), jA.getInt("down_vote_count"), jA.getLong("creation_date"));
 		return ret;
 	}
 
@@ -61,8 +61,8 @@ public class JSONParser {
 	}
 	
 	public static Comment commentFromJSONObject(JSONObject jC) throws JSONException {
-		Comment ret = new Comment(jC.getLong("CommentId"), jC.getInt("UserId"), jC.getLong("PostId"), jC
-				.getInt("VoteCount"), jC.getBoolean("OnQuestion"), jC.getLong("CreationDate"), jC.getString("Body"));
+		Comment ret = new Comment(jC.getLong("comment_id"), jC.getInt("user_id"), jC.getLong("post_id"), jC
+				.getInt("vote_count"), jC.getBoolean("on_question"), jC.getLong("creation_date"), jC.getString("body"));
 		return ret;
 	}
 
@@ -79,9 +79,9 @@ public class JSONParser {
 	}
 	
 	public static User userFromJSONObject(JSONObject jU) throws JSONException {
-		User ret = new User(jU.getInt("UserId"), jU.getInt("Reputation"), jU.getLong("CreationDate"), jU
-				.getString("DisplayName"), jU.getString("EmailHash"), jU.getInt("Age"), jU.getString("WebsiteUrl"), jU
-				.getString("Location"));
+		User ret = new User(jU.getInt("user_id"), jU.getInt("reputation"), jU.getLong("creation_date"), jU
+				.getString("display_name"), jU.getString("email_hash"), jU.getInt("age"), jU.getString("website_url"), jU
+				.getString("location"));
 		return ret;
 	}
 }

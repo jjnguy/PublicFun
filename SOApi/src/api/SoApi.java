@@ -17,7 +17,8 @@ public class SoApi {
 	public static final int DEFAULT_PAGE = 1;
 	public static final int DEFAULT_PAGESIZE = 100;
 
-	private static final String baseUrls = "http://api.stackoverflow.com/";
+	private static final String baseUrlS = "http://api.stackoverflow.com/";
+	private static final String versionS = "0.5/";
 	private static String key;
 
 	public SoApi(String key) {
@@ -25,8 +26,8 @@ public class SoApi {
 	}
 
 	public Question getQuestionById(long id) throws JSONException, IOException {
-		String urlS = baseUrls;
-		urlS += "questions/" + id + "?body=true&key=" + key;
+		String urlS = baseUrlS + versionS;
+		urlS += "questions/" + id + "?body=true";
 		Question q = JSONParser.parseQuestion(jsonRequest(urlS));
 		return q;
 	}
@@ -137,7 +138,7 @@ public class SoApi {
 	}
 
 	private String jsonRequest(String urlS) throws IOException {
-		URL url = new URL(urlS);
+		URL url = new URL(urlS + "&key=" + key);
 		BufferedInputStream stream = new BufferedInputStream(url.openStream());
 		Scanner s = new Scanner(stream);
 		String ret = "";
