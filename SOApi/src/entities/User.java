@@ -1,6 +1,9 @@
 package entities;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.json.JSONException;
 
 import api.SoApi;
 
@@ -55,17 +58,17 @@ public class User {
 		return location;
 	}
 
-	public List<Question> getAllQuestions(Question.Sort sort, int page, int pageSize) {
+	public List<Question> getAllQuestions(QuestionSort sort, int page, int pageSize) throws JSONException, IOException {
 		SoApi api = new SoApi();
 		return api.getListOfQuestionsFromUser(userId, sort, page, pageSize);
 	}
 
-	public List<Question> getAllQuestions(Question.Sort sort) {
+	public List<Question> getAllQuestions(QuestionSort sort) throws JSONException, IOException {
 		return this.getAllQuestions(sort, SoApi.DEFAULT_PAGE, SoApi.DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getAllQuestions() {
-		return getAllQuestions(Question.Sort.VOTES, SoApi.DEFAULT_PAGE, SoApi.DEFAULT_PAGESIZE);
+	public List<Question> getAllQuestions() throws JSONException, IOException {
+		return getAllQuestions(QuestionSort.VOTES, SoApi.DEFAULT_PAGE, SoApi.DEFAULT_PAGESIZE);
 	}
 
 	public List<Badge> getAllBadgesEarned() {
@@ -75,5 +78,9 @@ public class User {
 
 	public static enum Sort {
 		REPUTATION, OLDEST, NEWEST, NAME;
+	}
+	
+	public static enum QuestionSort {
+		RECENT, VIEWS, NEWEST, VOTES;
 	}
 }

@@ -14,8 +14,8 @@ import entities.User;
 
 public class SoApi {
 
-	public static final int DEFAULT_PAGE = 1;
-	public static final int DEFAULT_PAGESIZE = 100;
+	public static int DEFAULT_PAGE = 1;
+	public static int DEFAULT_PAGESIZE = 100;
 
 	private static final String baseUrlS = "http://api.stackoverflow.com/";
 	private static final String versionS = "0.5/";
@@ -30,69 +30,78 @@ public class SoApi {
 	}
 	
 	public Question getQuestionById(long id) throws JSONException, IOException {
-		String urlS = "questions/" + id + "?body=true";
+		return getQuestionById(id, true);
+	}
+	
+	public Question getQuestionById(long id, boolean body) throws JSONException, IOException {
+		String urlS = "questions/" + id + "?body=" + body;
 		Question q = JSONParser.parseQuestion(jsonRequest(urlS));
 		return q;
 	}
 
-	public List<Question> getListOfQuestions(Question.Sort sort) {
+	public List<Question> getListOfQuestions(Question.Sort sort) throws JSONException, IOException {
 		return getListOfQuestions(sort, DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListOfQuestions(Question.Sort sort, int page, int pageSize) {
+	public List<Question> getListOfQuestions(Question.Sort sort, int page, int pageSize) throws JSONException, IOException {
 		// http://api.stackoverflow.com/questions/active - default is active
 		// http://api.stackoverflow.com/questions/newest - newest questions
 		// http://api.stackoverflow.com/questions/votes - highest votes
-		return null; // TODO
+		String urlS = "questions/" + sort.toString() + "?page="+page + "&pageSize=" + pageSize;
+		return JSONParser.parseListOfQuestions(jsonRequest(urlS));
 	}
 
-	public List<Question> getListOfFeaturedQuestions() {
+	public List<Question> getListOfFeaturedQuestions() throws JSONException, IOException {
 		return getListOfFeaturedQuestions(DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListOfFeaturedQuestions(int page, int pageSize) {
+	public List<Question> getListOfFeaturedQuestions(int page, int pageSize) throws JSONException, IOException {
 		// http://api.stackoverflow.com/questions/featured - bounty questions
-		return null; // TODO
+		String urlS = "questions/featured?page="+page + "&pageSize=" + pageSize;
+		return JSONParser.parseListOfQuestions(jsonRequest(urlS));
 	}
 
-	public List<Question> getListofHotQuestions(Hottness hottness) {
+	public List<Question> getListofHotQuestions(Hottness hottness) throws JSONException, IOException {
 		return getListofHotQuestions(hottness, DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListofHotQuestions(Hottness hottness, int page, int pageSize) {
+	public List<Question> getListofHotQuestions(Hottness hottness, int page, int pageSize) throws JSONException, IOException {
 		// http://api.stackoverflow.com/questions/hot - all time hot questions
 		// http://api.stackoverflow.com/questions/week - weekly hot questions
 		// http://api.stackoverflow.com/questions/month - monthly hot questions
-		return null; // TODO
+		String urlS = "questions/" + hottness.toString() + "?page="+page + "&pageSize=" + pageSize;
+		return JSONParser.parseListOfQuestions(jsonRequest(urlS));
 	}
 
-	public List<Question> getListOfUnansweredQuestions(Question.SortUnanswered sort) {
+	public List<Question> getListOfUnansweredQuestions(Question.SortUnanswered sort) throws JSONException, IOException {
 		return getListOfUnansweredQuestions(sort, DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListOfUnansweredQuestions(Question.SortUnanswered sort, int page, int pageSize) {
+	public List<Question> getListOfUnansweredQuestions(Question.SortUnanswered sort, int page, int pageSize) throws JSONException, IOException {
 		// http://api.stackoverflow.com/questions/unanswered/newest - newest unanswered questions
 		// http://api.stackoverflow.com/questions/unanswered/votes - highest voted unanswered questions
-		return null; // TODO
+		String urlS = "questions/unanswered/" + sort.toString() + "?page="+page + "&pageSize=" + pageSize;
+		return JSONParser.parseListOfQuestions(jsonRequest(urlS));
 	}
 
-	public List<Question> getListOfQuestionsFromUser(int userId, Question.Sort sort) {
+	public List<Question> getListOfQuestionsFromUser(int userId, User.QuestionSort sort) throws JSONException, IOException {
 		return getListOfQuestionsFromUser(userId, sort, DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListOfQuestionsFromUser(int userId, Question.Sort sort, int page, int pageSize) {
+	public List<Question> getListOfQuestionsFromUser(int userId, User.QuestionSort sort, int page, int pageSize) throws JSONException, IOException {
 		// http://api.stackoverflow.com/users/{id}/questions/recent - questions created by user: id with recent activity
 		// http://api.stackoverflow.com/users/{id}/questions/views- questions created by user: id with highest views
 		// http://api.stackoverflow.com/users/{id}/questions/newest- questions created by user: id recently
 		// http://api.stackoverflow.com/users/{id}/questions/votes- questions created by user: id with the highest votes
-		return null; // TODO
+		String urlS = "users/" + userId + "/questions/" + sort.toString() + "?page="+page + "&pageSize=" + pageSize;
+		return JSONParser.parseListOfQuestions(jsonRequest(urlS));
 	}
 
-	public List<Question> getListOfFavoriteQuestionsFromUser(int userId, User.Sort sort) {
+	public List<Question> getListOfFavoriteQuestionsFromUser(int userId, User.Sort sort) throws JSONException, IOException {
 		return getListOfFavoriteQuestionsFromUser(userId, sort, DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListOfFavoriteQuestionsFromUser(int userId, User.Sort sort, int page, int pageSize) {
+	public List<Question> getListOfFavoriteQuestionsFromUser(int userId, User.Sort sort, int page, int pageSize) throws JSONException, IOException {
 		// http://api.stackoverflow.com/users/{id}/favorites/recent - questions marked as favorite by user: id with
 		// recent activity
 		// http://api.stackoverflow.com/users/{id}/favorites/views- questions marked as favorite by user: id with
@@ -100,12 +109,14 @@ public class SoApi {
 		// http://api.stackoverflow.com/users/{id}/favorites/newest- questions marked as favorite by user: id recently
 		// http://api.stackoverflow.com/users/{id}/favorites/added - questions marked as favorite in the order they were
 		// marked by user: id
-		return null; // TODO
+		String urlS = "users/" + userId + "/favorites/" + sort.toString() + "?page="+page + "&pageSize=" + pageSize;
+		return JSONParser.parseListOfQuestions(jsonRequest(urlS));
 	}
 
-	public User getUserById(int id) {
+	public User getUserById(int userId) {
 		// http://api.stackoverflow.com/users/{id} - pull only the user passed in by id
-		return null; // TODO
+		String urlS = "users/" + userId;
+		return null; // TODO need a parse User method
 	}
 	
 	public List<User> getListOfUsers(){
@@ -141,7 +152,9 @@ public class SoApi {
 	}
 
 	private String jsonRequest(String urlS) throws IOException {
-		URL url = new URL(baseUrlS + versionS + urlS + "&key=" + key);
+		String fullUrl = baseUrlS + versionS + urlS;
+		fullUrl +=  fullUrl.contains("?") ? "&key=" + key : "?key=" + key;
+		URL url = new URL(fullUrl);
 		BufferedInputStream stream = new BufferedInputStream(url.openStream());
 		Scanner s = new Scanner(stream);
 		String ret = "";
@@ -152,6 +165,15 @@ public class SoApi {
 	}
 
 	public static enum Hottness {
-		ALL_TIME, MONTH, WEEK;
+		ALL_TIME("hot"), MONTH("month"), WEEK("week");
+		
+		private String displayName;
+		private Hottness(String displayName){
+			this.displayName = displayName;
+		}
+		@Override
+		public String toString() {
+			return displayName;
+		}
 	}
 }

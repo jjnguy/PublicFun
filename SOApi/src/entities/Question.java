@@ -56,10 +56,28 @@ public class Question extends Post {
 	}
 	
 	public static enum Sort {
-		ACTIVE, NEWEST, VOTES;
+		ACTIVE("active"), NEWEST("newest"), VOTES("votes");
+		
+		private String displayName;
+		private Sort(String displayName){
+			this.displayName = displayName;
+		}
+		@Override
+		public String toString() {
+			return displayName;
+		}
 	}
 	
 	public static enum SortUnanswered {
-		NEWEST, VOTES;
+		NEWEST("newest"), VOTES("votes");
+		
+		private String displayName;
+		private SortUnanswered(String displayName){
+			this.displayName = displayName;
+		}
+		@Override
+		public String toString() {
+			return displayName;
+		}
 	}
 }
