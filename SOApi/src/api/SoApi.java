@@ -30,8 +30,7 @@ public class SoApi {
 	}
 	
 	public Question getQuestionById(long id) throws JSONException, IOException {
-		String urlS = baseUrlS + versionS;
-		urlS += "questions/" + id + "?body=true";
+		String urlS = "questions/" + id + "?body=true";
 		Question q = JSONParser.parseQuestion(jsonRequest(urlS));
 		return q;
 	}
@@ -142,7 +141,7 @@ public class SoApi {
 	}
 
 	private String jsonRequest(String urlS) throws IOException {
-		URL url = new URL(urlS + "&key=" + key);
+		URL url = new URL(baseUrlS + versionS + urlS + "&key=" + key);
 		BufferedInputStream stream = new BufferedInputStream(url.openStream());
 		Scanner s = new Scanner(stream);
 		String ret = "";
