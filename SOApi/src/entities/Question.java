@@ -54,5 +54,12 @@ public class Question extends Post {
 	public long getAcceptedAnswer() {
 		return acceptedAnswer;
 	}
-
+	
+	public static enum Sort {
+		ACTIVE, NEWEST, VOTES;
+	}
+	
+	public static enum SortUnanswered {
+		NEWEST, VOTES;
+	}
 }

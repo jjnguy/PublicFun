@@ -31,11 +31,11 @@ public class SoApi {
 		return q;
 	}
 
-	public List<Question> getListOfQuestions(Sort sort) {
+	public List<Question> getListOfQuestions(Question.Sort sort) {
 		return getListOfQuestions(sort, DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListOfQuestions(Sort sort, int page, int pageSize) {
+	public List<Question> getListOfQuestions(Question.Sort sort, int page, int pageSize) {
 		// http://api.stackoverflow.com/questions/active - default is active
 		// http://api.stackoverflow.com/questions/newest - newest questions
 		// http://api.stackoverflow.com/questions/votes - highest votes
@@ -62,21 +62,21 @@ public class SoApi {
 		return null; // TODO
 	}
 
-	public List<Question> getListOfUnansweredQuestions(Sort sort) {
+	public List<Question> getListOfUnansweredQuestions(Question.SortUnanswered sort) {
 		return getListOfUnansweredQuestions(sort, DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListOfUnansweredQuestions(Sort sort, int page, int pageSize) {
+	public List<Question> getListOfUnansweredQuestions(Question.SortUnanswered sort, int page, int pageSize) {
 		// http://api.stackoverflow.com/questions/unanswered/newest - newest unanswered questions
 		// http://api.stackoverflow.com/questions/unanswered/votes - highest voted unanswered questions
 		return null; // TODO
 	}
 
-	public List<Question> getListOfQuestionsFromUser(int userId, Sort sort) {
+	public List<Question> getListOfQuestionsFromUser(int userId, Question.Sort sort) {
 		return getListOfQuestionsFromUser(userId, sort, DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListOfQuestionsFromUser(int userId, Sort sort, int page, int pageSize) {
+	public List<Question> getListOfQuestionsFromUser(int userId, Question.Sort sort, int page, int pageSize) {
 		// http://api.stackoverflow.com/users/{id}/questions/recent - questions created by user: id with recent activity
 		// http://api.stackoverflow.com/users/{id}/questions/views- questions created by user: id with highest views
 		// http://api.stackoverflow.com/users/{id}/questions/newest- questions created by user: id recently
@@ -84,11 +84,11 @@ public class SoApi {
 		return null; // TODO
 	}
 
-	public List<Question> getListOfFavoriteQuestionsFromUser(int userId, Sort sort) {
+	public List<Question> getListOfFavoriteQuestionsFromUser(int userId, User.Sort sort) {
 		return getListOfFavoriteQuestionsFromUser(userId, sort, DEFAULT_PAGE, DEFAULT_PAGESIZE);
 	}
 
-	public List<Question> getListOfFavoriteQuestionsFromUser(int userId, Sort sort, int page, int pageSize) {
+	public List<Question> getListOfFavoriteQuestionsFromUser(int userId, User.Sort sort, int page, int pageSize) {
 		// http://api.stackoverflow.com/users/{id}/favorites/recent - questions marked as favorite by user: id with
 		// recent activity
 		// http://api.stackoverflow.com/users/{id}/favorites/views- questions marked as favorite by user: id with
@@ -105,10 +105,10 @@ public class SoApi {
 	}
 	
 	public List<User> getListOfUsers(){
-		return getListOfUsers(Sort.REPUTATION, SoApi.DEFAULT_PAGE, SoApi.DEFAULT_PAGESIZE, "");
+		return getListOfUsers(User.Sort.REPUTATION, SoApi.DEFAULT_PAGE, SoApi.DEFAULT_PAGESIZE, "");
 	}
 	
-	public List<User> getListOfUsers(Sort sort, int page, int pageSize, String filter){
+	public List<User> getListOfUsers(User.Sort sort, int page, int pageSize, String filter){
 		// http://api.stackoverflow.com/users/reputation - users by reputation score
 		// http://api.stackoverflow.com/users/newest - newest users
 		// http://api.stackoverflow.com/users/oldest - oldest users
@@ -149,9 +149,5 @@ public class SoApi {
 
 	public static enum Hottness {
 		ALL_TIME, MONTH, WEEK;
-	}
-
-	public static enum Sort {
-		ACTIVE, NEWEST, VOTES, VIEWS, ADDED, OLDEST, NAME, REPUTATION;
 	}
 }
