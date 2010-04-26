@@ -76,9 +76,6 @@ public class ActionList extends JPanel {
             if (newAction == null)
                 return;
             model.addAction(newAction);
-            listOfActions.repaint();
-            listOfActions.invalidate();
-            System.out.print("Should have added an action: " + newAction.getClass());
         }
     };
     private ActionListener editActionListener = new ActionListener() {
@@ -169,8 +166,6 @@ public class ActionList extends JPanel {
                 mainPane.add(currentFrame);
                 invalidate();
                 repaint();
-                System.out.println("Action fired.  Switched to:"
-                        + listOfActionTypes.getSelectedValue());
             }
         };
     }
