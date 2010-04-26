@@ -13,6 +13,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import actions.AutoAction;
 
@@ -29,6 +31,7 @@ public class ActionList extends JPanel {
         super(new BorderLayout());
         createComponents();
         layoutComponents();
+        setUpActions();
     }
 
     private void layoutComponents() {
@@ -50,6 +53,10 @@ public class ActionList extends JPanel {
         editAction = new JButton("Edit");
     }
 
+    private void setUpActions() {
+        addAction.addActionListener(addActionListener);
+    }
+
     public void addAction(AutoAction a) {
         model.addAction(a);
     }
@@ -59,14 +66,19 @@ public class ActionList extends JPanel {
     }
 
     public void setAction(int idx, AutoAction newAction) {
-        model.setNthAction(idx, newAction);
+        model.setAction(idx, newAction);
     }
 
     private ActionListener addActionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            CreateActionFrame f = new CreateActionFrame();
-            f.setVisible(true);
+            AutoAction newAction = CreateActionFrame.showNewActionDialog();
+            if (newAction == null)
+                return;
+            model.addAction(newAction);
+            listOfActions.repaint();
+            listOfActions.invalidate();
+            System.out.print("Should have added an action: " + newAction.getClass());
         }
     };
     private ActionListener editActionListener = new ActionListener() {
@@ -81,24 +93,86 @@ public class ActionList extends JPanel {
     };
 
     public static class CreateActionFrame extends JDialog {
+        private JPanel mainPane;
         private JList listOfActionTypes;
         private JButton createButton;
         private JButton cancelButton;
 
+        private CreateActionPanel currentFrame;
+
         private Map<String, CreateActionPanel> possibleViews;
 
-        public CreateActionFrame() {
+        private CreateActionFrame() {
             super();
+            setModal(true);
+            createComponents();
             createPossibleViews();
+            addActions();
+            layoutComponents();
             pack();
-            setVisible(true);
+        }
+
+        public static AutoAction showNewActionDialog() {
+            CreateActionFrame f = new CreateActionFrame();
+            f.setVisible(true);
+            return f.getAction();
+        }
+
+        public AutoAction getAction() {
+            return possibleViews.get(listOfActionTypes.getSelectedValue()).getAction();
+        }
+
+        private void createComponents() {
+            listOfActionTypes = new JList();
+            createButton = new JButton("Create");
+            cancelButton = new JButton("Cancel");
+        }
+
+        private void addActions() {
+            listOfActionTypes.addListSelectionListener(selectionChange);
+            createButton.addActionListener(createAction);
+        }
+
+        private void layoutComponents() {
+            mainPane = new JPanel(new BorderLayout());
+            JPanel south = new JPanel();
+            south.add(createButton);
+            south.add(cancelButton);
+            mainPane.add(south, BorderLayout.SOUTH);
+            mainPane.add(listOfActionTypes, BorderLayout.WEST);
+            currentFrame = possibleViews.get(listOfActionTypes.getSelectedValue());
+            mainPane.add(currentFrame);
+            add(mainPane);
         }
 
         private void createPossibleViews() {
             possibleViews = new HashMap<String, CreateActionPanel>();
             possibleViews.put("Pause", new CreatePauseActionPanel());
-            listOfActionTypes.setListData(new String[] { "Pause" });
+            possibleViews.put("Click", new CreateClickActionPanel());
+            listOfActionTypes.setListData(possibleViews.keySet().toArray(
+                    new String[possibleViews.keySet().size()]));
+            listOfActionTypes.setSelectedIndex(0);
         }
+
+        private ActionListener createAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+            }
+        };
+
+        private ListSelectionListener selectionChange = new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                mainPane.remove(currentFrame);
+                currentFrame = possibleViews.get(listOfActionTypes.getSelectedValue());
+                mainPane.add(currentFrame);
+                invalidate();
+                repaint();
+                System.out.println("Action fired.  Switched to:"
+                        + listOfActionTypes.getSelectedValue());
+            }
+        };
     }
 
     public static void main(String[] args) {

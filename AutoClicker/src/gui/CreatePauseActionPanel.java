@@ -2,16 +2,28 @@ package gui;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import actions.AutoAction;
 import actions.PauseAction;
 
 public class CreatePauseActionPanel extends CreateActionPanel {
     private JLabel pauseLabel;
-    private JTextArea pauseAmnt;
+    private JTextField pauseAmnt;
 
     public CreatePauseActionPanel() {
         super();
+        createComponents();layoutComponents();
+    }
+
+    private final void layoutComponents() {
+        add(pauseLabel);
+        add(pauseAmnt);
+    }
+
+    private final void createComponents() {
+        pauseLabel = new JLabel("Delay Ammount");
+        pauseAmnt = new JTextField(5);
     }
 
     @Override
