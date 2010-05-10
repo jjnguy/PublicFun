@@ -239,7 +239,7 @@ public class MainFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (connected)
-				disconnect();
+				MainFrame.this.disconnect();
 		}
 	};
 
