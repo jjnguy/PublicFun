@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,10 +11,12 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 import net.sf.stackwrap4j.StackOverflow;
 import net.sf.stackwrap4j.StackWrapper;
+import net.sf.stackwrap4j.datastructures.AnswerAutoFetchList;
 import net.sf.stackwrap4j.entities.Answer;
 import net.sf.stackwrap4j.entities.Question;
 import net.sf.stackwrap4j.entities.User;
 import net.sf.stackwrap4j.exceptions.ParameterNotSetException;
+import net.sf.stackwrap4j.http.HttpClient;
 import net.sf.stackwrap4j.json.JSONException;
 import net.sf.stackwrap4j.query.AnswerQuery;
 import net.sf.stackwrap4j.query.QuestionQuery;
@@ -20,8 +24,19 @@ import net.sf.stackwrap4j.query.QuestionQuery;
 public class Main {
     public static void main(String[] args) throws JSONException, IOException,
             ParameterNotSetException {
+        Proxy prox = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
+                "webproxy.int.westgroup.com", 80));
+        HttpClient.proxyServer = prox;
         StackWrapper sw = new StackOverflow("RhtZB9-r0EKYJi-OjKSRUg");
-        replicateStatsPage("java", sw);
+        testAutoFetchList(sw);
+    }
+
+    private static void testAutoFetchList(StackWrapper sw) {
+        List<Answer> answers = new AnswerAutoFetchList(sw,
+                (AnswerQuery) new AnswerQuery().setIds(4));
+        for (Answer a: answers){
+            System.out.println(a.getQuestionId());
+        }
     }
 
     /**
