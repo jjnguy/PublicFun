@@ -13,11 +13,15 @@ public class StackWrapDataAccess {
 
     private Map<String, StackWrapper> allSites;
 
-    public StackWrapDataAccess() throws IOException, JSONException {
+    public StackWrapDataAccess() throws IOException, JSONException{
+        this(null);
+    }
+    
+    public StackWrapDataAccess(String key) throws IOException, JSONException {
         allSites = new HashMap<String, StackWrapper>();
         Map<String, Site> sites = StackAuth.getNameSiteMap();
         for (Entry<String, Site> entry : sites.entrySet()) {
-            allSites.put(entry.getKey(), entry.getValue().getStackWrapper());
+            allSites.put(entry.getKey(), entry.getValue().getStackWrapper(key));
         }
     }
     
