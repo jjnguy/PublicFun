@@ -16,6 +16,8 @@ public class MainFrame extends JFrame {
         repGraph = new ReputationGraph();
         repGraph.setPreferredSize(new Dimension(400, 400));
         repGraph.addUser("Stack Overflow", 2598);
+        repGraph.addUser("Stack Overflow", 1288);
+        repGraph.addUser("Stack Overflow", 22656);
         add(repGraph);
         pack();
         setVisible(true);
