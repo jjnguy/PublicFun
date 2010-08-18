@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -36,21 +37,17 @@ public class ReputationGraph extends JPanel {
     private StackWrapDataAccess data;
     private Map<Integer, User> users;
     private Map<Integer, List<Reputation>> userRep;
-    private Map<Integer, List<RepPoint>> dailyPoints;
 
-    private Color[] colors = new Color[] { Color.BLACK, Color.BLUE, Color.RED,
-            Color.GREEN, Color.ORANGE, Color.CYAN, Color.MAGENTA };
-
-    private int minRep = 0, maxRep = Integer.MIN_VALUE;
-    private DateTime minDate = new DateTime(2060, 1, 1, 1, 1, 1, 1),
-            maxDate = new DateTime(0);
+    // private Map<Integer, List<RepPoint>> dailyPoints;
 
     public ReputationGraph() throws IOException, JSONException {
-        super();
+        super(new BorderLayout());
         users = new HashMap<Integer, User>();
         userRep = new HashMap<Integer, List<Reputation>>();
-        dailyPoints = new HashMap<Integer, List<RepPoint>>();
+        // dailyPoints = new HashMap<Integer, List<RepPoint>>();
         data = new StackWrapDataAccess("RhtZB9-r0EKYJi-OjKSRUg");
+        graph = new GraphPanel(this);
+        add(graph);
     }
 
     public void addUser(String site, int userId) throws JSONException,
@@ -60,10 +57,6 @@ public class ReputationGraph extends JPanel {
     }
 
     private List<RepPoint> calculateDailyPoints(int userId) {
-        int maxRep = Integer.MIN_VALUE;
-        int minRep = 0;
-        DateTime minDate = new DateTime(2060, 1, 1, 1, 1, 1, 1);
-        DateTime maxDate = new DateTime(0);
         List<RepPoint> points = new ArrayList<RepPoint>();
         int totalRep = 0;
         RepPoint currentDay = null;
@@ -72,17 +65,7 @@ public class ReputationGraph extends JPanel {
             currentDay.addRep(r);
             totalRep -= r.getNegativeRep();
             totalRep += r.getPositiveRep();
-            maxRep = Math.max(totalRep, maxRep);
-            minRep = Math.min(totalRep, minRep);
-            minDate = minDate.isBefore(currentDay.getDate()) ? minDate
-                    : currentDay.getDate();
-            maxDate = maxDate.isAfter(currentDay.getDate()) ? maxDate
-                    : currentDay.getDate();
         }
-        this.maxRep = Math.max(maxRep, this.maxRep);
-        this.minRep = Math.min(minRep, this.minRep);
-        this.minDate = minDate.isBefore(this.minDate) ? minDate : this.minDate;
-        this.maxDate = maxDate.isAfter(this.maxDate) ? maxDate : this.maxDate;
         return points;
     }
 
@@ -131,7 +114,7 @@ public class ReputationGraph extends JPanel {
             });
             userRep.put(userId, userRepL);
             List<RepPoint> reps = calculateDailyPoints(userId);
-            dailyPoints.put(userId, reps);
+            graph.addUser(users.get(userId), reps);
             return reps;
         }
 
