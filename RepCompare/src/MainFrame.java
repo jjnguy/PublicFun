@@ -18,8 +18,8 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         repGraph = new ReputationGraph();
         repGraph.setPreferredSize(new Dimension(400, 400));
-        repGraph.addUser("Stack Overflow", 112607);
-        repGraph.addUser("Stack Overflow", 2598);
+        repGraph.addUser("Stack Overflow", 95810);
+        repGraph.addUser("Stack Overflow", 893);
         add(repGraph);
         pack();
         setVisible(true);
