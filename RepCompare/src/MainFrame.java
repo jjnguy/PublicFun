@@ -18,6 +18,7 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         repGraph = new ReputationGraph();
         repGraph.addUser("Stack Overflow", 2598);
+        repGraph.addUser("Stack Overflow", 34509);
         repGraph.addUser("Stack Overflow", 1288);
         add(repGraph);
         pack();
@@ -25,7 +26,7 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) throws IOException, JSONException, ParameterNotSetException {
-        HttpClient.proxyServer = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("webproxy.int.westgroup.com", 80));
+        // HttpClient.proxyServer = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("webproxy.int.westgroup.com", 80));
         new MainFrame();
     }
 }

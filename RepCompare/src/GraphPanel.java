@@ -19,27 +19,20 @@ public class GraphPanel extends JPanel {
     private final int Edge_Padding = 16;
 
     private int minRep = 0, maxRep = Integer.MIN_VALUE;
-    private DateTime minDate = new DateTime(2060, 1, 1, 1, 1, 1, 1),
-            maxDate = new DateTime(0);
+    private DateTime minDate = new DateTime(2060, 1, 1, 1, 1, 1, 1), maxDate = new DateTime(0);
 
-    private ReputationGraph parent;
-    private KeyPanel key;
-
-    private List<User> users;
+    private List<UserColorPair> users;
     private Map<Integer, List<RepPoint>> idToRepPoints;
 
-    private Color[] colors = new Color[] { Color.BLACK, Color.BLUE, Color.RED,
-            Color.GREEN, Color.ORANGE, Color.CYAN, Color.MAGENTA };
-
     public GraphPanel(ReputationGraph parent) {
-        users = new ArrayList<User>();
+        users = new ArrayList<UserColorPair>();
         idToRepPoints = new HashMap<Integer, List<RepPoint>>();
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(400, 400));
     }
 
-    public void addUser(User u, List<RepPoint> reps) {
-        users.add(u);
+    public void addUser(User u, List<RepPoint> reps, Color c) {
+        users.add(new UserColorPair(u, c));
         idToRepPoints.put(u.getId(), reps);
         repaint();
         int repSum = 0;
@@ -55,13 +48,12 @@ public class GraphPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        System.out.println("Paint a graph panel");
         Graphics2D g2 = (Graphics2D) g;
         paintRule(g2);
-        int usernum = -1;
-        for (User user : users) {
-            usernum = ++usernum % colors.length;
-            g2.setColor(colors[usernum]);
-            List<RepPoint> points = idToRepPoints.get(user.getId());
+        for (UserColorPair u_c : users) {
+            g2.setColor(u_c.color);
+            List<RepPoint> points = idToRepPoints.get(u_c.user.getId());
             if (points == null)
                 continue;
             int totalRep = 0;
@@ -88,8 +80,8 @@ public class GraphPanel extends JPanel {
         g2.setStroke(saveStroke);
         g2.setColor(saveColor);
     }
-    
-    private void paintYRule(Graphics2D g2){
+
+    private void paintYRule(Graphics2D g2) {
         Color saveColor = g2.getColor();
         Stroke saveStroke = g2.getStroke();
         g2.setColor(Color.LIGHT_GRAY);
@@ -105,7 +97,7 @@ public class GraphPanel extends JPanel {
         g2.setColor(saveColor);
     }
 
-    private void paintXRule(Graphics2D g2){
+    private void paintXRule(Graphics2D g2) {
         Color saveColor = g2.getColor();
         Stroke saveStroke = g2.getStroke();
         g2.setColor(Color.LIGHT_GRAY);
@@ -113,14 +105,15 @@ public class GraphPanel extends JPanel {
         for (long i = minDate.getMillis(); i <= maxDate.getMillis(); i += dateIncrement) {
             int x = translateDateToXVal(new DateTime(i));
             g2.setColor(Color.BLACK);
-            g2.drawString(new DateTime(i).toString("MM-dd-YYYY"), x, getHeight() - ((Edge_Padding / 2) - 3));
+            g2.drawString(new DateTime(i).toString("MM-dd-YYYY"), x, getHeight()
+                    - ((Edge_Padding / 2) - 3));
             g2.setColor(Color.LIGHT_GRAY);
             g2.drawLine(x, Edge_Padding, x, getHeight() - Edge_Padding);
         }
         g2.setStroke(saveStroke);
         g2.setColor(saveColor);
     }
-    
+
     private long calculateDateIncrement() {
         long dateDiff = maxDate.getMillis() - minDate.getMillis();
         final double desiredNumberOfLines = 3.0;

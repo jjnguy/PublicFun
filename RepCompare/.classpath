@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="joda-time-1.6.1.jar" sourcepath="joda-time-1.6.1-sources.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StackWrap4J"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/stackwrap4j"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

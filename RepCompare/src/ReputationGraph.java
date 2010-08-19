@@ -1,8 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,17 +6,18 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
-
-import org.joda.time.DateTime;
 
 import net.sf.stackwrap4j.entities.Reputation;
 import net.sf.stackwrap4j.entities.User;
 import net.sf.stackwrap4j.exceptions.ParameterNotSetException;
 import net.sf.stackwrap4j.json.JSONException;
 import net.sf.stackwrap4j.query.ReputationQuery;
+
+import org.joda.time.DateTime;
 
 /**
  * I don't want this class to know anything about color graphics, poitns, or
@@ -31,22 +28,19 @@ import net.sf.stackwrap4j.query.ReputationQuery;
  */
 public class ReputationGraph extends JPanel {
 
-    private GraphPanel graph;
+    private GraphAndKeyPanel graph;
     private InfoPane info;
 
     private StackWrapDataAccess data;
     private Map<Integer, User> users;
     private Map<Integer, List<Reputation>> userRep;
 
-    // private Map<Integer, List<RepPoint>> dailyPoints;
-
     public ReputationGraph() throws IOException, JSONException {
         super(new BorderLayout());
         users = new HashMap<Integer, User>();
         userRep = new HashMap<Integer, List<Reputation>>();
-        // dailyPoints = new HashMap<Integer, List<RepPoint>>();
         data = new StackWrapDataAccess("RhtZB9-r0EKYJi-OjKSRUg");
-        graph = new GraphPanel(this);
+        graph = new GraphAndKeyPanel(this);
         add(graph);
     }
 
@@ -114,14 +108,25 @@ public class ReputationGraph extends JPanel {
             });
             userRep.put(userId, userRepL);
             List<RepPoint> reps = calculateDailyPoints(userId);
-            graph.addUser(users.get(userId), reps);
             return reps;
         }
 
         @Override
         protected void done() {
             super.done();
+            try {
+                graph.addUser(users.get(userId), this.get());
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            invalidate();
             ReputationGraph.this.repaint();
+            invalidate();
+            validate();
         }
     }
 }
