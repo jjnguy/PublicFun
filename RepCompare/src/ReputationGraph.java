@@ -20,8 +20,7 @@ import net.sf.stackwrap4j.query.ReputationQuery;
 import org.joda.time.DateTime;
 
 /**
- * I don't want this class to know anything about color graphics, poitns, or
- * anything like that.
+ * I don't want this class to know anything about color graphics, poitns, or anything like that.
  * 
  * @author u0117691
  * 
@@ -41,38 +40,26 @@ public class ReputationGraph extends JPanel {
         userRep = new HashMap<Integer, List<Reputation>>();
         data = new StackWrapDataAccess("RhtZB9-r0EKYJi-OjKSRUg");
         graph = new GraphAndKeyPanel(this);
+        info = new InfoPane();
         add(graph);
+        add(info, BorderLayout.SOUTH);
     }
 
-    public void addUser(String site, int userId) throws JSONException,
-            IOException, ParameterNotSetException {
+    public void addUser(String site, int userId) throws JSONException, IOException,
+            ParameterNotSetException {
         AddUserWorker worker = new AddUserWorker(userId, site);
         worker.execute();
     }
 
-    private List<RepPoint> calculateDailyPoints(int userId) {
-        List<RepPoint> points = new ArrayList<RepPoint>();
-        int totalRep = 0;
-        RepPoint currentDay = null;
-        for (Reputation r : userRep.get(userId)) {
-            currentDay = setCurrentDay(currentDay, r, points);
-            currentDay.addRep(r);
-            totalRep -= r.getNegativeRep();
-            totalRep += r.getPositiveRep();
-        }
-        return points;
-    }
-
-    private RepPoint setCurrentDay(RepPoint currentDay,
-            Reputation currentPoint, List<RepPoint> points) {
+    private RepPoint setCurrentDay(RepPoint currentDay, Reputation currentPoint,
+            List<RepPoint> points) {
         if (currentDay == null) {
             RepPoint newDay = new RepPoint(currentPoint.getOnDate() * 1000);
             points.add(newDay);
             return newDay;
         } else {
             DateTime dateInList = currentDay.getDate();
-            DateTime dateLookingAt = new DateTime(
-                    currentPoint.getOnDate() * 1000);
+            DateTime dateLookingAt = new DateTime(currentPoint.getOnDate() * 1000);
             if ((dateLookingAt.getMillis() - dateInList.getMillis()) > (60 * 60 * 24)) {
                 RepPoint newDay = new RepPoint(currentPoint.getOnDate() * 1000);
                 points.add(newDay);
@@ -83,23 +70,26 @@ public class ReputationGraph extends JPanel {
         }
     }
 
-    private class AddUserWorker extends SwingWorker<List<RepPoint>, Void> {
+    private class AddUserWorker extends SwingWorker<List<RepPoint>, Double> {
 
         private int userId;
         private String site;
+        private AddUserInfo addInfo;
 
-        public AddUserWorker(int userId, String site) {
+        public AddUserWorker(int userId, String site) throws JSONException, IOException {
             this.userId = userId;
             this.site = site;
+            User newU = data.getUser(site, userId);
+            users.put(userId, newU);
+            addInfo = new AddUserInfo(users.get(userId).getDisplayName());
+            info.addInfo(addInfo);
         }
 
         @Override
         protected List<RepPoint> doInBackground() throws Exception {
-            User newU = data.getUser(site, userId);
-            users.put(userId, newU);
             ReputationQuery query = new ReputationQuery();
             query.setPageSize(ReputationQuery.MAX_PAGE_SIZE);
-            List<Reputation> userRepL = newU.getReputationInfo(query);
+            List<Reputation> userRepL = users.get(userId).getReputationInfo(query);
             Collections.sort(userRepL, new Comparator<Reputation>() {
                 @Override
                 public int compare(Reputation o1, Reputation o2) {
@@ -109,6 +99,12 @@ public class ReputationGraph extends JPanel {
             userRep.put(userId, userRepL);
             List<RepPoint> reps = calculateDailyPoints(userId);
             return reps;
+        }
+
+        @Override
+        protected void process(List<Double> chunks) {
+            System.out.println("Processing: " + chunks.get(0));
+            addInfo.setProgress((int) (chunks.get(0) * 100));
         }
 
         @Override
@@ -123,10 +119,27 @@ public class ReputationGraph extends JPanel {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            info.remove(addInfo);
             invalidate();
             ReputationGraph.this.repaint();
             invalidate();
             validate();
+        }
+
+        private List<RepPoint> calculateDailyPoints(int userId) {
+            List<RepPoint> points = new ArrayList<RepPoint>();
+            int totalRep = 0;
+            RepPoint currentDay = null;
+            int numComplete = 0;
+            for (Reputation r : userRep.get(userId)) {
+                double completed = numComplete++ / (double) userRep.get(userId).size();
+                publish(completed);
+                currentDay = setCurrentDay(currentDay, r, points);
+                currentDay.addRep(r);
+                totalRep -= r.getNegativeRep();
+                totalRep += r.getPositiveRep();
+            }
+            return points;
         }
     }
 }
