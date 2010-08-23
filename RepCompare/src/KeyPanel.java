@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,19 +15,23 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import net.sf.stackwrap4j.entities.User;
+import net.sf.stackwrap4j.json.JSONException;
 
 public class KeyPanel extends JPanel {
 
     private List<UserColorPair> users;
 
-    public KeyPanel() {
+    private StackWrapDataAccess data;
+
+    public KeyPanel() throws IOException, JSONException {
         users = new ArrayList<UserColorPair>();
+        data = new StackWrapDataAccess(StackWrapDataAccess.Key);
         setPreferredSize(new Dimension(200, getPreferredSize().height));
         setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
     }
 
-    public void addUser(User u, Color c) {
-        users.add(new UserColorPair(u, c));
+    public void addUser(User u, String site, Color c) {
+        users.add(new UserColorPair(u, site, c));
         repaint();
     }
 
@@ -39,7 +45,7 @@ public class KeyPanel extends JPanel {
         final int xGap = 3;
         final int yGap = 2;
         final int cubeSide = 4;
-        int totalHeight = met.getHeight() * users.size() + yGap * (users.size() - 1);
+        int totalHeight = 30 * users.size() + yGap * (users.size() - 1);
         int height = (getHeight() - totalHeight) / 2;
         int maxWidth = 0;
         g2.setColor(Color.BLACK);
@@ -49,11 +55,11 @@ public class KeyPanel extends JPanel {
             g2.setColor(Color.BLACK);
             g.drawString(u_c.user.getDisplayName(), xGap + cubeSide * 2, height + met.getHeight()
                     / 2);
-            double strWidth = xGap * 6
+            double strWidth = xGap * 5
                     + met.getStringBounds(u_c.user.getDisplayName(), g2).getWidth();
-            maxWidth = Math.max(maxWidth, (int) (strWidth));
-            height += yGap + met.getHeight();
-            // g.drawImage(ImageIO.read(new URL(u_c.user.get)), arg1, arg2, arg3)
+            g.drawImage(data.getIconBySite(u_c.site), (int) (strWidth), height - 15, 30, 30, null);
+            maxWidth = Math.max(maxWidth, (int) (strWidth + 30 + 5));
+            height += yGap + 30;
         }
         if (maxWidth != 0)
             setPreferredSize(new Dimension(maxWidth, 400));

@@ -31,13 +31,13 @@ public class ReputationGraph extends JPanel {
     private InfoPane info;
 
     private StackWrapDataAccess data;
-    private Map<Integer, User> users;
-    private Map<Integer, List<Reputation>> userRep;
+    private Map<String, User> users;
+    private Map<String, List<Reputation>> userRep;
 
     public ReputationGraph() throws IOException, JSONException {
         super(new BorderLayout());
-        users = new HashMap<Integer, User>();
-        userRep = new HashMap<Integer, List<Reputation>>();
+        users = new HashMap<String, User>();
+        userRep = new HashMap<String, List<Reputation>>();
         data = new StackWrapDataAccess(StackWrapDataAccess.Key);
         graph = new GraphAndKeyPanel(this);
         info = new InfoPane();
@@ -80,8 +80,8 @@ public class ReputationGraph extends JPanel {
             this.userId = userId;
             this.site = site;
             User newU = data.getUser(site, userId);
-            users.put(userId, newU);
-            addInfo = new AddUserInfo(users.get(userId).getDisplayName());
+            users.put(site + ":" + userId, newU);
+            addInfo = new AddUserInfo(users.get(site + ":" + userId).getDisplayName());
             info.addInfo(addInfo);
         }
 
@@ -89,14 +89,14 @@ public class ReputationGraph extends JPanel {
         protected List<RepPoint> doInBackground() throws Exception {
             ReputationQuery query = new ReputationQuery();
             query.setPageSize(ReputationQuery.MAX_PAGE_SIZE);
-            List<Reputation> userRepL = users.get(userId).getReputationInfo(query);
+            List<Reputation> userRepL = users.get(site + ":" + userId).getReputationInfo(query);
             Collections.sort(userRepL, new Comparator<Reputation>() {
                 @Override
                 public int compare(Reputation o1, Reputation o2) {
                     return (int) (o1.getOnDate() - o2.getOnDate());
                 }
             });
-            userRep.put(userId, userRepL);
+            userRep.put(site + ":" + userId, userRepL);
             List<RepPoint> reps = calculateDailyPoints(userId);
             return reps;
         }
@@ -111,7 +111,7 @@ public class ReputationGraph extends JPanel {
         protected void done() {
             super.done();
             try {
-                graph.addUser(users.get(userId), this.get());
+                graph.addUser(users.get(site + ":" + userId), site, this.get());
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -131,8 +131,8 @@ public class ReputationGraph extends JPanel {
             int totalRep = 0;
             RepPoint currentDay = null;
             int numComplete = 0;
-            for (Reputation r : userRep.get(userId)) {
-                double completed = numComplete++ / (double) userRep.get(userId).size();
+            for (Reputation r : userRep.get(site + ":" + userId)) {
+                double completed = numComplete++ / (double) userRep.get(site + ":" + userId).size();
                 publish(completed);
                 currentDay = setCurrentDay(currentDay, r, points);
                 currentDay.addRep(r);

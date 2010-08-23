@@ -15,6 +15,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import net.sf.stackwrap4j.entities.User;
@@ -24,15 +25,14 @@ import net.sf.stackwrap4j.json.JSONException;
 
 public class MainFrame extends JFrame {
 
+    private AddUserDialog addUser;
     private ReputationGraph repGraph;
 
     public MainFrame() throws IOException, JSONException, ParameterNotSetException {
         super("Reputation Graph Compare");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        addUser = new AddUserDialog();
         repGraph = new ReputationGraph();
-        //repGraph.addUser("Stack Overflow", 2598);
-        //repGraph.addUser("Stack Overflow", 34509);
-        //repGraph.addUser("Stack Overflow", 1288);
         add(repGraph);
         createMenu();
         pack();
@@ -42,14 +42,12 @@ public class MainFrame extends JFrame {
     private void createMenu() {
         JMenuBar bar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
-        JMenuItem addUser = new JMenuItem("Add User");
-        addUser.addActionListener(new ActionListener() {
+        JMenuItem addUserItem = new JMenuItem("Add User");
+        addUserItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddUserDialog d;
                 try {
-                    d = new AddUserDialog();
-                    d.showCreateUserDialog();
+                    addUser.showCreateUserDialog();
                 } catch (IOException e2) {
                     // TODO Auto-generated catch block
                     e2.printStackTrace();
@@ -65,7 +63,7 @@ public class MainFrame extends JFrame {
                 }
             }
         });
-        fileMenu.add(addUser);
+        fileMenu.add(addUserItem);
         bar.add(fileMenu);
         setJMenuBar(bar);
     }
@@ -74,7 +72,23 @@ public class MainFrame extends JFrame {
             ParameterNotSetException {
         // HttpClient.proxyServer = new Proxy(Proxy.Type.HTTP, new
         // InetSocketAddress("webproxy.int.westgroup.com", 80));
-        new MainFrame();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new MainFrame();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (ParameterNotSetException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private class AddUserDialog extends JDialog {

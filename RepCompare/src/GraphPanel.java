@@ -22,18 +22,18 @@ public class GraphPanel extends JPanel {
     private DateTime minDate = new DateTime(2060, 1, 1, 1, 1, 1, 1), maxDate = new DateTime(0);
 
     private List<UserColorPair> users;
-    private Map<Integer, List<RepPoint>> idToRepPoints;
+    private Map<String, List<RepPoint>> idToRepPoints;
 
     public GraphPanel(ReputationGraph parent) {
         users = new ArrayList<UserColorPair>();
-        idToRepPoints = new HashMap<Integer, List<RepPoint>>();
+        idToRepPoints = new HashMap<String, List<RepPoint>>();
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(400, 400));
     }
 
-    public void addUser(User u, List<RepPoint> reps, Color c) {
-        users.add(new UserColorPair(u, c));
-        idToRepPoints.put(u.getId(), reps);
+    public void addUser(User u, String site, List<RepPoint> reps, Color c) {
+        users.add(new UserColorPair(u, site, c));
+        idToRepPoints.put(site +":"+u.getId(), reps);
         repaint();
         int repSum = 0;
         for (RepPoint r : reps) {
@@ -53,7 +53,7 @@ public class GraphPanel extends JPanel {
         paintRule(g2);
         for (UserColorPair u_c : users) {
             g2.setColor(u_c.color);
-            List<RepPoint> points = idToRepPoints.get(u_c.user.getId());
+            List<RepPoint> points = idToRepPoints.get(u_c.site +":"+u_c.user.getId());
             if (points == null)
                 continue;
             int totalRep = 0;
