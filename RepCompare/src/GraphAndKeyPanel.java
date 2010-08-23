@@ -31,6 +31,10 @@ public class GraphAndKeyPanel extends JPanel {
         graph.addUser(u, site, rep, usersColor);
     }
 
+    public void setKeyVisible(boolean visibility){
+        key.setVisible(visibility);
+    }
+    
     private Color decideColor() {
         Color[] colors = { Color.BLUE, Color.GREEN, Color.CYAN, Color.RED, Color.MAGENTA, Color.BLACK };
         return colors[usersAdded % colors.length];

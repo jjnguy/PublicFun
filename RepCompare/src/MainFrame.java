@@ -7,6 +7,7 @@ import java.net.Proxy;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -43,6 +44,13 @@ public class MainFrame extends JFrame {
         JMenuBar bar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenuItem addUserItem = new JMenuItem("Add User");
+        final JCheckBox keyVilibleItem = new JCheckBox("Hide Key");
+        keyVilibleItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                repGraph.setKeyVisibility(!keyVilibleItem.isSelected());
+            }
+        });
         addUserItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,6 +72,7 @@ public class MainFrame extends JFrame {
             }
         });
         fileMenu.add(addUserItem);
+        fileMenu.add(keyVilibleItem);
         bar.add(fileMenu);
         setJMenuBar(bar);
     }

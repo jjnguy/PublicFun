@@ -50,6 +50,10 @@ public class ReputationGraph extends JPanel {
         AddUserWorker worker = new AddUserWorker(userId, site);
         worker.execute();
     }
+    
+    public void setKeyVisibility(boolean visibility){
+        graph.setKeyVisible(visibility);
+    }
 
     private RepPoint setCurrentDay(RepPoint currentDay, Reputation currentPoint,
             List<RepPoint> points) {
