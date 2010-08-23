@@ -38,7 +38,7 @@ public class ReputationGraph extends JPanel {
         super(new BorderLayout());
         users = new HashMap<Integer, User>();
         userRep = new HashMap<Integer, List<Reputation>>();
-        data = new StackWrapDataAccess("RhtZB9-r0EKYJi-OjKSRUg");
+        data = new StackWrapDataAccess(StackWrapDataAccess.Key);
         graph = new GraphAndKeyPanel(this);
         info = new InfoPane();
         add(graph);

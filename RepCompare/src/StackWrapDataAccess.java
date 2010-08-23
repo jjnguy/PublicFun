@@ -1,5 +1,7 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -28,4 +30,14 @@ public class StackWrapDataAccess {
     public User getUser(String site, int id) throws JSONException, IOException{
         return allSites.get(site).getUserById(id);
     }
+    
+    public List<String> getAllSites() throws IOException, JSONException{
+        List<String> ret = new ArrayList<String>();
+        for (Site s: StackAuth.getAllSites()){
+            ret.add(s.getName());
+        }
+        return ret;
+    }
+    
+    public static String Key = "RhtZB9-r0EKYJi-OjKSRUg";
 }

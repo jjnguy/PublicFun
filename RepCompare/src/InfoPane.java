@@ -4,8 +4,6 @@ import javax.swing.JScrollPane;
 
 public class InfoPane extends JPanel {
 
-    private JScrollPane contents;
-
     public InfoPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }

@@ -4,9 +4,11 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
@@ -51,9 +53,11 @@ public class KeyPanel extends JPanel {
                     + met.getStringBounds(u_c.user.getDisplayName(), g2).getWidth();
             maxWidth = Math.max(maxWidth, (int) (strWidth));
             height += yGap + met.getHeight();
+            // g.drawImage(ImageIO.read(new URL(u_c.user.get)), arg1, arg2, arg3)
         }
         if (maxWidth != 0)
             setPreferredSize(new Dimension(maxWidth, 400));
+        getParent().validate();
         validate();
     }
 }
