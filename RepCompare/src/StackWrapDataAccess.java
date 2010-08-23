@@ -19,30 +19,35 @@ import net.sf.stackwrap4j.stackauth.entities.Site;
 public class StackWrapDataAccess {
 
     private static Map<String, Image> icons;
-    
+
     static {
-        icons= new HashMap<String, Image>();
-        Map<String, Site> sites = null;
-        try {
-            sites = StackAuth.getNameSiteMap();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        for (Entry<String, Site> entry : sites.entrySet()) {
-            try {
-                icons.put(entry.getKey(), ImageIO.read(new URL(entry.getValue().getIconUrl())));
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        new Thread() {
+            public void run() {
+                icons = new HashMap<String, Image>();
+                Map<String, Site> sites = null;
+                try {
+                    sites = StackAuth.getNameSiteMap();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                for (Entry<String, Site> entry : sites.entrySet()) {
+                    try {
+                        icons.put(entry.getKey(), ImageIO.read(new URL(entry.getValue()
+                                .getIconUrl())));
+                    } catch (MalformedURLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
+        }.start();
     }
     private Map<String, StackWrapper> allSites;
 

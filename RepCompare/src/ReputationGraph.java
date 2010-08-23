@@ -83,6 +83,10 @@ public class ReputationGraph extends JPanel {
             users.put(site + ":" + userId, newU);
             addInfo = new AddUserInfo(users.get(site + ":" + userId).getDisplayName());
             info.addInfo(addInfo);
+            invalidate();
+            ReputationGraph.this.repaint();
+            invalidate();
+            validate();
         }
 
         @Override
