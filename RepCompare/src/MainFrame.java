@@ -14,6 +14,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -101,6 +102,7 @@ public class MainFrame extends JFrame {
         private boolean okPressed;
         
         private JComboBox sites;
+        private JLabel label;
         private JTextField id;
         private JButton ok;
 
@@ -109,6 +111,7 @@ public class MainFrame extends JFrame {
             setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
             JPanel mainPane = new JPanel();
             sites = new JComboBox();
+            label = new JLabel("User ID: ");
             id = new JTextField(8);
             id.addKeyListener(enterPressed);
             sites.addKeyListener(enterPressed);
@@ -121,6 +124,7 @@ public class MainFrame extends JFrame {
                 }
             });
             mainPane.add(sites);
+            mainPane.add(label);
             mainPane.add(id);
             mainPane.add(ok);
             add(mainPane);
