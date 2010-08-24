@@ -9,7 +9,6 @@ public class AddUserInfo extends Info {
     public AddUserInfo(String userName) {
         this.userName = userName;
         progress = new JProgressBar(0, 100);
-        progress.setIndeterminate(true);
         add(new JLabel(this.userName));
         add(progress);
     }

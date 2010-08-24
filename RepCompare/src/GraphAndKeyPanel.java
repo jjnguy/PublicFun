@@ -39,5 +39,4 @@ public class GraphAndKeyPanel extends JPanel {
         Color[] colors = { Color.BLUE, Color.GREEN, Color.CYAN, Color.RED, Color.MAGENTA, Color.BLACK };
         return colors[usersAdded % colors.length];
     }
-
 }

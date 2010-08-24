@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,7 +27,7 @@ public class KeyPanel extends JPanel {
     public KeyPanel() throws IOException, JSONException {
         users = new ArrayList<UserColorPair>();
         data = new StackWrapDataAccess(StackWrapDataAccess.Key);
-        setPreferredSize(new Dimension(200, getPreferredSize().height));
+        setPreferredSize(new Dimension(200, 400));
         setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
     }
 
@@ -38,10 +39,18 @@ public class KeyPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // Title Stuff
         Graphics2D g2 = (Graphics2D) g;
+        Font titleFont = new Font(Font.SERIF, Font.BOLD, 18);
+        g2.setFont(titleFont);
+        // Setup for the rest
+        FontMetrics met = g.getFontMetrics();
+        int titleHeight = met.getHeight();
+        int titleWidth = met.stringWidth("Key");
+        g2.drawString("Key", (getWidth() / 2) - (titleWidth / 2), titleHeight + 5);
         Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
         g2.setFont(f);
-        FontMetrics met = g.getFontMetrics();
+        met = g.getFontMetrics();
         final int xGap = 3;
         final int yGap = 2;
         final int cubeSide = 4;
@@ -49,6 +58,7 @@ public class KeyPanel extends JPanel {
         int height = (getHeight() - totalHeight) / 2;
         int maxWidth = 0;
         g2.setColor(Color.BLACK);
+        // iterate through all users
         for (UserColorPair u_c : users) {
             g2.setColor(u_c.color);
             g.fillRect(xGap, height, cubeSide, cubeSide);
@@ -61,9 +71,8 @@ public class KeyPanel extends JPanel {
             maxWidth = Math.max(maxWidth, (int) (strWidth + 30 + 5));
             height += yGap + 30;
         }
+        // reset the width
         if (maxWidth != 0)
-            setPreferredSize(new Dimension(maxWidth, 400));
-        getParent().validate();
-        validate();
+            setPreferredSize(new Dimension(maxWidth, getParent().getHeight()));
     }
 }

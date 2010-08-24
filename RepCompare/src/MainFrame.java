@@ -1,6 +1,9 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -32,7 +35,7 @@ public class MainFrame extends JFrame {
     public MainFrame() throws IOException, JSONException, ParameterNotSetException {
         super("Reputation Graph Compare");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        addUser = new AddUserDialog();
+        addUser = new AddUserDialog(this);
         repGraph = new ReputationGraph();
         add(repGraph);
         createMenu();
@@ -57,16 +60,12 @@ public class MainFrame extends JFrame {
                 try {
                     addUser.showCreateUserDialog();
                 } catch (IOException e2) {
-                    // TODO Auto-generated catch block
                     e2.printStackTrace();
                 } catch (JSONException e2) {
-                    // TODO Auto-generated catch block
                     e2.printStackTrace();
                 } catch (NumberFormatException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 } catch (ParameterNotSetException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             }
@@ -87,13 +86,10 @@ public class MainFrame extends JFrame {
                 try {
                     new MainFrame();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (ParameterNotSetException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
@@ -102,18 +98,25 @@ public class MainFrame extends JFrame {
 
     private class AddUserDialog extends JDialog {
 
+        private boolean okPressed;
+        
         private JComboBox sites;
         private JTextField id;
         private JButton ok;
 
-        private AddUserDialog() throws IOException, JSONException {
+        private AddUserDialog(JFrame parent) throws IOException, JSONException {
+            super(parent);
+            setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
             JPanel mainPane = new JPanel();
             sites = new JComboBox();
             id = new JTextField(8);
+            id.addKeyListener(enterPressed);
+            sites.addKeyListener(enterPressed);
             ok = new JButton("Ok");
             ok.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
+                    okPressed = true;
                     setVisible(false);
                 }
             });
@@ -130,9 +133,19 @@ public class MainFrame extends JFrame {
 
         private void showCreateUserDialog() throws NumberFormatException, JSONException,
                 IOException, ParameterNotSetException {
+            okPressed = false;
             setVisible(true);
-            repGraph.addUser(sites.getSelectedItem().toString(), Integer.parseInt(id.getText()));
+            if (okPressed)
+                repGraph.addUser(sites.getSelectedItem().toString(), Integer.parseInt(id.getText()));
         }
 
+        private KeyListener enterPressed = new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyChar() == '\n') {
+                    ok.doClick();
+                }
+            }
+        };
     }
 }

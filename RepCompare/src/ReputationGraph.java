@@ -22,7 +22,6 @@ import org.joda.time.DateTime;
 /**
  * I don't want this class to know anything about color graphics, poitns, or anything like that.
  * 
- * @author u0117691
  * 
  */
 public class ReputationGraph extends JPanel {
@@ -98,20 +97,24 @@ public class ReputationGraph extends JPanel {
             ReputationQuery query = new ReputationQuery();
             query.setPageSize(ReputationQuery.MAX_PAGE_SIZE);
             List<Reputation> userRepL = users.get(site + ":" + userId).getReputationInfo(query);
-            Collections.sort(userRepL, new Comparator<Reputation>() {
+            List<Reputation> copy = new ArrayList<Reputation>(userRepL.size());
+            for (int i =0; i < userRepL.size(); i++){
+                copy.add(userRepL.get(i));
+                publish(i/(double)userRepL.size());
+            }
+            Collections.sort(copy, new Comparator<Reputation>() {
                 @Override
                 public int compare(Reputation o1, Reputation o2) {
                     return (int) (o1.getOnDate() - o2.getOnDate());
                 }
             });
-            userRep.put(site + ":" + userId, userRepL);
+            userRep.put(site + ":" + userId, copy);
             List<RepPoint> reps = calculateDailyPoints(userId);
             return reps;
         }
 
         @Override
         protected void process(List<Double> chunks) {
-            System.out.println("Processing: " + chunks.get(0));
             addInfo.setProgress((int) (chunks.get(0) * 100));
         }
 
