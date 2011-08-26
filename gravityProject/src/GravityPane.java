@@ -47,6 +47,12 @@ public class GravityPane extends JPanel {
 		repaint();
 	}
 
+	public void energize(double x, double y){
+	   for(GravityObject obj: objects){
+	      obj.accelerate(x, y);
+	   }
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

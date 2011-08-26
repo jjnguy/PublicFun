@@ -100,6 +100,12 @@ public class GravitySphere implements Dragable, Collidable {
 		return pos_y;
 	}
 
+	@Override
+	public void accelerate(double x, double y) {
+	   vel_x += x;
+	   vel_y += y*3;
+	}
+	
 	public void clickedOn() {
 		held = true;
 	}

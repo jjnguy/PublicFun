@@ -22,6 +22,8 @@ public interface GravityObject {
 	 */
 	public void fall(long miliseconds);
 
+	public void accelerate(double x, double y);
+	
 	public void draw(Graphics2D g, int gravPaneHeight);
 	
 }
