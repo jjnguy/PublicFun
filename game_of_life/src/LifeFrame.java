@@ -4,11 +4,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
-import javax.swing.Timer;
 
 public class LifeFrame extends JFrame {
     private LifeDisplay board;
     private boolean go;
+    private Thread runner;
+    private long msPerFrame = 75;
 
     public LifeFrame(LifeDisplay board) {
         setLayout(new BorderLayout());
@@ -25,13 +26,27 @@ public class LifeFrame extends JFrame {
         add(tgl, BorderLayout.SOUTH);
         pack();
         setVisible(true);
-        new Timer(0, new ActionListener() {
+        runner = new Thread() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (go)
-                    LifeFrame.this.board.update();
+            public void run() {
+                while (true) {
+                    long startTime = System.currentTimeMillis();
+                    if (go)
+                        LifeFrame.this.board.update();
+                    long endTime = System.currentTimeMillis();
+                    long elapsed = endTime - startTime;
+                    long remain = msPerFrame - elapsed;
+                    long timeTaken = Math.max(msPerFrame, elapsed);
+                    if (remain > 0)
+                        try {
+                            Thread.sleep(remain);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                }
             }
-        }).start();
+        };
+        runner.start();
     }
 
     public void pause() {
@@ -41,5 +56,4 @@ public class LifeFrame extends JFrame {
     public void go() {
         go = true;
     }
-
 }
