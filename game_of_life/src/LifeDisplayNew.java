@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,10 +16,10 @@ import javax.swing.JPanel;
 
 
 public class LifeDisplayNew extends LifeDisplay {
-    private final int SQUARE_WIDTH = 8;
+    private final int SQUARE_WIDTH = 6;
     private LifeBoard board;
     private Set<Point> points;
-    
+    private boolean grids;
     
     public LifeDisplayNew(LifeBoard board) {
         setBackground(Color.LIGHT_GRAY);
@@ -31,7 +32,10 @@ public class LifeDisplayNew extends LifeDisplay {
                 }
             }
         }
+        setPreferredSize(new Dimension(board.width() * SQUARE_WIDTH, board.height() * SQUARE_WIDTH));
         addMouseListener(ml);
+        addMouseMotionListener(mml);
+        grids = true;
     }
 
     @Override
@@ -60,6 +64,11 @@ public class LifeDisplayNew extends LifeDisplay {
         ret[3] = height;
         return ret;
     }
+    
+    @Override
+    public void setGrids(boolean on) {
+        grids = on;
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -67,8 +76,20 @@ public class LifeDisplayNew extends LifeDisplay {
         for (Point p: points) {
             drawPoint(p, g);
         }
+        if (grids)
+            drawGridLines(g);
     }
     
+    private void drawGridLines(Graphics g) {
+        g.setColor(Color.BLACK);
+        for (int i = 0; i < getWidth(); i += SQUARE_WIDTH) {
+            g.drawLine(i, 0, i, getHeight());
+        }
+        for (int i = 0; i < getHeight(); i += SQUARE_WIDTH) {
+            g.drawLine(0, i, getWidth(), i);
+        }
+    }
+
     private void drawPoint(Point p, Graphics g) {
         int[] coords = getCoordsFromPoint(p);
         if (board.get(p)) {
@@ -82,6 +103,23 @@ public class LifeDisplayNew extends LifeDisplay {
     private static void fillRect(int[] coords, Graphics g) {
         g.fillRect(coords[0], coords[1], coords[2], coords[3]);
     }
+    
+    private MouseMotionListener mml = new MouseMotionListener() {
+        
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+        
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            Point sqPoint = translateClickedLocationToSquarePoint(e.getPoint());
+            points.add(sqPoint);
+            board.set(sqPoint, true);
+            repaint();            
+        }
+    };
     
     private MouseListener ml = new MouseListener() {
         

@@ -21,6 +21,8 @@ public class LifeFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 go = !go;
+                LifeFrame.this.board.setGrids(!go);
+                repaint();
             }
         });
         add(tgl, BorderLayout.SOUTH);

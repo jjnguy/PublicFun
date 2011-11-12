@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         LifeBoard simpleBoard = new SimpleLifeBoard(buildArray());
         LifeBoard fastBoard = new FastLifeBoard(buildArray());
-        LifeDisplayNew disp = new LifeDisplayNew(fastBoard);
+        LifeDisplay disp = new LifeDisplayNew(fastBoard);
         new LifeFrame(disp);
     }
 

@@ -28,9 +28,10 @@ public class LifeDisplayOld extends LifeDisplay {
         }
     }
 
+    @Override
     public void update() {
         List<Point> changed = board.step();
-        for(Point p: changed) {
+        for (Point p : changed) {
             if (p.x < 0 || p.x >= squares.length)
                 continue;
             if (p.y < 0 || p.y >= squares[0].length)
@@ -39,29 +40,42 @@ public class LifeDisplayOld extends LifeDisplay {
         }
     }
 
+    @Override
+    public void setGrids(boolean on) {
+        for (int i = 0; i < board.width(); i++) {
+            for (int j = 0; j < board.height(); j++) {
+                if (on)
+                    squares[i][j].setGridBorder();
+                else
+                    squares[i][j].setNoBorder();
+            }
+        }
+    }
+
     class LifeSquare extends JPanel {
         Point coord;
+
         public LifeSquare(Point p) {
             coord = p;
             setPreferredSize(new Dimension(6, 6));
-            setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            setGridBorder();
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     board.toggle(coord);
                     repaint();
                 }
-                
+
                 @Override
                 public void mousePressed(MouseEvent e) {
                     mouseDown = true;
                 }
-                
+
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     mouseDown = false;
                 }
-                
+
                 @Override
                 public void mouseEntered(MouseEvent arg0) {
                     if (mouseDown) {
@@ -70,6 +84,14 @@ public class LifeDisplayOld extends LifeDisplay {
                     }
                 }
             });
+        }
+
+        public void setGridBorder() {
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        }
+
+        public void setNoBorder() {
+            setBorder(null);
         }
 
         @Override
