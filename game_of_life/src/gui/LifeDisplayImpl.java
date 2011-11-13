@@ -15,11 +15,11 @@ import java.util.Set;
 import logic.LifeBoard;
 
 
-public class LifeDisplayNew extends LifeDisplay {
+public class LifeDisplayImpl extends LifeDisplay {
     private Set<Point> points;
     private boolean grids;
     
-    public LifeDisplayNew(LifeBoard board) {
+    public LifeDisplayImpl(LifeBoard board) {
         setBackground(Color.LIGHT_GRAY);
         this.board = board;
         points = new HashSet<Point>();

@@ -1,5 +1,5 @@
 import gui.LifeDisplay;
-import gui.LifeDisplayNew;
+import gui.LifeDisplayImpl;
 import gui.LifeFrame;
 import logic.FastLifeBoard;
 import logic.LifeBoard;
@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         LifeBoard simpleBoard = new SimpleLifeBoard(buildArray());
         LifeBoard fastBoard = new FastLifeBoard(buildArray());
-        LifeDisplay disp = new LifeDisplayNew(fastBoard);
+        LifeDisplay disp = new LifeDisplayImpl(fastBoard);
         new LifeFrame(disp);
     }
 
