@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -19,6 +18,13 @@ import javax.swing.event.ChangeListener;
 import logic.LifeBoard;
 import util.LifeBoardSaveAndLoad;
 
+/**
+ * This class is in charge of managing a LifeDisplay. It animates it and lets the user interact with
+ * the board.
+ * 
+ * @author Justin
+ * 
+ */
 public class LifeFrame extends JFrame {
     private static final long serialVersionUID = -83611558260904001L;
     private LifeDisplay board;
