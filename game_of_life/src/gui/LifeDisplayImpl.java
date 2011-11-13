@@ -9,15 +9,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import logic.LifeBoard;
 
 public class LifeDisplayImpl extends LifeDisplay {
     private static final long serialVersionUID = -3639174827231940297L;
-    private Set<Point> points;
     private boolean grids;
 
     private Point origin;
@@ -26,14 +23,6 @@ public class LifeDisplayImpl extends LifeDisplay {
         setBackground(Color.LIGHT_GRAY);
         this.origin = new Point(0, 0);
         this.board = board;
-        points = new HashSet<Point>();
-        for (int i = 0; i < board.width(); i++) {
-            for (int j = 0; j < board.height(); j++) {
-                if (board.get(new Point(i, j))) {
-                    points.add(new Point(i, j));
-                }
-            }
-        }
         setPreferredSize(new Dimension(board.width() * sqWidth(), board.height() * sqWidth()));
         addMouseListener(ml);
         addMouseMotionListener(mml);
@@ -43,13 +32,6 @@ public class LifeDisplayImpl extends LifeDisplay {
     @Override
     public void update() {
         List<Point> changed = board.step();
-        for (Point p : changed) {
-            if (board.get(p)) {
-                points.add(p);
-            } else {
-                points.remove(p);
-            }
-        }
         repaint();
     }
 
@@ -81,7 +63,7 @@ public class LifeDisplayImpl extends LifeDisplay {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Point p : points) {
+        for (Point p : board) {
             drawPoint(p, g);
         }
         if (grids)
@@ -117,7 +99,6 @@ public class LifeDisplayImpl extends LifeDisplay {
         public void mouseDragged(MouseEvent e) {
             if (!e.isControlDown()) {
                 Point sqPoint = translateClickedLocationToSquarePoint(e.getPoint());
-                points.add(sqPoint);
                 board.set(sqPoint, true);
             } else if (dragInitiate != null) {
                 dragProgress = e.getPoint();
@@ -136,7 +117,6 @@ public class LifeDisplayImpl extends LifeDisplay {
         @Override
         public void mouseClicked(MouseEvent e) {
             Point sqPoint = translateClickedLocationToSquarePoint(e.getPoint());
-            points.add(sqPoint);
             board.toggle(sqPoint);
             repaint();
         }
@@ -164,7 +144,7 @@ public class LifeDisplayImpl extends LifeDisplay {
 
     @Override
     public void applyBoard(LifeBoard newB) {
-        board.clear();
-        
+        board = newB;
+        repaint();
     }
 }

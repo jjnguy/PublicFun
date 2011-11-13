@@ -3,7 +3,6 @@ import gui.LifeDisplayImpl;
 import gui.LifeFrame;
 import logic.FastLifeBoard;
 import logic.LifeBoard;
-import logic.SimpleLifeBoard;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
