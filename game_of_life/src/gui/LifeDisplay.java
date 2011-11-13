@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import logic.LifeBoard;
 
 public abstract class LifeDisplay extends JPanel {
+    private static final long serialVersionUID = -3750659407276582573L;
     protected LifeBoard board;
     private int squareWidth = 12;
 
@@ -12,6 +13,8 @@ public abstract class LifeDisplay extends JPanel {
 
     public abstract void setGrids(boolean on);
 
+    public abstract void applyBoard(LifeBoard newB);
+    
     public LifeBoard getLogic() {
         return board;
     }

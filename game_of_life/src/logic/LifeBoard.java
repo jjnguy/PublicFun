@@ -9,6 +9,8 @@ public interface LifeBoard extends Iterable<Point> {
 
     public boolean get(Point p);
 
+    public void clear();
+    
     public int width();
 
     public int height();

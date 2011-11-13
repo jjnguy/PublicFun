@@ -1,3 +1,4 @@
+package util;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import logic.FastLifeBoard;
 import logic.LifeBoard;
-import logic.SimpleLifeBoard;
 
 public class LifeBoardSaveAndLoad {
 
@@ -34,6 +35,6 @@ public class LifeBoardSaveAndLoad {
             int y = Integer.parseInt(line[1].trim());
             points.add(new Point(x, y));
         }
-        return new SimpleLifeBoard(points);
+        return new FastLifeBoard(points);
     }
 }

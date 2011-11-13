@@ -146,4 +146,9 @@ public class FastLifeBoard implements LifeBoard {
     public Iterator<Point> iterator() {
         return points.iterator();
     }
+
+    @Override
+    public void clear() {
+        points.clear();
+    }
 }

@@ -7,7 +7,6 @@ import logic.SimpleLifeBoard;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        LifeBoard simpleBoard = new SimpleLifeBoard(buildArray());
         LifeBoard fastBoard = new FastLifeBoard(buildArray());
         LifeDisplay disp = new LifeDisplayImpl(fastBoard);
         new LifeFrame(disp);

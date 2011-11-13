@@ -23,7 +23,7 @@ public class SimpleLifeBoard implements LifeBoard {
             max_X = Math.max(max_X, p.x);
             max_Y = Math.max(max_Y, p.y);
         }
-        byte[][] board = new byte[max_X][max_Y];
+        byte[][] board = new byte[max_X + 10][max_Y + 10];
         for(Point p: livePoints) {
             board[p.x][p.y]= 1; 
         }
@@ -120,5 +120,14 @@ public class SimpleLifeBoard implements LifeBoard {
             }
         }
         return livePoints.iterator();
+    }
+
+    @Override
+    public void clear() {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                board[i][j] = 0;
+            }
+        }
     }
 }

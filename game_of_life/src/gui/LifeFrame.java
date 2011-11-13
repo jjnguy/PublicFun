@@ -1,9 +1,13 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -11,6 +15,9 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import logic.LifeBoard;
+import util.LifeBoardSaveAndLoad;
 
 public class LifeFrame extends JFrame {
     private static final long serialVersionUID = -83611558260904001L;
@@ -68,21 +75,58 @@ public class LifeFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 go = !go;
-                LifeFrame.this.board.setGrids(!go);
+                LifeFrame.this.board.setGrids(!go && board.sqWidth() != 1);
                 repaint();
             }
         });
-        final JSlider squareSize = new JSlider(3, 20, 10);
+        final JSlider squareSize = new JSlider(1, 20, 10);
         squareSize.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
+                LifeFrame.this.board.setGrids(!go && board.sqWidth() != 1);
                 board.sqWidth(squareSize.getValue());
                 board.repaint();
+            }
+        });
+        final JButton save = new JButton("Save");
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooser = new JFileChooser();
+                int choice = chooser.showSaveDialog(LifeFrame.this);
+                if (choice == JFileChooser.APPROVE_OPTION) {
+                    LifeBoardSaveAndLoad saver = new LifeBoardSaveAndLoad(board.getLogic());
+                    try {
+                        saver.saveToFile(chooser.getSelectedFile().getAbsolutePath());
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        });
+        final JButton load = new JButton("Load");
+        load.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooser = new JFileChooser();
+                int choice = chooser.showOpenDialog(LifeFrame.this);
+                if (choice == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        LifeBoard board = LifeBoardSaveAndLoad.load(chooser.getSelectedFile()
+                                .getAbsolutePath());
+                        LifeFrame.this.board.applyBoard(board);
+                        repaint();
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                }
             }
         });
         JPanel control = new JPanel();
         control.add(tgl);
         control.add(squareSize);
+        control.add(load);
+        control.add(save);
         return control;
     }
 

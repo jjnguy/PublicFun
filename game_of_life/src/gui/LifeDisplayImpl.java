@@ -16,6 +16,7 @@ import java.util.Set;
 import logic.LifeBoard;
 
 public class LifeDisplayImpl extends LifeDisplay {
+    private static final long serialVersionUID = -3639174827231940297L;
     private Set<Point> points;
     private boolean grids;
 
@@ -159,5 +160,11 @@ public class LifeDisplayImpl extends LifeDisplay {
         int y = clicked.y / sqWidth();
         Point ret = new Point(x + origin.x, y + origin.y);
         return ret;
+    }
+
+    @Override
+    public void applyBoard(LifeBoard newB) {
+        board.clear();
+        
     }
 }
