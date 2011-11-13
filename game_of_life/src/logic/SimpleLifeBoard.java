@@ -1,5 +1,7 @@
+package logic;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SimpleLifeBoard implements LifeBoard {
@@ -14,6 +16,20 @@ public class SimpleLifeBoard implements LifeBoard {
         board = initial;
     }
 
+    public SimpleLifeBoard(List<Point> livePoints) {
+        int max_X = 0;
+        int max_Y = 0;
+        for (Point p: livePoints) {
+            max_X = Math.max(max_X, p.x);
+            max_Y = Math.max(max_Y, p.y);
+        }
+        byte[][] board = new byte[max_X][max_Y];
+        for(Point p: livePoints) {
+            board[p.x][p.y]= 1; 
+        }
+        this.board = board;
+    }
+    
     @Override
     public void toggle(Point p) {
         board[p.x][p.y] = (byte) ((int) (board[p.x][p.y] + 1) % 2);
@@ -86,5 +102,23 @@ public class SimpleLifeBoard implements LifeBoard {
     @Override
     public int height() {
         return board[0].length;
+    }
+    
+    public static int[][] grow(int[][] original, int up, int down, int left, int right) {
+        int[][] ret = new int[original.length + left + right][original[0].length + up + down];
+        return null;
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        List<Point> livePoints = new ArrayList<Point>();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 1) {
+                    livePoints.add(new Point(i,j));
+                }
+            }
+        }
+        return livePoints.iterator();
     }
 }

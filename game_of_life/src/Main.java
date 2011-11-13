@@ -1,13 +1,20 @@
+import gui.LifeDisplay;
+import gui.LifeDisplayNew;
+import gui.LifeFrame;
+import logic.FastLifeBoard;
+import logic.LifeBoard;
+import logic.SimpleLifeBoard;
+
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         LifeBoard simpleBoard = new SimpleLifeBoard(buildArray());
         LifeBoard fastBoard = new FastLifeBoard(buildArray());
-        LifeDisplay disp = new LifeDisplayNew(fastBoard);
+        LifeDisplay disp = new LifeDisplayNew(simpleBoard);
         new LifeFrame(disp);
     }
 
     public static byte[][] buildArray() {
-        byte[][] squares = new byte[110][110];
+        byte[][] squares = new byte[50][50];
         squares[0][0] = 1;
         squares[1][1] = 1;
         squares[2][1] = 1;

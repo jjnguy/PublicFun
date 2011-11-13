@@ -1,6 +1,9 @@
+package logic;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +19,14 @@ public class FastLifeBoard implements LifeBoard {
                 if (initial[i][j] == 1)
                     points.add(new Point(i, j));
             }
+        }
+    }
+
+    public FastLifeBoard(List<Point> livePoints) {
+        points = new HashSet<Point>(livePoints);
+        for (Point p : points) {
+            width = Math.max(width, p.x);
+            height = Math.max(height, p.y);
         }
     }
 
@@ -129,5 +140,10 @@ public class FastLifeBoard implements LifeBoard {
             }
             System.out.println();
         }
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return points.iterator();
     }
 }

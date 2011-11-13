@@ -1,3 +1,4 @@
+package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,10 +15,10 @@ import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import logic.LifeBoard;
+
 
 public class LifeDisplayNew extends LifeDisplay {
-    private final int SQUARE_WIDTH = 6;
-    private LifeBoard board;
     private Set<Point> points;
     private boolean grids;
     
@@ -32,7 +33,7 @@ public class LifeDisplayNew extends LifeDisplay {
                 }
             }
         }
-        setPreferredSize(new Dimension(board.width() * SQUARE_WIDTH, board.height() * SQUARE_WIDTH));
+        setPreferredSize(new Dimension(board.width() * sqWidth(), board.height() * sqWidth()));
         addMouseListener(ml);
         addMouseMotionListener(mml);
         grids = true;
@@ -54,10 +55,10 @@ public class LifeDisplayNew extends LifeDisplay {
     
     private int[] getCoordsFromPoint(Point p) {
         int[] ret = new int[4];
-        int x = p.x * SQUARE_WIDTH;
-        int y = p.y * SQUARE_WIDTH;
-        int width = SQUARE_WIDTH;
-        int height = SQUARE_WIDTH;
+        int x = p.x * sqWidth();
+        int y = p.y * sqWidth();
+        int width = sqWidth();
+        int height = sqWidth();
         ret[0] = x;
         ret[1] = y;
         ret[2] = width;
@@ -82,10 +83,10 @@ public class LifeDisplayNew extends LifeDisplay {
     
     private void drawGridLines(Graphics g) {
         g.setColor(Color.BLACK);
-        for (int i = 0; i < getWidth(); i += SQUARE_WIDTH) {
+        for (int i = 0; i < getWidth(); i += sqWidth()) {
             g.drawLine(i, 0, i, getHeight());
         }
-        for (int i = 0; i < getHeight(); i += SQUARE_WIDTH) {
+        for (int i = 0; i < getHeight(); i += sqWidth()) {
             g.drawLine(0, i, getWidth(), i);
         }
     }
@@ -151,14 +152,14 @@ public class LifeDisplayNew extends LifeDisplay {
         public void mouseClicked(MouseEvent e) {
             Point sqPoint = translateClickedLocationToSquarePoint(e.getPoint());
             points.add(sqPoint);
-            board.set(sqPoint, true);
+            board.toggle(sqPoint);
             repaint();
         }
     };
     
     private Point translateClickedLocationToSquarePoint(Point clicked) {
-        int x = clicked.x / SQUARE_WIDTH;
-        int y = clicked.y / SQUARE_WIDTH;
+        int x = clicked.x / sqWidth();
+        int y = clicked.y / sqWidth();
         Point ret = new Point(x, y);
         return ret;
     }

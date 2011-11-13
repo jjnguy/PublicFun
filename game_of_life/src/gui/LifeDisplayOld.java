@@ -1,3 +1,4 @@
+package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -10,8 +11,9 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import logic.LifeBoard;
+
 public class LifeDisplayOld extends LifeDisplay {
-    private LifeBoard board;
     private LifeSquare[][] squares;
     boolean mouseDown;
 
@@ -57,7 +59,7 @@ public class LifeDisplayOld extends LifeDisplay {
 
         public LifeSquare(Point p) {
             coord = p;
-            setPreferredSize(new Dimension(6, 6));
+            setPreferredSize(new Dimension(sqWidth(), sqWidth()));
             setGridBorder();
             addMouseListener(new MouseAdapter() {
                 @Override

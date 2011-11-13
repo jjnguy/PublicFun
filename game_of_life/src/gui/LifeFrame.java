@@ -1,11 +1,14 @@
+package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
 
 public class LifeFrame extends JFrame {
+    private static final long serialVersionUID = -83611558260904001L;
     private LifeDisplay board;
     private boolean go;
     private Thread runner;
@@ -33,18 +36,29 @@ public class LifeFrame extends JFrame {
             public void run() {
                 while (true) {
                     long startTime = System.currentTimeMillis();
-                    if (go)
-                        LifeFrame.this.board.update();
+                    if (go) {
+                        try {
+                            SwingUtilities.invokeAndWait(new Runnable() {
+                                @Override
+                                public void run() {
+                                    LifeFrame.this.board.update();
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                     long endTime = System.currentTimeMillis();
                     long elapsed = endTime - startTime;
                     long remain = msPerFrame - elapsed;
-                    long timeTaken = Math.max(msPerFrame, elapsed);
-                    if (remain > 0)
+                    // long timeTaken = Math.max(msPerFrame, elapsed);
+                    if (remain > 0) {
                         try {
                             Thread.sleep(remain);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                    }
                 }
             }
         };
