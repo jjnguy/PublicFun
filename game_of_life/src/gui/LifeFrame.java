@@ -1,11 +1,16 @@
 package gui;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class LifeFrame extends JFrame {
     private static final long serialVersionUID = -83611558260904001L;
@@ -19,16 +24,8 @@ public class LifeFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.board = board;
         add(board, BorderLayout.CENTER);
-        final JToggleButton tgl = new JToggleButton("Start/Stop");
-        tgl.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                go = !go;
-                LifeFrame.this.board.setGrids(!go);
-                repaint();
-            }
-        });
-        add(tgl, BorderLayout.SOUTH);
+        JPanel controls = buildControlPanel();
+        add(controls, BorderLayout.SOUTH);
         pack();
         setVisible(true);
         runner = new Thread() {
@@ -63,6 +60,30 @@ public class LifeFrame extends JFrame {
             }
         };
         runner.start();
+    }
+
+    private final JPanel buildControlPanel() {
+        final JToggleButton tgl = new JToggleButton("Start/Stop");
+        tgl.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                go = !go;
+                LifeFrame.this.board.setGrids(!go);
+                repaint();
+            }
+        });
+        final JSlider squareSize = new JSlider(3, 20, 10);
+        squareSize.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                board.sqWidth(squareSize.getValue());
+                board.repaint();
+            }
+        });
+        JPanel control = new JPanel();
+        control.add(tgl);
+        control.add(squareSize);
+        return control;
     }
 
     public void pause() {
