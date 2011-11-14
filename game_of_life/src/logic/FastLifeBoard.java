@@ -62,21 +62,6 @@ public class FastLifeBoard implements LifeBoard {
         return height;
     }
 
-    public void step2() {
-        Set<Point> newBoard = new HashSet<Point>();
-        for (int i = -7; i < width + 7; i++) {
-            for (int j = -7; j < height + 7; j++) {
-                if (lives(new Point(i, j))) {
-                    if (i < -5 || j < -5 || i > width + 5 || j > height + 5) {
-                        continue;
-                    }
-                    newBoard.add(new Point(i, j));
-                }
-            }
-        }
-        points = newBoard;
-    }
-
     public List<Point> step() {
         List<Point> changed = new ArrayList<Point>(1000);
         Set<Point> newBoard = new HashSet<Point>();
@@ -104,8 +89,8 @@ public class FastLifeBoard implements LifeBoard {
 
     private List<Point> getSurrounding(Point p) {
         List<Point> adj = new ArrayList<Point>();
-        for (int i = p.x - 1; i < p.x + 2; i++) {
-            for (int j = p.y - 1; j < p.y + 2; j++) {
+        for (int i = p.x - 2; i < p.x + 3; i++) {
+            for (int j = p.y - 2; j < p.y + 3; j++) {
                 if (new Point(i, j).equals(p))
                     continue;
                 adj.add(new Point(i, j));
