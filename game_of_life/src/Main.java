@@ -1,18 +1,24 @@
-import java.io.FileNotFoundException;
-
-import util.LifeBoardSaveAndLoad;
 import gui.LifeDisplay;
 import gui.LifeDisplayImpl;
 import gui.LifeFrame;
+
+import java.awt.Point;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
 import logic.FastLifeBoard;
 import logic.LifeBoard;
+import util.LifeBoardSaveAndLoad;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-        for (int i = 0; i < 100; i++) {
+       //LifeBoard b = new FastLifeBoard(new ArrayList<Point>());
+       //LifeDisplay disp = new LifeDisplayImpl(b);
+       //LifeFrame frame = new LifeFrame(disp);
+       for (int i = 0; i < 100; i++) {
             LifeBoard fastBoard = LifeBoardSaveAndLoad
-                    .load("C:\\Users\\Justin\\Documents\\gliderGun.life");
-            System.out.println(performanceTest(fastBoard, 1000));
+                    .load("J:\\Documents\\gliderGun.life");
+            System.out.println(performanceTest(fastBoard, 4000));
         }
     }
 

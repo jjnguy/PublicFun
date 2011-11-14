@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
-import java.util.Set;
 
 import logic.LifeBoard;
 
@@ -31,7 +30,7 @@ public class LifeDisplayImpl extends LifeDisplay {
 
     @Override
     public void update() {
-        Set<Point> changed = board.step();
+        board.step();
         repaint();
     }
 
