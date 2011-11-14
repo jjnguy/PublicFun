@@ -2,20 +2,22 @@ package logic;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 public class FastLifeBoard implements LifeBoard {
 
-    private int width, height;
+    // This holds all of the live points in the system
     private Set<Point> points;
 
     public FastLifeBoard(byte[][] initial) {
         points = new HashSet<Point>();
-        for (int i = 0; i < (width = initial.length); i++) {
-            for (int j = 0; j < (height = initial[0].length); j++) {
+        for (int i = 0; i < initial.length; i++) {
+            for (int j = 0; j < initial[0].length; j++) {
                 if (initial[i][j] == 1)
                     points.add(new Point(i, j));
             }
@@ -24,10 +26,6 @@ public class FastLifeBoard implements LifeBoard {
 
     public FastLifeBoard(List<Point> livePoints) {
         points = new HashSet<Point>(livePoints);
-        for (Point p : points) {
-            width = Math.max(width, p.x);
-            height = Math.max(height, p.y);
-        }
     }
 
     @Override
@@ -53,23 +51,14 @@ public class FastLifeBoard implements LifeBoard {
     }
 
     @Override
-    public int width() {
-        return width;
-    }
-
-    @Override
-    public int height() {
-        return height;
-    }
-
-    public List<Point> step() {
-        List<Point> changed = new ArrayList<Point>(1000);
+    public Set<Point> step() {
+        Set<Point> changed = new HashSet<Point>(1000);
         Set<Point> newBoard = new HashSet<Point>();
         Set<Point> alreadyProcessed = new HashSet<Point>();
-        List<Point> toProcess = new ArrayList<Point>();
+        Deque<Point> toProcess = new LinkedList<Point>();
         toProcess.addAll(points);
         while (toProcess.size() > 0) {
-            Point p = toProcess.remove(0);
+            Point p = toProcess.removeFirst();
             if (lives(p)) {
                 newBoard.add(p);
                 for (Point toAdd : getSurrounding(p)) {
@@ -114,16 +103,6 @@ public class FastLifeBoard implements LifeBoard {
             return liveNeighboors == 3;
         } else {
             return liveNeighboors == 2 || liveNeighboors == 3;
-        }
-    }
-
-    @Override
-    public void print() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                System.out.print(get(new Point(i, j)) ? 1 : 0 + " ");
-            }
-            System.out.println();
         }
     }
 

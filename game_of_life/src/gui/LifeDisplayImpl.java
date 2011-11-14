@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
-import java.util.List;
+import java.util.Set;
 
 import logic.LifeBoard;
 
@@ -23,7 +23,7 @@ public class LifeDisplayImpl extends LifeDisplay {
         setBackground(Color.LIGHT_GRAY);
         this.origin = new Point(0, 0);
         this.board = board;
-        setPreferredSize(new Dimension(board.width() * sqWidth(), board.height() * sqWidth()));
+        setPreferredSize(new Dimension(50 * sqWidth(), 50 * sqWidth()));
         addMouseListener(ml);
         addMouseMotionListener(mml);
         grids = true;
@@ -31,7 +31,7 @@ public class LifeDisplayImpl extends LifeDisplay {
 
     @Override
     public void update() {
-        List<Point> changed = board.step();
+        Set<Point> changed = board.step();
         repaint();
     }
 

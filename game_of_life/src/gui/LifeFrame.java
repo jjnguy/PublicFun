@@ -30,7 +30,7 @@ public class LifeFrame extends JFrame {
     private LifeDisplay board;
     private boolean go;
     private Thread runner;
-    private long msPerFrame = 60;
+    private long msPerFrame = 0;
 
     public LifeFrame(LifeDisplay board) {
         setLayout(new BorderLayout());

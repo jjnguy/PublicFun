@@ -1,6 +1,6 @@
 package logic;
 import java.awt.Point;
-import java.util.List;
+import java.util.Set;
 
 public interface LifeBoard extends Iterable<Point> {
     public void toggle(Point p);
@@ -11,15 +11,10 @@ public interface LifeBoard extends Iterable<Point> {
 
     public void clear();
     
-    public int width();
-
-    public int height();
-
     /**
      * 
      * @return the points that have changed
      */
-    public List<Point> step();
+    public Set<Point> step();
 
-    public void print();
 }
