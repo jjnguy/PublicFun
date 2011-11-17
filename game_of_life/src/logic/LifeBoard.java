@@ -1,5 +1,6 @@
 package logic;
 import java.awt.Point;
+import java.util.Collection;
 
 public interface LifeBoard extends Iterable<Point> {
     public void toggle(Point p);
@@ -12,4 +13,6 @@ public interface LifeBoard extends Iterable<Point> {
     
     public void step();
 
+    public Collection<Point> getLivePoints();
+    
 }

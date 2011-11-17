@@ -1,5 +1,8 @@
 package gui;
 
+import java.awt.Dimension;
+import java.awt.Rectangle;
+
 import javax.swing.JPanel;
 
 import logic.LifeBoard;
@@ -32,4 +35,8 @@ public abstract class LifeDisplay extends JPanel {
     public void sqWidth(int width) {
         squareWidth = width;
     }
+    
+    public abstract int liveCells();
+    
+    public abstract Rectangle maxDimension();
 }

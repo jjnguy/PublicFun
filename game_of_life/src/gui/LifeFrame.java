@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
@@ -29,7 +31,7 @@ public class LifeFrame extends JFrame {
    private LifeDisplay board;
    private boolean go;
    private Thread runner;
-   private long msPerFrame = 20;
+   private long msPerFrame = 1;
 
    public LifeFrame(LifeDisplay board) {
       setLayout(new BorderLayout());
@@ -71,6 +73,8 @@ public class LifeFrame extends JFrame {
             }
          }
       };
+      LifeStats stats = new LifeStats();
+      stats.setVisible(true);
       runner.start();
    }
 
@@ -140,5 +144,38 @@ public class LifeFrame extends JFrame {
 
    public void go() {
       go = true;
+   }
+
+   private class LifeStats extends JDialog {
+      private JLabel liveCells;
+      private JLabel dimensions;
+
+      public LifeStats() {
+         super(LifeFrame.this, false);
+         JPanel mainPane = new JPanel();
+         JLabel liveCells_l = new JLabel("Live Cells:");
+         liveCells = new JLabel();
+         JLabel dimensions_l = new JLabel("Dimensions:");
+         dimensions = new JLabel();
+         JButton update = new JButton("Update");
+         update.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               update();
+            }
+         });
+         mainPane.add(liveCells_l);
+         mainPane.add(liveCells);
+         mainPane.add(dimensions_l);
+         mainPane.add(dimensions);
+         mainPane.add(update);
+         add(mainPane);
+         pack();
+      }
+
+      public void update() {
+         liveCells.setText(board.liveCells() + "");
+         dimensions.setText(board.maxDimension().toString());
+      }
    }
 }
