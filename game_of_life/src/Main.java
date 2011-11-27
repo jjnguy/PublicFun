@@ -12,15 +12,9 @@ import util.LifeBoardSaveAndLoad;
 
 public class Main {
    public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-      LifeBoard fastBoard = LifeBoardSaveAndLoad.load("J:\\Documents\\gliderGun.life");
+      LifeBoard fastBoard = LifeBoardSaveAndLoad.load("C:\\Users\\Justin\\Documents\\gliderGun.life");
       LifeDisplay disp = new LifeDisplayImpl(fastBoard);
       LifeFrame frame = new LifeFrame(disp);
-/*
-      for (int i = 0; i < 100; i++) {
-         fastBoard = LifeBoardSaveAndLoad.load("J:\\Documents\\gliderGun.life");
-         System.out.println(performanceTest(fastBoard, 4000));
-      }
-*/
    }
 
    public static byte[][] buildArray() {

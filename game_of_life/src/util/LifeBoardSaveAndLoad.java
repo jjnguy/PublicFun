@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import logic.FastLifeBoard;
 import logic.LifeBoard;
+import logic.SimpleLifeBoard;
 
 public class LifeBoardSaveAndLoad {
 
@@ -35,6 +36,6 @@ public class LifeBoardSaveAndLoad {
             int y = Integer.parseInt(line[1].trim());
             points.add(new Point(x, y));
         }
-        return new FastLifeBoard(points);
+        return new SimpleLifeBoard(points);
     }
 }
