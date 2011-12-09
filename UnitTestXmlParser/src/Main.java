@@ -9,7 +9,7 @@ public class Main {
       String fileLocation = "C:/Users/Justin/workspace/JNUnitXmlFileParser/resources/testResult.xml";
       String otherFileLocation = "D:/Development/Foldering/TestResults/MergedTestResults.xml";
       Jode j = Jocument.load(fileLocation, "TestRun");
-      TestRun tesstRun = AutoParser.parse(j, TestRun.class);
+      TestRun tesstRun = j.toObject(TestRun.class);
       //TestResultXmlFile file = new TestResultXmlFile(fileLocation);
       System.out.println("WooHoo");
    }
