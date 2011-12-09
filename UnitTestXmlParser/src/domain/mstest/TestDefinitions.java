@@ -1,11 +1,7 @@
 package domain.mstest;
 
-import xmlcomponents.Jode;
+import java.util.List;
 
 public class TestDefinitions {
-public TestDefinitions(){}
-   public TestDefinitions(Jode single) {
-      // TODO Auto-generated constructor stub
-   }
-
+    private List<UnitTest> unitTest;
 }

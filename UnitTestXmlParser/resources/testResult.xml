@@ -1,0 +1,747 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="27c143cc-4c81-4c77-9a7b-0d6b6aeebbfb" name="brian@NEON 2011-12-07 14:30:32" runUser="neon\brian" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="00ed0ede-62df-4445-85e6-72759b1009e6">
+    <Deployment runDeploymentRoot="brian_NEON 2011-12-07 14_30_32">
+      <DeploymentItem filename="C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\bin\Debug\CodeCompProblems.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-12-07T14:30:32.3491000-06:00" queuing="2011-12-07T14:30:34.5983000-06:00" start="2011-12-07T14:30:34.8635000-06:00" finish="2011-12-07T14:30:36.3143000-06:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="40" executed="40" error="0" failed="40" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Dave_MostFrequentCharacter_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="0c8f70ab-5ee2-e56c-c935-4639dc19c4de">
+      <Execution timeOut="5000" id="14ad5bbe-02d1-4907-b139-189c62fb8b85" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_MostFrequentCharacter_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_LastDigitPowerOfTwo_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="da1a0a1b-ce82-7fc4-a8b0-1e8601e1c514">
+      <Execution timeOut="5000" id="2d73a18e-2c4a-497f-9db7-c0e6b8da6176" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_LastDigitPowerOfTwo_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_LastDigitPowerOfTwo_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="0ea65618-76c0-57a8-4803-0d9fc4411cd1">
+      <Execution timeOut="5000" id="4f5e9ff1-2779-4930-ac71-8a5c1a94cb90" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_LastDigitPowerOfTwo_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_LongestCommonSubstring_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="773d5a6d-bfc6-2407-bd9a-84aa01a36c93">
+      <Execution timeOut="5000" id="05cca65e-caad-46af-9168-4ea8b42fee97" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_LongestCommonSubstring_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_Weights_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="c7f77670-7913-9a83-3bf4-5e5bb7af71ec">
+      <Execution timeOut="5000" id="06f14b31-6670-4bd5-9f75-1c7c130666a3" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_Weights_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_Neighbors_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="914c2c6d-03ca-6260-13ee-d4d71ead7f66">
+      <Execution timeOut="5000" id="a4a7afdf-4257-4c32-b85b-b19b48c28234" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_Neighbors_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_AreAnagrams_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="ba1829d0-ea2a-028c-fe0d-40fa6a232885">
+      <Execution timeOut="5000" id="42fc8f75-7a53-42de-b3cc-f20eff5eba30" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_AreAnagrams_tests" />
+    </UnitTest>
+    <UnitTest name="Dave_CollapseInteger_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="251ea29d-4aea-ae11-aadb-986f9416d4ea">
+      <Execution timeOut="5000" id="d928be77-5015-4d42-ab25-0ddf87dc5505" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_CollapseInteger_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_MostDiverseString_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="78f3fd3a-78e6-1d95-82b9-9298c0ff4dab">
+      <Execution timeOut="5000" id="bb4846d3-91f0-454c-b7bb-76f17f3cf068" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_MostDiverseString_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_Neighbors_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="c83dd35d-890c-8b63-66b9-356b6c9eb2cd">
+      <Execution timeOut="5000" id="a006436f-1d2a-4316-89da-2385ac8dcfc7" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_Neighbors_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_LastDigitPowerOfTwo_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="893a3e33-4ce2-0d0c-4f19-8c24a6ec597f">
+      <Execution timeOut="5000" id="06707d81-da98-41a6-bd44-53026d108ce0" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_LastDigitPowerOfTwo_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_CollapseInteger_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="d448fea4-5fa6-f9f6-2722-37613d17a322">
+      <Execution timeOut="5000" id="e968ec8c-4ceb-4b1d-83e7-973cdd48ff91" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_CollapseInteger_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_IsBalanced_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="67aab23b-f00b-078b-5433-31c4309f9d93">
+      <Execution timeOut="5000" id="bb135022-b878-46ba-be83-49eca5f1506f" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_IsBalanced_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_Neighbors_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="ec929666-30b2-fc68-afa8-f8bd65985283">
+      <Execution timeOut="5000" id="749d16fb-5544-4b4e-9612-6754b014767e" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_Neighbors_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_AreAnagrams_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="21248873-0bad-55bc-9cf2-5fa40f8d27b4">
+      <Execution timeOut="5000" id="be211f90-865a-47e1-a6d6-f9e5ad8ebfec" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_AreAnagrams_tests" />
+    </UnitTest>
+    <UnitTest name="Dave_Neighbors_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="c1c00e53-4033-0199-4294-b76c031b12f2">
+      <Execution timeOut="5000" id="81638131-c8bb-4bf4-85aa-5dbbb669bf45" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_Neighbors_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_Weights_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="2218f8ba-015a-095d-c57c-5f9c8d2860e3">
+      <Execution timeOut="5000" id="dc9847f3-70e6-4468-9335-da3a494149d7" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_Weights_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_MostFrequentCharacter_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="9f386a27-6ca8-de1d-3b79-d7c4576229ec">
+      <Execution timeOut="5000" id="2e374d6e-e313-4bbb-a6e2-9cc3f56f2ed9" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_MostFrequentCharacter_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_CollapseInteger_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="446ed04b-b11e-5130-0d09-e87d56580ad2">
+      <Execution timeOut="5000" id="2c8b7df5-1547-4c99-ab0c-c800e164992d" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_CollapseInteger_tests" />
+    </UnitTest>
+    <UnitTest name="Dave_Weights_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="30675abe-a8c4-faf4-f89d-9fed1fd4ae3c">
+      <Execution timeOut="5000" id="0a69cfaf-ffd6-4c41-9244-d4a897e4bca6" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_Weights_tests" />
+    </UnitTest>
+    <UnitTest name="Dave_LongestCommonSubstring_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="2b5b744e-a112-380e-9f4d-d6dc6639bc6a">
+      <Execution timeOut="5000" id="6428b9e5-7972-4ee7-a0e9-8211e7d465cd" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_LongestCommonSubstring_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_AreAnagrams_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="65e4a497-b907-9658-8056-83587bf71d3b">
+      <Execution timeOut="5000" id="f109341c-7dbf-41cc-8efc-88f6891163f4" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_AreAnagrams_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_MostFrequentCharacter_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="5c7f53c3-2715-39b8-a4ef-0941d3d46460">
+      <Execution timeOut="5000" id="4f36535f-bed9-4d96-99c8-e838d325bf64" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_MostFrequentCharacter_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_MostDiverseString_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="8299abca-2eaa-461f-514d-b40272c1dd1d">
+      <Execution timeOut="5000" id="08747f26-0f44-4558-9c79-816864a5dd74" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_MostDiverseString_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_CollapseInteger_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="599fddfc-0493-fb0a-2fd9-152fedb083db">
+      <Execution timeOut="5000" id="7f47569f-213f-467c-b331-9f0ac54a9def" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_CollapseInteger_tests" />
+    </UnitTest>
+    <UnitTest name="Dave_IsBalanced_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="865fe9b0-995a-f58f-5229-7e97f9d279ad">
+      <Execution timeOut="5000" id="c8c6f8d8-ea79-4480-92cc-784d8b28702b" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_IsBalanced_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_MostFrequentCharacter_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="8c61e79a-058a-b065-7fb4-c01bc82b63e4">
+      <Execution timeOut="5000" id="9284118a-3968-44c3-9dee-98eff3d2b851" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_MostFrequentCharacter_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_Weights_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="eb43bc34-c656-2459-f0e8-705250322abe">
+      <Execution timeOut="5000" id="4b6a76bd-4196-4463-932a-bd67935e219d" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_Weights_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_CountBits_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="902786ea-3fde-8ddf-0576-0bd1954dfeb2">
+      <Execution timeOut="5000" id="92a8210c-0a46-47a2-8878-623e805706fa" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_CountBits_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_IsBalanced_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="efa473a6-e2ab-e067-c31b-486d611b19d8">
+      <Execution timeOut="5000" id="d98807c9-62a9-4659-ae68-54b78060639e" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_IsBalanced_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_LongestCommonSubstring_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="afd975b8-70b0-b573-03a7-7dd23aa10251">
+      <Execution timeOut="5000" id="4d7825de-d309-4501-ac63-28e90e5fe507" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_LongestCommonSubstring_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_IsBalanced_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="e77bf451-9b7a-f88f-0d60-ee3d1e4eed3a">
+      <Execution timeOut="5000" id="da86f16d-c2e4-4ef1-8db1-ef3c31a7bcf5" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_IsBalanced_tests" />
+    </UnitTest>
+    <UnitTest name="Dave_MostDiverseString_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="e5ac8e3b-f041-4504-e904-90e574e8dfda">
+      <Execution timeOut="5000" id="6f28b615-0511-41af-97a5-4067e93aed81" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_MostDiverseString_tests" />
+    </UnitTest>
+    <UnitTest name="Dave_LastDigitPowerOfTwo_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="6f843928-599f-84d7-cb15-2e90bcf6f262">
+      <Execution timeOut="5000" id="621e0ea5-d52d-4842-bf0b-7af3499198a1" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_LastDigitPowerOfTwo_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_MostDiverseString_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="841c117f-bfe2-1c7d-2eb8-a9e34ae1827b">
+      <Execution timeOut="5000" id="2acc217c-a4bb-40d9-8ea5-f8f7dd71d1b4" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_MostDiverseString_tests" />
+    </UnitTest>
+    <UnitTest name="Dave_CountBits_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="e7dcb307-4008-513a-21cf-352341be928f">
+      <Execution timeOut="5000" id="f599bb11-e1dd-4a58-8cc4-2dc52b799c4e" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_CountBits_tests" />
+    </UnitTest>
+    <UnitTest name="Dave_AreAnagrams_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="c6ee81f7-5010-4a4d-a594-73ec62484174">
+      <Execution timeOut="5000" id="862cae39-28e5-4cc9-b6cc-1f1701795f9a" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.DaveTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Dave_AreAnagrams_tests" />
+    </UnitTest>
+    <UnitTest name="Alice_LongestCommonSubstring_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="7b81f686-9fdd-d6ab-31b7-92a666ea31c6">
+      <Execution timeOut="5000" id="318385c6-8b35-4ece-b058-980772aba5b9" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.AliceTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Alice_LongestCommonSubstring_tests" />
+    </UnitTest>
+    <UnitTest name="Bob_CountBits_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="d31eeef9-9726-49b8-9bd4-2f92ea87c6d8">
+      <Execution timeOut="5000" id="00fb71bd-c7c9-462a-9a57-9a3feb1f046a" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.BobTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bob_CountBits_tests" />
+    </UnitTest>
+    <UnitTest name="Carol_CountBits_tests" storage="c:\users\brian\documents\tri coding comp\codecompround1\visualstudio\grader\codecomptests\bin\debug\codecomptests.dll" id="fd1266bb-d689-c52a-bb1f-300064ec5e55">
+      <Execution timeOut="5000" id="74c31b42-46f7-4853-8aa3-361129d7876e" />
+      <TestMethod codeBase="C:/Users/brian/Documents/TRI Coding Comp/CodeCompRound1/VisualStudio/Grader/CodeCompTests/bin/Debug/CodeCompTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CodeCompTests.CarolTests, CodeCompTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Carol_CountBits_tests" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="0c8f70ab-5ee2-e56c-c935-4639dc19c4de" executionId="14ad5bbe-02d1-4907-b139-189c62fb8b85" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0ea65618-76c0-57a8-4803-0d9fc4411cd1" executionId="4f5e9ff1-2779-4930-ac71-8a5c1a94cb90" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="21248873-0bad-55bc-9cf2-5fa40f8d27b4" executionId="be211f90-865a-47e1-a6d6-f9e5ad8ebfec" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2218f8ba-015a-095d-c57c-5f9c8d2860e3" executionId="dc9847f3-70e6-4468-9335-da3a494149d7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="251ea29d-4aea-ae11-aadb-986f9416d4ea" executionId="d928be77-5015-4d42-ab25-0ddf87dc5505" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2b5b744e-a112-380e-9f4d-d6dc6639bc6a" executionId="6428b9e5-7972-4ee7-a0e9-8211e7d465cd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="30675abe-a8c4-faf4-f89d-9fed1fd4ae3c" executionId="0a69cfaf-ffd6-4c41-9244-d4a897e4bca6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="446ed04b-b11e-5130-0d09-e87d56580ad2" executionId="2c8b7df5-1547-4c99-ab0c-c800e164992d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="599fddfc-0493-fb0a-2fd9-152fedb083db" executionId="7f47569f-213f-467c-b331-9f0ac54a9def" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5c7f53c3-2715-39b8-a4ef-0941d3d46460" executionId="4f36535f-bed9-4d96-99c8-e838d325bf64" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="65e4a497-b907-9658-8056-83587bf71d3b" executionId="f109341c-7dbf-41cc-8efc-88f6891163f4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="67aab23b-f00b-078b-5433-31c4309f9d93" executionId="bb135022-b878-46ba-be83-49eca5f1506f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6f843928-599f-84d7-cb15-2e90bcf6f262" executionId="621e0ea5-d52d-4842-bf0b-7af3499198a1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="773d5a6d-bfc6-2407-bd9a-84aa01a36c93" executionId="05cca65e-caad-46af-9168-4ea8b42fee97" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="78f3fd3a-78e6-1d95-82b9-9298c0ff4dab" executionId="bb4846d3-91f0-454c-b7bb-76f17f3cf068" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7b81f686-9fdd-d6ab-31b7-92a666ea31c6" executionId="318385c6-8b35-4ece-b058-980772aba5b9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8299abca-2eaa-461f-514d-b40272c1dd1d" executionId="08747f26-0f44-4558-9c79-816864a5dd74" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="841c117f-bfe2-1c7d-2eb8-a9e34ae1827b" executionId="2acc217c-a4bb-40d9-8ea5-f8f7dd71d1b4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="865fe9b0-995a-f58f-5229-7e97f9d279ad" executionId="c8c6f8d8-ea79-4480-92cc-784d8b28702b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="893a3e33-4ce2-0d0c-4f19-8c24a6ec597f" executionId="06707d81-da98-41a6-bd44-53026d108ce0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8c61e79a-058a-b065-7fb4-c01bc82b63e4" executionId="9284118a-3968-44c3-9dee-98eff3d2b851" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="902786ea-3fde-8ddf-0576-0bd1954dfeb2" executionId="92a8210c-0a46-47a2-8878-623e805706fa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="914c2c6d-03ca-6260-13ee-d4d71ead7f66" executionId="a4a7afdf-4257-4c32-b85b-b19b48c28234" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9f386a27-6ca8-de1d-3b79-d7c4576229ec" executionId="2e374d6e-e313-4bbb-a6e2-9cc3f56f2ed9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="afd975b8-70b0-b573-03a7-7dd23aa10251" executionId="4d7825de-d309-4501-ac63-28e90e5fe507" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ba1829d0-ea2a-028c-fe0d-40fa6a232885" executionId="42fc8f75-7a53-42de-b3cc-f20eff5eba30" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c1c00e53-4033-0199-4294-b76c031b12f2" executionId="81638131-c8bb-4bf4-85aa-5dbbb669bf45" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c6ee81f7-5010-4a4d-a594-73ec62484174" executionId="862cae39-28e5-4cc9-b6cc-1f1701795f9a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c7f77670-7913-9a83-3bf4-5e5bb7af71ec" executionId="06f14b31-6670-4bd5-9f75-1c7c130666a3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c83dd35d-890c-8b63-66b9-356b6c9eb2cd" executionId="a006436f-1d2a-4316-89da-2385ac8dcfc7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d31eeef9-9726-49b8-9bd4-2f92ea87c6d8" executionId="00fb71bd-c7c9-462a-9a57-9a3feb1f046a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d448fea4-5fa6-f9f6-2722-37613d17a322" executionId="e968ec8c-4ceb-4b1d-83e7-973cdd48ff91" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="da1a0a1b-ce82-7fc4-a8b0-1e8601e1c514" executionId="2d73a18e-2c4a-497f-9db7-c0e6b8da6176" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e5ac8e3b-f041-4504-e904-90e574e8dfda" executionId="6f28b615-0511-41af-97a5-4067e93aed81" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e77bf451-9b7a-f88f-0d60-ee3d1e4eed3a" executionId="da86f16d-c2e4-4ef1-8db1-ef3c31a7bcf5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e7dcb307-4008-513a-21cf-352341be928f" executionId="f599bb11-e1dd-4a58-8cc4-2dc52b799c4e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eb43bc34-c656-2459-f0e8-705250322abe" executionId="4b6a76bd-4196-4463-932a-bd67935e219d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ec929666-30b2-fc68-afa8-f8bd65985283" executionId="749d16fb-5544-4b4e-9612-6754b014767e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="efa473a6-e2ab-e067-c31b-486d611b19d8" executionId="d98807c9-62a9-4659-ae68-54b78060639e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fd1266bb-d689-c52a-bb1f-300064ec5e55" executionId="74c31b42-46f7-4853-8aa3-361129d7876e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="14ad5bbe-02d1-4907-b139-189c62fb8b85" testId="0c8f70ab-5ee2-e56c-c935-4639dc19c4de" testName="Dave_MostFrequentCharacter_tests" computerName="NEON" duration="00:00:00.2295630" startTime="2011-12-07T14:30:34.9883000-06:00" endTime="2011-12-07T14:30:35.7215000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="14ad5bbe-02d1-4907-b139-189c62fb8b85">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_MostFrequentCharacter_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.MostFrequentCharacter(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 109
+   at CodeComp.Dave.DaveSolutions.MostFrequentCharacter(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 115
+   at CodeCompTests.CodeCompTests.TestMostFrequentCharacter_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 70
+   at CodeCompTests.DaveTests.Dave_MostFrequentCharacter_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 35
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4f5e9ff1-2779-4930-ac71-8a5c1a94cb90" testId="0ea65618-76c0-57a8-4803-0d9fc4411cd1" testName="Carol_LastDigitPowerOfTwo_tests" computerName="NEON" duration="00:00:00.0029575" startTime="2011-12-07T14:30:35.7215000-06:00" endTime="2011-12-07T14:30:35.7371000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4f5e9ff1-2779-4930-ac71-8a5c1a94cb90">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_LastDigitPowerOfTwo_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.LastDigitPowerOfTwo(Int32 p) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 215
+   at CodeComp.Carol.CarolSolutions.LastDigitPowerOfTwo(Int32 p) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 221
+   at CodeCompTests.CodeCompTests.TestLastDigitPowerOfTwo_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 137
+   at CodeCompTests.CarolTests.Carol_LastDigitPowerOfTwo_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 59
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="be211f90-865a-47e1-a6d6-f9e5ad8ebfec" testId="21248873-0bad-55bc-9cf2-5fa40f8d27b4" testName="Carol_AreAnagrams_tests" computerName="NEON" duration="00:00:00.0021307" startTime="2011-12-07T14:30:35.7371000-06:00" endTime="2011-12-07T14:30:35.7371000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="be211f90-865a-47e1-a6d6-f9e5ad8ebfec">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_AreAnagrams_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.AreAnagrams(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 189
+   at CodeComp.Carol.CarolSolutions.AreAnagrams(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 195
+   at CodeCompTests.CodeCompTests.TestAreAnagrams_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 119
+   at CodeCompTests.CarolTests.Carol_AreAnagrams_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 53
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="dc9847f3-70e6-4468-9335-da3a494149d7" testId="2218f8ba-015a-095d-c57c-5f9c8d2860e3" testName="Alice_Weights_tests" computerName="NEON" duration="00:00:00.0072730" startTime="2011-12-07T14:30:35.7371000-06:00" endTime="2011-12-07T14:30:35.7527000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dc9847f3-70e6-4468-9335-da3a494149d7">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_Weights_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.Weights(Int32[] weights, Int32 max) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 260
+   at CodeComp.Alice.AliceSolutions.Weights(Int32[] weights, Int32 max) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 266
+   at CodeCompTests.CodeCompTests.TestWeights_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 169
+   at CodeCompTests.AliceTests.Alice_Weights_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 71
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d928be77-5015-4d42-ab25-0ddf87dc5505" testId="251ea29d-4aea-ae11-aadb-986f9416d4ea" testName="Dave_CollapseInteger_tests" computerName="NEON" duration="00:00:00.0026129" startTime="2011-12-07T14:30:35.7527000-06:00" endTime="2011-12-07T14:30:35.7527000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d928be77-5015-4d42-ab25-0ddf87dc5505">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_CollapseInteger_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.CollapseInteger(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 86
+   at CodeComp.Dave.DaveSolutions.CollapseInteger(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 92
+   at CodeCompTests.CodeCompTests.TestCollapseInteger_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 53
+   at CodeCompTests.DaveTests.Dave_CollapseInteger_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 29
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6428b9e5-7972-4ee7-a0e9-8211e7d465cd" testId="2b5b744e-a112-380e-9f4d-d6dc6639bc6a" testName="Dave_LongestCommonSubstring_tests" computerName="NEON" duration="00:00:00.0067177" startTime="2011-12-07T14:30:35.7683000-06:00" endTime="2011-12-07T14:30:35.7839000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6428b9e5-7972-4ee7-a0e9-8211e7d465cd">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_LongestCommonSubstring_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.LongestCommonSubstring(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 162
+   at CodeComp.Dave.DaveSolutions.LongestCommonSubstring(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 168
+   at CodeCompTests.CodeCompTests.TestLongestCommonSubstring_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 99
+   at CodeCompTests.DaveTests.Dave_LongestCommonSubstring_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 47
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0a69cfaf-ffd6-4c41-9244-d4a897e4bca6" testId="30675abe-a8c4-faf4-f89d-9fed1fd4ae3c" testName="Dave_Weights_tests" computerName="NEON" duration="00:00:00.0072598" startTime="2011-12-07T14:30:35.7839000-06:00" endTime="2011-12-07T14:30:35.7995000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0a69cfaf-ffd6-4c41-9244-d4a897e4bca6">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_Weights_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.Weights(Int32[] weights, Int32 max) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 260
+   at CodeComp.Dave.DaveSolutions.Weights(Int32[] weights, Int32 max) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 266
+   at CodeCompTests.CodeCompTests.TestWeights_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 169
+   at CodeCompTests.DaveTests.Dave_Weights_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 71
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2c8b7df5-1547-4c99-ab0c-c800e164992d" testId="446ed04b-b11e-5130-0d09-e87d56580ad2" testName="Carol_CollapseInteger_tests" computerName="NEON" duration="00:00:00.0072503" startTime="2011-12-07T14:30:35.7995000-06:00" endTime="2011-12-07T14:30:35.8307000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2c8b7df5-1547-4c99-ab0c-c800e164992d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_CollapseInteger_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.CollapseInteger(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 86
+   at CodeComp.Carol.CarolSolutions.CollapseInteger(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 92
+   at CodeCompTests.CodeCompTests.TestCollapseInteger_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 53
+   at CodeCompTests.CarolTests.Carol_CollapseInteger_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 29
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7f47569f-213f-467c-b331-9f0ac54a9def" testId="599fddfc-0493-fb0a-2fd9-152fedb083db" testName="Alice_CollapseInteger_tests" computerName="NEON" duration="00:00:00.0016063" startTime="2011-12-07T14:30:35.8307000-06:00" endTime="2011-12-07T14:30:35.8307000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7f47569f-213f-467c-b331-9f0ac54a9def">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_CollapseInteger_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.CollapseInteger(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 86
+   at CodeComp.Alice.AliceSolutions.CollapseInteger(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 92
+   at CodeCompTests.CodeCompTests.TestCollapseInteger_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 53
+   at CodeCompTests.AliceTests.Alice_CollapseInteger_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 29
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4f36535f-bed9-4d96-99c8-e838d325bf64" testId="5c7f53c3-2715-39b8-a4ef-0941d3d46460" testName="Bob_MostFrequentCharacter_tests" computerName="NEON" duration="00:00:00.0020081" startTime="2011-12-07T14:30:35.8463000-06:00" endTime="2011-12-07T14:30:35.8463000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4f36535f-bed9-4d96-99c8-e838d325bf64">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_MostFrequentCharacter_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.MostFrequentCharacter(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 109
+   at CodeComp.Bob.BobSolutions.MostFrequentCharacter(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 115
+   at CodeCompTests.CodeCompTests.TestMostFrequentCharacter_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 70
+   at CodeCompTests.BobTests.Bob_MostFrequentCharacter_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 35
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f109341c-7dbf-41cc-8efc-88f6891163f4" testId="65e4a497-b907-9658-8056-83587bf71d3b" testName="Bob_AreAnagrams_tests" computerName="NEON" duration="00:00:00.0016027" startTime="2011-12-07T14:30:35.8463000-06:00" endTime="2011-12-07T14:30:35.8463000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f109341c-7dbf-41cc-8efc-88f6891163f4">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_AreAnagrams_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.AreAnagrams(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 189
+   at CodeComp.Bob.BobSolutions.AreAnagrams(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 195
+   at CodeCompTests.CodeCompTests.TestAreAnagrams_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 119
+   at CodeCompTests.BobTests.Bob_AreAnagrams_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 53
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bb135022-b878-46ba-be83-49eca5f1506f" testId="67aab23b-f00b-078b-5433-31c4309f9d93" testName="Carol_IsBalanced_tests" computerName="NEON" duration="00:00:00.0021815" startTime="2011-12-07T14:30:35.8619000-06:00" endTime="2011-12-07T14:30:35.8619000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bb135022-b878-46ba-be83-49eca5f1506f">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_IsBalanced_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.IsBalanced(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 40
+   at CodeComp.Carol.CarolSolutions.IsBalanced(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 46
+   at CodeCompTests.CodeCompTests.TestIsBalanced_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 15
+   at CodeCompTests.CarolTests.Carol_IsBalanced_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 17
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="621e0ea5-d52d-4842-bf0b-7af3499198a1" testId="6f843928-599f-84d7-cb15-2e90bcf6f262" testName="Dave_LastDigitPowerOfTwo_tests" computerName="NEON" duration="00:00:00.0016217" startTime="2011-12-07T14:30:35.8775000-06:00" endTime="2011-12-07T14:30:35.8775000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="621e0ea5-d52d-4842-bf0b-7af3499198a1">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_LastDigitPowerOfTwo_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.LastDigitPowerOfTwo(Int32 p) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 215
+   at CodeComp.Dave.DaveSolutions.LastDigitPowerOfTwo(Int32 p) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 221
+   at CodeCompTests.CodeCompTests.TestLastDigitPowerOfTwo_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 137
+   at CodeCompTests.DaveTests.Dave_LastDigitPowerOfTwo_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 59
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="05cca65e-caad-46af-9168-4ea8b42fee97" testId="773d5a6d-bfc6-2407-bd9a-84aa01a36c93" testName="Bob_LongestCommonSubstring_tests" computerName="NEON" duration="00:00:00.0015940" startTime="2011-12-07T14:30:35.8775000-06:00" endTime="2011-12-07T14:30:35.8775000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="05cca65e-caad-46af-9168-4ea8b42fee97">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_LongestCommonSubstring_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.LongestCommonSubstring(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 162
+   at CodeComp.Bob.BobSolutions.LongestCommonSubstring(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 168
+   at CodeCompTests.CodeCompTests.TestLongestCommonSubstring_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 99
+   at CodeCompTests.BobTests.Bob_LongestCommonSubstring_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 47
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bb4846d3-91f0-454c-b7bb-76f17f3cf068" testId="78f3fd3a-78e6-1d95-82b9-9298c0ff4dab" testName="Alice_MostDiverseString_tests" computerName="NEON" duration="00:00:00.0025416" startTime="2011-12-07T14:30:35.8931000-06:00" endTime="2011-12-07T14:30:35.8931000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bb4846d3-91f0-454c-b7bb-76f17f3cf068">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_MostDiverseString_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.MostDiverseString(String[] strs) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 136
+   at CodeComp.Alice.AliceSolutions.MostDiverseString(String[] strs) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 142
+   at CodeCompTests.CodeCompTests.TestMostDiverseString_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 85
+   at CodeCompTests.AliceTests.Alice_MostDiverseString_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 41
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="318385c6-8b35-4ece-b058-980772aba5b9" testId="7b81f686-9fdd-d6ab-31b7-92a666ea31c6" testName="Alice_LongestCommonSubstring_tests" computerName="NEON" duration="00:00:00.0015977" startTime="2011-12-07T14:30:35.8931000-06:00" endTime="2011-12-07T14:30:35.9087000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="318385c6-8b35-4ece-b058-980772aba5b9">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_LongestCommonSubstring_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.LongestCommonSubstring(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 162
+   at CodeComp.Alice.AliceSolutions.LongestCommonSubstring(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 168
+   at CodeCompTests.CodeCompTests.TestLongestCommonSubstring_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 99
+   at CodeCompTests.AliceTests.Alice_LongestCommonSubstring_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 47
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="08747f26-0f44-4558-9c79-816864a5dd74" testId="8299abca-2eaa-461f-514d-b40272c1dd1d" testName="Carol_MostDiverseString_tests" computerName="NEON" duration="00:00:00.0016340" startTime="2011-12-07T14:30:35.9087000-06:00" endTime="2011-12-07T14:30:35.9087000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="08747f26-0f44-4558-9c79-816864a5dd74">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_MostDiverseString_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.MostDiverseString(String[] strs) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 136
+   at CodeComp.Carol.CarolSolutions.MostDiverseString(String[] strs) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 142
+   at CodeCompTests.CodeCompTests.TestMostDiverseString_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 85
+   at CodeCompTests.CarolTests.Carol_MostDiverseString_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 41
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2acc217c-a4bb-40d9-8ea5-f8f7dd71d1b4" testId="841c117f-bfe2-1c7d-2eb8-a9e34ae1827b" testName="Bob_MostDiverseString_tests" computerName="NEON" duration="00:00:00.0015958" startTime="2011-12-07T14:30:35.9243000-06:00" endTime="2011-12-07T14:30:35.9243000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2acc217c-a4bb-40d9-8ea5-f8f7dd71d1b4">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_MostDiverseString_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.MostDiverseString(String[] strs) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 136
+   at CodeComp.Bob.BobSolutions.MostDiverseString(String[] strs) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 142
+   at CodeCompTests.CodeCompTests.TestMostDiverseString_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 85
+   at CodeCompTests.BobTests.Bob_MostDiverseString_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 41
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c8c6f8d8-ea79-4480-92cc-784d8b28702b" testId="865fe9b0-995a-f58f-5229-7e97f9d279ad" testName="Dave_IsBalanced_tests" computerName="NEON" duration="00:00:00.0016022" startTime="2011-12-07T14:30:35.9243000-06:00" endTime="2011-12-07T14:30:35.9243000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c8c6f8d8-ea79-4480-92cc-784d8b28702b">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_IsBalanced_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.IsBalanced(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 40
+   at CodeComp.Dave.DaveSolutions.IsBalanced(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 46
+   at CodeCompTests.CodeCompTests.TestIsBalanced_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 15
+   at CodeCompTests.DaveTests.Dave_IsBalanced_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 17
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="06707d81-da98-41a6-bd44-53026d108ce0" testId="893a3e33-4ce2-0d0c-4f19-8c24a6ec597f" testName="Bob_LastDigitPowerOfTwo_tests" computerName="NEON" duration="00:00:00.0015772" startTime="2011-12-07T14:30:35.9399000-06:00" endTime="2011-12-07T14:30:35.9399000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="06707d81-da98-41a6-bd44-53026d108ce0">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_LastDigitPowerOfTwo_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.LastDigitPowerOfTwo(Int32 p) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 215
+   at CodeComp.Bob.BobSolutions.LastDigitPowerOfTwo(Int32 p) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 221
+   at CodeCompTests.CodeCompTests.TestLastDigitPowerOfTwo_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 137
+   at CodeCompTests.BobTests.Bob_LastDigitPowerOfTwo_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 59
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9284118a-3968-44c3-9dee-98eff3d2b851" testId="8c61e79a-058a-b065-7fb4-c01bc82b63e4" testName="Carol_MostFrequentCharacter_tests" computerName="NEON" duration="00:00:00.0015945" startTime="2011-12-07T14:30:35.9399000-06:00" endTime="2011-12-07T14:30:35.9399000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9284118a-3968-44c3-9dee-98eff3d2b851">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_MostFrequentCharacter_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.MostFrequentCharacter(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 109
+   at CodeComp.Carol.CarolSolutions.MostFrequentCharacter(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 115
+   at CodeCompTests.CodeCompTests.TestMostFrequentCharacter_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 70
+   at CodeCompTests.CarolTests.Carol_MostFrequentCharacter_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 35
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="92a8210c-0a46-47a2-8878-623e805706fa" testId="902786ea-3fde-8ddf-0576-0bd1954dfeb2" testName="Alice_CountBits_tests" computerName="NEON" duration="00:00:00.0020549" startTime="2011-12-07T14:30:35.9399000-06:00" endTime="2011-12-07T14:30:35.9555000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="92a8210c-0a46-47a2-8878-623e805706fa">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_CountBits_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.CountBits(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 62
+   at CodeComp.Alice.AliceSolutions.CountBits(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 68
+   at CodeCompTests.CodeCompTests.TestCountBits_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 40
+   at CodeCompTests.AliceTests.Alice_CountBits_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 23
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a4a7afdf-4257-4c32-b85b-b19b48c28234" testId="914c2c6d-03ca-6260-13ee-d4d71ead7f66" testName="Alice_Neighbors_tests" computerName="NEON" duration="00:00:00.0023227" startTime="2011-12-07T14:30:35.9555000-06:00" endTime="2011-12-07T14:30:35.9555000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a4a7afdf-4257-4c32-b85b-b19b48c28234">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_Neighbors_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.Neighbors(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 236
+   at CodeComp.Alice.AliceSolutions.Neighbors(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 242
+   at CodeCompTests.CodeCompTests.TestNeighbors_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 153
+   at CodeCompTests.AliceTests.Alice_Neighbors_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 65
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2e374d6e-e313-4bbb-a6e2-9cc3f56f2ed9" testId="9f386a27-6ca8-de1d-3b79-d7c4576229ec" testName="Alice_MostFrequentCharacter_tests" computerName="NEON" duration="00:00:00.0016181" startTime="2011-12-07T14:30:35.9555000-06:00" endTime="2011-12-07T14:30:35.9711000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2e374d6e-e313-4bbb-a6e2-9cc3f56f2ed9">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_MostFrequentCharacter_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.MostFrequentCharacter(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 109
+   at CodeComp.Alice.AliceSolutions.MostFrequentCharacter(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 115
+   at CodeCompTests.CodeCompTests.TestMostFrequentCharacter_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 70
+   at CodeCompTests.AliceTests.Alice_MostFrequentCharacter_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 35
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4d7825de-d309-4501-ac63-28e90e5fe507" testId="afd975b8-70b0-b573-03a7-7dd23aa10251" testName="Carol_LongestCommonSubstring_tests" computerName="NEON" duration="00:00:00.0018528" startTime="2011-12-07T14:30:35.9711000-06:00" endTime="2011-12-07T14:30:35.9711000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4d7825de-d309-4501-ac63-28e90e5fe507">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_LongestCommonSubstring_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.LongestCommonSubstring(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 162
+   at CodeComp.Carol.CarolSolutions.LongestCommonSubstring(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 168
+   at CodeCompTests.CodeCompTests.TestLongestCommonSubstring_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 99
+   at CodeCompTests.CarolTests.Carol_LongestCommonSubstring_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 47
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="42fc8f75-7a53-42de-b3cc-f20eff5eba30" testId="ba1829d0-ea2a-028c-fe0d-40fa6a232885" testName="Alice_AreAnagrams_tests" computerName="NEON" duration="00:00:00.0017802" startTime="2011-12-07T14:30:35.9711000-06:00" endTime="2011-12-07T14:30:35.9867000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="42fc8f75-7a53-42de-b3cc-f20eff5eba30">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_AreAnagrams_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.AreAnagrams(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 189
+   at CodeComp.Alice.AliceSolutions.AreAnagrams(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 195
+   at CodeCompTests.CodeCompTests.TestAreAnagrams_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 119
+   at CodeCompTests.AliceTests.Alice_AreAnagrams_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 53
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="81638131-c8bb-4bf4-85aa-5dbbb669bf45" testId="c1c00e53-4033-0199-4294-b76c031b12f2" testName="Dave_Neighbors_tests" computerName="NEON" duration="00:00:00.0016331" startTime="2011-12-07T14:30:35.9867000-06:00" endTime="2011-12-07T14:30:36.0023000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="81638131-c8bb-4bf4-85aa-5dbbb669bf45">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_Neighbors_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.Neighbors(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 236
+   at CodeComp.Dave.DaveSolutions.Neighbors(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 242
+   at CodeCompTests.CodeCompTests.TestNeighbors_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 153
+   at CodeCompTests.DaveTests.Dave_Neighbors_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 65
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="862cae39-28e5-4cc9-b6cc-1f1701795f9a" testId="c6ee81f7-5010-4a4d-a594-73ec62484174" testName="Dave_AreAnagrams_tests" computerName="NEON" duration="00:00:00.0015909" startTime="2011-12-07T14:30:36.0023000-06:00" endTime="2011-12-07T14:30:36.0023000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="862cae39-28e5-4cc9-b6cc-1f1701795f9a">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_AreAnagrams_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.AreAnagrams(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 189
+   at CodeComp.Dave.DaveSolutions.AreAnagrams(String a, String b) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 195
+   at CodeCompTests.CodeCompTests.TestAreAnagrams_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 119
+   at CodeCompTests.DaveTests.Dave_AreAnagrams_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 53
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="06f14b31-6670-4bd5-9f75-1c7c130666a3" testId="c7f77670-7913-9a83-3bf4-5e5bb7af71ec" testName="Carol_Weights_tests" computerName="NEON" duration="00:00:00.0016045" startTime="2011-12-07T14:30:36.0179000-06:00" endTime="2011-12-07T14:30:36.0179000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="06f14b31-6670-4bd5-9f75-1c7c130666a3">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_Weights_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.Weights(Int32[] weights, Int32 max) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 260
+   at CodeComp.Carol.CarolSolutions.Weights(Int32[] weights, Int32 max) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 266
+   at CodeCompTests.CodeCompTests.TestWeights_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 169
+   at CodeCompTests.CarolTests.Carol_Weights_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 71
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a006436f-1d2a-4316-89da-2385ac8dcfc7" testId="c83dd35d-890c-8b63-66b9-356b6c9eb2cd" testName="Carol_Neighbors_tests" computerName="NEON" duration="00:00:00.0015745" startTime="2011-12-07T14:30:36.0179000-06:00" endTime="2011-12-07T14:30:36.0179000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a006436f-1d2a-4316-89da-2385ac8dcfc7">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_Neighbors_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.Neighbors(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 236
+   at CodeComp.Carol.CarolSolutions.Neighbors(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 242
+   at CodeCompTests.CodeCompTests.TestNeighbors_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 153
+   at CodeCompTests.CarolTests.Carol_Neighbors_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 65
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="00fb71bd-c7c9-462a-9a57-9a3feb1f046a" testId="d31eeef9-9726-49b8-9bd4-2f92ea87c6d8" testName="Bob_CountBits_tests" computerName="NEON" duration="00:00:00.0015940" startTime="2011-12-07T14:30:36.0335000-06:00" endTime="2011-12-07T14:30:36.0335000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="00fb71bd-c7c9-462a-9a57-9a3feb1f046a">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_CountBits_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.CountBits(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 62
+   at CodeComp.Bob.BobSolutions.CountBits(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 68
+   at CodeCompTests.CodeCompTests.TestCountBits_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 40
+   at CodeCompTests.BobTests.Bob_CountBits_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 23
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e968ec8c-4ceb-4b1d-83e7-973cdd48ff91" testId="d448fea4-5fa6-f9f6-2722-37613d17a322" testName="Bob_CollapseInteger_tests" computerName="NEON" duration="00:00:00.0017806" startTime="2011-12-07T14:30:36.0335000-06:00" endTime="2011-12-07T14:30:36.0491000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e968ec8c-4ceb-4b1d-83e7-973cdd48ff91">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_CollapseInteger_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.CollapseInteger(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 86
+   at CodeComp.Bob.BobSolutions.CollapseInteger(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 92
+   at CodeCompTests.CodeCompTests.TestCollapseInteger_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 53
+   at CodeCompTests.BobTests.Bob_CollapseInteger_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 29
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2d73a18e-2c4a-497f-9db7-c0e6b8da6176" testId="da1a0a1b-ce82-7fc4-a8b0-1e8601e1c514" testName="Alice_LastDigitPowerOfTwo_tests" computerName="NEON" duration="00:00:00.0015922" startTime="2011-12-07T14:30:36.0491000-06:00" endTime="2011-12-07T14:30:36.0491000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2d73a18e-2c4a-497f-9db7-c0e6b8da6176">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_LastDigitPowerOfTwo_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.LastDigitPowerOfTwo(Int32 p) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 215
+   at CodeComp.Alice.AliceSolutions.LastDigitPowerOfTwo(Int32 p) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 221
+   at CodeCompTests.CodeCompTests.TestLastDigitPowerOfTwo_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 137
+   at CodeCompTests.AliceTests.Alice_LastDigitPowerOfTwo_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 59
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6f28b615-0511-41af-97a5-4067e93aed81" testId="e5ac8e3b-f041-4504-e904-90e574e8dfda" testName="Dave_MostDiverseString_tests" computerName="NEON" duration="00:00:00.0016145" startTime="2011-12-07T14:30:36.0647000-06:00" endTime="2011-12-07T14:30:36.0647000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6f28b615-0511-41af-97a5-4067e93aed81">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_MostDiverseString_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.MostDiverseString(String[] strs) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 136
+   at CodeComp.Dave.DaveSolutions.MostDiverseString(String[] strs) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 142
+   at CodeCompTests.CodeCompTests.TestMostDiverseString_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 85
+   at CodeCompTests.DaveTests.Dave_MostDiverseString_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 41
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="da86f16d-c2e4-4ef1-8db1-ef3c31a7bcf5" testId="e77bf451-9b7a-f88f-0d60-ee3d1e4eed3a" testName="Alice_IsBalanced_tests" computerName="NEON" duration="00:00:00.0100920" startTime="2011-12-07T14:30:36.0647000-06:00" endTime="2011-12-07T14:30:36.0959000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="da86f16d-c2e4-4ef1-8db1-ef3c31a7bcf5">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.AliceTests.Alice_IsBalanced_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.IsBalanced(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 40
+   at CodeComp.Alice.AliceSolutions.IsBalanced(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Alice\AliceSolutions.cs:line 46
+   at CodeCompTests.CodeCompTests.TestIsBalanced_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 15
+   at CodeCompTests.AliceTests.Alice_IsBalanced_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\AliceTests.cs:line 17
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f599bb11-e1dd-4a58-8cc4-2dc52b799c4e" testId="e7dcb307-4008-513a-21cf-352341be928f" testName="Dave_CountBits_tests" computerName="NEON" duration="00:00:00.0071254" startTime="2011-12-07T14:30:36.0959000-06:00" endTime="2011-12-07T14:30:36.1115000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f599bb11-e1dd-4a58-8cc4-2dc52b799c4e">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.DaveTests.Dave_CountBits_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.CountBits(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 62
+   at CodeComp.Dave.DaveSolutions.CountBits(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Dave\DaveSolutions.cs:line 68
+   at CodeCompTests.CodeCompTests.TestCountBits_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 40
+   at CodeCompTests.DaveTests.Dave_CountBits_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\DaveTests.cs:line 23
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4b6a76bd-4196-4463-932a-bd67935e219d" testId="eb43bc34-c656-2459-f0e8-705250322abe" testName="Bob_Weights_tests" computerName="NEON" duration="00:00:00.0060880" startTime="2011-12-07T14:30:36.1271000-06:00" endTime="2011-12-07T14:30:36.1427000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b6a76bd-4196-4463-932a-bd67935e219d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_Weights_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.Weights(Int32[] weights, Int32 max) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 260
+   at CodeComp.Bob.BobSolutions.Weights(Int32[] weights, Int32 max) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 266
+   at CodeCompTests.CodeCompTests.TestWeights_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 169
+   at CodeCompTests.BobTests.Bob_Weights_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 71
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="749d16fb-5544-4b4e-9612-6754b014767e" testId="ec929666-30b2-fc68-afa8-f8bd65985283" testName="Bob_Neighbors_tests" computerName="NEON" duration="00:00:00.0022474" startTime="2011-12-07T14:30:36.1583000-06:00" endTime="2011-12-07T14:30:36.1583000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="749d16fb-5544-4b4e-9612-6754b014767e">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_Neighbors_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.Neighbors(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 236
+   at CodeComp.Bob.BobSolutions.Neighbors(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 242
+   at CodeCompTests.CodeCompTests.TestNeighbors_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 153
+   at CodeCompTests.BobTests.Bob_Neighbors_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 65
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d98807c9-62a9-4659-ae68-54b78060639e" testId="efa473a6-e2ab-e067-c31b-486d611b19d8" testName="Bob_IsBalanced_tests" computerName="NEON" duration="00:00:00.0058405" startTime="2011-12-07T14:30:36.1739000-06:00" endTime="2011-12-07T14:30:36.1895000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d98807c9-62a9-4659-ae68-54b78060639e">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.BobTests.Bob_IsBalanced_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.IsBalanced(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 40
+   at CodeComp.Bob.BobSolutions.IsBalanced(String s) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Bob\BobSolutions.cs:line 46
+   at CodeCompTests.CodeCompTests.TestIsBalanced_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 15
+   at CodeCompTests.BobTests.Bob_IsBalanced_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\BobTests.cs:line 17
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="74c31b42-46f7-4853-8aa3-361129d7876e" testId="fd1266bb-d689-c52a-bb1f-300064ec5e55" testName="Carol_CountBits_tests" computerName="NEON" duration="00:00:00.0016853" startTime="2011-12-07T14:30:36.2051000-06:00" endTime="2011-12-07T14:30:36.2051000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="74c31b42-46f7-4853-8aa3-361129d7876e">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CodeCompTests.CarolTests.Carol_CountBits_tests threw exception: 
+System.NotImplementedException: The method or operation is not implemented.</Message>
+          <StackTrace>    at CodeComp.CodeCompSolutions.CountBits(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\CodeCompSolutions.cs:line 62
+   at CodeComp.Carol.CarolSolutions.CountBits(Int32 n) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompProblems\Carol\CarolSolutions.cs:line 68
+   at CodeCompTests.CodeCompTests.TestCountBits_tests(CodeCompSolutions c) in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CodeCompTests.cs:line 40
+   at CodeCompTests.CarolTests.Carol_CountBits_tests() in C:\Users\brian\Documents\TRI Coding Comp\CodeCompRound1\VisualStudio\Grader\CodeCompTests\CarolTests.cs:line 23
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

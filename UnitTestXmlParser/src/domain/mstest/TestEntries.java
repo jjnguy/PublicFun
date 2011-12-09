@@ -1,11 +1,7 @@
 package domain.mstest;
 
-import xmlcomponents.Jode;
+import java.util.List;
 
 public class TestEntries {
-public TestEntries(){}
-   public TestEntries(Jode single) {
-      // TODO Auto-generated constructor stub
-   }
-
+List<TestEntry> testEntry;
 }

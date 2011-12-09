@@ -1,13 +1,9 @@
 package domain.mstest;
 
-import xmlcomponents.Jode;
 
 public class Times {
-
-   public Times(){}
-   
-   public Times(Jode single) {
-      // TODO Auto-generated constructor stub
-   }
-
+    private String creation;
+    private String queuing;
+    private String start;
+    private String finish;
 }
