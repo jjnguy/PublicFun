@@ -8,11 +8,11 @@ public class TestRun {
    private String runUser;
    private String xmlns;
    
-   private TestSettings testSettings;
-   private Times times;
-   private ResultSummary resultSummary;
-   private TestDefinitions testDefinitions;
-   private TestLists testLists;
-   private TestEntries testEntries;
-   private Results results;
+   private TestSettings TestSettings;
+   private Times Times;
+   private ResultSummary ResultSummary;
+   private TestDefinitions TestDefinitions;
+   private TestLists TestLists;
+   private TestEntries TestEntries;
+   private Results Results;
 }

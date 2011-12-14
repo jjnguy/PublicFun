@@ -2,5 +2,5 @@ package domain.mstest;
 
 public class ResultSummary {
     private String outcome;
-    private Counters counters;
+    private Counters Counters;
 }

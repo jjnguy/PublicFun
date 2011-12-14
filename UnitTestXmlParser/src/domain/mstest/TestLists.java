@@ -4,5 +4,5 @@ import java.util.List;
 
 
 public class TestLists {
-private List<TestList> testList;
+private List<TestList> TestList;
 }

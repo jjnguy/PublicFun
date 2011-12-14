@@ -6,6 +6,6 @@ import xmlcomponents.Jode;
 
 public class Results {
    
-   private List<UnitTestResult> unitTestResult;
+   private List<UnitTestResult> UnitTestResult;
 
 }

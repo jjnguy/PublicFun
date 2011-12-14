@@ -6,7 +6,7 @@ import domain.mstest.TestRun;
 
 public class Main {
    public static void main(String[] args) {
-      String fileLocation = "C:/Users/Justin/workspace/JNUnitXmlFileParser/resources/testResult.xml";
+      String fileLocation = "C:/Users/U0117691/workspace2/JNUnitXmlFileParser/resources/testResult.xml";
       String otherFileLocation = "D:/Development/Foldering/TestResults/MergedTestResults.xml";
       Jode j = Jocument.load(fileLocation, "TestRun");
       TestRun tesstRun = j.toObject(TestRun.class);
