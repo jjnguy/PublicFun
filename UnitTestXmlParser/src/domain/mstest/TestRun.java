@@ -3,16 +3,16 @@ package domain.mstest;
 
 public class TestRun {
    
-   private String id;
-   private String name;
-   private String runUser;
-   private String xmlns;
+   public String id;
+   public String name;
+   public String runUser;
+   public String xmlns;
    
-   private TestSettings TestSettings;
-   private Times Times;
-   private ResultSummary ResultSummary;
-   private TestDefinitions TestDefinitions;
-   private TestLists TestLists;
-   private TestEntries TestEntries;
-   private Results Results;
+   public TestSettings TestSettings;
+   public Times Times;
+   public ResultSummary ResultSummary;
+   public TestDefinitions TestDefinitions;
+   public TestLists TestLists;
+   public TestEntries TestEntries;
+   public Results Results;
 }

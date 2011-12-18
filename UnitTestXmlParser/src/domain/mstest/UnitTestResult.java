@@ -1,16 +1,16 @@
 package domain.mstest;
 
 public class UnitTestResult {
-   private String executionId;
-   private String testId;
-   private String testName;
-   private String computerName;
-   private String duration;
-   private String startTime;
-   private String endTime;
-   private String testType;
-   private String outcome;
-   private String testListId;
-   private String relativeResultsDirectory;
-   private Output Output;
+   public String executionId;
+   public String testId;
+   public String testName;
+   public String computerName;
+   public String duration;
+   public String startTime;
+   public String endTime;
+   public String testType;
+   public String outcome;
+   public String testListId;
+   public String relativeResultsDirectory;
+   public Output Output;
 }
