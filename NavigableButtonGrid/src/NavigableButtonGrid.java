@@ -1,5 +1,7 @@
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -23,6 +25,12 @@ public class NavigableButtonGrid extends JPanel {
             final int curRow = i;
             final int curCol = j;
             buttons[i][j] = new JButton(i + ", " + j);
+            buttons[i][j].addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+                  buttons[curRow][curCol].setText("O");
+               }
+            });
             buttons[i][j].addKeyListener(enter);
             buttons[i][j].addKeyListener(new KeyAdapter() {
                @Override
@@ -82,7 +90,7 @@ public class NavigableButtonGrid extends JPanel {
    public static void main(String[] args) {
       JFrame f = new JFrame();
       f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      f.add(new NavigableButtonGrid(30, 24));
+      f.add(new NavigableButtonGrid(5, 5));
       f.pack();
       f.setVisible(true);
    }
