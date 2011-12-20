@@ -4,8 +4,8 @@ import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.swing.JFrame;
@@ -15,6 +15,7 @@ public class ClockFrame extends JFrame {
 	public ClockFrame(ClockPanel p) {
 		setUndecorated(true);
 		getContentPane().setBackground(Color.WHITE);
+		setAlwaysOnTop(true);
 		try {
 			Class<?> awtUtilitiesClass = Class.forName("com.sun.awt.AWTUtilities");
 			Method mSetWindowOpacity = awtUtilitiesClass.getMethod("setWindowOpacity", Window.class,
@@ -39,12 +40,7 @@ public class ClockFrame extends JFrame {
 			clickedPoint = e.getLocationOnScreen();
 		}
 	};
-	MouseMotionListener mml = new MouseMotionListener() {
-
-		@Override
-		public void mouseMoved(MouseEvent e) {
-		}
-
+	MouseMotionListener mml = new MouseMotionAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent arg0) {
 			int xDiff = clickedPoint.x - arg0.getXOnScreen();
