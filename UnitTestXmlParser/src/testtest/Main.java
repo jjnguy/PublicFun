@@ -1,10 +1,11 @@
+package testtest;
 import java.io.FileNotFoundException;
 
 import xmlcomponents.Jocument;
 import xmlcomponents.Jode;
+import xmlcomponents.autoparse.ClassCreation;
 import domain.mstest.TestRun;
-import domain.questionvalues.QuestionWeightFile;
-import domain.scoring.TestScores;
+import domain.questionvalues.UnitTestInfoFile;
 
 public class Main {
    public static void main(String[] args) throws FileNotFoundException {
@@ -13,12 +14,10 @@ public class Main {
       Jode j = Jocument.load(fileLocation, "TestRun");
       TestRun tesstRun = j.toObject(TestRun.class);
       System.out.println("WooHoo");
-      QuestionWeightFile file = QuestionWeightFile
+      UnitTestInfoFile file = UnitTestInfoFile
             .parseFile("C:/Users/U0117691/workspace2/JNUnitXmlFileParser/resources/round1weights.txt");
       System.out.println(file);
-      TestScores scores = new TestScores(file, tesstRun);
-      for (String name : scores.participants()) {
-         System.out.println(name + ": " + scores.score(name));
-      }
+      ClassCreation.createClasses(j, "C:\\Users\\U0117691\\Desktop\\output");
+      // TestScores scores = new TestScores(file, tesstRun);
    }
 }

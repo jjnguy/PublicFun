@@ -600,7 +600,7 @@ System.NotImplementedException: The method or operation is not implemented.</Mes
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="a006436f-1d2a-4316-89da-2385ac8dcfc7" testId="c83dd35d-890c-8b63-66b9-356b6c9eb2cd" testName="Carol_Neighbors_tests" computerName="NEON" duration="00:00:00.0015745" startTime="2011-12-07T14:30:36.0179000-06:00" endTime="2011-12-07T14:30:36.0179000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a006436f-1d2a-4316-89da-2385ac8dcfc7">
+    <UnitTestResult executionId="a006436f-1d2a-4316-89da-2385ac8dcfc7" testId="c83dd35d-890c-8b63-66b9-356b6c9eb2cd" testName="Carol_Neighbors_tests" computerName="NEON" duration="00:00:00.0015745" startTime="2011-12-07T14:30:36.0179000-06:00" endTime="2011-12-07T14:30:36.0179000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a006436f-1d2a-4316-89da-2385ac8dcfc7">
       <Output>
         <ErrorInfo>
           <Message>Test method CodeCompTests.CarolTests.Carol_Neighbors_tests threw exception: 
@@ -613,7 +613,7 @@ System.NotImplementedException: The method or operation is not implemented.</Mes
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="00fb71bd-c7c9-462a-9a57-9a3feb1f046a" testId="d31eeef9-9726-49b8-9bd4-2f92ea87c6d8" testName="Bob_CountBits_tests" computerName="NEON" duration="00:00:00.0015940" startTime="2011-12-07T14:30:36.0335000-06:00" endTime="2011-12-07T14:30:36.0335000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="00fb71bd-c7c9-462a-9a57-9a3feb1f046a">
+    <UnitTestResult executionId="00fb71bd-c7c9-462a-9a57-9a3feb1f046a" testId="d31eeef9-9726-49b8-9bd4-2f92ea87c6d8" testName="Bob_CountBits_tests" computerName="NEON" duration="00:00:00.0015940" startTime="2011-12-07T14:30:36.0335000-06:00" endTime="2011-12-07T14:30:36.0335000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="00fb71bd-c7c9-462a-9a57-9a3feb1f046a">
       <Output>
         <ErrorInfo>
           <Message>Test method CodeCompTests.BobTests.Bob_CountBits_tests threw exception: 
@@ -639,7 +639,7 @@ System.NotImplementedException: The method or operation is not implemented.</Mes
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="2d73a18e-2c4a-497f-9db7-c0e6b8da6176" testId="da1a0a1b-ce82-7fc4-a8b0-1e8601e1c514" testName="Alice_LastDigitPowerOfTwo_tests" computerName="NEON" duration="00:00:00.0015922" startTime="2011-12-07T14:30:36.0491000-06:00" endTime="2011-12-07T14:30:36.0491000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2d73a18e-2c4a-497f-9db7-c0e6b8da6176">
+    <UnitTestResult executionId="2d73a18e-2c4a-497f-9db7-c0e6b8da6176" testId="da1a0a1b-ce82-7fc4-a8b0-1e8601e1c514" testName="Alice_LastDigitPowerOfTwo_tests" computerName="NEON" duration="00:00:00.0015922" startTime="2011-12-07T14:30:36.0491000-06:00" endTime="2011-12-07T14:30:36.0491000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2d73a18e-2c4a-497f-9db7-c0e6b8da6176">
       <Output>
         <ErrorInfo>
           <Message>Test method CodeCompTests.AliceTests.Alice_LastDigitPowerOfTwo_tests threw exception: 
@@ -678,7 +678,7 @@ System.NotImplementedException: The method or operation is not implemented.</Mes
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="f599bb11-e1dd-4a58-8cc4-2dc52b799c4e" testId="e7dcb307-4008-513a-21cf-352341be928f" testName="Dave_CountBits_tests" computerName="NEON" duration="00:00:00.0071254" startTime="2011-12-07T14:30:36.0959000-06:00" endTime="2011-12-07T14:30:36.1115000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f599bb11-e1dd-4a58-8cc4-2dc52b799c4e">
+    <UnitTestResult executionId="f599bb11-e1dd-4a58-8cc4-2dc52b799c4e" testId="e7dcb307-4008-513a-21cf-352341be928f" testName="Dave_CountBits_tests" computerName="NEON" duration="00:00:00.0071254" startTime="2011-12-07T14:30:36.0959000-06:00" endTime="2011-12-07T14:30:36.1115000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f599bb11-e1dd-4a58-8cc4-2dc52b799c4e">
       <Output>
         <ErrorInfo>
           <Message>Test method CodeCompTests.DaveTests.Dave_CountBits_tests threw exception: 
@@ -704,7 +704,7 @@ System.NotImplementedException: The method or operation is not implemented.</Mes
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="749d16fb-5544-4b4e-9612-6754b014767e" testId="ec929666-30b2-fc68-afa8-f8bd65985283" testName="Bob_Neighbors_tests" computerName="NEON" duration="00:00:00.0022474" startTime="2011-12-07T14:30:36.1583000-06:00" endTime="2011-12-07T14:30:36.1583000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="749d16fb-5544-4b4e-9612-6754b014767e">
+    <UnitTestResult executionId="749d16fb-5544-4b4e-9612-6754b014767e" testId="ec929666-30b2-fc68-afa8-f8bd65985283" testName="Bob_Neighbors_tests" computerName="NEON" duration="00:00:00.0022474" startTime="2011-12-07T14:30:36.1583000-06:00" endTime="2011-12-07T14:30:36.1583000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="749d16fb-5544-4b4e-9612-6754b014767e">
       <Output>
         <ErrorInfo>
           <Message>Test method CodeCompTests.BobTests.Bob_Neighbors_tests threw exception: 
@@ -717,7 +717,7 @@ System.NotImplementedException: The method or operation is not implemented.</Mes
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="d98807c9-62a9-4659-ae68-54b78060639e" testId="efa473a6-e2ab-e067-c31b-486d611b19d8" testName="Bob_IsBalanced_tests" computerName="NEON" duration="00:00:00.0058405" startTime="2011-12-07T14:30:36.1739000-06:00" endTime="2011-12-07T14:30:36.1895000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d98807c9-62a9-4659-ae68-54b78060639e">
+    <UnitTestResult executionId="d98807c9-62a9-4659-ae68-54b78060639e" testId="efa473a6-e2ab-e067-c31b-486d611b19d8" testName="Bob_IsBalanced_tests" computerName="NEON" duration="00:00:00.0058405" startTime="2011-12-07T14:30:36.1739000-06:00" endTime="2011-12-07T14:30:36.1895000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d98807c9-62a9-4659-ae68-54b78060639e">
       <Output>
         <ErrorInfo>
           <Message>Test method CodeCompTests.BobTests.Bob_IsBalanced_tests threw exception: 
@@ -730,7 +730,7 @@ System.NotImplementedException: The method or operation is not implemented.</Mes
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="74c31b42-46f7-4853-8aa3-361129d7876e" testId="fd1266bb-d689-c52a-bb1f-300064ec5e55" testName="Carol_CountBits_tests" computerName="NEON" duration="00:00:00.0016853" startTime="2011-12-07T14:30:36.2051000-06:00" endTime="2011-12-07T14:30:36.2051000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="74c31b42-46f7-4853-8aa3-361129d7876e">
+    <UnitTestResult executionId="74c31b42-46f7-4853-8aa3-361129d7876e" testId="fd1266bb-d689-c52a-bb1f-300064ec5e55" testName="Carol_CountBits_tests" computerName="NEON" duration="00:00:00.0016853" startTime="2011-12-07T14:30:36.2051000-06:00" endTime="2011-12-07T14:30:36.2051000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="74c31b42-46f7-4853-8aa3-361129d7876e">
       <Output>
         <ErrorInfo>
           <Message>Test method CodeCompTests.CarolTests.Carol_CountBits_tests threw exception: 

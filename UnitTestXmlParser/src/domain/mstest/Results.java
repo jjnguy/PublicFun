@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This holds all of the results from the C# unit test runs
+ * @author Justin Nelson
+ */
 public class Results {
 
    public List<UnitTestResult> UnitTestResult;
