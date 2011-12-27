@@ -14,7 +14,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -39,6 +38,7 @@ public class AllUserResultPanel extends JPanel {
    private UserSummaryPanel summary;
    private JList users;
    private JButton sortByName, sortByScore;
+   private JButton exportData;
 
    public AllUserResultPanel(TestScores data) {
       super(new BorderLayout());
@@ -77,6 +77,15 @@ public class AllUserResultPanel extends JPanel {
                   AllUserResultPanel.this.data.score(o2)));
          }
       }));
+      exportData = new JButton("Export Data");
+      exportData.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent arg0) {
+            JDialog dia = new JDialog();
+            dia.add(new ExportPanel());
+            dia.setVisible(true);
+         }
+      });
       JPanel westPanel = new JPanel(new BorderLayout());
       westPanel.add(new JLabel("User Name - Score"), BorderLayout.NORTH);
       JScrollPane scroll = new JScrollPane(users);
@@ -87,6 +96,13 @@ public class AllUserResultPanel extends JPanel {
       westPanel.add(sortButtonPanel, BorderLayout.SOUTH);
       add(westPanel, BorderLayout.WEST);
       add(new ProblemSummaryPanel(data), BorderLayout.CENTER);
+      JPanel eastPane = new JPanel();
+      eastPane.add(exportData);
+      add(eastPane, BorderLayout.EAST);
+   }
+
+   private static class ExportPanel extends JPanel {
+
    }
 
    private MouseListener sortingListener(final Comparator<String> sortMethod) {
