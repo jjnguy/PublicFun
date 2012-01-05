@@ -14,24 +14,26 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import domain.combined.AllTests;
+import domain.combined.CombinedSingleProblem;
 import domain.combined.CombinedSingleTest;
 import domain.scoring.UnitTestScore;
 
 public class UserDetailsPanel extends JPanel {
-   private Set<CombinedSingleTest> testReults;
+   private AllTests allTests;
    private JLabel userName;
    private JLabel total;
    private JList resultListDisplay;
 
-   public UserDetailsPanel(String userName, Set<CombinedSingleTest> testReults, double score) {
+   public UserDetailsPanel(String userName, AllTests allTests, double score) {
       setLayout(new BorderLayout());
-      this.testReults = testReults;
+      this.allTests = allTests;
       List<String> data = new ArrayList<String>();
-      for (CombinedSingleTest result : testReults) {
-         data.add(result.singleInfo.questionName);
+      for (CombinedSingleProblem result : allTests.allProblemsForUser(userName)) {
+         data.add(result.problemName);
       }
       resultListDisplay = new JList(data.toArray(new String[data.size()]));
-      resultListDisplay.setCellRenderer(new TestListCellRenderer(testReults));
+      resultListDisplay.setCellRenderer(new TestListCellRenderer(allTests, userName));
       this.userName = new JLabel("Name: " + userName);
       this.total = new JLabel("Total: " + score);
       JPanel northPanel = new JPanel();
@@ -42,31 +44,30 @@ public class UserDetailsPanel extends JPanel {
    }
 
    private static class TestListCellRenderer extends DefaultListCellRenderer {
-      private Map<String, CombinedSingleTest> scores;
+      private AllTests allTests;
+      private String userName;
 
-      public TestListCellRenderer(Set<CombinedSingleTest> scores) {
-         this.scores = new HashMap<String, CombinedSingleTest>();
-         for (CombinedSingleTest score : scores) {
-            this.scores.put(score.singleInfo.questionName, score);
-         }
+      public TestListCellRenderer(AllTests allTests, String userName) {
+         this.allTests = allTests;
+         this.userName = userName;
       }
 
       @Override
       public Component getListCellRendererComponent(JList list, final Object value, int index, boolean isSelected,
             boolean cellHasFocus) {
          super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-         CombinedSingleTest score = scores.get(value);
-         setText(score.singleInfo.questionName + " - " + score.score() + "/" + score.singleInfo.weight);
+         CombinedSingleProblem score = allTests.singleProblemForUser(userName, value.toString());
+         setText(value.toString() + " - " + score.score() + "/" + score.totalPossible());
          Color myRed = new Color(237, 148, 150);
          Color myYellow = new Color(233, 240, 145);
          Color myGreen = new Color(146, 239, 162);
          if (score.score() <= 0) {
             // red
             setBackground(myRed);
-         } else if (score.score() < score.singleInfo.weight) {
+         } else if (score.score() < score.totalPossible()) {
             // yellow
             setBackground(myYellow);
-         } else if (score.score() == score.singleInfo.weight) {
+         } else if (score.score() == score.totalPossible()) {
             // green
             setBackground(myGreen);
          } else {

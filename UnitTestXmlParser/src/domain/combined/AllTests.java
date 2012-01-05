@@ -12,9 +12,10 @@ import domain.questionvalues.SingleUnitTestInfo;
 import domain.questionvalues.UnitTestInfoFile;
 
 public class AllTests {
-   private final UnitTestInfoFile testInfo;
+   public final UnitTestInfoFile testInfo;
    public final Map<String, CombinedSingleTest> allTests;
    public Set<String> problemNames;
+   public Set<String> testNames;
    public Set<String> userNames;
 
    public AllTests(TestRun cSharp, testrun java, UnitTestInfoFile testInfo) {
@@ -22,11 +23,13 @@ public class AllTests {
       Map<String, CombinedSingleTest> allTests = new HashMap<String, CombinedSingleTest>();
       problemNames = new HashSet<String>();
       userNames = new HashSet<String>();
+      testNames = new HashSet<String>();
       for (SingleUnitTestInfo info : testInfo) {
          allTests.put(info.fullTestName(), new CombinedSingleTest(java.getResultForTest(info.fullTestName()),
                cSharp.Results.getResultForTest(info.fullTestName()), info));
          problemNames.add(info.questionName);
          userNames.add(info.participantName);
+         testNames.add(info.testName);
       }
       this.allTests = Collections.unmodifiableMap(allTests);
    }
@@ -38,6 +41,17 @@ public class AllTests {
          score += result.score();
       }
       return score;
+   }
+
+   public Set<CombinedSingleTest> getTestsForUserAndProblem(String userName, String problemName) {
+      Set<CombinedSingleTest> results = new HashSet<CombinedSingleTest>();
+      for (SingleUnitTestInfo singleInfo : testInfo.testsByUserName.get(userName)) {
+         if (singleInfo.questionName.equals(problemName)) {
+            CombinedSingleTest result = allTests.get(singleInfo.fullTestName());
+            results.add(result);
+         }
+      }
+      return results;
    }
 
    public double getScoreForUserAndProblem(String userName, String problemName) {
@@ -62,6 +76,18 @@ public class AllTests {
          result.add(allTests.get(singleInfo.fullTestName()));
       }
       return result;
+   }
+
+   public Set<CombinedSingleProblem> allProblemsForUser(String userName) {
+      Set<CombinedSingleProblem> results = new HashSet<CombinedSingleProblem>();
+      for (String problemName : problemNames) {
+         results.add(new CombinedSingleProblem(problemName, getTestsForUserAndProblem(userName, problemName)));
+      }
+      return results;
+   }
+
+   public CombinedSingleProblem singleProblemForUser(String userName, String problemName) {
+      return new CombinedSingleProblem(problemName, getTestsForUserAndProblem(userName, problemName));
    }
 
    public Set<String> getUsersWhoPassedTest(String testName) {

@@ -81,9 +81,19 @@ System.NotImplementedException: The method or operation is not implemented.</Mes
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="43164510-4d8e-4089-acaf-9b8b7dfecebb" testId="574094fe-ce0c-e753-c652-df7fc8896b5a" testName="user003_AddTwoNumbers_addTwoNumbersHard!" computerName="U0081332-W7B" duration="00:00:00.0009115" startTime="2012-01-04T14:17:12.6766804-06:00" endTime="2012-01-04T14:17:12.6806804-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="43164510-4d8e-4089-acaf-9b8b7dfecebb">
+    <UnitTestResult executionId="43164510-4d8e-4089-acaf-9b8b7dfecebb" testId="574094fe-ce0c-e753-c652-df7fc8896b5a" testName="user003_AddTwoNumbers_addTwoNumbersHard!" computerName="U0081332-W7B" duration="00:00:00.0009115" startTime="2012-01-04T14:17:12.6766804-06:00" endTime="2012-01-04T14:17:12.6806804-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="43164510-4d8e-4089-acaf-9b8b7dfecebb">
+	    <Output>
+	        <ErrorInfo>
+	          <Message>Test method CodeCompTests.user002Tests.user002_AddTwoNumbers_addTwoNumbersBasic threw exception: 
+	System.NotImplementedException: The method or operation is not implemented.</Message>
+	          <StackTrace>    at CodeComp.user002.user002Solutions.AddTwoNumbers(Int32 a, Int32 b) in C:\Users\u0081332\Desktop\TRI Code Challenge\Grader\VisualStudio\CodeCompProblems\User002\User002Solutions.cs:line 142
+	   at CodeCompTests.CodeCompTests.TestAddTwoNumbers_addTwoNumbersBasic(CodeCompSolutions c) in C:\Users\u0081332\Desktop\TRI Code Challenge\Grader\VisualStudio\CodeCompTests\CodeCompTests.cs:line 19
+	   at CodeCompTests.user002Tests.user002_AddTwoNumbers_addTwoNumbersBasic() in C:\Users\u0081332\Desktop\TRI Code Challenge\Grader\VisualStudio\CodeCompTests\User002Tests.cs:line 20
+			</StackTrace>
+	        </ErrorInfo>
+	     </Output>
     </UnitTestResult>
-        <UnitTestResult executionId="2a125465-b869-4fc8-8ea6-af1003ad8df3" testId="2dbf8ec5-e881-97bc-8431-489b506331d7" testName="user002_AddTwoNumbers_addTwoNumbersBasic" computerName="U0081332-W7B" duration="00:00:00.0917969" startTime="2012-01-04T14:17:12.2336804-06:00" endTime="2012-01-04T14:17:12.6666804-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2a125465-b869-4fc8-8ea6-af1003ad8df3">
+    <UnitTestResult executionId="2a125465-b869-4fc8-8ea6-af1003ad8df3" testId="2dbf8ec5-e881-97bc-8431-489b506331d7" testName="user002_AddTwoNumbers_addTwoNumbersBasic" computerName="U0081332-W7B" duration="00:00:00.0917969" startTime="2012-01-04T14:17:12.2336804-06:00" endTime="2012-01-04T14:17:12.6666804-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2a125465-b869-4fc8-8ea6-af1003ad8df3">
       <Output>
         <ErrorInfo>
           <Message>Test method CodeCompTests.user002Tests.user002_AddTwoNumbers_addTwoNumbersBasic threw exception: 

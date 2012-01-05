@@ -31,7 +31,7 @@ public class UnitTestInfoFile implements Iterable<SingleUnitTestInfo> {
             testsByQuestionName.put(singleItem.questionName, new ArrayList<SingleUnitTestInfo>());
          }
          if (!testsByUserName.containsKey(singleItem.participantName)) {
-            testsByQuestionName.put(singleItem.participantName, new ArrayList<SingleUnitTestInfo>());
+            testsByUserName.put(singleItem.participantName, new ArrayList<SingleUnitTestInfo>());
          }
          testByUniqueName.put(singleItem.fullTestName(), singleItem);
          testsByQuestionName.get(singleItem.questionName).add(singleItem);

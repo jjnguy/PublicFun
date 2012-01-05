@@ -17,7 +17,7 @@ public class ProblemSummaryPanel extends JPanel {
 
    public ProblemSummaryPanel(AllTests scores) {
       this.scores = scores;
-      scoresList = new JList(scores.allTests.keySet().toArray());
+      scoresList = new JList(scores.testNames.toArray());
       scoresList.setCellRenderer(new ProblemListCellRendereer(scores));
       add(scoresList);
    }

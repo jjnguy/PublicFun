@@ -4,10 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,6 +22,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -30,6 +35,7 @@ import domain.combined.AllTests;
 import domain.combined.CombinedSingleTest;
 import domain.junit.testrun;
 import domain.mstest.TestRun;
+import domain.questionvalues.SingleUnitTestInfo;
 import domain.questionvalues.UnitTestInfoFile;
 import domain.scoring.TestScores;
 import domain.scoring.UnitTestScore;
@@ -58,9 +64,8 @@ public class AllUserResultPanel extends JFrame {
             String clickedParticipant = users.getModel().getElementAt(idx).toString();
             summary.updateForUser(clickedParticipant);
             if (evt.getClickCount() == 2) {
-               UserDetailsPanel details = new UserDetailsPanel(clickedParticipant, AllUserResultPanel.this.data
-                     .allTestsForUser(clickedParticipant), AllUserResultPanel.this.data
-                     .getScoreForUser(clickedParticipant));
+               UserDetailsPanel details = new UserDetailsPanel(clickedParticipant, AllUserResultPanel.this.data,
+                     AllUserResultPanel.this.data.getScoreForUser(clickedParticipant));
                JDialog dialog = new JDialog();
                dialog.add(details);
                dialog.pack();
@@ -69,14 +74,14 @@ public class AllUserResultPanel extends JFrame {
          }
       });
       sortByName = new JButton("Sort By Name");
-      sortByName.addMouseListener(sortingListener(new Comparator<String>() {
+      sortByName.addActionListener(sortingListener(new Comparator<String>() {
          @Override
          public int compare(String o1, String o2) {
             return o1.compareTo(o2);
          }
       }));
       sortByScore = new JButton("Sort By Score");
-      sortByScore.addMouseListener(sortingListener(new Comparator<String>() {
+      sortByScore.addActionListener(sortingListener(new Comparator<String>() {
          @Override
          public int compare(String o1, String o2) {
             return -new Double(AllUserResultPanel.this.data.getScoreForUser(o1)).compareTo(new Double(
@@ -84,12 +89,19 @@ public class AllUserResultPanel extends JFrame {
          }
       }));
       exportData = new JButton("Export Data");
-      exportData.addMouseListener(new MouseAdapter() {
+      exportData.addActionListener(new ActionListener() {
          @Override
-         public void mouseClicked(MouseEvent arg0) {
-            JDialog dia = new JDialog();
-            dia.add(new ExportPanel());
-            dia.setVisible(true);
+         public void actionPerformed(ActionEvent e) {
+            JFileChooser chooser = new JFileChooser();
+            int choice = chooser.showSaveDialog(AllUserResultPanel.this);
+            if (choice != JFileChooser.APPROVE_OPTION) {
+               return;
+            }
+            try {
+               exportToCsv(chooser.getSelectedFile().getAbsolutePath());
+            } catch (FileNotFoundException e1) {
+               e1.printStackTrace();
+            }
          }
       });
       JPanel westPanel = new JPanel(new BorderLayout());
@@ -108,14 +120,37 @@ public class AllUserResultPanel extends JFrame {
       pack();
    }
 
-   private static class ExportPanel extends JPanel {
-
+   private void exportToCsv(String location) throws FileNotFoundException {
+      PrintStream out = new PrintStream(new File(location));
+      List<String> uniqueTestNames = new ArrayList<String>(data.allTests.keySet());
+      Collections.sort(uniqueTestNames);
+      out.print("User Name,Total,");
+      String currentUserName = data.testInfo.testByUniqueName.get(uniqueTestNames.get(0)).participantName;
+      for (String uniqueName : uniqueTestNames) {
+         SingleUnitTestInfo singleInfo = data.testInfo.testByUniqueName.get(uniqueName);
+         if (!singleInfo.participantName.equals(currentUserName)) {
+            out.println();
+            break;
+         }
+         out.print(singleInfo.questionName + " - " + singleInfo.testName + ",");
+      }
+      out.print(data.testInfo.testByUniqueName.get(uniqueTestNames.get(0)).participantName + "," + data.getScoreForUser(currentUserName) + ",");
+      for (String uniqueName : uniqueTestNames) {
+         SingleUnitTestInfo singleInfo = data.testInfo.testByUniqueName.get(uniqueName);
+         if (!singleInfo.participantName.equals(currentUserName)) {
+            out.println();
+            currentUserName = singleInfo.participantName;
+            out.print(singleInfo.participantName + "," + data.getScoreForUser(currentUserName) + ",");
+         }
+         out.print(data.getScoreByUniqueName(uniqueName) + ",");
+      }
+      out.close();
    }
 
-   private MouseListener sortingListener(final Comparator<String> sortMethod) {
-      return new MouseAdapter() {
+   private ActionListener sortingListener(final Comparator<String> sortMethod) {
+      return new ActionListener() {
          @Override
-         public void mouseClicked(MouseEvent arg0) {
+         public void actionPerformed(ActionEvent arg0) {
             Object selected = users.getSelectedValue();
             List<String> dataList = new ArrayList<String>(data.userNames);
             Collections.sort(dataList, sortMethod);
@@ -123,50 +158,5 @@ public class AllUserResultPanel extends JFrame {
             users.setSelectedValue(selected, true);
          }
       };
-   }
-
-   private static class UserCellRenderer extends DefaultListCellRenderer {
-      private AllTests allScores;
-
-      public UserCellRenderer(AllTests allScores) {
-         this.allScores = allScores;
-      }
-
-      @Override
-      public Component getListCellRendererComponent(JList list, final Object value, int index, boolean isSelected,
-            boolean cellHasFocus) {
-         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-         setFont(new Font("sans", Font.PLAIN, 18));
-         setText(String.format("%-14s-%5.2f", value.toString(), allScores.getScoreForUser(value.toString())));
-         final Set<CombinedSingleTest> usersScores = allScores.allTestsForUser(value.toString());
-         return this;
-      }
-   }
-
-   private static class UserSummaryPanel extends JPanel {
-      private static final long serialVersionUID = 1L;
-
-      private AllTests allScores;
-
-      private JLabel nameLabel;
-      private JLabel scoreLabel;
-
-      public UserSummaryPanel(AllTests allScores) {
-         setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-         this.allScores = allScores;
-         JLabel nameLabel_label = new JLabel("Name: ");
-         nameLabel = new JLabel();
-         JLabel scoreLabel_label = new JLabel("Score: ");
-         scoreLabel = new JLabel();
-         add(nameLabel_label);
-         add(nameLabel);
-         add(scoreLabel_label);
-         add(scoreLabel);
-      }
-
-      public void updateForUser(String user) {
-         nameLabel.setText(user);
-         scoreLabel.setText(allScores.getScoreForUser(user) + "");
-      }
    }
 }

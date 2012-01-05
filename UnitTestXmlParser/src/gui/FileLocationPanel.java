@@ -1,10 +1,13 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -26,9 +29,13 @@ public class FileLocationPanel extends JPanel {
    private JButton go;
 
    public FileLocationPanel() {
-      java = new BrowsePanel("Junit Test Result Location", "");
-      cSharp = new BrowsePanel("MSTest Result Location", "");
-      testWeights = new BrowsePanel("Unit Test Weight File", "");
+      setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+      java = new BrowsePanel("Junit Test Result Location",
+            "C:/Users/U0117691/workspace2/JNUnitXmlFileParser/resources/junit.xml");
+      cSharp = new BrowsePanel("MSTest Result Location",
+            "C:/Users/U0117691/workspace2/JNUnitXmlFileParser/resources/mstest.xml");
+      testWeights = new BrowsePanel("Unit Test Weight File",
+            "C:/Users/U0117691/workspace2/JNUnitXmlFileParser/resources/round1weights.txt");
       go = new JButton("Calculate Scores");
       go.addActionListener(new ActionListener() {
          @Override
@@ -80,6 +87,7 @@ class BrowsePanel extends JPanel {
       browse = new JButton("Browse");
 
       locationText.setColumns(80);
+      locationText.setFont(new Font("monospace", Font.PLAIN, 12));
 
       browse.addActionListener(new ActionListener() {
          @Override

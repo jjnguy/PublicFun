@@ -10,10 +10,14 @@ public class testcase {
 
 	private double time;
 
-	@XmlProperty(optional=true)
-	private failure failure;
-	
+   @XmlProperty(optional=true)
+   private failure failure;
+   
+   
+   @XmlProperty(optional=true)
+   private error error;
+   
 	public boolean failed(){
-	   return failure != null;
+	   return failure != null || error != null;
 	}
 }
