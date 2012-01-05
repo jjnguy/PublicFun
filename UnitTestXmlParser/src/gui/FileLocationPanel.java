@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,12 +83,14 @@ class BrowsePanel extends JPanel {
 
    public BrowsePanel(String labelText, String defaultLocation) {
       super(new BorderLayout());
-      label = new JLabel(labelText);
+      label = new JLabel(labelText + ":");
       locationText = new JTextField(defaultLocation == null ? "" : defaultLocation);
       browse = new JButton("Browse");
 
+      label.setPreferredSize(new Dimension(140, label.getPreferredSize().height));
+
       locationText.setColumns(80);
-      locationText.setFont(new Font("monospace", Font.PLAIN, 12));
+      locationText.setFont(new Font("consolas", Font.PLAIN, 12));
 
       browse.addActionListener(new ActionListener() {
          @Override
