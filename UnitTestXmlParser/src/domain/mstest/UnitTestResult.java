@@ -1,5 +1,7 @@
 package domain.mstest;
 
+import xmlcomponents.autoparse.annotation.XmlProperty;
+
 public class UnitTestResult {
    public String executionId;
    public String testId;
@@ -12,5 +14,10 @@ public class UnitTestResult {
    public String outcome;
    public String testListId;
    public String relativeResultsDirectory;
+   @XmlProperty(optional = true)
    public Output Output;
+
+   public boolean failed() {
+      return outcome.equals("Failed");
+   }
 }

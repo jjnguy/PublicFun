@@ -25,12 +25,13 @@ import javax.swing.JScrollPane;
 
 import xmlcomponents.Jocument;
 import xmlcomponents.Jode;
+import domain.junit.testrun;
 import domain.mstest.TestRun;
 import domain.questionvalues.UnitTestInfoFile;
 import domain.scoring.TestScores;
 import domain.scoring.UnitTestScore;
 
-public class AllUserResultPanel extends JPanel {
+public class AllUserResultPanel extends JFrame {
    private static final long serialVersionUID = 1L;
 
    private TestScores data;
@@ -41,7 +42,9 @@ public class AllUserResultPanel extends JPanel {
    private JButton exportData;
 
    public AllUserResultPanel(TestScores data) {
-      super(new BorderLayout());
+      super("Test Results");
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setLayout(new BorderLayout());
       this.data = data;
       summary = new UserSummaryPanel(data);
       users = new JList(data.participants().toArray(new String[data.participants().size()]));
@@ -99,6 +102,7 @@ public class AllUserResultPanel extends JPanel {
       JPanel eastPane = new JPanel();
       eastPane.add(exportData);
       add(eastPane, BorderLayout.EAST);
+      pack();
    }
 
    private static class ExportPanel extends JPanel {
@@ -161,19 +165,5 @@ public class AllUserResultPanel extends JPanel {
          nameLabel.setText(user);
          scoreLabel.setText(allScores.score(user) + "");
       }
-   }
-
-   public static void main(String[] args) throws FileNotFoundException {
-      String fileLocation = "C:/Users/U0117691/workspace2/JNUnitXmlFileParser/resources/testResult.xml";
-      Jode j = Jocument.load(fileLocation, "TestRun");
-      TestRun tesstRun = j.toObject(TestRun.class);
-      UnitTestInfoFile file = UnitTestInfoFile
-            .parseFile("C:/Users/U0117691/workspace2/JNUnitXmlFileParser/resources/round1weights.txt");
-      TestScores s = new TestScores(file, tesstRun);
-      JFrame f = new JFrame("Coding Competition Results");
-      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      f.add(new AllUserResultPanel(s));
-      f.pack();
-      f.setVisible(true);
    }
 }

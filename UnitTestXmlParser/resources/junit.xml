@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testrun name="CodeCompProblems" project="CodeCompProblems" tests="9" started="9" failures="2" errors="5" ignored="0">
+  <testsuite name="com.tlr.codecomp.grading.user003Tests" time="0.001">
+    <testcase name="user003_SubtractTwoNumbers_subtractTwoNumbersBasic" classname="com.tlr.codecomp.grading.user003Tests" time="0.001">
+      <error>java.lang.UnsupportedOperationException
+	at com.tlr.codecomp.user003.user003Solutions.subtractTwoNumbers(user003Solutions.java:103)
+	at com.tlr.codecomp.CodeCompTests.gradeSubtractTwoNumbers_subtractTwoNumbersBasic(CodeCompTests.java:50)
+	at com.tlr.codecomp.grading.user003Tests.user003_SubtractTwoNumbers_subtractTwoNumbersBasic(user003Tests.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</error>
+    </testcase>
+    <testcase name="user003_JoinStrings_joinStringsBasic" classname="com.tlr.codecomp.grading.user003Tests" time="0.0"/>
+    <testcase name="user003_AddTwoNumbers_addTwoNumbersBasic" classname="com.tlr.codecomp.grading.user003Tests" time="0.0">
+      <error>java.lang.UnsupportedOperationException
+	at com.tlr.codecomp.user003.user003Solutions.addTwoNumbers(user003Solutions.java:166)
+	at com.tlr.codecomp.CodeCompTests.gradeAddTwoNumbers_addTwoNumbersBasic(CodeCompTests.java:38)
+	at com.tlr.codecomp.grading.user003Tests.user003_AddTwoNumbers_addTwoNumbersBasic(user003Tests.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</error>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.tlr.codecomp.grading.user002Tests" time="0.0">
+    <testcase name="user002_JoinStrings_joinStringsBasic" classname="com.tlr.codecomp.grading.user002Tests" time="0.0">
+      <failure>
+        <expected>foo</expected>
+        <actual>foonull</actual>org.junit.ComparisonFailure: expected:&lt;foo[]&gt; but was:&lt;foo[null]&gt;
+	at org.junit.Assert.assertEquals(Assert.java:123)
+	at org.junit.Assert.assertEquals(Assert.java:145)
+	at com.tlr.codecomp.CodeCompTests.gradeJoinStrings_joinStringsBasic(CodeCompTests.java:64)
+	at com.tlr.codecomp.grading.user002Tests.user002_JoinStrings_joinStringsBasic(user002Tests.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</failure>
+    </testcase>
+    <testcase name="user002_SubtractTwoNumbers_subtractTwoNumbersBasic" classname="com.tlr.codecomp.grading.user002Tests" time="0.0"/>
+    <testcase name="user002_AddTwoNumbers_addTwoNumbersBasic" classname="com.tlr.codecomp.grading.user002Tests" time="0.0">
+      <failure>java.lang.AssertionError: expected:&lt;7&gt; but was:&lt;10&gt;
+	at org.junit.Assert.fail(Assert.java:91)
+	at org.junit.Assert.failNotEquals(Assert.java:645)
+	at org.junit.Assert.assertEquals(Assert.java:126)
+	at org.junit.Assert.assertEquals(Assert.java:470)
+	at org.junit.Assert.assertEquals(Assert.java:454)
+	at com.tlr.codecomp.CodeCompTests.gradeAddTwoNumbers_addTwoNumbersBasic(CodeCompTests.java:38)
+	at com.tlr.codecomp.grading.user002Tests.user002_AddTwoNumbers_addTwoNumbersBasic(user002Tests.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.tlr.codecomp.grading.user001Tests" time="0.0">
+    <testcase name="user001_JoinStrings_joinStringsBasic" classname="com.tlr.codecomp.grading.user001Tests" time="0.0">
+      <error>java.lang.UnsupportedOperationException
+	at com.tlr.codecomp.user001.user001Solutions.joinStrings(user001Solutions.java:97)
+	at com.tlr.codecomp.CodeCompTests.gradeJoinStrings_joinStringsBasic(CodeCompTests.java:62)
+	at com.tlr.codecomp.grading.user001Tests.user001_JoinStrings_joinStringsBasic(user001Tests.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</error>
+    </testcase>
+    <testcase name="user001_AddTwoNumbers_addTwoNumbersBasic" classname="com.tlr.codecomp.grading.user001Tests" time="0.0">
+      <error>java.lang.UnsupportedOperationException
+	at com.tlr.codecomp.user001.user001Solutions.addTwoNumbers(user001Solutions.java:130)
+	at com.tlr.codecomp.CodeCompTests.gradeAddTwoNumbers_addTwoNumbersBasic(CodeCompTests.java:38)
+	at com.tlr.codecomp.grading.user001Tests.user001_AddTwoNumbers_addTwoNumbersBasic(user001Tests.java:40)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</error>
+    </testcase>
+    <testcase name="user001_SubtractTwoNumbers_subtractTwoNumbersBasic" classname="com.tlr.codecomp.grading.user001Tests" time="0.0">
+      <error>java.lang.UnsupportedOperationException
+	at com.tlr.codecomp.user001.user001Solutions.subtractTwoNumbers(user001Solutions.java:163)
+	at com.tlr.codecomp.CodeCompTests.gradeSubtractTwoNumbers_subtractTwoNumbersBasic(CodeCompTests.java:50)
+	at com.tlr.codecomp.grading.user001Tests.user001_SubtractTwoNumbers_subtractTwoNumbersBasic(user001Tests.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</error>
+    </testcase>
+  </testsuite>
+</testrun>

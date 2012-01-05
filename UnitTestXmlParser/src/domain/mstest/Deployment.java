@@ -1,6 +1,7 @@
 package domain.mstest;
 
+import java.util.List;
 
 public class Deployment {
-    private DeploymentItem DeploymentItem;
+    private List<DeploymentItem> DeploymentItem;
 }

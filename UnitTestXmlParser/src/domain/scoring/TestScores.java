@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import domain.junit.testcase;
+import domain.junit.testrun;
 import domain.mstest.TestRun;
 import domain.mstest.UnitTestResult;
 import domain.questionvalues.SingleUnitTestInfo;
@@ -21,18 +23,22 @@ public class TestScores {
 
    private Map<String, List<UnitTestScore>> resultsByPerson;
 
-   public TestScores(UnitTestInfoFile questions, TestRun results) {
+   public TestScores(UnitTestInfoFile questions, TestRun seeSharpResults, testrun javaResults) {
       resultsByPerson = new HashMap<String, List<UnitTestScore>>();
       for (SingleUnitTestInfo question : questions.questions) {
          if (!resultsByPerson.containsKey(question.participantName)) {
             resultsByPerson.put(question.participantName, new ArrayList<UnitTestScore>());
          }
-         String combinedTestName = question.participantName + "_" + question.questionName + "_tests";
-         UnitTestResult testResults = results.Results.getResultForTest(combinedTestName);
-         System.out.println(testResults.outcome);
-         UnitTestScore score = new UnitTestScore(question, !testResults.outcome.equals("Failed") ? question.weight : 0);
+         UnitTestResult seeSharpTestResult = seeSharpResults.Results.getResultForTest(question.fullTestName());
+         testcase javaTestResult = javaResults.getResultForTest(question.fullTestName());
+         UnitTestScore score = new UnitTestScore(question,
+               passedEitherLanguage(seeSharpTestResult, javaTestResult) ? question.weight : 0);
          resultsByPerson.get(question.participantName).add(score);
       }
+   }
+
+   private static boolean passedEitherLanguage(UnitTestResult seeSharpResult, testcase javaResult) {
+      return !seeSharpResult.failed() || !javaResult.failed();
    }
 
    public Set<String> getUsersWhoPassedProblem(String problemName) {

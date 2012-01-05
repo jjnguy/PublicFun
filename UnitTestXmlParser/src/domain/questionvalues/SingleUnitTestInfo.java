@@ -9,11 +9,13 @@ public class SingleUnitTestInfo {
 
    public final String participantName;
    public final String questionName;
+   public final String testName;
    public final double weight;
 
-   private SingleUnitTestInfo(String participantName, String questionName, double weight) {
+   private SingleUnitTestInfo(String participantName, String questionName, String testName, double weight) {
       this.participantName = participantName;
       this.questionName = questionName;
+      this.testName = testName;
       this.weight = weight;
    }
 
@@ -21,8 +23,13 @@ public class SingleUnitTestInfo {
       String[] splitLine = line.trim().split("\t|_");
       String participantName = splitLine[0];
       String questionName = splitLine[1];
+      String testName = splitLine[2];
       double weight = Double.parseDouble(splitLine[3]);
-      SingleUnitTestInfo item = new SingleUnitTestInfo(participantName, questionName, weight);
+      SingleUnitTestInfo item = new SingleUnitTestInfo(participantName, questionName, testName, weight);
       return item;
+   }
+   
+   public String fullTestName() {
+      return participantName + "_" + questionName + "_" + testName;
    }
 }
