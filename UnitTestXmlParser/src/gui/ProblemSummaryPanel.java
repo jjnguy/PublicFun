@@ -6,25 +6,26 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import domain.combined.AllTests;
 import domain.scoring.TestScores;
 
 public class ProblemSummaryPanel extends JPanel {
 
-   private TestScores scores;
+   private AllTests scores;
 
    private JList scoresList;
 
-   public ProblemSummaryPanel(TestScores scores) {
+   public ProblemSummaryPanel(AllTests scores) {
       this.scores = scores;
-      scoresList = new JList(scores.getAllProblems().toArray());
+      scoresList = new JList(scores.allTests.keySet().toArray());
       scoresList.setCellRenderer(new ProblemListCellRendereer(scores));
       add(scoresList);
    }
 
    private static class ProblemListCellRendereer extends DefaultListCellRenderer {
-      private TestScores scores;
+      private AllTests scores;
 
-      public ProblemListCellRendereer(TestScores scores) {
+      public ProblemListCellRendereer(AllTests scores) {
          this.scores = scores;
       }
 
@@ -33,8 +34,8 @@ public class ProblemSummaryPanel extends JPanel {
             boolean cellHasFocus) {
          super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
          String pName = value.toString();
-         int passed = scores.getUsersWhoPassedProblem(pName).size();
-         int failed = scores.getUsersWhoFailedProblem(pName).size();
+         int passed = scores.getUsersWhoPassedTest(pName).size();
+         int failed = scores.getUsersWhoFailedTest(pName).size();
          double percent = (passed / ((double) passed + failed)) * 100;
          setText(pName + " - " + percent + "%");
          return this;

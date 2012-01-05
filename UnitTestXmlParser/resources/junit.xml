@@ -36,6 +36,23 @@
 
 </error>
     </testcase>
+    <testcase name="user003_AddTwoNumbers_addTwoNumbersHard!" classname="com.tlr.codecomp.grading.user003Tests" time="0.0">
+      <error>java.lang.UnsupportedOperationException
+	at com.tlr.codecomp.user003.user003Solutions.addTwoNumbers(user003Solutions.java:166)
+	at com.tlr.codecomp.CodeCompTests.gradeAddTwoNumbers_addTwoNumbersBasic(CodeCompTests.java:38)
+	at com.tlr.codecomp.grading.user003Tests.user003_AddTwoNumbers_addTwoNumbersBasic(user003Tests.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</error>
+    </testcase>
   </testsuite>
   <testsuite name="com.tlr.codecomp.grading.user002Tests" time="0.0">
     <testcase name="user002_JoinStrings_joinStringsBasic" classname="com.tlr.codecomp.grading.user002Tests" time="0.0">
@@ -80,6 +97,27 @@
 
 </failure>
     </testcase>
+    <testcase name="user002_AddTwoNumbers_addTwoNumbersHard!" classname="com.tlr.codecomp.grading.user002Tests" time="0.0">
+      <failure>java.lang.AssertionError: expected:&lt;7&gt; but was:&lt;10&gt;
+	at org.junit.Assert.fail(Assert.java:91)
+	at org.junit.Assert.failNotEquals(Assert.java:645)
+	at org.junit.Assert.assertEquals(Assert.java:126)
+	at org.junit.Assert.assertEquals(Assert.java:470)
+	at org.junit.Assert.assertEquals(Assert.java:454)
+	at com.tlr.codecomp.CodeCompTests.gradeAddTwoNumbers_addTwoNumbersBasic(CodeCompTests.java:38)
+	at com.tlr.codecomp.grading.user002Tests.user002_AddTwoNumbers_addTwoNumbersBasic(user002Tests.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</failure>
+    </testcase>
   </testsuite>
   <testsuite name="com.tlr.codecomp.grading.user001Tests" time="0.0">
     <testcase name="user001_JoinStrings_joinStringsBasic" classname="com.tlr.codecomp.grading.user001Tests" time="0.0">
@@ -100,6 +138,23 @@
 </error>
     </testcase>
     <testcase name="user001_AddTwoNumbers_addTwoNumbersBasic" classname="com.tlr.codecomp.grading.user001Tests" time="0.0">
+      <error>java.lang.UnsupportedOperationException
+	at com.tlr.codecomp.user001.user001Solutions.addTwoNumbers(user001Solutions.java:130)
+	at com.tlr.codecomp.CodeCompTests.gradeAddTwoNumbers_addTwoNumbersBasic(CodeCompTests.java:38)
+	at com.tlr.codecomp.grading.user001Tests.user001_AddTwoNumbers_addTwoNumbersBasic(user001Tests.java:40)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$1.run(FailOnTimeout.java:28)
+
+</error>
+    </testcase>
+    <testcase name="user001_AddTwoNumbers_addTwoNumbersHard!" classname="com.tlr.codecomp.grading.user001Tests" time="0.0">
       <error>java.lang.UnsupportedOperationException
 	at com.tlr.codecomp.user001.user001Solutions.addTwoNumbers(user001Solutions.java:130)
 	at com.tlr.codecomp.CodeCompTests.gradeAddTwoNumbers_addTwoNumbersBasic(CodeCompTests.java:38)

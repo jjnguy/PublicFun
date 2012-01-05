@@ -25,7 +25,7 @@ public class TestScores {
 
    public TestScores(UnitTestInfoFile questions, TestRun seeSharpResults, testrun javaResults) {
       resultsByPerson = new HashMap<String, List<UnitTestScore>>();
-      for (SingleUnitTestInfo question : questions.questions) {
+      for (SingleUnitTestInfo question : questions.allTests) {
          if (!resultsByPerson.containsKey(question.participantName)) {
             resultsByPerson.put(question.participantName, new ArrayList<UnitTestScore>());
          }

@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import xmlcomponents.Jocument;
 import xmlcomponents.Jode;
+import domain.combined.AllTests;
 import domain.junit.testrun;
 import domain.mstest.TestRun;
 import domain.questionvalues.UnitTestInfoFile;
@@ -33,8 +34,8 @@ public class FileLocationPanel extends JPanel {
          @Override
          public void actionPerformed(ActionEvent e) {
             try {
-               TestScores scores = new TestScores(loadUnitTestInfoFile(testWeights.getSelectedLocation()),
-                     loadSeeSharpTestScores(cSharp.getSelectedLocation()), loadJavaTestScores(java
+               AllTests scores = new AllTests(loadSeeSharpTestScores(cSharp.getSelectedLocation()),
+                     loadJavaTestScores(java.getSelectedLocation()), loadUnitTestInfoFile(testWeights
                            .getSelectedLocation()));
                JFrame rootWindow = new AllUserResultPanel(scores);
                rootWindow.setVisible(true);

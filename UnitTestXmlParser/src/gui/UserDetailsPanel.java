@@ -7,26 +7,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import domain.combined.CombinedSingleTest;
 import domain.scoring.UnitTestScore;
 
 public class UserDetailsPanel extends JPanel {
-   private List<UnitTestScore> testReults;
+   private Set<CombinedSingleTest> testReults;
    private JLabel userName;
    private JLabel total;
    private JList resultListDisplay;
 
-   public UserDetailsPanel(String userName, List<UnitTestScore> testReults, double score) {
+   public UserDetailsPanel(String userName, Set<CombinedSingleTest> testReults, double score) {
       setLayout(new BorderLayout());
       this.testReults = testReults;
       List<String> data = new ArrayList<String>();
-      for (UnitTestScore result : testReults) {
-         data.add(result.question.questionName);
+      for (CombinedSingleTest result : testReults) {
+         data.add(result.singleInfo.questionName);
       }
       resultListDisplay = new JList(data.toArray(new String[data.size()]));
       resultListDisplay.setCellRenderer(new TestListCellRenderer(testReults));
@@ -40,12 +42,12 @@ public class UserDetailsPanel extends JPanel {
    }
 
    private static class TestListCellRenderer extends DefaultListCellRenderer {
-      private Map<String, UnitTestScore> scores;
+      private Map<String, CombinedSingleTest> scores;
 
-      public TestListCellRenderer(List<UnitTestScore> scores) {
-         this.scores = new HashMap<String, UnitTestScore>();
-         for (UnitTestScore score : scores) {
-            this.scores.put(score.question.questionName, score);
+      public TestListCellRenderer(Set<CombinedSingleTest> scores) {
+         this.scores = new HashMap<String, CombinedSingleTest>();
+         for (CombinedSingleTest score : scores) {
+            this.scores.put(score.singleInfo.questionName, score);
          }
       }
 
@@ -53,18 +55,18 @@ public class UserDetailsPanel extends JPanel {
       public Component getListCellRendererComponent(JList list, final Object value, int index, boolean isSelected,
             boolean cellHasFocus) {
          super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-         UnitTestScore score = scores.get(value);
-         setText(score.question.questionName + " - " + score.score + "/" + score.question.weight);
+         CombinedSingleTest score = scores.get(value);
+         setText(score.singleInfo.questionName + " - " + score.score() + "/" + score.singleInfo.weight);
          Color myRed = new Color(237, 148, 150);
          Color myYellow = new Color(233, 240, 145);
          Color myGreen = new Color(146, 239, 162);
-         if (score.score <= 0) {
+         if (score.score() <= 0) {
             // red
             setBackground(myRed);
-         } else if (score.score < score.question.weight) {
+         } else if (score.score() < score.singleInfo.weight) {
             // yellow
             setBackground(myYellow);
-         } else if (score.score == score.question.weight) {
+         } else if (score.score() == score.singleInfo.weight) {
             // green
             setBackground(myGreen);
          } else {

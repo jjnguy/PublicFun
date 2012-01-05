@@ -1,9 +1,12 @@
 user001_AddTwoNumbers_addTwoNumbersBasic	1.00
+user001_AddTwoNumbers_addTwoNumbersHard!	4.00
 user001_JoinStrings_joinStringsBasic	2.00
 user001_SubtractTwoNumbers_subtractTwoNumbersBasic	3.00
 user002_AddTwoNumbers_addTwoNumbersBasic	1.00
+user002_AddTwoNumbers_addTwoNumbersHard!	4.00
 user002_JoinStrings_joinStringsBasic	2.00
 user002_SubtractTwoNumbers_subtractTwoNumbersBasic	3.00
 user003_AddTwoNumbers_addTwoNumbersBasic	1.00
+user003_AddTwoNumbers_addTwoNumbersHard!	4.00
 user003_JoinStrings_joinStringsBasic	2.00
 user003_SubtractTwoNumbers_subtractTwoNumbersBasic	3.00

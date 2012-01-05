@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
@@ -25,6 +26,8 @@ import javax.swing.JScrollPane;
 
 import xmlcomponents.Jocument;
 import xmlcomponents.Jode;
+import domain.combined.AllTests;
+import domain.combined.CombinedSingleTest;
 import domain.junit.testrun;
 import domain.mstest.TestRun;
 import domain.questionvalues.UnitTestInfoFile;
@@ -34,20 +37,20 @@ import domain.scoring.UnitTestScore;
 public class AllUserResultPanel extends JFrame {
    private static final long serialVersionUID = 1L;
 
-   private TestScores data;
+   private AllTests data;
 
    private UserSummaryPanel summary;
    private JList users;
    private JButton sortByName, sortByScore;
    private JButton exportData;
 
-   public AllUserResultPanel(TestScores data) {
+   public AllUserResultPanel(AllTests data) {
       super("Test Results");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLayout(new BorderLayout());
       this.data = data;
       summary = new UserSummaryPanel(data);
-      users = new JList(data.participants().toArray(new String[data.participants().size()]));
+      users = new JList(data.userNames.toArray(new String[data.userNames.size()]));
       users.setCellRenderer(new UserCellRenderer(data));
       users.addMouseListener(new MouseAdapter() {
          public void mouseClicked(MouseEvent evt) {
@@ -56,8 +59,8 @@ public class AllUserResultPanel extends JFrame {
             summary.updateForUser(clickedParticipant);
             if (evt.getClickCount() == 2) {
                UserDetailsPanel details = new UserDetailsPanel(clickedParticipant, AllUserResultPanel.this.data
-                     .getScoresForParticipant(clickedParticipant), AllUserResultPanel.this.data
-                     .score(clickedParticipant));
+                     .allTestsForUser(clickedParticipant), AllUserResultPanel.this.data
+                     .getScoreForUser(clickedParticipant));
                JDialog dialog = new JDialog();
                dialog.add(details);
                dialog.pack();
@@ -76,8 +79,8 @@ public class AllUserResultPanel extends JFrame {
       sortByScore.addMouseListener(sortingListener(new Comparator<String>() {
          @Override
          public int compare(String o1, String o2) {
-            return -new Double(AllUserResultPanel.this.data.score(o1)).compareTo(new Double(
-                  AllUserResultPanel.this.data.score(o2)));
+            return -new Double(AllUserResultPanel.this.data.getScoreForUser(o1)).compareTo(new Double(
+                  AllUserResultPanel.this.data.getScoreForUser(o2)));
          }
       }));
       exportData = new JButton("Export Data");
@@ -114,7 +117,7 @@ public class AllUserResultPanel extends JFrame {
          @Override
          public void mouseClicked(MouseEvent arg0) {
             Object selected = users.getSelectedValue();
-            List<String> dataList = new ArrayList<String>(data.participants());
+            List<String> dataList = new ArrayList<String>(data.userNames);
             Collections.sort(dataList, sortMethod);
             users.setListData(dataList.toArray(new String[dataList.size()]));
             users.setSelectedValue(selected, true);
@@ -123,9 +126,9 @@ public class AllUserResultPanel extends JFrame {
    }
 
    private static class UserCellRenderer extends DefaultListCellRenderer {
-      private TestScores allScores;
+      private AllTests allScores;
 
-      public UserCellRenderer(TestScores allScores) {
+      public UserCellRenderer(AllTests allScores) {
          this.allScores = allScores;
       }
 
@@ -134,8 +137,8 @@ public class AllUserResultPanel extends JFrame {
             boolean cellHasFocus) {
          super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
          setFont(new Font("sans", Font.PLAIN, 18));
-         setText(String.format("%-14s-%5.2f", value.toString(), allScores.score(value.toString())));
-         final List<UnitTestScore> usersScores = allScores.getScoresForParticipant(value.toString());
+         setText(String.format("%-14s-%5.2f", value.toString(), allScores.getScoreForUser(value.toString())));
+         final Set<CombinedSingleTest> usersScores = allScores.allTestsForUser(value.toString());
          return this;
       }
    }
@@ -143,12 +146,12 @@ public class AllUserResultPanel extends JFrame {
    private static class UserSummaryPanel extends JPanel {
       private static final long serialVersionUID = 1L;
 
-      private TestScores allScores;
+      private AllTests allScores;
 
       private JLabel nameLabel;
       private JLabel scoreLabel;
 
-      public UserSummaryPanel(TestScores allScores) {
+      public UserSummaryPanel(AllTests allScores) {
          setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
          this.allScores = allScores;
          JLabel nameLabel_label = new JLabel("Name: ");
@@ -163,7 +166,7 @@ public class AllUserResultPanel extends JFrame {
 
       public void updateForUser(String user) {
          nameLabel.setText(user);
-         scoreLabel.setText(allScores.score(user) + "");
+         scoreLabel.setText(allScores.getScoreForUser(user) + "");
       }
    }
 }
