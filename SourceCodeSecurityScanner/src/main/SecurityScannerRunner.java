@@ -1,7 +1,11 @@
+package main;
+
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,6 +14,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -20,8 +25,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileSystemView;
 
 public class SecurityScannerRunner {
-   public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, InstantiationException,
-         IllegalAccessException, UnsupportedLookAndFeelException {
+   public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
+         IllegalAccessException, UnsupportedLookAndFeelException, IOException {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       new DirectoryInputFrame();
    }
@@ -77,7 +82,7 @@ public class SecurityScannerRunner {
             || file.getName().equalsIgnoreCase("CodeCompHelpers.java")//
             || file.getName().equalsIgnoreCase("CodeCompTests.java")//
             || file.getName().equalsIgnoreCase("CodeCompTests.cs") //
-            || file.getName().equalsIgnoreCase("AssemblyInfo.cs"));
+      || file.getName().equalsIgnoreCase("AssemblyInfo.cs"));
    }
 
    private static void scanText(String text, String fileLocation) {
@@ -124,10 +129,12 @@ public class SecurityScannerRunner {
    }
 
    public static class DirectoryInputFrame extends JFrame {
-      public DirectoryInputFrame() {
-         super("Dangerous File Scanner");
+      public DirectoryInputFrame() throws IOException {
+         super("Dangerous Code Scanner");
          setDefaultCloseOperation(EXIT_ON_CLOSE);
+         setIconImage(ImageIO.read(this.getClass().getResource("/images/icon-radioactive.gif")));
          final JButton scan = new JButton("Select and scan!");
+         scan.setPreferredSize(new Dimension(300, 100));
          scan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
