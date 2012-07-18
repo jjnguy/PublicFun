@@ -19,6 +19,7 @@ public abstract class LifeDisplay extends JPanel {
     private int squareWidth = 12;
 
     public abstract void update();
+    public abstract void update(boolean repaint);
 
     public abstract void setGrids(boolean on);
 

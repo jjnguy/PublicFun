@@ -11,7 +11,7 @@ import java.util.Set;
 public class FastLifeBoard implements LifeBoard {
 
    // This holds all of the live points in the system
-   private Set<Point> points;
+   protected Set<Point> points;
 
    public FastLifeBoard(byte[][] initial) {
       points = new HashSet<Point>();
@@ -83,7 +83,7 @@ public class FastLifeBoard implements LifeBoard {
       points = newBoard;
    }
 
-   private List<Point> getSurrounding(Point p) {
+   protected List<Point> getSurrounding(Point p) {
       List<Point> adj = new ArrayList<Point>();
       for (int i = p.x - 2; i < p.x + 3; i++) {
          for (int j = p.y - 2; j < p.y + 3; j++) {
@@ -96,7 +96,7 @@ public class FastLifeBoard implements LifeBoard {
       return adj;
    }
 
-   private boolean lives(Point p) {
+   protected boolean lives(Point p) {
       int liveNeighboors = 0;
       for (int i = p.x - 1; i < p.x + 2; i++) {
          for (int j = p.y - 1; j < p.y + 2; j++) {
